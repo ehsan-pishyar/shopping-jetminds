@@ -50,8 +50,6 @@ android {
 }
 
 dependencies {
-    api project(':domain')
-    api project(':data:repository')
 
     def glide_version = '4.14.2'
     def palette_version = "1.0.0"

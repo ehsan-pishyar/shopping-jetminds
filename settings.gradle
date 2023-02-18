@@ -14,7 +14,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Shopping JetMinds"
 include ':app'
-include ':data:repository'
 include ':data:cache'
 include ':data:network'
+include ':data:repository'
 include ':domain'
