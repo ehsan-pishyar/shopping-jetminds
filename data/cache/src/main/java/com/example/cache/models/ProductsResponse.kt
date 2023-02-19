@@ -1,4 +1,4 @@
-package com.example.domain.models
+package com.example.cache.models
 
 data class ProductsResponse(
     val id: Int,

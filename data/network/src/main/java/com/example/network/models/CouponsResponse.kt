@@ -1,4 +1,4 @@
-package com.example.domain.models
+package com.example.network.models
 
 data class CouponsResponse(
     val id: Int,
