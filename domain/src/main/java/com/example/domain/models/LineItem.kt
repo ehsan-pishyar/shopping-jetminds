@@ -4,14 +4,14 @@ data class LineItem(
     val id: Int,
     val name: String,
     val price: Int,
-    val product_id: Int,
+    val productId: Int,
     val quantity: Int,
     val sku: String,
     val subtotal: String,
-    val subtotal_tax: String,
-    val tax_class: String,
+    val subtotalTax: String,
+    val taxClass: String,
     val taxes: List<Taxe>,
     val total: String,
-    val total_tax: String,
-    val variation_id: Int
+    val totalTax: String,
+    val variationId: Int
 )

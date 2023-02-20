@@ -5,6 +5,6 @@ data class ProductAttributesResponse(
     val name: String,
     val slug: String,
     val type: String,
-    val order_by: String,
-    val has_archives: Boolean
+    val orderBy: String,
+    val hasArchives: Boolean
 )

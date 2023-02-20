@@ -1,6 +1,9 @@
 package com.example.network.models
 
-data class Attribute(
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class AttributeDto(
     val id: Int,
     val name: String,
     val options: List<String>,

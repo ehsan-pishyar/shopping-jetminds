@@ -1,6 +1,9 @@
 package com.example.network.models
 
-data class DefaultAttribute(
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class DefaultAttributeDto(
     val id: Int,
     val name: String,
     val option: String

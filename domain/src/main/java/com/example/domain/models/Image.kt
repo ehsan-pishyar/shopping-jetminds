@@ -5,8 +5,6 @@ data class Image(
     val name: String,
     val src: String,
     val alt: String,
-    val date_created: String,
-    val date_created_gmt: String,
-    val date_modified: String,
-    val date_modified_gmt: String
+    val dateCreated: String,
+    val dateCreatedGmt: String
 )

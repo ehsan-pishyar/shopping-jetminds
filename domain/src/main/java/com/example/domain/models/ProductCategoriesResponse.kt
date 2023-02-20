@@ -8,6 +8,6 @@ data class ProductCategoriesResponse(
     val description: String,
     val display: String,
     val image: Image,
-    val menu_order: Int,
+    val menuOrder: Int,
     val count: Int,
 )

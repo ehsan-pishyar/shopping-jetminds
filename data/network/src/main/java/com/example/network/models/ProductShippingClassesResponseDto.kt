@@ -1,6 +1,9 @@
 package com.example.network.models
 
-data class ProductsTagsResponse(
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class ProductShippingClassesResponseDto(
     val id: Int,
     val name: String,
     val slug: String,

@@ -1,5 +1,6 @@
 package com.example.network
 
+import com.example.network.models.*
 import com.example.network.utils.Constants
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -12,14 +13,14 @@ interface ApiService {
     suspend fun getProducts(
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
-    )
+    ): ProductsResponseDto
 
     @GET("/products/{id}")
     suspend fun getProductById(
         @Path("id") productId: Int,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
-    )
+    ): ProductsResponseDto
 
     @GET("/products/{product_id}/variations/{id}")
     suspend fun getProductVariationById(
@@ -27,68 +28,68 @@ interface ApiService {
         @Path("id") variationId: Int,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
-    )
+    ): ProductVariationsResponseDto
 
     @GET("/products/attributes/{id}")
     suspend fun getProductAttributeById(
         @Path("id") attrId: Int,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
-    )
+    ): ProductAttributesResponseDto
 
     @GET("/products/categories")
     suspend fun getProductsCategories(
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
-    )
+    ): ProductCategoriesResponseDto
 
     @GET("/products/categories/{id}")
     suspend fun getProductCategoryById(
         @Path("id") categoryId: Int,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
-    )
+    ): ProductCategoriesResponseDto
 
     @GET("/products/shipping_classes/{id}")
     suspend fun getProductShippingClassById(
         @Path("id") shippingClassesId: Int,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
-    )
+    ): ProductShippingClassesResponseDto
 
     @GET("/products/tags")
     suspend fun getProductsTags(
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
-    )
+    ): ProductsTagsResponseDto
 
     @GET("/products/tags/{id}")
     suspend fun getProductTagById(
         @Path("id") tagId: Int,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
-    )
+    ): ProductsTagsResponseDto
 
     @GET("/products/reviews/{id}")
     suspend fun getProductReviewById(
         @Path("id") reviewId: Int,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
-    )
+    ): ProductReviewsResponseDto
 
     // Orders -------------------------------------------------------------------------
     @GET("/orders")
     suspend fun getOrders(
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
-    )
+    ): OrdersResponseDto
 
     @GET("/orders/{id}")
     suspend fun getOrderById(
         @Path("id") orderId: Int,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
-    )
+    ): OrdersResponseDto
 
     // Payment GateWays ---------------------------------------------------------------
     @GET("/payment_gateways")
@@ -118,5 +119,5 @@ interface ApiService {
         @Path("id") customerId: Int,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
-    )
+    ): CustomersResponseDto
 }

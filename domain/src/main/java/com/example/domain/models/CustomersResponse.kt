@@ -2,15 +2,15 @@ package com.example.domain.models
 
 data class CustomersResponse(
     val id: Int,
-    val date_created: String,
-    val date_created_gmt: String,
+    val dateCreated: String,
+    val dateCreatedGmt: String,
     val email: String,
-    val first_name: String,
-    val last_name: String,
+    val firstName: String,
+    val lastName: String,
     val role: String,
     val username: String,
     val billing: Billing,
     val shipping: Shipping,
-    val is_paying_customer: Boolean,
-    val avatar_url: String
+    val isPayingCustomer: Boolean,
+    val avatarUrl: String
 )
