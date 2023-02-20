@@ -1,6 +1,6 @@
 package com.example.cache.models
 
-data class Attribute(
+data class AttributeEntity(
     val id: Int,
     val name: String,
     val options: List<String>,

@@ -1,6 +1,6 @@
 package com.example.cache.models
 
-data class Billing(
+data class BillingEntity(
     val address_1: String,
     val address_2: String,
     val city: String,

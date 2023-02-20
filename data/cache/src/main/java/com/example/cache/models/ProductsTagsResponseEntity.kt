@@ -1,0 +1,15 @@
+package com.example.cache.models
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.cache.utils.CacheConstants
+
+@Entity(tableName = CacheConstants.PRODUCT_TAGS_TABLE)
+data class ProductsTagsResponseEntity(
+    @PrimaryKey(autoGenerate = false)
+    val id: Int,
+    val name: String,
+    val slug: String,
+    val description: String,
+    val count: Int
+)

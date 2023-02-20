@@ -1,6 +1,6 @@
 package com.example.cache.models
 
-data class TaxLine(
+data class TaxLineEntity(
     val id: Int,
     val label: String,
     val compound: Boolean,
