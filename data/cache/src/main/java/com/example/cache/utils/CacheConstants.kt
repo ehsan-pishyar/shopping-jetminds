@@ -13,4 +13,7 @@ object CacheConstants {
     const val PRODUCT_TAGS_TABLE = "product_tags_table"
     const val PRODUCT_VARIATIONS_TABLE = "product_variations_table"
     const val SHIPPING_ZONES_TABLE = "shipping_zones_table"
+
+    const val DB_NAME = "anaram-db"
+    const val DB_VERSION = 1
 }
