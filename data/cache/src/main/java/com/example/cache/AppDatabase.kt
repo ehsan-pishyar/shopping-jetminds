@@ -18,7 +18,7 @@ import com.example.cache.utils.CacheConstants
         ProductReviewsResponseEntity::class,
         ProductShippingClassesResponseEntity::class,
         ProductsResponseEntity::class,
-        ProductsTagsResponseEntity::class,
+        ProductTagsResponseEntity::class,
         ProductVariationsResponseEntity::class,
         ShippingZonesResponseEntity::class
     ],

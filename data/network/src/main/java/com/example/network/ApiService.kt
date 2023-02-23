@@ -11,6 +11,7 @@ interface ApiService {
     // Products -----------------------------------------------------------------------
     @GET("/products")
     suspend fun getProducts(
+        @Query("page") page: Int = 1,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
     ): ProductsResponseDto
@@ -39,6 +40,7 @@ interface ApiService {
 
     @GET("/products/categories")
     suspend fun getProductsCategories(
+        @Query("page") page: Int = 1,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
     ): ProductCategoriesResponseDto
@@ -59,6 +61,7 @@ interface ApiService {
 
     @GET("/products/tags")
     suspend fun getProductsTags(
+        @Query("page") page: Int = 1,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
     ): ProductsTagsResponseDto
@@ -80,6 +83,7 @@ interface ApiService {
     // Orders -------------------------------------------------------------------------
     @GET("/orders")
     suspend fun getOrders(
+        @Query("page") page: Int = 1,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
     ): OrdersResponseDto
@@ -94,6 +98,7 @@ interface ApiService {
     // Payment GateWays ---------------------------------------------------------------
     @GET("/payment_gateways")
     suspend fun getPaymentGateways(
+        @Query("page") page: Int = 1,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
     )
@@ -114,10 +119,25 @@ interface ApiService {
     )
 
     // Customers ---------------------------------------------------------------------
-    @GET("/customers/<id>")
+    @GET("/customers/{id}")
     suspend fun getCustomerById(
         @Path("id") customerId: Int,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
     ): CustomersResponseDto
+
+    // Coupons ----------------------------------------------------------------------
+    @GET("/coupons")
+    suspend fun getCoupons(
+        @Query("page") page: Int = 1,
+        @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
+        @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
+    )
+
+    @GET("/coupons/{id}")
+    suspend fun getCouponById(
+        @Path("id") couponId: Int,
+        @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
+        @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
+    )
 }

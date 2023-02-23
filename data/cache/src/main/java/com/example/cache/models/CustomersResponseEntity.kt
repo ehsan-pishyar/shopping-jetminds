@@ -20,10 +20,8 @@ data class CustomersResponseEntity(
     val lastName: String,
     val role: String,
     val username: String,
-    @ColumnInfo(name = "billing")
-    val billingEntity: BillingEntity,
-    @ColumnInfo(name = "shipping")
-    val shippingEntity: ShippingEntity,
+    val billing: BillingEntity,
+    val shipping: ShippingEntity,
     @ColumnInfo(name = "is_paying_customer")
     val isPayingCustomer: Boolean,
     @ColumnInfo(name = "avatar_url")

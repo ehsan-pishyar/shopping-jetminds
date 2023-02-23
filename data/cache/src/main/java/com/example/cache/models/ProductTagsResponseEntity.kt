@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.example.cache.utils.CacheConstants
 
 @Entity(tableName = CacheConstants.PRODUCT_TAGS_TABLE)
-data class ProductsTagsResponseEntity(
+data class ProductTagsResponseEntity(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     val name: String,

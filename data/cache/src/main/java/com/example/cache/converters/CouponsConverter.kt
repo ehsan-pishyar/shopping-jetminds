@@ -2,26 +2,22 @@ package com.example.cache.converters
 
 import androidx.room.TypeConverter
 import com.example.cache.models.CouponsResponseEntity
-import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class CouponsConverter {
 
-    private val gson = Gson()
-
     @TypeConverter
-    fun fromCoupons(coupons: CouponsResponseEntity?): String?{
-        if (coupons == null) return null
-
-        val type = object : TypeToken<CouponsResponseEntity?>() {}.type
-        return gson.toJson(coupons, type)
+    fun fromCoupon(coupon: CouponsResponseEntity?): String?{
+        if (coupon == null) return null
+        return Json.encodeToString(coupon)
     }
 
     @TypeConverter
-    fun toCoupons(couponsItem: String?): CouponsResponseEntity?{
-        if (couponsItem.isNullOrEmpty()) return null
-
-        val type = object : TypeToken<CouponsResponseEntity?>() {}.type
-        return gson.fromJson(couponsItem, type)
+    fun toCoupon(couponString: String?): CouponsResponseEntity?{
+        if (couponString.isNullOrEmpty()) return null
+        return Json.decodeFromString(couponString)
     }
 }
