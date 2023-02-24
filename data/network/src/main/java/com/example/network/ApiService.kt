@@ -64,14 +64,14 @@ interface ApiService {
         @Query("page") page: Int = 1,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
-    ): ProductsTagsResponseDto
+    ): ProductTagsResponseDto
 
     @GET("/products/tags/{id}")
     suspend fun getProductTagById(
         @Path("id") tagId: Int,
         @Query("consumer_key") consumerKey: String = Constants.CONSUMER_KEY,
         @Query("consumer_secret") consumerSecret: String = Constants.CONSUMER_SECRET
-    ): ProductsTagsResponseDto
+    ): ProductTagsResponseDto
 
     @GET("/products/reviews/{id}")
     suspend fun getProductReviewById(

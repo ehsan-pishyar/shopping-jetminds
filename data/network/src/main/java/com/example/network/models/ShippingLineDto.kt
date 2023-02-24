@@ -10,7 +10,7 @@ data class ShippingLineDto(
     val methodId: String,
     @SerialName("method_title")
     val methodTitle: String,
-    val taxDtos: List<TaxDto>,
+    val taxes: List<TaxDto>,
     val total: String,
     @SerialName("total_tax")
     val totalTax: String

@@ -1,6 +1,6 @@
 package com.example.domain.models
 
-data class ProductsTagsResponse(
+data class ProductTagsResponse(
     val id: Int,
     val name: String,
     val slug: String,

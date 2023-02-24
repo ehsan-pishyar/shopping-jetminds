@@ -22,7 +22,7 @@ data class CouponsResponseEntity(
     @ColumnInfo(name = "date_expires")
     val dateExpires: String,
     @ColumnInfo(name = "date_expires_gmt")
-    val dateExpires_gmt: String,
+    val dateExpiresGmt: String,
     @ColumnInfo(name = "usage_count")
     val usageCount: Int,
     @ColumnInfo(name = "individual_use")

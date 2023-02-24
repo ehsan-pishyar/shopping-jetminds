@@ -15,7 +15,7 @@ data class ProductsResponseEntity(
     @ColumnInfo(name = "date_created")
     val dateCreated: String,
     @ColumnInfo(name = "date_created_gmt")
-    val date_created_gmt: String,
+    val dateCreatedGmt: String,
     val type: String,
     val status: String,
     val featured: Boolean,
@@ -70,9 +70,9 @@ data class ProductsResponseEntity(
     @ColumnInfo(name = "purchase_note")
     val purchaseNote: String,
     val categories: List<CategoryEntity>,
-    val tag: List<TagEntity>,
-    val image: List<ImageEntity>,
-    val attribute: List<AttributeEntity>,
+    val tags: List<TagEntity>,
+    val images: List<ImageEntity>,
+    val attributes: List<AttributeEntity>,
     @ColumnInfo(name = "default_attributes")
     val defaultAttributes: List<DefaultAttributeEntity>,
     @ColumnInfo(name = "stock_status")

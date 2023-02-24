@@ -44,6 +44,6 @@ data class ProductVariationsResponseDto(
     val shippingClass: String,
     @SerialName("shipping_class_id")
     val shippingClassId: Int,
-    val imageDto: ImageDto,
-    val attributeDtos: List<AttributeDto>
+    val image: ImageDto,
+    val attribute: List<AttributeDto>
 )

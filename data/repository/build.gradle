@@ -33,6 +33,7 @@ android {
 }
 
 dependencies {
+    api project(":domain")
     api project(":data:cache")
     api project(":data:network")
 

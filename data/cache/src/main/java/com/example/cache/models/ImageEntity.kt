@@ -6,7 +6,5 @@ data class ImageEntity(
     val src: String,
     val alt: String,
     val dateCreated: String,
-    val dateCreatedGmt: String,
-    val dateModified: String,
-    val dateModifiedGmt: String
+    val dateCreatedGmt: String
 )

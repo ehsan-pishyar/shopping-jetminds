@@ -10,7 +10,7 @@ data class LineItem(
     val subtotal: String,
     val subtotalTax: String,
     val taxClass: String,
-    val taxes: List<Taxe>,
+    val taxes: List<Tax>,
     val total: String,
     val totalTax: String,
     val variationId: Int

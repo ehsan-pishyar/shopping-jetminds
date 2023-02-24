@@ -17,7 +17,7 @@ data class LineItemDto(
     val subtotalTax: String,
     @SerialName("tax_class")
     val taxClass: String,
-    val taxDtos: List<TaxDto>,
+    val taxes: List<TaxDto>,
     val total: String,
     @SerialName("total_tax")
     val totalTax: String,

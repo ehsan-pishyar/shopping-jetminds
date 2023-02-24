@@ -33,8 +33,8 @@ data class OrdersResponseDto(
     val customerId: Int,
     @SerialName("order_key")
     val orderKey: String,
-    val billingDto: BillingDto,
-    val shippingDto: ShippingDto,
+    val billing: BillingDto,
+    val shipping: ShippingDto,
     @SerialName("payment_method")
     val paymentMethod: String,
     @SerialName("payment_method_title")
@@ -53,11 +53,11 @@ data class OrdersResponseDto(
     val cartHash: String,
     val number: String,
     @SerialName("line_items")
-    val lineItemDtos: List<LineItemDto>,
+    val lineItems: List<LineItemDto>,
     @SerialName("tax_lines")
-    val taxLineDtos: List<TaxLineDto>,
+    val taxLines: List<TaxLineDto>,
     @SerialName("shipping_lines")
-    val shippingLineDtos: List<ShippingLineDto>,
+    val shippingLines: List<ShippingLineDto>,
     @SerialName("payment_url")
     val paymentUrl: String,
     @SerialName("date_created_gmt")

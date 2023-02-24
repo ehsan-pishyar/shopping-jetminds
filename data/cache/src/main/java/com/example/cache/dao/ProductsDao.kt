@@ -16,6 +16,6 @@ interface ProductsDao {
     @Query("SELECT * FROM `products_table` WHERE categories = :categoryId")
     suspend fun fetchProductsByCategoryId(categoryId: Int): List<ProductsResponseEntity>
 
-    @Query("SELECT * FROM `products_table` WHERE tag = :tagId")
+    @Query("SELECT * FROM `products_table` WHERE tags = :tagId")
     suspend fun fetchProductsByTagId(tagId: Int): List<ProductsResponseEntity>
 }

@@ -11,7 +11,7 @@ data class ProductCategoriesResponseDto(
     val parent: Int,
     val description: String,
     val display: String,
-    val imageDto: ImageDto,
+    val image: ImageDto,
     @SerialName("menu_order")
     val menuOrder: Int,
     val count: Int,

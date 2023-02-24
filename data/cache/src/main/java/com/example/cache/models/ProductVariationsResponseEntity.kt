@@ -48,5 +48,5 @@ data class ProductVariationsResponseEntity(
     @ColumnInfo(name = "shipping_class_id")
     val shippingClassId: Int,
     val image: ImageEntity,
-    val attribute: List<AttributeEntity>
+    val attributes: List<AttributeEntity>
 )

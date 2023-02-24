@@ -12,7 +12,7 @@ data class CustomersResponseEntity(
     @ColumnInfo(name = "date_created")
     val dateCreated: String,
     @ColumnInfo(name = "date_created_gmt")
-    val dateCreated_gmt: String,
+    val dateCreatedGmt: String,
     val email: String,
     @ColumnInfo(name = "first_name")
     val firstName: String,

@@ -67,11 +67,11 @@ data class ProductsResponseDto(
     @SerialName("purchase_note")
     val purchaseNote: String,
     val categories: List<CategoryDto>,
-    val tagDtos: List<TagDto>,
-    val imageDtos: List<ImageDto>,
-    val attributeDtos: List<AttributeDto>,
+    val tags: List<TagDto>,
+    val images: List<ImageDto>,
+    val attributes: List<AttributeDto>,
     @SerialName("default_attributes")
-    val defaultAttributeDtos: List<DefaultAttributeDto>,
+    val defaultAttributes: List<DefaultAttributeDto>,
     @SerialName("stock_status")
     val stockStatus: String,
     @SerialName("has_options")
