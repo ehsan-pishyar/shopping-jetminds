@@ -10,7 +10,7 @@ data class CouponsResponse(
     val discountType: String,
     val description: String,
     val dateExpires: String,
-    val dateExpires_gmt: String,
+    val dateExpiresGmt: String,
     val usageCount: Int,
     val individualUse: Boolean,
     val productIds: List<Int>,

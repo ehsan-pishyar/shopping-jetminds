@@ -10,5 +10,5 @@ interface ProductsRepository {
     fun getProductsByCategoryId(categoryId: Int): Flow<ServiceResult<List<ProductsResponse>>>
     fun getProductsByTagId(tagId: Int): Flow<ServiceResult<List<ProductsResponse>>>
     fun getProductsByAttrId(attrId: Int): Flow<ServiceResult<List<ProductsResponse>>>
-    fun getProductDetails(productId: Int): ServiceResult<ProductsResponse>
+    suspend fun getProductDetails(productId: Int): ServiceResult<ProductsResponse>
 }

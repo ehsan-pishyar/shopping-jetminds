@@ -1,4 +1,14 @@
 package com.example.domain.use_cases.product_shipping_classes
 
-class GetProductShippingClassesUseCase {
+import com.example.domain.models.ProductShippingClassesResponse
+import com.example.domain.repositories.ProductShippingClassesRepository
+import com.example.domain.utils.ServiceResult
+import kotlinx.coroutines.flow.Flow
+
+class GetProductShippingClassesUseCase constructor(
+    private val productShippingClassesRepository: ProductShippingClassesRepository
+){
+
+    operator fun invoke(): Flow<ServiceResult<List<ProductShippingClassesResponse>>> =
+        productShippingClassesRepository.getProductShippingClasses()
 }
