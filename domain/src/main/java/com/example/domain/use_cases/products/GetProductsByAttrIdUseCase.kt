@@ -5,10 +5,10 @@ import com.example.domain.repositories.ProductsRepository
 import com.example.domain.utils.ServiceResult
 import kotlinx.coroutines.flow.Flow
 
-class GetProductByTagIdUseCase constructor(
+class GetProductsByAttrIdUseCase constructor(
     private val productsRepository: ProductsRepository
 ) {
 
-    operator fun invoke(tagId: Int): Flow<ServiceResult<List<ProductsResponse>>> =
-        productsRepository.getProductsByTagId(tagId)
+    operator fun invoke(attrId: Int): Flow<ServiceResult<List<ProductsResponse>>> =
+        productsRepository.getProductsByAttrId(attrId)
 }

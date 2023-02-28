@@ -1,4 +1,4 @@
-package com.example.domain.use_cases.prodyct_variations
+package com.example.domain.use_cases.product_variations
 
 import com.example.domain.models.ProductVariationsResponse
 import com.example.domain.repositories.ProductVariationsRepository
