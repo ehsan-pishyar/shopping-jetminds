@@ -5,15 +5,20 @@ import com.example.domain.models.ProductVariationsResponse
 import com.example.domain.repositories.ProductVariationsRepository
 import com.example.domain.utils.ServiceResult
 import com.example.network.ApiService
+import com.example.network.models.ProductCategoriesResponseDto
+import com.example.repository.mappers.toDomain
+import com.example.repository.mappers.toEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import java.io.IOException
 import javax.inject.Inject
 
 class ProductVariationsRepositoryImpl @Inject constructor(
-    apiService: ApiService,
-    productVariationsDao: ProductVariationsDao
+    private val apiService: ApiService,
+    private val productVariationsDao: ProductVariationsDao
 ): ProductVariationsRepository {
 
-    override fun getProductVariations(productId: Int): Flow<ServiceResult<List<ProductVariationsResponse>>> {
+    override fun getProductVariations(productId: Int): Flow<ServiceResult<List<ProductVariationsResponse>>> = flow {
         TODO("Not yet implemented")
     }
 

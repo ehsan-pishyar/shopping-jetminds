@@ -10,7 +10,6 @@ import javax.inject.Inject
 class ProductCategoriesViewModel @Inject constructor(
     private val getProductCategoriesUseCase: GetProductCategoriesUseCase,
     private val getProductCategoryDetailsUseCase: GetProductCategoryDetailsUseCase
-): ViewModel(){
-
+): ViewModel() {
 
 }

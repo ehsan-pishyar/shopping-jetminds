@@ -1,7 +1,6 @@
 package com.example.repository.repository
 
 import com.example.cache.dao.ProductCategoriesDao
-import com.example.cache.models.ProductCategoriesResponseEntity
 import com.example.domain.models.ProductCategoriesResponse
 import com.example.domain.repositories.ProductCategoriesRepository
 import com.example.domain.utils.ServiceResult
@@ -51,8 +50,8 @@ class ProductCategoriesRepositoryImpl @Inject constructor(
             return ServiceResult.Success(data = categoryEntity.toDomain())
         }
 
-        val remoteCategoryDetails = try {
-            apiService.getProductCategoryById(categoryId)
+        val response = try {
+            apiService.getProductCategoryDetails(categoryId)
         } catch (e: IOException) {
             e.printStackTrace()
             return ServiceResult.Error(data = null, error = e.message)
@@ -61,11 +60,9 @@ class ProductCategoriesRepositoryImpl @Inject constructor(
             return ServiceResult.Error(data = null, error = e.message)
         }
 
-        remoteCategoryDetails.let {
+        response.let {
             productCategoriesDao.insertProductCategoryDetails(it.toEntity())
             return ServiceResult.Success(productCategoriesDao.fetchProductCategoryDetails(categoryId).toDomain())
         }
     }
-
-
 }
