@@ -27,9 +27,7 @@ fun JetButton(
     text: String,
     fontSize: Int = 16,
     fontWeight: FontWeight = FontWeight.Normal,
-    textColor: Color = Color.White
-
-    ) {
+    textColor: Color = Color.White) {
 
     Button(
         onClick = { onClick() },
