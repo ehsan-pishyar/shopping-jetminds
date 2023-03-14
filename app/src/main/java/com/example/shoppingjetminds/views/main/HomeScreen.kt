@@ -38,7 +38,9 @@ fun HomeScreen(
                     Image(painter = painterResource(id = R.drawable.image_placeholder), contentDescription = "main banner")
                 }
             }
+
             // Categories
+
             // OffSale Products
         }
     }

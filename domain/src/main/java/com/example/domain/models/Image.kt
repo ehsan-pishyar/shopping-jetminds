@@ -1,10 +1,10 @@
 package com.example.domain.models
 
 data class Image(
-    val id: Int,
-    val name: String,
-    val src: String,
-    val alt: String,
-    val dateCreated: String,
-    val dateCreatedGmt: String
+    val id: Int? = null,
+    val name: String? = null,
+    val src: String? = null,
+    val alt: String? = null,
+    val dateCreated: String? = null,
+    val dateCreatedGmt: String? = null
 )
