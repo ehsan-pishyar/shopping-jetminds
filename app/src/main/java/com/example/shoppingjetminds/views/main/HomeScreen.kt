@@ -23,7 +23,9 @@ import com.example.shoppingjetminds.components.JetProduct
 import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.ui.theme.Background
 import com.example.shoppingjetminds.utils.CategoriesFakeData
+import com.example.shoppingjetminds.utils.DeviceBaseBatteriesFakeData
 import com.example.shoppingjetminds.utils.ProductFakeData
+import com.example.shoppingjetminds.utils.TechnologyBaseBatteriesFakeData
 
 @Composable
 fun HomeScreen(){
@@ -79,12 +81,123 @@ fun HomeScreen(){
                     })
                 }
 
-                Spacer(modifier = Modifier.height(50.dp))
+                Spacer(modifier = Modifier.height(30.dp))
 
                 // OffSale Products
-                JetIconText(
-                    title = "تخفیفات این هفته آنارام"
-                )
+                JetIconText(title = "تخفیفات این هفته آنارام")
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    userScrollEnabled = true
+                ) {
+                    items(items = ProductFakeData.products, itemContent = { items ->
+                        JetProduct(
+                            title = items.title,
+                            image = items.image,
+                            price = items.price,
+                            rating = items.rating
+                        )
+                    })
+                }
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                // Technology Base Batteries Category
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    userScrollEnabled = true
+                ) {
+                    items(items = TechnologyBaseBatteriesFakeData.technologyBaseBatteries, itemContent = { items ->
+                        Image(
+                            modifier = Modifier.size(120.dp),
+                            painter = painterResource(id = items.image),
+                            contentDescription = null
+                        )
+                    })
+                }
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                // Popular Products
+                JetIconText(title = "محبوب ترین های آنارام")
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    userScrollEnabled = true
+                ) {
+                    items(items = ProductFakeData.products, itemContent = { items ->
+                        JetProduct(
+                            title = items.title,
+                            image = items.image,
+                            price = items.price,
+                            rating = items.rating
+                        )
+                    })
+                }
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                // Device Base Batteries Category
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    userScrollEnabled = true
+                ) {
+                    items(items = DeviceBaseBatteriesFakeData.devices, itemContent = { items ->
+                        JetCategory(
+                            modifier = Modifier
+                                .size(120.dp)
+                                .padding(5.dp),
+                            title = items.title,
+                            image = items.image,
+                            titleSize = 10
+                        )
+                    })
+                }
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                // Delivery Banner - ***
+                Image(painter = painterResource(id = R.drawable.free_delivery_banner), contentDescription = null)
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                // Top Sales Products
+                JetIconText(title = "پرفروش ترین ها")
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    userScrollEnabled = true
+                ) {
+                    items(items = ProductFakeData.products, itemContent = { items ->
+                        JetProduct(
+                            title = items.title,
+                            image = items.image,
+                            price = items.price,
+                            rating = items.rating
+                        )
+                    })
+                }
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                // Newest Products
+                JetIconText(title = "جدیدترین ها")
 
                 Spacer(modifier = Modifier.height(10.dp))
 

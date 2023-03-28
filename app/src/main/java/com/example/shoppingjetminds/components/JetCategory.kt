@@ -18,19 +18,21 @@ import com.example.shoppingjetminds.R
 
 @Composable
 fun JetCategory(
+    modifier: Modifier = Modifier,
     navController: NavController? = null,
     title: String = "باتری وارتا",
-    image: Int = R.drawable.category_9v
+    image: Int = R.drawable.category_9v,
+    titleSize: Int = 12
 ) {
     Box {
         Column {
             Card(
-                modifier = Modifier
+                modifier = modifier
                     .size(120.dp),
                 shape = RoundedCornerShape(10.dp)
             ) {
                 Column(
-                    modifier = Modifier.padding(10.dp),
+                    modifier = modifier.padding(10.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {

@@ -33,7 +33,7 @@ fun JetProduct(
 
             Card(
                 modifier = Modifier
-                    .width(200.dp),
+                    .width(180.dp),
                 shape = RoundedCornerShape(8.dp)
             ) {
 
@@ -49,29 +49,17 @@ fun JetProduct(
                         horizontalArrangement = Arrangement.End,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            Row {
-                                Column {
-                                    JetText(
-                                        modifier = Modifier.padding(end = 3.dp),
-                                        text = "$rating",
-                                        fontSize = 12
-                                    )
-                                }
-                                Column {
-                                    Icon(
-                                        modifier = Modifier.width(15.dp),
-                                        painter = painterResource(id = R.drawable.star),
-                                        contentDescription = null,
-                                        tint = YellowColor
-                                    )
-                                }
-                            }
-                        }
+                        JetText(
+                            modifier = Modifier.padding(end = 3.dp),
+                            text = "$rating",
+                            fontSize = 11
+                        )
+                        Icon(
+                            modifier = Modifier.width(13.dp),
+                            painter = painterResource(id = R.drawable.star),
+                            contentDescription = null,
+                            tint = YellowColor
+                        )
                     }
 
                     Column(
@@ -83,7 +71,7 @@ fun JetProduct(
 
                         Image(
                             modifier = Modifier
-                                .size(140.dp),
+                                .size(120.dp),
                             painter = painterResource(id = image!!),
                             contentDescription = null,
                             contentScale = ContentScale.Fit
@@ -93,7 +81,7 @@ fun JetProduct(
 
                         JetText(
                             text = title,
-                            fontSize = 12,
+                            fontSize = 11,
                             fontWeight = FontWeight.SemiBold,
                             maxLines = 2,
                             textAlign = TextAlign.Center
@@ -106,7 +94,7 @@ fun JetProduct(
                                 text = "$price",
                                 color = Primary,
                                 fontWeight = FontWeight.SemiBold,
-                                fontSize = 14
+                                fontSize = 12
                             )
 
                             Spacer(modifier = Modifier.width(5.dp))
@@ -115,7 +103,7 @@ fun JetProduct(
                                 text = "تومان",
                                 color = Primary,
                                 fontWeight = FontWeight.SemiBold,
-                                fontSize = 14
+                                fontSize = 12
                             )
                         }
 
@@ -148,7 +136,7 @@ fun RowScope.addProductItemButtons(
 ) {
     Box(
         modifier = Modifier
-            .size(width = 100.dp, height = 35.dp)
+            .size(width = 90.dp, height = 30.dp)
             .background(color = Primary, shape = RoundedCornerShape(5.dp))
             .clickable { addToCart() },
     ) {
@@ -170,8 +158,8 @@ fun RowScope.addProductItemButtons(
 
                 JetText(
                     text = "افزودن به سبد",
-                    fontSize = 10,
-                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 9,
+                    fontWeight = FontWeight.Normal,
                     textAlign = TextAlign.Start,
                     color = Color.White
                 )
@@ -184,7 +172,7 @@ fun RowScope.addProductItemButtons(
 
     Box(
         modifier = Modifier
-            .size(35.dp)
+            .size(30.dp)
             .background(LighterGray, shape = RoundedCornerShape(5.dp))
             .clickable { addToFavorites() },
     ) {
@@ -207,7 +195,7 @@ fun RowScope.addProductItemButtons(
 
     Box(
         modifier = Modifier
-            .size(35.dp)
+            .size(30.dp)
             .background(LighterGray, shape = RoundedCornerShape(5.dp))
             .clickable { addToCompare() },
     ) {
