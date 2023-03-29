@@ -43,6 +43,7 @@ fun JetProduct(
                     verticalArrangement = Arrangement.Center
                 ) {
 
+                    // Rating start
                     Row(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -55,12 +56,13 @@ fun JetProduct(
                             fontSize = 11
                         )
                         Icon(
-                            modifier = Modifier.width(13.dp),
+                            modifier = Modifier.size(13.dp),
                             painter = painterResource(id = R.drawable.star),
                             contentDescription = null,
                             tint = YellowColor
                         )
                     }
+                    // Rating end
 
                     Column(
                         modifier = Modifier
@@ -69,6 +71,7 @@ fun JetProduct(
                         verticalArrangement = Arrangement.Center,
                     ) {
 
+                        // Feature image
                         Image(
                             modifier = Modifier
                                 .size(120.dp),
@@ -79,6 +82,7 @@ fun JetProduct(
 
                         Spacer(modifier = Modifier.height(10.dp))
 
+                        // Title
                         JetText(
                             text = title,
                             fontSize = 11,
@@ -89,6 +93,7 @@ fun JetProduct(
 
                         Spacer(modifier = Modifier.height(10.dp))
 
+                        // Price start
                         Row {
                             JetText(
                                 text = "$price",
@@ -106,11 +111,13 @@ fun JetProduct(
                                 fontSize = 12
                             )
                         }
+                        // Price end
 
                     }
 
                     Spacer(modifier = Modifier.height(10.dp))
 
+                    // Buttons
                     Row(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -129,11 +136,12 @@ fun JetProduct(
 }
 
 @Composable
-fun RowScope.addProductItemButtons(
+fun addProductItemButtons(
     addToCart: () -> Unit,
     addToFavorites: () -> Unit,
     addToCompare: () -> Unit
 ) {
+    // Add to cart start
     Box(
         modifier = Modifier
             .size(width = 90.dp, height = 30.dp)
@@ -167,9 +175,11 @@ fun RowScope.addProductItemButtons(
 
         }
     }
+    // Add to cart end
 
     Spacer(modifier = Modifier.width(5.dp))
 
+    // Favorite start
     Box(
         modifier = Modifier
             .size(30.dp)
@@ -190,9 +200,11 @@ fun RowScope.addProductItemButtons(
             )
         }
     }
+    // Favorite end
 
     Spacer(modifier = Modifier.width(5.dp))
 
+    // Compare start
     Box(
         modifier = Modifier
             .size(30.dp)
@@ -213,6 +225,7 @@ fun RowScope.addProductItemButtons(
             )
         }
     }
+    // Compare end
 }
 
 @Preview

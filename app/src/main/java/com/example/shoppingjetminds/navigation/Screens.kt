@@ -7,10 +7,7 @@ sealed class StartScreens(val route: String) {
 
 sealed class AuthScreens(val route: String) {
     object Login: AuthScreens(route = "login")
-    object Register: AuthScreens(route = "register")
-    object ForgotPassword: AuthScreens(route = "forgot_password")
-    object PasswordRecovery: AuthScreens(route = "password_recovery")
-    object NewPassword: AuthScreens(route = "new_password")
+    object Verification: AuthScreens(route = "verification")
 }
 
 sealed class MainScreens(val route: String) {

@@ -51,32 +51,8 @@ fun NavGraphBuilder.addAuthTopLevel(navController: NavController) {
         composable(route = AuthScreens.Login.route) {
             LoginScreen(
                 toHomeScreen = { navController.navigate(route = MainScreens.Home.route) },
-                toRegisterScreen = { navController.navigate(route = AuthScreens.Register.route) },
-                toForgotPasswordScreen = { navController.navigate(route = AuthScreens.ForgotPassword.route) }
+                toVerificationScreen = { navController.navigate(route = AuthScreens.Verification.route) }
             )
-        }
-        composable(route = AuthScreens.Register.route) {
-            RegisterScreen(
-                toLoginScreen = { navController.navigate(route = AuthScreens.Login.route) },
-                toHomeScreen = { navController.navigate(route = MainScreens.Home.route) }
-            )
-        }
-        composable(route = AuthScreens.ForgotPassword.route) {
-            ForgotPasswordScreen(
-                toPasswordRecoveryScreen = { navController.navigate(route = AuthScreens.PasswordRecovery.route) },
-                toLoginScreen = { navController.navigate(route = AuthScreens.Login.route) }
-            )
-        }
-        composable(route = AuthScreens.PasswordRecovery.route) {
-            PasswordRecoveryScreen(
-                toNewPasswordScreen = { navController.navigate(route = AuthScreens.NewPassword.route) },
-                toHomeScreen = { navController.navigate(route = MainScreens.Home.route) }
-            )
-        }
-        composable(route = AuthScreens.NewPassword.route) {
-            NewPasswordScreen {
-                navController.navigate(route = MainScreens.Home.route)
-            }
         }
     }
 }

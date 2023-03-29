@@ -10,7 +10,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -39,7 +38,6 @@ fun HomeScreen(){
             // Banner
             Box(modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFFf6f6f6))
             ) {
                 Column {
                     Image(painter = painterResource(id = R.drawable.anaram_main_banner), contentDescription = "main banner")

@@ -2,12 +2,11 @@ package com.example.shoppingjetminds.views.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Divider
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -22,8 +21,7 @@ import com.example.shoppingjetminds.ui.theme.*
 @Composable
 fun LoginScreen(
     toHomeScreen: () -> Unit,
-    toRegisterScreen: () -> Unit,
-    toForgotPasswordScreen: () -> Unit
+    toVerificationScreen: () -> Unit
 ){
 
     var phoneNumber by remember { mutableStateOf("") }
@@ -38,24 +36,22 @@ fun LoginScreen(
                 .fillMaxSize()
                 .align(Alignment.BottomCenter)
                 .padding(30.dp),
-            verticalArrangement = Arrangement.Top,
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             JetText(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                text = "سلام دوباره!",
-                fontWeight = FontWeight.Bold,
-                fontSize = 25,
+                text = "Anaram",
+                fontSize = 35,
                 textAlign = TextAlign.Center,
-                color = BlackColor
+                color = BlackColor,
+                fontFamily = FontFamily.Serif,
+                fontWeight = FontWeight.Bold
             )
 
             Spacer(modifier = Modifier.height(10.dp))
 
             JetText(
-                modifier = Modifier
-                    .fillMaxWidth(),
                 text = "خوش اومـــــدی",
                 fontSize = 16,
                 textAlign = TextAlign.Center,
@@ -63,27 +59,25 @@ fun LoginScreen(
             )
 
             JetText(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                text = "دلمون برات تنگ شده بود",
+                text = "ورود فقط با یه شماره همراه",
                 fontSize = 16,
                 textAlign = TextAlign.Center,
                 color = BlackColor
             )
 
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
             JetTextField(
                 onValueChange = {
                     phoneNumber = it
                 },
                 value = phoneNumber,
-                placeholder = "شماره تماس خودتو وارد کن",
+                placeholder = "شماره همراه خودتو وارد کن",
                 singleLine = true,
                 maxLines = 1,
                 maxLength = 50,
                 keyboardType = KeyboardType.Email,
-                title = "شماره تماس",
+                title = "شماره همراه",
                 style = TextStyle(
                     color = LighterGray,
                     fontFamily = Yekanbakh,
@@ -91,23 +85,7 @@ fun LoginScreen(
                 )
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
-
-            TextButton(
-                modifier = Modifier.fillMaxWidth(),
-                onClick = { toForgotPasswordScreen() }
-            ) {
-                JetText(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    text = "رمز عبورتو فراموش کردی؟",
-                    textAlign = TextAlign.End,
-                    fontSize = 14,
-                    color = Primary
-                )
-            }
-
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(15.dp))
 
             JetButton(
                 onClick = {
@@ -121,37 +99,8 @@ fun LoginScreen(
 //                    }
                 },
                 width = 0,
-                text = "ورود",
+                text = "دریافت کد",
             )
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                JetText(
-                    modifier = Modifier
-                        .wrapContentWidth(),
-                    text = "هنوز فروشنده نشدی؟",
-                    fontSize = 14,
-                    color = BlackColor
-                )
-
-                TextButton(
-                    onClick = { toRegisterScreen() },
-                ) {
-                    JetText(
-                        modifier = Modifier
-                            .wrapContentWidth(),
-                        text = "الان ثبت نام کن",
-                        fontSize = 14,
-                        color = Primary
-                    )
-                }
-            }
         }
     }
 }
@@ -159,5 +108,5 @@ fun LoginScreen(
 @Preview
 @Composable
 fun PreviewLoginScreen() {
-    LoginScreen(toHomeScreen = {}, toRegisterScreen = {}) {}
+    LoginScreen(toHomeScreen = {}) {}
 }

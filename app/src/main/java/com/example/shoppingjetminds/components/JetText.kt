@@ -1,5 +1,6 @@
 package com.example.shoppingjetminds.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -30,7 +31,7 @@ fun JetText(
 ) {
 
     Text(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         text = text,
         fontFamily = fontFamily,
         fontWeight = fontWeight,
