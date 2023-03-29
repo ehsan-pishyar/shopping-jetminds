@@ -5,15 +5,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.shoppingjetminds.components.JetButton
+import com.example.shoppingjetminds.components.JetSimpleButton
 import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.components.JetTextField
 import com.example.shoppingjetminds.ui.theme.*
@@ -75,11 +77,10 @@ fun LoginScreen(
                 placeholder = "شماره همراه خودتو وارد کن",
                 singleLine = true,
                 maxLines = 1,
-                maxLength = 50,
-                keyboardType = KeyboardType.Email,
+                keyboardType = KeyboardType.Number,
                 title = "شماره همراه",
                 style = TextStyle(
-                    color = LighterGray,
+                    color = LighterBlack,
                     fontFamily = Yekanbakh,
                     fontSize = 14.sp
                 )
@@ -87,7 +88,7 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            JetButton(
+            JetSimpleButton(
                 onClick = {
 //                    viewModel.getUserByEmailAndPassword(email, password)
 //                    if (state.loading) {
@@ -98,8 +99,8 @@ fun LoginScreen(
 //                        toDashboardScreen()
 //                    }
                 },
-                width = 0,
                 text = "دریافت کد",
+                modifier = Modifier.fillMaxWidth().height(55.dp)
             )
         }
     }
@@ -108,5 +109,7 @@ fun LoginScreen(
 @Preview
 @Composable
 fun PreviewLoginScreen() {
-    LoginScreen(toHomeScreen = {}) {}
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
+        LoginScreen(toHomeScreen = {}) {}
+    }
 }

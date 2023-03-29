@@ -1,0 +1,186 @@
+package com.example.shoppingjetminds.views.auth
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.shoppingjetminds.components.JetSimpleButton
+import com.example.shoppingjetminds.components.JetText
+import com.example.shoppingjetminds.components.JetTextField
+import com.example.shoppingjetminds.ui.theme.Background
+import com.example.shoppingjetminds.ui.theme.BlackColor
+import com.example.shoppingjetminds.ui.theme.LighterBlack
+import com.example.shoppingjetminds.ui.theme.Yekanbakh
+
+@Composable
+fun VerificationScreen() {
+
+    var number1 by remember{ mutableStateOf("") }
+    var number2 by remember{ mutableStateOf("") }
+    var number3 by remember{ mutableStateOf("") }
+    var number4 by remember{ mutableStateOf("") }
+    var numbers by remember{ mutableStateOf("$number1$number2$number3$number4") }
+
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Background)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .align(Alignment.BottomCenter)
+                    .padding(30.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                JetText(
+                    text = "Anaram",
+                    fontSize = 35,
+                    textAlign = TextAlign.Center,
+                    color = BlackColor,
+                    fontFamily = FontFamily.Serif,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                JetText(
+                    text = "خوش اومـــــدی",
+                    fontSize = 16,
+                    textAlign = TextAlign.Center,
+                    color = BlackColor
+                )
+
+                JetText(
+                    text = "رمز 4 رقمی که دریافت کردی رو وارد کن",
+                    fontSize = 16,
+                    textAlign = TextAlign.Center,
+                    color = BlackColor
+                )
+
+                Spacer(modifier = Modifier.height(40.dp))
+
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    JetTextField(
+                        onValueChange = {
+                            number1 = it
+                        },
+                        value = number1,
+                        placeholder = "1",
+                        singleLine = true,
+                        maxLines = 1,
+                        keyboardType = KeyboardType.Number,
+                        style = TextStyle(
+                            color = LighterBlack,
+                            fontFamily = Yekanbakh,
+                            fontSize = 20.sp,
+                            textAlign = TextAlign.Center
+                        ),
+                        modifier = Modifier.weight(1f).height(65.dp)
+                    )
+
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    JetTextField(
+                        onValueChange = {
+                            number2 = it
+                        },
+                        value = number2,
+                        placeholder = "2",
+                        singleLine = true,
+                        maxLines = 1,
+                        keyboardType = KeyboardType.Number,
+                        style = TextStyle(
+                            color = LighterBlack,
+                            fontFamily = Yekanbakh,
+                            fontSize = 20.sp,
+                            textAlign = TextAlign.Center
+                        ),
+                        modifier = Modifier.weight(1f).height(65.dp)
+                    )
+
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    JetTextField(
+                        onValueChange = {
+                            number3 = it
+                        },
+                        value = number3,
+                        placeholder = "3",
+                        singleLine = true,
+                        maxLines = 1,
+                        keyboardType = KeyboardType.Number,
+                        style = TextStyle(
+                            color = LighterBlack,
+                            fontFamily = Yekanbakh,
+                            fontSize = 20.sp,
+                            textAlign = TextAlign.Center
+                        ),
+                        modifier = Modifier.weight(1f).height(65.dp)
+                    )
+
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    JetTextField(
+                        onValueChange = {
+                            number4 = it
+                        },
+                        value = number4,
+                        placeholder = "4",
+                        singleLine = true,
+                        maxLines = 1,
+                        keyboardType = KeyboardType.Number,
+                        style = TextStyle(
+                            color = LighterBlack,
+                            fontFamily = Yekanbakh,
+                            fontSize = 20.sp,
+                            textAlign = TextAlign.Center
+                        ),
+                        modifier = Modifier.weight(1f).height(65.dp)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(15.dp))
+
+                JetSimpleButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(55.dp),
+                    onClick = {
+//                    viewModel.getUserByEmailAndPassword(email, password)
+//                    if (state.loading) {
+//                        // Indicator on button
+//                    } else if (state.error == null) {
+//                        // Snack bar
+//                    } else if (state.success) {
+//                        toDashboardScreen()
+//                    }
+                    },
+                    text = "ورود"
+                )
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewVerificationScreen() {
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ) {
+        VerificationScreen()
+    }
+}

@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.TextStyle
@@ -18,6 +19,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.shoppingjetminds.ui.theme.BlackColor
@@ -31,7 +33,6 @@ fun JetTextField(
     height: Int = 55,
     value: String = "",
     placeholder: String,
-    error: String = "",
     style: TextStyle = TextStyle(
         color = MaterialTheme.colors.onBackground,
         fontSize = 14.sp,
@@ -42,7 +43,6 @@ fun JetTextField(
     ),
     singleLine: Boolean = true,
     maxLines: Int = 1,
-    maxLength: Int = 100,
     shape: Shape = RoundedCornerShape(12.dp),
     readOnly: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
@@ -82,9 +82,7 @@ fun JetTextField(
                     testTag = "Text field"
                 },
             value = value,
-            onValueChange = {
-                onValueChange(it)
-            },
+            onValueChange = { onValueChange(it) },
             shape = shape,
             maxLines = maxLines,
             textStyle = style,
@@ -94,7 +92,6 @@ fun JetTextField(
                     modifier = modifier.fillMaxWidth(),
                     text = placeholder,
                     style = style,
-
                 )
             },
 //            if (onValueChange.toString().length > maxLength) {
@@ -103,7 +100,6 @@ fun JetTextField(
 //                isError = ""
 //            }
 //            isError = error != "",
-            isError = onValueChange.toString().length > maxLength,
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType
             ),
@@ -122,21 +118,17 @@ fun JetTextField(
             leadingIcon = leadingIcon,
             trailingIcon = trailingIcon
         )
-        if (error.isNotEmpty()) {
-            Text(
-                text = error,
-                style = style,
-                color = MaterialTheme.colors.error,
-                textAlign = TextAlign.End,
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-        }
     }
 }
 
 @Composable
 @Preview
 fun PreviewJetTextField() {
-    JetTextField(title = "عنوان", placeholder = "نگهدارنده عنوان", onValueChange = {})
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+        JetTextField(
+            title = "عنوان",
+            placeholder = "نگهدارنده عنوان",
+            onValueChange = {}
+        )
+    }
 }

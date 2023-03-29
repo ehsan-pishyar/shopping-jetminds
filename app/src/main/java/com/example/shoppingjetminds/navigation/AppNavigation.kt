@@ -54,6 +54,9 @@ fun NavGraphBuilder.addAuthTopLevel(navController: NavController) {
                 toVerificationScreen = { navController.navigate(route = AuthScreens.Verification.route) }
             )
         }
+        composable(route = AuthScreens.Verification.route) {
+            VerificationScreen()
+        }
     }
 }
 
