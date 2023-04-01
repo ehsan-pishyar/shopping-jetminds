@@ -74,7 +74,7 @@ fun VerificationScreen() {
 
                 Spacer(modifier = Modifier.height(40.dp))
 
-                Row(modifier = Modifier.fillMaxWidth()) {
+                Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp)) {
                     JetTextField(
                         onValueChange = {
                             number1 = it
@@ -90,7 +90,8 @@ fun VerificationScreen() {
                             fontSize = 20.sp,
                             textAlign = TextAlign.Center
                         ),
-                        modifier = Modifier.weight(1f).height(65.dp)
+                        shape = 8,
+                        modifier = Modifier.weight(1f).height(75.dp)
                     )
 
                     Spacer(modifier = Modifier.width(10.dp))
@@ -110,7 +111,8 @@ fun VerificationScreen() {
                             fontSize = 20.sp,
                             textAlign = TextAlign.Center
                         ),
-                        modifier = Modifier.weight(1f).height(65.dp)
+                        shape = 8,
+                        modifier = Modifier.weight(1f).height(75.dp)
                     )
 
                     Spacer(modifier = Modifier.width(10.dp))
@@ -130,7 +132,8 @@ fun VerificationScreen() {
                             fontSize = 20.sp,
                             textAlign = TextAlign.Center
                         ),
-                        modifier = Modifier.weight(1f).height(65.dp)
+                        shape = 8,
+                        modifier = Modifier.weight(1f).height(75.dp)
                     )
 
                     Spacer(modifier = Modifier.width(10.dp))
@@ -150,16 +153,14 @@ fun VerificationScreen() {
                             fontSize = 20.sp,
                             textAlign = TextAlign.Center
                         ),
-                        modifier = Modifier.weight(1f).height(65.dp)
+                        shape = 8,
+                        modifier = Modifier.weight(1f).height(75.dp)
                     )
                 }
 
                 Spacer(modifier = Modifier.height(15.dp))
 
                 JetSimpleButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(55.dp),
                     onClick = {
 //                    viewModel.getUserByEmailAndPassword(email, password)
 //                    if (state.loading) {

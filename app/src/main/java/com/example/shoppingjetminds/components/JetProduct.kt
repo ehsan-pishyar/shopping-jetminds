@@ -5,15 +5,18 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.shoppingjetminds.R
@@ -135,6 +138,87 @@ fun JetProduct(
     }
 }
 
+
+@Composable
+fun JetProduct2(
+    navController: NavController? = null,
+    title: String = "باتری شارژی قلمی وارتا 2100 میلی آمپر",
+    image: Int? = R.drawable.varta_recharge_accu_power_aa_2100mah,
+    price: Int? = 120000,
+    rating: Double? = 0.0
+) {
+    Box(modifier = Modifier
+        .fillMaxWidth()
+    ) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.White)
+            .padding(15.dp)
+        ) {
+            Image(
+                modifier = Modifier.height(100.dp),
+                painter = painterResource(id = image!!),
+                contentDescription = null
+            )
+
+            Spacer(modifier = Modifier.width(10.dp))
+            
+            Column {
+                JetText(
+                    text = title,
+                    textAlign = TextAlign.Start,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 2,
+                    fontSize = 14
+                )
+                
+                Spacer(modifier = Modifier.height(10.dp))
+
+                // Price start
+                Row(modifier = Modifier
+                    .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    JetText(
+                        modifier = Modifier.wrapContentWidth(),
+                        text = "$price",
+                        color = Primary,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 12
+                    )
+
+                    Spacer(modifier = Modifier.width(5.dp))
+
+                    JetText(
+                        modifier = Modifier.wrapContentWidth(),
+                        text = "تومان",
+                        color = Primary,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 12
+                    )
+                }
+                // Price end
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    addProductItemButtons(
+                        addToCart = {},
+                        addToFavorites = {},
+                        addToCompare = {}
+                    )
+                }
+            }
+        }
+    }
+}
+
+
 @Composable
 fun addProductItemButtons(
     addToCart: () -> Unit,
@@ -230,6 +314,16 @@ fun addProductItemButtons(
 
 @Preview
 @Composable
-fun PreviewJetProductItem1() {
-    JetProduct(navController = NavController(LocalContext.current), title = "باتری شارژی قلمی وارتا 2100 میلی آمپر")
+fun PreviewJetProduct1() {
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
+        JetProduct(navController = NavController(LocalContext.current), title = "باتری شارژی قلمی وارتا 2100 میلی آمپر")
+    }
+}
+
+@Preview
+@Composable
+fun PreviewJetProduct2() {
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
+        JetProduct2()
+    }
 }

@@ -30,7 +30,7 @@ import com.example.shoppingjetminds.ui.theme.Yekanbakh
 fun JetTextField(
     modifier: Modifier = Modifier,
     title: String = "",
-    height: Int = 55,
+    height: Int = 66,
     value: String = "",
     placeholder: String,
     style: TextStyle = TextStyle(
@@ -43,7 +43,7 @@ fun JetTextField(
     ),
     singleLine: Boolean = true,
     maxLines: Int = 1,
-    shape: Shape = RoundedCornerShape(12.dp),
+    shape: Int = 100,
     readOnly: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
     isPasswordToggleDisplayed: Boolean = keyboardType == KeyboardType.Password,
@@ -63,7 +63,7 @@ fun JetTextField(
                 text = title,
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 10.dp),
+                    .padding(horizontal = 30.dp),
                 fontFamily = Yekanbakh,
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.SemiBold,
@@ -83,7 +83,7 @@ fun JetTextField(
                 },
             value = value,
             onValueChange = { onValueChange(it) },
-            shape = shape,
+            shape = RoundedCornerShape(shape.dp),
             maxLines = maxLines,
             textStyle = style,
             readOnly = readOnly,

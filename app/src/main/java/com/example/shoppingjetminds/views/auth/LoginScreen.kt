@@ -99,8 +99,7 @@ fun LoginScreen(
 //                        toDashboardScreen()
 //                    }
                 },
-                text = "دریافت کد",
-                modifier = Modifier.fillMaxWidth().height(55.dp)
+                text = "دریافت کد"
             )
         }
     }

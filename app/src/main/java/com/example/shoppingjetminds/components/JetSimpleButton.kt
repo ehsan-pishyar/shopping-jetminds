@@ -19,9 +19,10 @@ import com.example.shoppingjetminds.ui.theme.Primary
 @Composable
 fun JetSimpleButton(
     modifier: Modifier = Modifier,
+    height: Int = 66,
     onClick: () -> Unit,
     color: ButtonColors = ButtonDefaults.buttonColors(backgroundColor = Primary),
-    shape: Int = 12,
+    shape: Int = 24,
     text: String,
     fontSize: Int = 16,
     fontWeight: FontWeight = FontWeight.Normal,
@@ -31,7 +32,7 @@ fun JetSimpleButton(
 
     Button(
         onClick = { onClick() },
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth().height(height.dp),
         colors = color,
         shape = RoundedCornerShape(shape.dp),
         elevation = ButtonDefaults.elevation(
@@ -45,7 +46,7 @@ fun JetSimpleButton(
             verticalAlignment = Alignment.CenterVertically
         ) {
             JetText(
-                modifier = Modifier.wrapContentWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 text = text,
                 fontSize = fontSize,
                 fontWeight = fontWeight,
@@ -63,7 +64,7 @@ fun PreviewJetButton() {
         JetSimpleButton(
             onClick = {},
             text = "احسان پیش یار",
-            modifier = Modifier.width(200.dp).height(55.dp)
+            modifier = Modifier.width(364.dp)
         )
     }
 }
