@@ -8,13 +8,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.shoppingjetminds.R
 import com.example.shoppingjetminds.components.JetCategory
 import com.example.shoppingjetminds.components.JetIconText
@@ -25,9 +29,19 @@ import com.example.shoppingjetminds.utils.CategoriesFakeData
 import com.example.shoppingjetminds.utils.DeviceBaseBatteriesFakeData
 import com.example.shoppingjetminds.utils.ProductFakeData
 import com.example.shoppingjetminds.utils.TechnologyBaseBatteriesFakeData
+import com.example.shoppingjetminds.viewmodels.ProductCategoriesViewModel
+import com.example.shoppingjetminds.viewmodels.ProductTagsViewModel
+import com.example.shoppingjetminds.viewmodels.ProductsViewModel
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen(
+    productCategoriesViewModel: ProductCategoriesViewModel = hiltViewModel(),
+    productsViewModel: ProductsViewModel = hiltViewModel(),
+    productTagsViewModel: ProductTagsViewModel = hiltViewModel()
+){
+
+    val categoriesState = productCategoriesViewModel.categoriesState
+
     Box(
         modifier = Modifier
             .padding(15.dp)
@@ -71,10 +85,10 @@ fun HomeScreen(){
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     userScrollEnabled = true
                 ) {
-                    items(items = CategoriesFakeData.categories, itemContent = { items ->
+                    items(items = categoriesState.categories!!, itemContent = { items ->
                         JetCategory(
-                            title = items.name,
-                            image = items.image!!
+                            title = items.name!!,
+                            image = items.image
                         )
                     })
                 }
@@ -222,5 +236,7 @@ fun HomeScreen(){
 @Composable
 @Preview
 fun PreviewHomeScreen() {
-    HomeScreen()
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
+        HomeScreen()
+    }
 }

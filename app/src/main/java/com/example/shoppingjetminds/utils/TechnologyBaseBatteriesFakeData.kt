@@ -3,7 +3,7 @@ package com.example.shoppingjetminds.utils
 import com.example.shoppingjetminds.R
 
 object TechnologyBaseBatteriesFakeData {
-    val technologyBaseBatteries = listOf<FakeTechnologyBaseBatteries>(
+    val technologyBaseBatteries = listOf(
         FakeTechnologyBaseBatteries(image = R.drawable.tag_alkaline),
         FakeTechnologyBaseBatteries(image = R.drawable.tag_lithium),
         FakeTechnologyBaseBatteries(image = R.drawable.tag_zinc),

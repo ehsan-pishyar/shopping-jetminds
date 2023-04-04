@@ -10,7 +10,6 @@ import com.example.domain.use_cases.product_categories.GetProductCategoriesUseCa
 import com.example.domain.use_cases.product_categories.GetProductCategoryDetailsUseCase
 import com.example.domain.utils.ServiceResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

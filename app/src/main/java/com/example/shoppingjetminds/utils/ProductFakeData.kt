@@ -4,7 +4,7 @@ import com.example.shoppingjetminds.R
 
 object ProductFakeData {
 
-    val products = listOf<FakeProduct>(
+    val products = listOf(
         FakeProduct(
             title = "باتری شارژی قلمی وارتا 2100 میلی آمپر",
             image = R.drawable.varta_recharge_accu_power_aa_2100mah,

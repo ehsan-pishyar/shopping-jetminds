@@ -4,7 +4,7 @@ import com.example.shoppingjetminds.R
 
 object DeviceBaseBatteriesFakeData {
     
-    val devices = listOf<FakeDeviceBaseBatteries>(
+    val devices = listOf(
         FakeDeviceBaseBatteries(title = "باتری دوربین", image = R.drawable.tag_camera),
         FakeDeviceBaseBatteries(title = "باتری ساعت", image = R.drawable.tag_clock),
         FakeDeviceBaseBatteries(title = "باتری چراغ قوه", image = R.drawable.tag_flashlight),

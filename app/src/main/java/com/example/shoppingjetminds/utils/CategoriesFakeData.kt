@@ -4,7 +4,7 @@ import com.example.shoppingjetminds.R
 
 object CategoriesFakeData {
 
-    val categories = listOf<FakeCategory>(
+    val categories = listOf(
         FakeCategory(
             id = 1,
             name = "باتری قلمی",
