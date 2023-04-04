@@ -25,7 +25,6 @@ import com.example.shoppingjetminds.components.JetIconText
 import com.example.shoppingjetminds.components.JetProduct
 import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.ui.theme.Background
-import com.example.shoppingjetminds.utils.CategoriesFakeData
 import com.example.shoppingjetminds.utils.DeviceBaseBatteriesFakeData
 import com.example.shoppingjetminds.utils.ProductFakeData
 import com.example.shoppingjetminds.utils.TechnologyBaseBatteriesFakeData
