@@ -51,7 +51,9 @@ fun JetSimpleButton(
                 fontSize = fontSize,
                 fontWeight = fontWeight,
                 color = textColor,
-                textAlign = textAlign
+                textAlign = textAlign,
+                maxLines = 1,
+                lineHeight = 0.0
             )
         }
     }

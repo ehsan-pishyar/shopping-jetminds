@@ -96,7 +96,9 @@ fun OnBoardingScreen(
                     text = onBoardingItems[pagerState.currentPage].title,
                     fontSize = 20,
                     textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1,
+                    lineHeight = 0.0
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -107,7 +109,8 @@ fun OnBoardingScreen(
                     fontSize = 14,
                     fontWeight = FontWeight.Normal,
                     textAlign = TextAlign.Center,
-                    maxLines = 4
+                    maxLines = 4,
+                    lineHeight = 0.0
                 )
             }
 

@@ -25,7 +25,6 @@ import com.example.shoppingjetminds.components.JetIconText
 import com.example.shoppingjetminds.components.JetProduct
 import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.ui.theme.Background
-import com.example.shoppingjetminds.utils.DeviceBaseBatteriesFakeData
 import com.example.shoppingjetminds.utils.ProductFakeData
 import com.example.shoppingjetminds.utils.TechnologyBaseBatteriesFakeData
 import com.example.shoppingjetminds.viewmodels.ProductCategoriesViewModel
@@ -73,7 +72,9 @@ fun HomeScreen(
                     text = "انواع باتری وارتا",
                     fontSize = 16,
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    lineHeight = 0.0
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -87,7 +88,7 @@ fun HomeScreen(
                     items(items = categoriesState.categories!!, itemContent = { items ->
                         JetCategory(
                             title = items.name!!,
-                            image = items.image
+                            imageUrl = items.image?.src!!
                         )
                     })
                 }
@@ -165,16 +166,16 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     userScrollEnabled = true
                 ) {
-                    items(items = DeviceBaseBatteriesFakeData.devices, itemContent = { items ->
-                        JetCategory(
-                            modifier = Modifier
-                                .size(120.dp)
-                                .padding(5.dp),
-                            title = items.title,
-                            image = items.image,
-                            titleSize = 10
-                        )
-                    })
+//                    items(items = , itemContent = { items ->
+//                        JetCategory(
+//                            modifier = Modifier
+//                                .size(120.dp)
+//                                .padding(5.dp),
+//                            title = items.title,
+//                            imageUrl = items.image?.src!!,
+//                            titleSize = 10
+//                        )
+//                    })
                 }
 
                 Spacer(modifier = Modifier.height(30.dp))

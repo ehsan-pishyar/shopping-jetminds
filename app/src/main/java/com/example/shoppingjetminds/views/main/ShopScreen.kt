@@ -3,7 +3,6 @@ package com.example.shoppingjetminds.views.main
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -16,11 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.example.shoppingjetminds.R
-import com.example.shoppingjetminds.components.JetCategory
 import com.example.shoppingjetminds.components.JetText
-import com.example.shoppingjetminds.components.JetTextField
 import com.example.shoppingjetminds.ui.theme.Background
-import com.example.shoppingjetminds.utils.CategoriesFakeData
 
 @Composable
 fun ShopScreen() {
@@ -42,12 +38,12 @@ fun ShopScreen() {
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 userScrollEnabled = true
             ) {
-                items(items = CategoriesFakeData.categories, itemContent = { items ->
-                    JetCategory(
-                        title = items.name,
-                        image = items.image!!
-                    )
-                })
+//                items(items = CategoriesFakeData.categories, itemContent = { items ->
+//                    JetCategory(
+//                        title = items.name,
+//                        imageUrl = items.image?
+//                    )
+//                })
             }
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -72,7 +68,9 @@ fun ShopScreen() {
                             text = "فیلتر ها",
                             textAlign = TextAlign.Start,
                             fontWeight = FontWeight.Normal,
-                            fontSize = 14
+                            fontSize = 14,
+                            maxLines = 1,
+                            lineHeight = 0.0
                         )
                     }
                 }
@@ -97,7 +95,9 @@ fun ShopScreen() {
                             text = "مرتب سازی",
                             textAlign = TextAlign.Start,
                             fontWeight = FontWeight.Normal,
-                            fontSize = 14
+                            fontSize = 14,
+                            maxLines = 1,
+                            lineHeight = 0.0
                         )
                     }
                 }

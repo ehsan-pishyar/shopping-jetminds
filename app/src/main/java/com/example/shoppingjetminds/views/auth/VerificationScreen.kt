@@ -53,7 +53,9 @@ fun VerificationScreen() {
                     textAlign = TextAlign.Center,
                     color = BlackColor,
                     fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    lineHeight = 0.0
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -62,14 +64,18 @@ fun VerificationScreen() {
                     text = "خوش اومـــــدی",
                     fontSize = 16,
                     textAlign = TextAlign.Center,
-                    color = BlackColor
+                    color = BlackColor,
+                    maxLines = 1,
+                    lineHeight = 0.0
                 )
 
                 JetText(
                     text = "رمز 4 رقمی که دریافت کردی رو وارد کن",
                     fontSize = 16,
                     textAlign = TextAlign.Center,
-                    color = BlackColor
+                    color = BlackColor,
+                    maxLines = 1,
+                    lineHeight = 0.0
                 )
 
                 Spacer(modifier = Modifier.height(40.dp))
