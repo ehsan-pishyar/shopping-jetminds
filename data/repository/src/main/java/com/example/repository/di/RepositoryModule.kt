@@ -190,6 +190,31 @@ object RepositoryModule {
         productsRepository: ProductsRepository
     ): GetProductsByAttrIdUseCase = GetProductsByAttrIdUseCase(productsRepository)
 
+    @Provides
+    fun providesGetOnSalesProductsForHomeUseCase(
+        productsRepository: ProductsRepository
+    ): GetPopularProductsForHomeUseCase = GetPopularProductsForHomeUseCase(productsRepository)
+
+    @Provides
+    fun providesGetPopularProductsForHomeUseCase(
+        productsRepository: ProductsRepository
+    ): GetPopularProductsForHomeUseCase = GetPopularProductsForHomeUseCase(productsRepository)
+
+    @Provides
+    fun providesGetTopSalesProductsForHomeUseCase(
+        productsRepository: ProductsRepository
+    ): GetTopSalesProductsForHomeUseCase = GetTopSalesProductsForHomeUseCase(productsRepository)
+
+    @Provides
+    fun getNewestProductsProductsForHomeUseCase(
+        productsRepository: ProductsRepository
+    ): GetNewestProductsForHomeUseCase = GetNewestProductsForHomeUseCase(productsRepository)
+
+    @Provides
+    fun getTopRatedProductsForHomeUseCase(
+        productsRepository: ProductsRepository
+    ): GetTopRatedProductsForHomeUseCase = GetTopRatedProductsForHomeUseCase(productsRepository)
+
 
     // Product Tags
     @Provides

@@ -95,4 +95,129 @@ class ProductsRepositoryImpl @Inject constructor(
             return ServiceResult.Success(productsDao.fetchProductDetails(productId).toDomain())
         }
     }
+
+    override fun getOnSaleProductsForHome(): Flow<ServiceResult<List<ProductsResponse>>> = flow {
+        emit(ServiceResult.Loading())
+
+        if (productsDao.isProductsCacheAvailable() > 0) {
+            emit(ServiceResult.Success(data = productsDao.fetchOnSaleProducts().map { it.toDomain() }))
+        }
+
+        val responseDto = try {
+            apiService.getProducts()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            emit(ServiceResult.Error(data = null, error = e.message))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(ServiceResult.Error(data = null, error = e.message))
+        } as ProductsResponseDto
+
+        responseDto.let { products ->
+            productsDao.insertProducts(listOf(products.toEntity()))
+            emit(ServiceResult.Success(data = productsDao.fetchOnSaleProducts().map { it.toDomain() }))
+        }
+
+        emit(ServiceResult.Loading(isLoading = false))
+    }
+
+    override fun getPopularProductsForHome(): Flow<ServiceResult<List<ProductsResponse>>> = flow {
+        emit(ServiceResult.Loading())
+
+        if (productsDao.isProductsCacheAvailable() > 0) {
+            emit(ServiceResult.Success(data = productsDao.fetchPopularProducts().map { it.toDomain() }))
+        }
+
+        val responseDto = try {
+            apiService.getProducts()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            emit(ServiceResult.Error(data = null, error = e.message))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(ServiceResult.Error(data = null, error = e.message))
+        } as ProductsResponseDto
+
+        responseDto.let { products ->
+            productsDao.insertProducts(listOf(products.toEntity()))
+            emit(ServiceResult.Success(data = productsDao.fetchPopularProducts().map { it.toDomain() }))
+        }
+
+        emit(ServiceResult.Loading(isLoading = false))
+    }
+
+    override fun getTopSalesProductsForHome(): Flow<ServiceResult<List<ProductsResponse>>> = flow {
+        emit(ServiceResult.Loading())
+
+        if (productsDao.isProductsCacheAvailable() > 0) {
+            emit(ServiceResult.Success(data = productsDao.fetchTopSalesProducts().map { it.toDomain() }))
+        }
+
+        val responseDto = try {
+            apiService.getProducts()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            emit(ServiceResult.Error(data = null, error = e.message))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(ServiceResult.Error(data = null, error = e.message))
+        } as ProductsResponseDto
+
+        responseDto.let { products ->
+            productsDao.insertProducts(listOf(products.toEntity()))
+            emit(ServiceResult.Success(data = productsDao.fetchTopSalesProducts().map { it.toDomain() }))
+        }
+
+        emit(ServiceResult.Loading(isLoading = false))
+    }
+
+    override fun getNewestProductsForHome(): Flow<ServiceResult<List<ProductsResponse>>> = flow {
+        emit(ServiceResult.Loading())
+
+        if (productsDao.isProductsCacheAvailable() > 0) {
+            emit(ServiceResult.Success(data = productsDao.fetchNewestProducts().map { it.toDomain() }))
+        }
+
+        val responseDto = try {
+            apiService.getProducts()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            emit(ServiceResult.Error(data = null, error = e.message))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(ServiceResult.Error(data = null, error = e.message))
+        } as ProductsResponseDto
+
+        responseDto.let { products ->
+            productsDao.insertProducts(listOf(products.toEntity()))
+            emit(ServiceResult.Success(data = productsDao.fetchNewestProducts().map { it.toDomain() }))
+        }
+
+        emit(ServiceResult.Loading(isLoading = false))
+    }
+
+    override fun getTopRatedProductsForHome(): Flow<ServiceResult<List<ProductsResponse>>> = flow {
+        emit(ServiceResult.Loading())
+
+        if (productsDao.isProductsCacheAvailable() > 0) {
+            emit(ServiceResult.Success(data = productsDao.fetchTopRatedProducts().map { it.toDomain() }))
+        }
+
+        val responseDto = try {
+            apiService.getProducts()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            emit(ServiceResult.Error(data = null, error = e.message))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(ServiceResult.Error(data = null, error = e.message))
+        } as ProductsResponseDto
+
+        responseDto.let { products ->
+            productsDao.insertProducts(listOf(products.toEntity()))
+            emit(ServiceResult.Success(data = productsDao.fetchTopRatedProducts().map { it.toDomain() }))
+        }
+
+        emit(ServiceResult.Loading(isLoading = false))
+    }
 }

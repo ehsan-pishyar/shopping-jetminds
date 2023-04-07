@@ -8,11 +8,8 @@ data class ProductsResponseDto(
     val id: Int,
     val name: String,
     val slug: String,
-    val permalink: String,
     @SerialName("date_created")
     val dateCreated: String,
-    @SerialName("date_created_gmt")
-    val dateCreatedGmt: String,
     val type: String,
     val status: String,
     val featured: Boolean,
@@ -29,15 +26,13 @@ data class ProductsResponseDto(
     val salePrice: String,
     @SerialName("date_on_sale_from")
     val dateOnSaleFrom: String,
-    @SerialName("date_on_sale_from_gmt")
-    val dateOnSaleFromGmt: String,
     @SerialName("date_on_sale_to")
     val dateOnSaleTo: String,
-    @SerialName("date_on_sale_to_gmt")
-    val dateOnSaleToGmt: String,
     @SerialName("on_sale")
     val onSale: Boolean,
     val purchasable: Boolean,
+    @SerialName("total_sales")
+    val totalSales: Int,
     @SerialName("tax_status")
     val taxStatus: String,
     @SerialName("tax_class")
@@ -62,10 +57,6 @@ data class ProductsResponseDto(
     val averageRating: String,
     @SerialName("rating_count")
     val ratingCount: Int,
-    @SerialName("parent_id")
-    val parentId: Int,
-    @SerialName("purchase_note")
-    val purchaseNote: String,
     val categories: List<CategoryDto>,
     val tags: List<TagDto>,
     val images: List<ImageDto>,
@@ -73,7 +64,5 @@ data class ProductsResponseDto(
     @SerialName("default_attributes")
     val defaultAttributes: List<DefaultAttributeDto>,
     @SerialName("stock_status")
-    val stockStatus: String,
-    @SerialName("has_options")
-    val hasOptions: Boolean
+    val stockStatus: String
 )

@@ -11,11 +11,8 @@ data class ProductsResponseEntity(
     val id: Int,
     val name: String,
     val slug: String,
-    val permalink: String,
     @ColumnInfo(name = "date_created")
     val dateCreated: String,
-    @ColumnInfo(name = "date_created_gmt")
-    val dateCreatedGmt: String,
     val type: String,
     val status: String,
     val featured: Boolean,
@@ -32,15 +29,13 @@ data class ProductsResponseEntity(
     val salePrice: String,
     @ColumnInfo(name = "date_on_sale_from")
     val dateOnSaleFrom: String,
-    @ColumnInfo(name = "date_on_sale_from_gmt")
-    val dateOnSaleFromGmt: String,
     @ColumnInfo(name = "date_on_sale_to")
     val dateOnSaleTo: String,
-    @ColumnInfo(name = "date_on_sale_to_gmt")
-    val dateOnSaleToGmt: String,
     @ColumnInfo(name = "on_sale")
     val onSale: Boolean,
     val purchasable: Boolean,
+    @ColumnInfo(name = "total_sales")
+    val totalSales: Int,
     @ColumnInfo(name = "tax_status")
     val taxStatus: String,
     @ColumnInfo(name = "tax_class")
@@ -65,10 +60,6 @@ data class ProductsResponseEntity(
     val averageRating: String,
     @ColumnInfo(name = "rating_count")
     val ratingCount: Int,
-    @ColumnInfo(name = "parent_id")
-    val parentId: Int,
-    @ColumnInfo(name = "purchase_note")
-    val purchaseNote: String,
     val categories: List<CategoryEntity>,
     val tags: List<TagEntity>,
     val images: List<ImageEntity>,
@@ -76,7 +67,5 @@ data class ProductsResponseEntity(
     @ColumnInfo(name = "default_attributes")
     val defaultAttributes: List<DefaultAttributeEntity>,
     @ColumnInfo(name = "stock_status")
-    val stockStatus: String,
-    @ColumnInfo(name = "has_options")
-    val hasOptions: Boolean
+    val stockStatus: String
 )

@@ -95,7 +95,7 @@ fun HomeScreen(
 
                 Spacer(modifier = Modifier.height(30.dp))
 
-                // OffSale Products
+                // OnSale Products
                 JetIconText(title = "تخفیفات این هفته آنارام")
 
                 Spacer(modifier = Modifier.height(10.dp))
