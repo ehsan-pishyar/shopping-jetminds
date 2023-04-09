@@ -2,7 +2,6 @@ package com.example.repository.mappers
 
 import com.example.cache.models.*
 import com.example.domain.models.*
-import com.example.network.models.*
 
 fun CouponsResponseEntity.toDomain(): CouponsResponse =
     CouponsResponse(
@@ -122,9 +121,7 @@ fun ProductsResponseEntity.toDomain(): ProductsResponse =
         this.id,
         this.name,
         this.slug,
-        this.permalink,
         this.dateCreated,
-        this.dateCreatedGmt,
         this.type,
         this.status,
         this.featured,
@@ -136,11 +133,10 @@ fun ProductsResponseEntity.toDomain(): ProductsResponse =
         this.regularPrice,
         this.salePrice,
         this.dateOnSaleFrom,
-        this.dateOnSaleFromGmt,
         this.dateOnSaleTo,
-        this.dateOnSaleToGmt,
         this.onSale,
         this.purchasable,
+        this.totalSales,
         this.taxStatus,
         this.taxClass,
         this.manageStock,
@@ -153,15 +149,12 @@ fun ProductsResponseEntity.toDomain(): ProductsResponse =
         this.reviewsAllowed,
         this.averageRating,
         this.ratingCount,
-        this.parentId,
-        this.purchaseNote,
         this.categories.map { it.toDomain() },
         this.tags.map { it.toDomain() },
         this.images.map { it.toDomain() },
         this.attributes.map { it.toDomain() },
         this.defaultAttributes.map { it.toDomain() },
-        this.stockStatus,
-        this.hasOptions
+        this.stockStatus
     )
 
 fun ProductTagsResponseEntity.toDomain(): ProductTagsResponse =

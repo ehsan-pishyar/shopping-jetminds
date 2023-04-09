@@ -1,6 +1,7 @@
 package com.example.shoppingjetminds.components
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
@@ -9,7 +10,8 @@ import com.example.shoppingjetminds.R
 
 @Composable
 fun JetCoilImage(
-    imageUrl: String?
+    modifier: Modifier = Modifier,
+    imageUrl: String? = null
 ) {
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
@@ -18,6 +20,7 @@ fun JetCoilImage(
             .crossfade(300)
             .build(),
         contentDescription = null,
-        contentScale = ContentScale.Crop
+        contentScale = ContentScale.Crop,
+        modifier = modifier
     )
 }

@@ -121,9 +121,7 @@ fun ProductsResponseDto.toEntity(): ProductsResponseEntity =
         this.id,
         this.name,
         this.slug,
-        this.permalink,
         this.dateCreated,
-        this.dateCreatedGmt,
         this.type,
         this.status,
         this.featured,
@@ -135,11 +133,10 @@ fun ProductsResponseDto.toEntity(): ProductsResponseEntity =
         this.regularPrice,
         this.salePrice,
         this.dateOnSaleFrom,
-        this.dateOnSaleFromGmt,
         this.dateOnSaleTo,
-        this.dateOnSaleToGmt,
         this.onSale,
         this.purchasable,
+        this.totalSales,
         this.taxStatus,
         this.taxClass,
         this.manageStock,
@@ -152,15 +149,12 @@ fun ProductsResponseDto.toEntity(): ProductsResponseEntity =
         this.reviewsAllowed,
         this.averageRating,
         this.ratingCount,
-        this.parentId,
-        this.purchaseNote,
         this.categories.map { it.toEntity() },
         this.tags.map { it.toEntity() },
         this.images.map { it.toEntity() },
         this.attributes.map { it.toEntity() },
         this.defaultAttributes.map { it.toEntity() },
-        this.stockStatus,
-        this.hasOptions
+        this.stockStatus
     )
 
 fun ProductTagsResponseDto.toEntity(): ProductTagsResponseEntity =

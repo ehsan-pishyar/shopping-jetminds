@@ -1,5 +1,7 @@
 package com.example.shoppingjetminds.views.main
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,17 +22,16 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.shoppingjetminds.R
-import com.example.shoppingjetminds.components.JetCategory
-import com.example.shoppingjetminds.components.JetIconText
-import com.example.shoppingjetminds.components.JetProduct
-import com.example.shoppingjetminds.components.JetText
+import com.example.shoppingjetminds.components.*
 import com.example.shoppingjetminds.ui.theme.Background
-import com.example.shoppingjetminds.utils.ProductFakeData
 import com.example.shoppingjetminds.utils.TechnologyBaseBatteriesFakeData
+import com.example.shoppingjetminds.utils.onSaleCountDown
+import com.example.shoppingjetminds.utils.priceThousandsSeparator
 import com.example.shoppingjetminds.viewmodels.ProductCategoriesViewModel
 import com.example.shoppingjetminds.viewmodels.ProductTagsViewModel
 import com.example.shoppingjetminds.viewmodels.ProductsViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(
     productCategoriesViewModel: ProductCategoriesViewModel = hiltViewModel(),
@@ -39,6 +40,11 @@ fun HomeScreen(
 ){
 
     val categoriesState = productCategoriesViewModel.categoriesState
+    val onSaleState = productsViewModel.onSaleState
+    val popularState = productsViewModel.popularState
+    val topSalesState = productsViewModel.topSalesState
+    val newestState = productsViewModel.newestState
+    val topRatedState = productsViewModel.topRatedState
 
     Box(
         modifier = Modifier
@@ -106,14 +112,20 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     userScrollEnabled = true
                 ) {
-                    items(items = ProductFakeData.products, itemContent = { items ->
-                        JetProduct(
-                            title = items.title,
-                            image = items.image,
-                            price = items.price,
-                            rating = items.rating
-                        )
-                    })
+                    if (onSaleState.success) {
+                        items(items = onSaleState.products!!, itemContent = { item ->
+                            JetOnSaleProduct(
+                                title = item.name,
+                                image = item.images[0].src,
+                                regularPrice = priceThousandsSeparator(item.regularPrice),
+                                salePrice = priceThousandsSeparator(item.salePrice),
+                                rating = item.averageRating,
+                                ratingCount = item.ratingCount,
+                                countDownTimer = onSaleCountDown(item.dateOnSaleFrom, item.dateOnSaleTo)
+                            )
+                        })
+                    }
+
                 }
 
                 Spacer(modifier = Modifier.height(30.dp))
@@ -147,12 +159,13 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     userScrollEnabled = true
                 ) {
-                    items(items = ProductFakeData.products, itemContent = { items ->
+                    items(items = popularState.products!!, itemContent = { item ->
                         JetProduct(
-                            title = items.title,
-                            image = items.image,
-                            price = items.price,
-                            rating = items.rating
+                            title = item.name,
+                            image = item.images[0].src,
+                            price = priceThousandsSeparator(item.price),
+                            rating = item.averageRating,
+                            ratingCount = item.ratingCount
                         )
                     })
                 }
@@ -196,12 +209,13 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     userScrollEnabled = true
                 ) {
-                    items(items = ProductFakeData.products, itemContent = { items ->
+                    items(items = topSalesState.products!!, itemContent = { item ->
                         JetProduct(
-                            title = items.title,
-                            image = items.image,
-                            price = items.price,
-                            rating = items.rating
+                            title = item.name,
+                            image = item.images[0].src,
+                            price = priceThousandsSeparator(item.price),
+                            rating = item.averageRating,
+                            ratingCount = item.ratingCount
                         )
                     })
                 }
@@ -219,12 +233,37 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     userScrollEnabled = true
                 ) {
-                    items(items = ProductFakeData.products, itemContent = { items ->
+                    items(items = newestState.products!!, itemContent = { item ->
                         JetProduct(
-                            title = items.title,
-                            image = items.image,
-                            price = items.price,
-                            rating = items.rating
+                            title = item.name,
+                            image = item.images[0].src,
+                            price = priceThousandsSeparator(item.price),
+                            rating = item.averageRating,
+                            ratingCount = item.ratingCount
+                        )
+                    })
+                }
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                // Newest Products
+                JetIconText(title = "برترین ها")
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    userScrollEnabled = true
+                ) {
+                    items(items = topRatedState.products!!, itemContent = { item ->
+                        JetProduct(
+                            title = item.name,
+                            image = item.images[0].src,
+                            price = priceThousandsSeparator(item.price),
+                            rating = item.averageRating,
+                            ratingCount = item.ratingCount
                         )
                     })
                 }
@@ -233,10 +272,13 @@ fun HomeScreen(
     }
 }
 
-@Composable
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
+@Composable
 fun PreviewHomeScreen() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        HomeScreen()
+        HomeScreen(
+
+        )
     }
 }

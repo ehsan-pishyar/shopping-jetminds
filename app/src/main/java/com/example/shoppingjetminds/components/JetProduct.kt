@@ -9,7 +9,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
@@ -24,9 +23,10 @@ import com.example.shoppingjetminds.ui.theme.*
 @Composable
 fun JetProduct(
     title: String = "باتری شارژی قلمی وارتا 2100 میلی آمپر",
-    image: Int? = R.drawable.varta_recharge_accu_power_aa_2100mah,
-    price: Int? = 120000,
-    rating: Double? = 4.5
+    image: String? = null,
+    price: String? = null,
+    rating: String? = "4.5",
+    ratingCount: Int = 0
 ) {
 
     Box {
@@ -48,13 +48,15 @@ fun JetProduct(
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ) {
-                            JetIconText(
-                                icon = R.drawable.star,
-                                iconSize = 14,
-                                title = "$rating",
-                                titleSize = 10,
-                            )
+                        if (ratingCount > 0) {
+                            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ) {
+                                JetIconText(
+                                    icon = R.drawable.star,
+                                    iconSize = 14,
+                                    title = rating!!,
+                                    titleSize = 10,
+                                )
+                            }
                         }
                     }
                     // Rating end
@@ -66,12 +68,9 @@ fun JetProduct(
                         verticalArrangement = Arrangement.Center,
                     ) {
                         // Feature image
-                        Image(
-                            modifier = Modifier
-                                .size(120.dp),
-                            painter = painterResource(id = image!!),
-                            contentDescription = null,
-                            contentScale = ContentScale.Fit
+                        JetCoilImage(
+                            imageUrl = image,
+                            modifier = Modifier.width(120.dp)
                         )
 
                         Spacer(modifier = Modifier.height(10.dp))
@@ -90,21 +89,23 @@ fun JetProduct(
 
                         // Price start
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            JetText(
-                                text = "$price",
-                                color = Primary,
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 12
-                            )
+                            if (price?.trim()?.isNotEmpty() == true) {
+                                JetText(
+                                    text = price,
+                                    color = Primary,
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 12
+                                )
 
-                            Spacer(modifier = Modifier.width(5.dp))
+                                Spacer(modifier = Modifier.width(5.dp))
 
-                            JetText(
-                                text = "تومان",
-                                color = Primary,
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 10
-                            )
+                                JetText(
+                                    text = "تومان",
+                                    color = Primary,
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 10
+                                )
+                            }
                         }
                         // Price end
 
@@ -118,7 +119,7 @@ fun JetProduct(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Start
                     ) {
-                        addProductItemButtons(
+                        AddProductItemButtons(
                             addToCart = {},
                             addToFavorites = {},
                             addToCompare = {}
@@ -134,9 +135,10 @@ fun JetProduct(
 @Composable
 fun JetProduct2(
     title: String = "باتری شارژی قلمی وارتا 2100 میلی آمپر دو تایی",
-    image: Int? = R.drawable.varta_recharge_accu_power_aa_2100mah,
-    price: Int? = 120000,
-    rating: Double? = 4.5
+    image: String? = null,
+    price: String? = "120000",
+    rating: String? = "4.5",
+    ratingCount: Int = 0
 ) {
     Box(modifier = Modifier
         .fillMaxWidth()
@@ -150,22 +152,23 @@ fun JetProduct2(
             shape = RoundedCornerShape(8.dp)
         ) {
             Row(modifier = Modifier.padding(15.dp)) {
-                Image(
-                    modifier = Modifier.height(130.dp),
-                    painter = painterResource(id = image!!),
-                    contentDescription = null
+                JetCoilImage(
+                    imageUrl = image,
+                    modifier = Modifier.width(130.dp)
                 )
 
                 Spacer(modifier = Modifier.width(10.dp))
 
                 Column {
-                    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ) {
-                        JetIconText(
-                            icon = R.drawable.star,
-                            iconSize = 14,
-                            title = "$rating",
-                            titleSize = 10,
-                        )
+                    if (ratingCount > 0) {
+                        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ) {
+                            JetIconText(
+                                icon = R.drawable.star,
+                                iconSize = 14,
+                                title = rating!!,
+                                titleSize = 10,
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.height(10.dp))
@@ -187,23 +190,26 @@ fun JetProduct2(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.End
                     ) {
-                        JetText(
-                            modifier = Modifier.wrapContentWidth(),
-                            text = "$price",
-                            color = Primary,
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 14
-                        )
 
-                        Spacer(modifier = Modifier.width(5.dp))
+                        if (price?.trim()?.isNotEmpty() == true) {
+                            JetText(
+                                modifier = Modifier.wrapContentWidth(),
+                                text = price,
+                                color = Primary,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 14
+                            )
 
-                        JetText(
-                            modifier = Modifier.wrapContentWidth(),
-                            text = "تومان",
-                            color = Primary,
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 12,
-                        )
+                            Spacer(modifier = Modifier.width(5.dp))
+
+                            JetText(
+                                modifier = Modifier.wrapContentWidth(),
+                                text = "تومان",
+                                color = Primary,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 12,
+                            )
+                        }
                     }
                     // Price end
 
@@ -214,7 +220,7 @@ fun JetProduct2(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Start
                     ) {
-                        addProductItemButtons(
+                        AddProductItemButtons(
                             addToCart = {},
                             addToFavorites = {},
                             addToCompare = {}
@@ -229,10 +235,12 @@ fun JetProduct2(
 @Composable
 fun JetOnSaleProduct(
     title: String = "باتری شارژی قلمی وارتا 2100 میلی آمپر",
-    image: Int? = R.drawable.varta_recharge_accu_power_aa_2100mah,
-    regularPrice: Int? = 120000,
-    salePrice: Int? = 99000,
-    rating: Double? = 4.5
+    image: String? = null,
+    regularPrice: String? = "120000",
+    salePrice: String? = "99000",
+    rating: String? = "4.5",
+    ratingCount: Int = 0,
+    countDownTimer: List<Int> = listOf<Int>()
 ) {
     Box {
         Column {
@@ -246,27 +254,32 @@ fun JetOnSaleProduct(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    // Rating start
                     Row(
                         modifier = Modifier
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.End,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .wrapContentHeight(),
-                            horizontalAlignment = Alignment.Start,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            JetIconText(
-                                icon = R.drawable.star,
-                                iconSize = 14,
-                                title = "$rating",
-                                titleSize = 10,
-                            )
+
+                        // Rating start
+                        if (ratingCount > 0) {
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .wrapContentHeight(),
+                                horizontalAlignment = Alignment.Start,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                JetIconText(
+                                    icon = R.drawable.star,
+                                    iconSize = 14,
+                                    title = rating!!,
+                                    titleSize = 10,
+                                )
+                            }
                         }
+                        // Rating end
+
                         Column(
                             modifier = Modifier
                                 .weight(1f)
@@ -278,7 +291,6 @@ fun JetOnSaleProduct(
                             )
                         }
                     }
-                    // Rating end
 
                     Column(
                         modifier = Modifier
@@ -287,12 +299,9 @@ fun JetOnSaleProduct(
                         verticalArrangement = Arrangement.Center,
                     ) {
                         // Feature image
-                        Image(
-                            modifier = Modifier
-                                .size(100.dp),
-                            painter = painterResource(id = image!!),
-                            contentDescription = null,
-                            contentScale = ContentScale.Fit
+                        JetCoilImage(
+                            imageUrl = image,
+                            modifier = Modifier.width(100.dp)
                         )
 
                         Spacer(modifier = Modifier.height(10.dp))
@@ -312,56 +321,59 @@ fun JetOnSaleProduct(
                         // Price start
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             // Regular Price
-                            Row(
-                                modifier = Modifier.weight(1f),
-                                horizontalArrangement = Arrangement.Start,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                JetText(
-                                    text = "$regularPrice",
-                                    color = LighterBlack,
-                                    fontWeight = FontWeight.Normal,
-                                    fontSize = 10,
-                                    maxLines = 1,
-                                    lineHeight = 1.0
-                                )
+                            if (salePrice?.trim()?.isNotEmpty() == true) {
+                                Row(
+                                    modifier = Modifier.weight(1f),
+                                    horizontalArrangement = Arrangement.Start,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
 
-                                Spacer(modifier = Modifier.width(5.dp))
+                                    JetText(
+                                        text = regularPrice!!,
+                                        color = LighterBlack,
+                                        fontWeight = FontWeight.Normal,
+                                        fontSize = 10,
+                                        maxLines = 1,
+                                        lineHeight = 1.0
+                                    )
 
-                                JetText(
-                                    text = "تومان",
-                                    color = LighterBlack,
-                                    fontWeight = FontWeight.Normal,
-                                    fontSize = 8,
-                                    maxLines = 1,
-                                    lineHeight = 1.0
-                                )
-                            }
-                            // Featured Price
-                            Row(
-                                modifier = Modifier.weight(1f),
-                                horizontalArrangement = Arrangement.End,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                JetText(
-                                    text = "$salePrice",
-                                    color = Primary,
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize = 12,
-                                    maxLines = 1,
-                                    lineHeight = 1.0
-                                )
+                                    Spacer(modifier = Modifier.width(5.dp))
 
-                                Spacer(modifier = Modifier.width(5.dp))
+                                    JetText(
+                                        text = "تومان",
+                                        color = LighterBlack,
+                                        fontWeight = FontWeight.Normal,
+                                        fontSize = 8,
+                                        maxLines = 1,
+                                        lineHeight = 1.0
+                                    )
+                                }
+                                // Featured Price
+                                Row(
+                                    modifier = Modifier.weight(1f),
+                                    horizontalArrangement = Arrangement.End,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    JetText(
+                                        text = salePrice,
+                                        color = Primary,
+                                        fontWeight = FontWeight.SemiBold,
+                                        fontSize = 12,
+                                        maxLines = 1,
+                                        lineHeight = 1.0
+                                    )
 
-                                JetText(
-                                    text = "تومان",
-                                    color = Primary,
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize = 10,
-                                    maxLines = 1,
-                                    lineHeight = 1.0
-                                )
+                                    Spacer(modifier = Modifier.width(5.dp))
+
+                                    JetText(
+                                        text = "تومان",
+                                        color = Primary,
+                                        fontWeight = FontWeight.SemiBold,
+                                        fontSize = 10,
+                                        maxLines = 1,
+                                        lineHeight = 1.0
+                                    )
+                                }
                             }
                         }
                         // Price end
@@ -375,7 +387,7 @@ fun JetOnSaleProduct(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        addProductItemButtons(
+                        AddProductItemButtons(
                             addToCart = {},
                             addToFavorites = {},
                             addToCompare = {}
@@ -390,11 +402,11 @@ fun JetOnSaleProduct(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        addOnSaleProductTimers(
-                            days = 258,
-                            hours = 11,
-                            minutes = 57,
-                            seconds = 31
+                        AddOnSaleProductTimers(
+                            days = countDownTimer[3],
+                            hours = countDownTimer[2],
+                            minutes = countDownTimer[1],
+                            seconds = countDownTimer[0]
                         )
                     }
                 }
@@ -405,7 +417,7 @@ fun JetOnSaleProduct(
 
 
 @Composable
-fun addProductItemButtons(
+fun AddProductItemButtons(
     addToCart: () -> Unit,
     addToFavorites: () -> Unit,
     addToCompare: () -> Unit
@@ -500,7 +512,7 @@ fun addProductItemButtons(
 }
 
 @Composable
-fun addOnSaleProductTimers(
+fun AddOnSaleProductTimers(
     days: Int? = null,
     hours: Int? = null,
     minutes: Int? = null,

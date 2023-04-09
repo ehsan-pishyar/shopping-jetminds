@@ -193,7 +193,7 @@ object RepositoryModule {
     @Provides
     fun providesGetOnSalesProductsForHomeUseCase(
         productsRepository: ProductsRepository
-    ): GetPopularProductsForHomeUseCase = GetPopularProductsForHomeUseCase(productsRepository)
+    ): GetOnSaleProductsForHomeUseCase = GetOnSaleProductsForHomeUseCase(productsRepository)
 
     @Provides
     fun providesGetPopularProductsForHomeUseCase(

@@ -4,11 +4,17 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import java.time.Duration
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 // Takes beginning and ending date times and converts to separate integers(days, hours, minutes, seconds)
 @RequiresApi(Build.VERSION_CODES.O)
-fun onSaleCountDown(beginningDateTime: LocalDateTime, finishingDateTime: LocalDateTime): List<Int> {
-    val duration: Duration = Duration.between(beginningDateTime, finishingDateTime)
+fun onSaleCountDown(beginningDateTime: String?, finishingDateTime: String?): List<Int> {
+
+    val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+    val beginningTime = LocalDateTime.parse(beginningDateTime, formatter)
+    val finishingTime = LocalDateTime.parse(finishingDateTime, formatter)
+
+    val duration: Duration = Duration.between(beginningTime, finishingTime)
     val seconds = duration.seconds
     val days = (seconds / 86400).toInt()
     val hours = ((seconds % 86400) / 3600).toInt()
