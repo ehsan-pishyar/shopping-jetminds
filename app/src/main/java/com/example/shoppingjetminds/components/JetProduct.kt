@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.example.shoppingjetminds.R
 import com.example.shoppingjetminds.ui.theme.*
+import com.example.shoppingjetminds.utils.priceThousandsSeparator
 
 @Composable
 fun JetProduct(
@@ -106,6 +107,115 @@ fun JetProduct(
                                     fontSize = 10
                                 )
                             }
+                        }
+                        // Price end
+
+                    }
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    // Buttons
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        AddProductItemButtons(
+                            addToCart = {},
+                            addToFavorites = {},
+                            addToCompare = {}
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun JetProduct3(
+    title: String = "باتری شارژی قلمی وارتا 2100 میلی آمپر",
+    image: Int? = null,
+    price: Int? = null,
+    rating: Double? = 4.5,
+    ratingCount: Int = 0
+) {
+
+    Box {
+        Column {
+            Card(
+                modifier = Modifier
+                    .width(175.dp),
+                shape = RoundedCornerShape(8.dp),
+                elevation = 0.dp
+            ) {
+                Column(
+                    modifier = Modifier.padding(10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    // Rating start
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ) {
+                            JetIconText(
+                                icon = R.drawable.star,
+                                iconSize = 14,
+                                title = "$rating",
+                                titleSize = 10,
+                            )
+                        }
+                    }
+                    // Rating end
+
+                    Column(
+                        modifier = Modifier
+                            .padding(top = 5.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        // Feature image
+                        Image(
+                            painter = painterResource(id = image!!),
+                            contentDescription = null,
+                            modifier = Modifier.width(120.dp)
+                        )
+
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        // Title
+                        JetText(
+                            text = title,
+                            fontSize = 11,
+                            fontWeight = FontWeight.SemiBold,
+                            maxLines = 2,
+                            textAlign = TextAlign.Center,
+                            lineHeight = 1.5
+                        )
+
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        // Price start
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            JetText(
+                                text = priceThousandsSeparator("$price"),
+                                color = Primary,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 12
+                            )
+
+                            Spacer(modifier = Modifier.width(5.dp))
+
+                            JetText(
+                                text = "تومان",
+                                color = Primary,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 10
+                            )
                         }
                         // Price end
 
@@ -425,7 +535,7 @@ fun AddProductItemButtons(
     // Add to cart start
     Box(
         modifier = Modifier
-            .size(width = 90.dp, height = 30.dp)
+            .size(35.dp)
             .background(color = Primary, shape = RoundedCornerShape(5.dp))
             .clickable { addToCart() },
     ) {
@@ -435,27 +545,12 @@ fun AddProductItemButtons(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    modifier = Modifier.size(15.dp),
-                    painter = painterResource(id = R.drawable.cart),
-                    contentDescription = "",
-                    tint = Color.White
-                )
-
-                Spacer(modifier = Modifier.width(5.dp))
-
-                JetText(
-                    text = "افزودن به سبد",
-                    fontSize = 9,
-                    fontWeight = FontWeight.Normal,
-                    textAlign = TextAlign.Start,
-                    color = Color.White,
-                    maxLines = 1,
-                    lineHeight = 0.0
-                )
-            }
-
+            Icon(
+                modifier = Modifier.size(15.dp),
+                painter = painterResource(id = R.drawable.cart),
+                contentDescription = "",
+                tint = Color.White
+            )
         }
     }
     // Add to cart end
@@ -465,7 +560,7 @@ fun AddProductItemButtons(
     // Favorite start
     Box(
         modifier = Modifier
-            .size(30.dp)
+            .size(35.dp)
             .background(LighterGray, shape = RoundedCornerShape(5.dp))
             .clickable { addToFavorites() },
     ) {
@@ -490,7 +585,7 @@ fun AddProductItemButtons(
     // Compare start
     Box(
         modifier = Modifier
-            .size(30.dp)
+            .size(35.dp)
             .background(LighterGray, shape = RoundedCornerShape(5.dp))
             .clickable { addToCompare() },
     ) {

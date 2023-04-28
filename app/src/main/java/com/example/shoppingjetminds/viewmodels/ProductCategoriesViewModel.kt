@@ -1,69 +1,55 @@
 package com.example.shoppingjetminds.viewmodels
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.models.ProductCategoriesResponse
-import com.example.domain.use_cases.product_categories.GetProductCategoriesUseCase
-import com.example.domain.use_cases.product_categories.GetProductCategoryDetailsUseCase
-import com.example.domain.utils.ServiceResult
+import com.example.domain.repositories.ProductCategoriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.example.domain.utils.asResult
+import kotlinx.coroutines.flow.*
+import com.example.domain.utils.Result
 
 @HiltViewModel
 class ProductCategoriesViewModel @Inject constructor(
-    private val getProductCategoriesUseCase: GetProductCategoriesUseCase,
-    private val getProductCategoryDetailsUseCase: GetProductCategoryDetailsUseCase
+    private val productCategoriesRepository: ProductCategoriesRepository
 ): ViewModel() {
 
-    var categoriesState by mutableStateOf(ProductCategoriesUiState())
-    var categoryState by mutableStateOf(ProductCategoryUiState())
+    private val _state = MutableStateFlow(HomeCategoriesUIState(CategoriesUiState.Loading))
+    val state = _state.asStateFlow()
 
-    init {
-        getCategories()
-    }
-
-    private fun getCategories() {
+    fun getCategories() {
         viewModelScope.launch {
-            categoriesState = categoriesState.copy(loading = true)
-            getProductCategoriesUseCase.invoke().collect { categories ->
-                when(categories) {
-                    is ServiceResult.Success -> {
-                        categoriesState = categoriesState.copy(
-                            loading = false,
-                            success = true,
-                            error = null,
-                            categories = categories.data
-                        )
+            productCategoriesRepository.getProductCategories().asResult()
+                .collect { result ->
+                    val categoriesUiState = when (result) {
+                        is Result.Success -> {
+                            println("ViewModel: Success")
+                            CategoriesUiState.Success(result.data)
+                        }
+                        is Result.Loading -> {
+                            println("ViewModel: Loading")
+                            CategoriesUiState.Loading
+                        }
+                        is Result.Error -> {
+                            println("ViewModel: Error")
+                            CategoriesUiState.Error
+                        }
                     }
-                    is ServiceResult.Error -> {
-                        categoriesState = categoriesState.copy(
-                            loading = false,
-                            success = false,
-                            error = categories.error,
-                            categories = null
-                        )
-                    }
-                    else -> Unit
+
+                    _state.value = HomeCategoriesUIState(categoriesUiState)
                 }
-            }
         }
     }
 }
 
-data class ProductCategoriesUiState(
-    val loading: Boolean = true,
-    val success: Boolean = false,
-    val error: String? = "",
-    val categories: List<ProductCategoriesResponse>? = emptyList()
-)
+sealed interface CategoriesUiState {
+    data class Success(val categories: List<ProductCategoriesResponse>) : CategoriesUiState
+    object Error : CategoriesUiState
+    object Loading : CategoriesUiState
+}
 
-data class ProductCategoryUiState(
-    val loading: Boolean = true,
-    val success: Boolean = false,
-    val error: String? = "",
-    val category: ProductCategoriesResponse? = null
+data class HomeCategoriesUIState(
+    val categories: CategoriesUiState
 )

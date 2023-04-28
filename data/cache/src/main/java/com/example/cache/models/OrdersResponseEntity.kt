@@ -8,69 +8,69 @@ import com.example.cache.utils.CacheConstants
 @Entity(tableName = CacheConstants.ORDERS_TABLE)
 data class OrdersResponseEntity(
     @PrimaryKey(autoGenerate = false)
-    val id: Int,
+    val id: Int? = null,
     @ColumnInfo(name = "parent_id")
-    val parentId: Int,
-    val status: String,
-    val currency: String,
+    val parentId: Int? = null,
+    val status: String? = null,
+    val currency: String? = null,
     @ColumnInfo(name = "prices_include_tax")
-    val pricesIncludeTax: Boolean,
+    val pricesIncludeTax: Boolean? = null,
     @ColumnInfo(name = "date_created")
-    val dateCreated: String,
+    val dateCreated: String? = null,
     @ColumnInfo(name = "date_modified")
-    val dateModified: String,
+    val dateModified: String? = null,
     @ColumnInfo(name = "discount_total")
-    val discountTotal: String,
+    val discountTotal: String? = null,
     @ColumnInfo(name = "discount_tax")
-    val discountTax: String,
+    val discountTax: String? = null,
     @ColumnInfo(name = "shipping_total")
-    val shippingTotal: String,
+    val shippingTotal: String? = null,
     @ColumnInfo(name = "shipping_tax")
-    val shippingTax: String,
+    val shippingTax: String? = null,
     @ColumnInfo(name = "cart_tax")
-    val cartTax: String,
-    val total: String,
+    val cartTax: String? = null,
+    val total: String? = null,
     @ColumnInfo(name = "total_tax")
-    val totalTax: String,
+    val totalTax: String? = null,
     @ColumnInfo(name = "customer_id")
-    val customerId: Int,
+    val customerId: Int? = null,
     @ColumnInfo(name = "order_key")
-    val orderKey: String,
-    val billing: BillingEntity,
-    val shipping: ShippingEntity,
+    val orderKey: String? = null,
+    val billing: BillingEntity? = null,
+    val shipping: ShippingEntity? = null,
     @ColumnInfo(name = "payment_method")
-    val paymentMethod: String,
+    val paymentMethod: String? = null,
     @ColumnInfo(name = "payment_method_title")
-    val paymentMethodTitle: String,
+    val paymentMethodTitle: String? = null,
     @ColumnInfo(name = "transaction_id")
-    val transactionId: String,
+    val transactionId: String? = null,
     @ColumnInfo(name = "customer_ip_address")
-    val customerIpAddress: String,
+    val customerIpAddress: String? = null,
     @ColumnInfo(name = "customer_note")
-    val customerNote: String,
+    val customerNote: String? = null,
     @ColumnInfo(name = "date_completed")
-    val dateCompleted: String,
+    val dateCompleted: String? = null,
     @ColumnInfo(name = "date_paid")
-    val datePaid: String,
+    val datePaid: String? = null,
     @ColumnInfo(name = "cart_hash")
-    val cartHash: String,
-    val number: String,
+    val cartHash: String? = null,
+    val number: String? = null,
     @ColumnInfo(name = "line_items")
-    val lineItems: List<LineItemEntity>,
+    val lineItems: List<LineItemEntity>? = null,
     @ColumnInfo(name = "tax_lines")
-    val taxLines: List<TaxLineEntity>,
+    val taxLines: List<TaxLineEntity>? = null,
     @ColumnInfo(name = "shipping_lines")
-    val shippingLines: List<ShippingLineEntity>,
+    val shippingLines: List<ShippingLineEntity>? = null,
     @ColumnInfo(name = "payment_url")
-    val paymentUrl: String,
+    val paymentUrl: String? = null,
     @ColumnInfo(name = "date_created_gmt")
-    val dateCreatedGmt: String,
+    val dateCreatedGmt: String? = null,
     @ColumnInfo(name = "date_modified_gmt")
-    val dateModifiedGmt: String,
+    val dateModifiedGmt: String? = null,
     @ColumnInfo(name = "date_completed_gmt")
-    val dateCompletedGmt: String,
+    val dateCompletedGmt: String? = null,
     @ColumnInfo(name = "date_paid_gmt")
-    val datePaidGmt: String,
+    val datePaidGmt: String? = null,
     @ColumnInfo(name = "currency_symbol")
-    val currencySymbol: String
+    val currencySymbol: String? = null
 )

@@ -1,16 +1,16 @@
 package com.example.domain.models
 
 data class CustomersResponse(
-    val id: Int,
-    val dateCreated: String,
-    val dateCreatedGmt: String,
-    val email: String,
-    val firstName: String,
-    val lastName: String,
-    val role: String,
-    val username: String,
-    val billing: Billing,
-    val shipping: Shipping,
-    val isPayingCustomer: Boolean,
-    val avatarUrl: String
+    val id: Int? = null,
+    val dateCreated: String? = null,
+    val dateCreatedGmt: String? = null,
+    val email: String? = null,
+    val firstName: String? = null,
+    val lastName: String? = null,
+    val role: String? = null,
+    val username: String? = null,
+    val billing: Billing? = null,
+    val shipping: Shipping? = null,
+    val isPayingCustomer: Boolean? = null,
+    val avatarUrl: String? = null
 )

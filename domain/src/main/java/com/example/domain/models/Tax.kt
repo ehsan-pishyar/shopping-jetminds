@@ -1,7 +1,7 @@
 package com.example.domain.models
 
 data class Tax(
-    val id: Int,
-    val subtotal: String,
-    val total: String
+    val id: Int? = null,
+    val subtotal: String? = null,
+    val total: String? = null
 )

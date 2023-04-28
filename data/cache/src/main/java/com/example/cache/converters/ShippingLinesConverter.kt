@@ -1,24 +1,39 @@
 package com.example.cache.converters
 
 import androidx.room.TypeConverter
-import com.example.cache.models.LineItemEntity
-import com.example.cache.models.ShippingEntity
 import com.example.cache.models.ShippingLineEntity
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 
 class ShippingLinesConverter {
 
+    private val moshi = Moshi.Builder().build()
+
     @TypeConverter
-    fun fromShippingLines(shippingLines: List<ShippingLineEntity>?): String? {
-        if (shippingLines == null) return null
-        return Json.encodeToString(shippingLines)
+    fun toJsonList(shippingLinesEntity: List<ShippingLineEntity>?): String? {
+        return shippingLinesEntity?.let {
+            val type = Types.newParameterizedType(List::class.java, ShippingLineEntity::class.java)
+            moshi.adapter<List<ShippingLineEntity>>(type).toJson(it)
+        }
     }
 
     @TypeConverter
-    fun toShippingLine(shippingLinesString: String?): List<ShippingLineEntity>? {
-        if (shippingLinesString == null) return null
-        return Json.decodeFromString(shippingLinesString)
+    fun fromJsonList(value: String?): List<ShippingLineEntity>? {
+        return value?.let {
+            val type = Types.newParameterizedType(List::class.java, ShippingLineEntity::class.java)
+            moshi.adapter<List<ShippingLineEntity>>(type).fromJson(it)
+        }
     }
+
+//    @TypeConverter
+//    fun fromShippingLines(shippingLines: List<ShippingLineEntity>?): String? {
+//        if (shippingLines == null) return null
+//        return Json.encodeToString(shippingLines)
+//    }
+//
+//    @TypeConverter
+//    fun toShippingLine(shippingLinesString: String?): List<ShippingLineEntity>? {
+//        if (shippingLinesString == null) return null
+//        return Json.decodeFromString(shippingLinesString)
+//    }
 }

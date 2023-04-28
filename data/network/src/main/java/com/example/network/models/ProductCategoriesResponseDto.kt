@@ -1,18 +1,16 @@
 package com.example.network.models
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.squareup.moshi.Json
 
-@Serializable
 data class ProductCategoriesResponseDto(
-    val id: Int,
-    val name: String,
-    val slug: String,
-    val parent: Int,
-    val description: String,
-    val display: String,
-    val image: ImageDto,
-    @SerialName("menu_order")
-    val menuOrder: Int,
-    val count: Int,
+    val id: Int? = null,
+    val name: String? = null,
+    val slug: String? = null,
+    val parent: Int? = null,
+    val description: String? = null,
+    val display: String? = null,
+    val image: ImageDto? = null,
+    @Json(name = "menu_order")
+    val menuOrder: Int? = null,
+    val count: Int? = null,
 )

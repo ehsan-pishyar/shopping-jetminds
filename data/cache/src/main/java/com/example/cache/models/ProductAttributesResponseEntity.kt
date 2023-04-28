@@ -8,12 +8,12 @@ import com.example.cache.utils.CacheConstants
 @Entity(tableName = CacheConstants.PRODUCT_ATTRS_TABLE)
 data class ProductAttributesResponseEntity(
     @PrimaryKey
-    val id: Int,
-    val name: String,
-    val slug: String,
-    val type: String,
+    val id: Int? = null,
+    val name: String? = null,
+    val slug: String? = null,
+    val type: String? = null,
     @ColumnInfo(name = "order_by")
-    val orderBy: String,
+    val orderBy: String? = null,
     @ColumnInfo(name = "has_archives")
-    val hasArchives: Boolean
+    val hasArchives: Boolean? = null
 )

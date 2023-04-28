@@ -1,5 +1,7 @@
 package com.example.shoppingjetminds.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -11,6 +13,7 @@ import com.example.shoppingjetminds.views.auth.*
 import com.example.shoppingjetminds.views.main.*
 import com.example.shoppingjetminds.views.start.*
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavigation(navHostController: NavHostController) {
     NavHost(
@@ -60,13 +63,14 @@ fun NavGraphBuilder.addAuthTopLevel(navController: NavController) {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.addMainTopLevel(navController: NavController) {
     navigation(
         route = Graph.MAIN,
         startDestination = MainScreens.Home.route
     ) {
         composable(route = MainScreens.Home.route) {
-            HomeScreen()
+            HomeScreen(navController = navController)
         }
         composable(route = MainScreens.Shop.route) {
             ShopScreen()

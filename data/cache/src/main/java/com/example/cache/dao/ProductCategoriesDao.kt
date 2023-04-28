@@ -1,26 +1,30 @@
 package com.example.cache.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.cache.models.ProductCategoriesResponseEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductCategoriesDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertProductCategoriesToDb(categories: List<ProductCategoriesResponseEntity>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertOrIgnoreCategories(categories: List<ProductCategoriesResponseEntity>): List<Long>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertProductCategoryDetails(categoryDetails: ProductCategoriesResponseEntity)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertProductCategoryDetails(categoryDetails: ProductCategoriesResponseEntity?)
 
     @Query("SELECT * FROM `product_categories_table`")
-    suspend fun fetchProductCategories(): List<ProductCategoriesResponseEntity>
+    fun fetchProductCategories(): Flow<List<ProductCategoriesResponseEntity>>
 
     @Query("SELECT * FROM `product_categories_table` WHERE id = :categoryId")
-    suspend fun fetchProductCategoryDetails(categoryId: Int): ProductCategoriesResponseEntity
+    fun fetchProductCategoryDetails(categoryId: Int): Flow<ProductCategoriesResponseEntity>
 
-    @Query("SELECT COUNT(*) FROM `product_categories_table`")
-    suspend fun isProductCategoryCacheAvailable(): Int
+    @Query("DELETE FROM `product_categories_table`")
+    suspend fun deleteCategories()
+
+    @Transaction
+    suspend fun deleteAndInsertCategories(categories: List<ProductCategoriesResponseEntity>) {
+        deleteCategories()
+        insertOrIgnoreCategories(categories)
+    }
 }

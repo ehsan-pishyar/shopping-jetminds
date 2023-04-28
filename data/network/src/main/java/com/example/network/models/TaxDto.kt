@@ -1,10 +1,7 @@
 package com.example.network.models
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class TaxDto(
-    val id: Int,
-    val subtotal: String,
-    val total: String
+    val id: Int? = null,
+    val subtotal: String? = null,
+    val total: String? = null
 )

@@ -17,52 +17,11 @@ class CouponsRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
     private val couponsDao: CouponsDao
 ): CouponsRepository{
-
-    override fun getCoupons(): Flow<ServiceResult<List<CouponsResponse>>> = flow {
-        emit(ServiceResult.Loading())
-
-        if (couponsDao.isCouponsCacheAvailable() > 0) {
-            emit(ServiceResult.Success(data = couponsDao.fetchCoupons().map { it.toDomain() }))
-        }
-
-        val response = try {
-            apiService.getCoupons()
-        } catch (e: IOException) {
-            e.printStackTrace()
-            emit(ServiceResult.Error(data = null, error = e.message))
-        } catch (e: Exception) {
-            e.printStackTrace()
-            emit(ServiceResult.Error(data = null, error = e.message))
-        } as CouponsResponseDto
-
-        response.let { coupons ->
-            couponsDao.insertCoupons(listOf(coupons.toEntity()))
-            emit(ServiceResult.Success(couponsDao.fetchCoupons().map { it.toDomain() }))
-        }
-
-        emit(ServiceResult.Loading(isLoading = false))
+    override fun getCoupons(): Flow<ServiceResult<List<CouponsResponse>>> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun getCouponDetails(couponId: Int): ServiceResult<CouponsResponse> {
-        val couponsEntity = couponsDao.fetchCouponDetails(couponId)
-
-        if (couponsDao.isCouponsCacheAvailable() > 0) {
-            return ServiceResult.Success(data = couponsEntity.toDomain())
-        }
-
-        val response = try {
-            apiService.getCouponDetails(couponId)
-        } catch (e: IOException) {
-            e.printStackTrace()
-            return ServiceResult.Error(data = null, error = e.message)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return ServiceResult.Error(data = null, error = e.message)
-        } as CouponsResponseDto
-
-        response.let {
-            couponsDao.insertCouponDetails(it.toEntity())
-            return ServiceResult.Success(couponsDao.fetchCouponDetails(couponId).toDomain())
-        }
+        TODO("Not yet implemented")
     }
 }

@@ -17,25 +17,6 @@ class ShippingZonesRepositoryImpl @Inject constructor(
 ): ShippingZonesRepository {
 
     override suspend fun getShippingZones(): ServiceResult<List<ShippingZonesResponse>> {
-        val zonesEntity = shippingZonesDao.fetchShippingZones()
-
-        if (shippingZonesDao.isShippingZonesCacheAvailable() > 0) {
-            return ServiceResult.Success(data = zonesEntity.map { it.toDomain() })
-        }
-
-        val response = try {
-            apiService.getShippingZones()
-        } catch (e: IOException) {
-            e.printStackTrace()
-            return ServiceResult.Error(data = null, error = e.message)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return ServiceResult.Error(data = null, error = e.message)
-        } as ShippingZonesResponseDto
-
-        response.let { zones ->
-            shippingZonesDao.insertShippingZones(listOf(zones.toEntity()))
-            return ServiceResult.Success(shippingZonesDao.fetchShippingZones().map { it.toDomain() })
-        }
+        TODO("Not yet implemented")
     }
 }

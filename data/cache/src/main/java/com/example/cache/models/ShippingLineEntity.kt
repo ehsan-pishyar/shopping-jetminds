@@ -1,10 +1,10 @@
 package com.example.cache.models
 
 data class ShippingLineEntity(
-    val id: Int,
-    val methodId: String,
-    val methodTitle: String,
-    val taxes: List<TaxEntity>,
-    val total: String,
-    val totalTax: String
+    val id: Int? = null,
+    val methodId: String? = null,
+    val methodTitle: String? = null,
+    val taxes: List<TaxEntity>? = null,
+    val total: String? = null,
+    val totalTax: String? = null
 )

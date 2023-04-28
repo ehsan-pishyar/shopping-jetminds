@@ -1,19 +1,17 @@
 package com.example.network.models
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.squareup.moshi.Json
 
-@Serializable
 data class TaxLineDto(
-    val id: Int,
-    val label: String,
-    val compound: Boolean,
-    @SerialName("rate_code")
-    val rateCode: String,
-    @SerialName("rate_id")
-    val rateId: Int,
-    @SerialName("shipping_tax_total")
-    val shippingTaxTotal: String,
-    @SerialName("tax_total")
-    val taxTotal: String
+    val id: Int? = null,
+    val label: String? = null,
+    val compound: Boolean? = null,
+    @Json(name = "rate_code")
+    val rateCode: String? = null,
+    @Json(name = "rate_id")
+    val rateId: Int? = null,
+    @Json(name = "shipping_tax_total")
+    val shippingTaxTotal: String? = null,
+    @Json(name = "tax_total")
+    val taxTotal: String? = null
 )

@@ -1,24 +1,39 @@
 package com.example.cache.converters
 
 import androidx.room.TypeConverter
-import com.example.cache.models.ShippingEntity
-import com.example.cache.models.ShippingLineEntity
 import com.example.cache.models.TaxLineEntity
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 
 class TaxLinesConverter {
 
+    private val moshi = Moshi.Builder().build()
+
     @TypeConverter
-    fun fromTaxLines(taxLines: List<TaxLineEntity>?): String? {
-        if (taxLines == null) return null
-        return Json.encodeToString(taxLines)
+    fun toJsonList(taxLinesEntity: List<TaxLineEntity>?): String? {
+        return taxLinesEntity?.let {
+            val type = Types.newParameterizedType(List::class.java, TaxLineEntity::class.java)
+            moshi.adapter<List<TaxLineEntity>>(type).toJson(it)
+        }
     }
 
     @TypeConverter
-    fun toTaxLines(taxLinesString: String?): List<TaxLineEntity>? {
-        if (taxLinesString == null) return null
-        return Json.decodeFromString(taxLinesString)
+    fun fromJsonList(value: String?): List<TaxLineEntity>? {
+        return value?.let {
+            val type = Types.newParameterizedType(List::class.java, TaxLineEntity::class.java)
+            moshi.adapter<List<TaxLineEntity>>(type).fromJson(it)
+        }
     }
+
+//    @TypeConverter
+//    fun fromTaxLines(taxLines: List<TaxLineEntity>?): String? {
+//        if (taxLines == null) return null
+//        return Json.encodeToString(taxLines)
+//    }
+//
+//    @TypeConverter
+//    fun toTaxLines(taxLinesString: String?): List<TaxLineEntity>? {
+//        if (taxLinesString == null) return null
+//        return Json.decodeFromString(taxLinesString)
+//    }
 }

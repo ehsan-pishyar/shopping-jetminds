@@ -8,45 +8,45 @@ import com.example.cache.utils.CacheConstants
 @Entity(tableName = CacheConstants.COUPONS_TABLE)
 data class CouponsResponseEntity(
     @PrimaryKey(autoGenerate = false)
-    val id: Int,
-    val code: String,
-    val amount: String,
-    val status: String,
+    val id: Int? = null,
+    val code: String? = null,
+    val amount: String? = null,
+    val status: String? = null,
     @ColumnInfo(name = "date_created")
-    val dateCreated: String,
+    val dateCreated: String? = null,
     @ColumnInfo(name = "date_created_gmt")
-    val dateCreatedGmt: String,
+    val dateCreatedGmt: String? = null,
     @ColumnInfo(name = "discount_type")
-    val discountType: String,
-    val description: String,
+    val discountType: String? = null,
+    val description: String? = null,
     @ColumnInfo(name = "date_expires")
-    val dateExpires: String,
+    val dateExpires: String? = null,
     @ColumnInfo(name = "date_expires_gmt")
-    val dateExpiresGmt: String,
+    val dateExpiresGmt: String? = null,
     @ColumnInfo(name = "usage_count")
-    val usageCount: Int,
+    val usageCount: Int? = null,
     @ColumnInfo(name = "individual_use")
-    val individualUse: Boolean,
+    val individualUse: Boolean? = null,
     @ColumnInfo(name = "product_ids")
-    val productIds: List<Int>,
+    val productIds: List<Int>? = null,
     @ColumnInfo(name = "excluded_product_ids")
-    val excludedProductIds: List<Int>,
+    val excludedProductIds: List<Int>? = null,
     @ColumnInfo(name = "usage_limit")
-    val usageLimit: Int,
+    val usageLimit: Int? = null,
     @ColumnInfo(name = "usage_limit_per_user")
-    val usageLimitPerUser: Int,
+    val usageLimitPerUser: Int? = null,
     @ColumnInfo(name = "limit_usage_to_x_items")
-    val limitUsageToXItems: Int,
+    val limitUsageToXItems: Int? = null,
     @ColumnInfo(name = "free_shipping")
-    val freeShipping: Boolean,
+    val freeShipping: Boolean? = null,
     @ColumnInfo(name = "product_categories")
-    val productCategories: List<CategoryEntity>,
+    val productCategories: List<CategoryEntity>? = null,
     @ColumnInfo(name = "exclude_sale_items")
-    val excludeSaleItems: Boolean,
+    val excludeSaleItems: Boolean? = null,
     @ColumnInfo(name = "maximum_amount")
-    val maximumAmount: String,
+    val maximumAmount: String? = null,
     @ColumnInfo(name = "minimum_amount")
-    val minimumAmount: String,
+    val minimumAmount: String? = null,
     @ColumnInfo(name = "email_restrictions")
-    val emailRestrictions: List<String>
+    val emailRestrictions: List<String>? = null
 )

@@ -39,7 +39,6 @@ import com.example.cache.utils.CacheConstants
     ProductVariationsConverter::class,
     ShippingZonesConverter::class,
     CategoriesConverter::class,
-    PrimitiveTypesConverter::class,
     BillingsConverter::class,
     ShippingsConverter::class,
     LineItemsConverter::class,
@@ -48,7 +47,9 @@ import com.example.cache.utils.CacheConstants
     ImagesConverter::class,
     TagsConverter::class,
     AttributesConverter::class,
-    DefaultAttributesConverter::class
+    DefaultAttributesConverter::class,
+    IntegerListConverter::class,
+    StringListConverter::class
 )
 abstract class AppDatabase: RoomDatabase() {
 

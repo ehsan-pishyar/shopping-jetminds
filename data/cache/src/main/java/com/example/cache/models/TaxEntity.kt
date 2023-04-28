@@ -1,7 +1,7 @@
 package com.example.cache.models
 
 data class TaxEntity(
-    val id: Int,
-    val subtotal: String,
-    val total: String
+    val id: Int? = null,
+    val subtotal: String? = null,
+    val total: String? = null
 )

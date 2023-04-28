@@ -1,7 +1,7 @@
 package com.example.cache.models
 
 data class DefaultAttributeEntity(
-    val id: Int,
-    val name: String,
-    val option: String
+    val id: Int? = null,
+    val name: String? = null,
+    val option: String? = null
 )

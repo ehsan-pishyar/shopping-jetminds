@@ -2,7 +2,6 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'kotlinx-serialization'
     id 'dagger.hilt.android.plugin'
 }
 
@@ -37,25 +36,31 @@ dependencies {
 
     implementation "androidx.core:core-ktx:$androidCore_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1'
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation("com.squareup.moshi:moshi-kotlin:1.13.0")
+    //implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1'
     // Retrofit kotlin-serialization-converter
     // It lets Retrofit use the Kotlin Serialization library to convert API requests and responses.
-    implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
+    // OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
 
     // Dagger Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
-    // Timber
-    implementation "com.jakewharton.timber:timber:$timber_version"
+    // Test
+    androidTestImplementation 'junit:junit:4.13.2'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:4.5.1'
+    testImplementation "org.mockito.kotlin:mockito-kotlin:4.1.0"
+    testImplementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    testImplementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation 'androidx.test.ext:junit-ktx:1.1.5'
+
 }

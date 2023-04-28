@@ -15,5 +15,5 @@ object CacheConstants {
     const val SHIPPING_ZONES_TABLE = "shipping_zones_table"
 
     const val DB_NAME = "anaram-db"
-    const val DB_VERSION = 1
+    const val DB_VERSION = 4
 }
