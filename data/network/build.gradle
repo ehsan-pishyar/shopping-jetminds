@@ -1,8 +1,10 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.kapt'
     id 'dagger.hilt.android.plugin'
+    id 'kotlinx-serialization'
+
 }
 
 android {
@@ -24,43 +26,32 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_18
+        targetCompatibility JavaVersion.VERSION_18
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_18.toString()
     }
 }
 
 dependencies {
 
     implementation "androidx.core:core-ktx:$androidCore_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
-    implementation("com.squareup.moshi:moshi-kotlin:1.13.0")
-    //implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1'
-    // Retrofit kotlin-serialization-converter
-    // It lets Retrofit use the Kotlin Serialization library to convert API requests and responses.
+
+    // Kotlinx.Serialization
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0'
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0'
 
     // OkHttp
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11'
 
     // Dagger Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-
-    // Test
-    androidTestImplementation 'junit:junit:4.13.2'
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:4.5.1'
-    testImplementation "org.mockito.kotlin:mockito-kotlin:4.1.0"
-    testImplementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    testImplementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
-    implementation 'androidx.test.ext:junit-ktx:1.1.5'
-
+    kapt "androidx.hilt:hilt-compiler:1.0.0"
 }

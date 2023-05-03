@@ -4,22 +4,23 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.cache.utils.CacheConstants
+import kotlinx.serialization.Serializable
 
 @Entity(tableName = CacheConstants.PRODUCT_REVIEWS_TABLE)
 data class ProductReviewsResponseEntity(
     @PrimaryKey(autoGenerate = false)
-    val id: Int? = null,
+    val id: Int,
     @ColumnInfo(name = "date_created")
-    val dateCreated: String? = null,
+    val dateCreated: String,
     @ColumnInfo(name = "date_created_gmt")
-    val dateCreatedGmt: String? = null,
+    val dateCreatedGmt: String,
     @ColumnInfo(name = "product_id")
-    val productId: Int? = null,
-    val status: String? = null,
-    val reviewer: String? = null,
+    val productId: Int,
+    val status: String,
+    val reviewer: String,
     @ColumnInfo(name = "reviewer_email")
-    val reviewerEmail: String? = null,
-    val review: String? = null,
-    val rating: Int? = null,
-    val verified: Boolean? = null,
+    val reviewerEmail: String,
+    val review: String,
+    val rating: Int,
+    val verified: Boolean,
 )

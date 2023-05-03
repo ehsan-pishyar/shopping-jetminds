@@ -26,38 +26,4 @@ object DatabaseModule {
         )
             .fallbackToDestructiveMigration()
             .build()
-
-    @Provides
-    fun providesCouponsDao(database: AppDatabase): CouponsDao = database.couponsDao()
-
-    @Provides
-    fun providesCustomersDao(database: AppDatabase): CustomersDao = database.customersDao()
-
-    @Provides
-    fun providesOrdersDao(database: AppDatabase): OrdersDao = database.ordersDao()
-
-    @Provides
-    fun providesProductAttributesDao(database: AppDatabase): ProductAttributesDao = database.productAttributesDao()
-
-    @Provides
-    fun providesProductCategoriesDao(database: AppDatabase): ProductCategoriesDao = database.productCategoriesDao()
-
-    @Provides
-    fun providesProductReviewsDao(database: AppDatabase): ProductReviewsDao = database.productReviewsDao()
-
-    @Provides
-    fun providesProductsDao(database: AppDatabase): ProductsDao = database.productsDao()
-
-    @Provides
-    fun providesProductShippingClassesDao(database: AppDatabase): ProductShippingClassesDao = database.productShippingClassesDao()
-
-    @Provides
-    fun providesProductTagsDao(database: AppDatabase): ProductTagsDao = database.productTagsDao()
-
-    @Provides
-    fun providesProductVariationsDao(database: AppDatabase): ProductVariationsDao = database.productVariationsDao()
-
-    @Provides
-    fun providesShippingZonesDao(database: AppDatabase): ShippingZonesDao = database.shippingZonesDao()
-
 }

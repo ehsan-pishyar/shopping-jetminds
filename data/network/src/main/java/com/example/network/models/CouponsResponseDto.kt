@@ -1,48 +1,49 @@
 package com.example.network.models
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-
+@Serializable
 data class CouponsResponseDto(
-    val id: Int? = null,
-    val code: String? = null,
-    val amount: String? = null,
-    val status: String? = null,
-    @Json(name = "date_created")
-    val dateCreated: String? = null,
-    @Json(name = "date_created_gmt")
-    val dateCreatedGmt: String? = null,
-    @Json(name = "discount_type")
-    val discountType: String? = null,
-    val description: String? = null,
-    @Json(name = "date_expires")
-    val dateExpires: String? = null,
-    @Json(name = "date_expires_gmt")
-    val dateExpiresGmt: String? = null,
-    @Json(name = "usage_count")
-    val usageCount: Int? = null,
-    @Json(name = "individual_use")
-    val individualUse: Boolean? = null,
-    @Json(name = "product_ids")
-    val productIds: List<Int>? = null,
-    @Json(name = "excluded_product_ids")
-    val excludedProductIds: List<Int>? = null,
-    @Json( name = "usage_limit")
-    val usageLimit: Int? = null,
-    @Json(name = "usage_limit_per_user")
-    val usageLimitPerUser: Int? = null,
-    @Json(name = "limit_usage_to_x_items")
-    val limitUsageToXItems: Int? = null,
-    @Json(name = "free_shipping")
-    val freeShipping: Boolean? = null,
-    @Json(name = "product_categories")
-    val productCategories: List<CategoryDto>? = null,
-    @Json(name = "exclude_sale_items")
-    val excludeSaleItems: Boolean? = null,
-    @Json(name = "maximum_amount")
-    val maximumAmount: String? = null,
-    @Json(name = "minimum_amount")
-    val minimumAmount: String? = null,
-    @Json( name = "email_restrictions")
-    val emailRestrictions: List<String>? = null
+    val id: Int,
+    val code: String,
+    val amount: String,
+    val status: String,
+    @SerialName("date_created")
+    val dateCreated: String,
+    @SerialName("date_created_gmt")
+    val dateCreatedGmt: String,
+    @SerialName("discount_type")
+    val discountType: String,
+    val description: String,
+    @SerialName("date_expires")
+    val dateExpires: String,
+    @SerialName("date_expires_gmt")
+    val dateExpiresGmt: String,
+    @SerialName("usage_count")
+    val usageCount: Int,
+    @SerialName("individual_use")
+    val individualUse: Boolean,
+    @SerialName("product_ids")
+    val productIds: List<Int>,
+    @SerialName("excluded_product_ids")
+    val excludedProductIds: List<Int>,
+    @SerialName("usage_limit")
+    val usageLimit: Int,
+    @SerialName("usage_limit_per_user")
+    val usageLimitPerUser: Int,
+    @SerialName("limit_usage_to_x_items")
+    val limitUsageToXItems: Int,
+    @SerialName("free_shipping")
+    val freeShipping: Boolean,
+    @SerialName("product_categories")
+    val productCategories: List<CategoryDto>,
+    @SerialName("exclude_sale_items")
+    val excludeSaleItems: Boolean,
+    @SerialName("maximum_amount")
+    val maximumAmount: String,
+    @SerialName("minimum_amount")
+    val minimumAmount: String,
+    @SerialName("email_restrictions")
+    val emailRestrictions: List<String>
 )

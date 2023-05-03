@@ -2,34 +2,21 @@ package com.example.cache.converters
 
 import androidx.room.TypeConverter
 import com.example.cache.models.ProductReviewsResponseEntity
-import com.squareup.moshi.Moshi
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class ProductReviewsConverter {
 
-    private val moshi = Moshi.Builder().build()
     @TypeConverter
-    fun toJson(productReviewEntity: ProductReviewsResponseEntity?): String? {
-        return productReviewEntity?.let {
-            moshi.adapter(ProductReviewsResponseEntity::class.java).toJson(it)
-        }
+    fun fromProductReviews(productReviews: ProductReviewsResponseEntity?): String? {
+        if (productReviews == null) return null
+        return Json.encodeToString(productReviews)
     }
 
     @TypeConverter
-    fun fromJson(value: String?): ProductReviewsResponseEntity? {
-        return value?.let {
-            moshi.adapter(ProductReviewsResponseEntity::class.java).fromJson(it)
-        }
+    fun toProductReviews(productReviewsString: String?): ProductReviewsResponseEntity? {
+        if (productReviewsString.isNullOrEmpty()) return null
+        return Json.decodeFromString(productReviewsString)
     }
-
-//    @TypeConverter
-//    fun fromProductReviews(productReviews: ProductReviewsResponseEntity?): String? {
-//        if (productReviews == null) return null
-//        return Json.encodeToString(productReviews)
-//    }
-//
-//    @TypeConverter
-//    fun toProductReviews(productReviewsString: String?): ProductReviewsResponseEntity? {
-//        if (productReviewsString.isNullOrEmpty()) return null
-//        return Json.decodeFromString(productReviewsString)
-//    }
 }

@@ -4,68 +4,69 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.cache.utils.CacheConstants
+import kotlinx.serialization.Serializable
 
 @Entity(tableName = CacheConstants.PRODUCTS_TABLE)
 data class ProductsResponseEntity(
     @PrimaryKey(autoGenerate = false)
-    val id: Int? = null,
-    val name: String? = null,
-    val slug: String? = null,
+    val id: Int,
+    val name: String,
+    val slug: String,
     @ColumnInfo(name = "date_created")
-    val dateCreated: String? = null,
-    val type: String? = null,
-    val status: String? = null,
-    val featured: Boolean? = null,
+    val dateCreated: String,
+    val type: String,
+    val status: String,
+    val featured: Boolean,
     @ColumnInfo(name = "catalog_visibility")
-    val catalogVisibility: String? = null,
-    val description: String? = null,
+    val catalogVisibility: String,
+    val description: String,
     @ColumnInfo(name = "short_description")
-    val shortDescription: String? = null,
-    val sku: String? = null,
-    val price: String? = null,
+    val shortDescription: String,
+    val sku: String,
+    val price: String,
     @ColumnInfo(name = "regular_price")
-    val regularPrice: String? = null,
+    val regularPrice: String,
     @ColumnInfo(name = "sale_price")
-    val salePrice: String? = null,
+    val salePrice: String,
     @ColumnInfo(name = "date_on_sale_from")
-    val dateOnSaleFrom: String? = null,
+    val dateOnSaleFrom: String,
     @ColumnInfo(name = "date_on_sale_to")
-    val dateOnSaleTo: String? = null,
+    val dateOnSaleTo: String,
     @ColumnInfo(name = "on_sale")
-    val onSale: Boolean? = null,
-    val purchasable: Boolean? = null,
+    val onSale: Boolean,
+    val purchasable: Boolean,
     @ColumnInfo(name = "total_sales")
-    val totalSales: Int? = null,
+    val totalSales: Int,
     @ColumnInfo(name = "tax_status")
-    val taxStatus: String? = null,
+    val taxStatus: String,
     @ColumnInfo(name = "tax_class")
-    val taxClass: String? = null,
+    val taxClass: String,
     @ColumnInfo(name = "manage_stock")
-    val manageStock: Boolean? = null,
+    val manageStock: Boolean,
     @ColumnInfo(name = "stock_quantity")
-    val stockQuantity: Int? = null,
+    val stockQuantity: Int,
     @ColumnInfo(name = "sold_individually")
-    val soldIndividually: Boolean? = null,
+    val soldIndividually: Boolean,
     @ColumnInfo(name = "shipping_required")
-    val shippingRequired: Boolean? = null,
+    val shippingRequired: Boolean,
     @ColumnInfo(name = "shipping_taxable")
-    val shippingTaxable: Boolean? = null,
+    val shippingTaxable: Boolean,
     @ColumnInfo(name = "shipping_class")
-    val shippingClass: String? = null,
+    val shippingClass: String,
     @ColumnInfo(name = "shipping_class_id")
-    val shippingClassId: Int? = null,
+    val shippingClassId: Int,
     @ColumnInfo(name = "reviews_allowed")
-    val reviewsAllowed: Boolean? = null,
+    val reviewsAllowed: Boolean,
     @ColumnInfo(name = "average_rating")
-    val averageRating: String? = null,
+    val averageRating: String,
     @ColumnInfo(name = "rating_count")
-    val ratingCount: Int? = null,
-    val categories: List<CategoryEntity>? = null,
-    val tags: List<TagEntity>? = null,
-    val images: List<ImageEntity>? = null,
-    val attributes: List<AttributeEntity>? = null,
+    val ratingCount: Int,
+    val categories: List<CategoryEntity>,
+    val tags: List<TagEntity>,
+    val images: List<ImageEntity>,
+    val attributes: List<AttributeEntity>,
     @ColumnInfo(name = "default_attributes")
-    val defaultAttributes: List<DefaultAttributeEntity>? = null,
+    val defaultAttributes: List<DefaultAttributeEntity>,
     @ColumnInfo(name = "stock_status")
-    val stockStatus: String? = null
+    val stockStatus: String
 )

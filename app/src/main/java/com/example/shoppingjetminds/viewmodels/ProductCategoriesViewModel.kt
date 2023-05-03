@@ -1,5 +1,7 @@
 package com.example.shoppingjetminds.viewmodels
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.models.ProductCategoriesResponse
@@ -8,7 +10,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.domain.utils.asResult
-import kotlinx.coroutines.flow.*
 import com.example.domain.utils.Result
 
 @HiltViewModel
@@ -16,40 +17,43 @@ class ProductCategoriesViewModel @Inject constructor(
     private val productCategoriesRepository: ProductCategoriesRepository
 ): ViewModel() {
 
-    private val _state = MutableStateFlow(HomeCategoriesUIState(CategoriesUiState.Loading))
-    val state = _state.asStateFlow()
+    private var _state = mutableStateOf(CategoriesUiState())
+    val state: State<CategoriesUiState> = _state
 
-    fun getCategories() {
+    init {
+        getCategories()
+    }
+
+    private fun getCategories() {
         viewModelScope.launch {
-            productCategoriesRepository.getProductCategories().asResult()
-                .collect { result ->
-                    val categoriesUiState = when (result) {
-                        is Result.Success -> {
-                            println("ViewModel: Success")
-                            CategoriesUiState.Success(result.data)
-                        }
-                        is Result.Loading -> {
-                            println("ViewModel: Loading")
-                            CategoriesUiState.Loading
-                        }
-                        is Result.Error -> {
-                            println("ViewModel: Error")
-                            CategoriesUiState.Error
-                        }
+            productCategoriesRepository.getProductCategories().asResult().collect { result ->
+                when (result) {
+                    is Result.Loading -> {
+                        _state.value = _state.value.copy(
+                            loading = true
+                        )
                     }
-
-                    _state.value = HomeCategoriesUIState(categoriesUiState)
+                    is Result.Success -> {
+                        _state.value = _state.value.copy(
+                            loading = false,
+                            success = result.data
+                        )
+                    }
+                    is Result.Error -> {
+                        _state.value = _state.value.copy(
+                            loading = false,
+                            success = emptyList(),
+                            error = result.throwable?.localizedMessage?.toString()!!
+                        )
+                    }
                 }
+            }
         }
     }
 }
 
-sealed interface CategoriesUiState {
-    data class Success(val categories: List<ProductCategoriesResponse>) : CategoriesUiState
-    object Error : CategoriesUiState
-    object Loading : CategoriesUiState
-}
-
-data class HomeCategoriesUIState(
-    val categories: CategoriesUiState
+data class CategoriesUiState(
+    val loading: Boolean = true,
+    val success: List<ProductCategoriesResponse> = emptyList(),
+    val error: String = ""
 )

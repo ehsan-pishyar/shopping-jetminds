@@ -1,21 +1,23 @@
 package com.example.network.models
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class BillingDto(
-    @Json(name = "address_1")
-    val address1: String? = null,
-    @Json(name = "address_2")
-    val address2: String? = null,
-    val city: String? = null,
-    val company: String? = null,
-    val country: String? = null,
-    val email: String? = null,
-    @Json(name = "first_name")
-    val firstName: String? = null,
-    @Json(name = "last_name")
-    val lastName: String? = null,
-    val phone: String? = null,
-    val postcode: String? = null,
-    val state: String? = null
+    @SerialName("address_1")
+    val address1: String,
+    @SerialName("address_2")
+    val address2: String,
+    val city: String,
+    val company: String,
+    val country: String,
+    val email: String,
+    @SerialName("first_name")
+    val firstName: String,
+    @SerialName("last_name")
+    val lastName: String,
+    val phone: String,
+    val postcode: String,
+    val state: String
 )

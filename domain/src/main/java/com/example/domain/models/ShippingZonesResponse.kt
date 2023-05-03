@@ -1,7 +1,7 @@
 package com.example.domain.models
 
 data class ShippingZonesResponse(
-    val id: Int? = null,
-    val name: String? = null,
-    val order: Int? = null
+    val id: Int,
+    val name: String,
+    val order: Int
 )

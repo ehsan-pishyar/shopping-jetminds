@@ -1,26 +1,21 @@
 package com.example.cache.converters
 
 import androidx.room.TypeConverter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+
 
 class IntegerListConverter {
-
-    private val moshi = Moshi.Builder().build()
-
     @TypeConverter
-    fun toJson(ints: List<Int>?): String? {
-        return ints?.let {
-            val type = Types.newParameterizedType(List::class.java, Int::class.javaPrimitiveType)
-            moshi.adapter<List<Int>>(type).toJson(it)
-        }
+    fun fromIntegerList(list: List<Int>?): String? {
+        if (list == null) return null
+        return Json.encodeToString(list)
     }
 
     @TypeConverter
-    fun fromJson(jsonString: String?): List<Int>? {
-        return jsonString?.let {
-            val type = Types.newParameterizedType(List::class.java, Int::class.javaPrimitiveType)
-            moshi.adapter<List<Int>>(type).fromJson(it)
-        }
+    fun toIntegerList(item: String?): List<Int>? {
+        if (item == null) return null
+        return Json.decodeFromString(item)
     }
 }

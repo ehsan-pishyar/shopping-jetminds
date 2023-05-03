@@ -1,6 +1,6 @@
 package com.example.domain.models
 
 data class Tag(
-    val id: Int? = null,
-    val name: String? = null
+    val id: Int,
+    val name: String
 )

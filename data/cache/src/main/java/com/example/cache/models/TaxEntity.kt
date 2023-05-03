@@ -1,7 +1,10 @@
 package com.example.cache.models
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class TaxEntity(
-    val id: Int? = null,
-    val subtotal: String? = null,
-    val total: String? = null
+    val id: Int,
+    val subtotal: String,
+    val total: String
 )

@@ -1,10 +1,13 @@
 package com.example.cache.models
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class ShippingLineEntity(
-    val id: Int? = null,
-    val methodId: String? = null,
-    val methodTitle: String? = null,
-    val taxes: List<TaxEntity>? = null,
-    val total: String? = null,
-    val totalTax: String? = null
+    val id: Int,
+    val methodId: String,
+    val methodTitle: String,
+    val taxes: List<TaxEntity>,
+    val total: String,
+    val totalTax: String
 )

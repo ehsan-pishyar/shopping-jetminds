@@ -4,49 +4,50 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.cache.utils.CacheConstants
+import kotlinx.serialization.Serializable
 
 @Entity(tableName = CacheConstants.PRODUCT_VARIATIONS_TABLE)
 data class ProductVariationsResponseEntity(
     @PrimaryKey(autoGenerate = false)
-    val id: Int? = null,
+    val id: Int,
     @ColumnInfo(name = "date_created")
-    val dateCreated: String? = null,
+    val dateCreated: String,
     @ColumnInfo(name = "date_created_gmt")
-    val dateCreatedGmt: String? = null,
-    val description: String? = null,
-    val permalink: String? = null,
-    val sku: String? = null,
-    val price: String? = null,
+    val dateCreatedGmt: String,
+    val description: String,
+    val permalink: String,
+    val sku: String,
+    val price: String,
     @ColumnInfo(name = "regular_price")
-    val regularPrice: String? = null,
+    val regularPrice: String,
     @ColumnInfo(name = "sale_price")
-    val salePrice: String? = null,
+    val salePrice: String,
     @ColumnInfo(name = "date_on_sale_from")
-    val dateOnSaleFrom: String? = null,
+    val dateOnSaleFrom: String,
     @ColumnInfo(name = "date_on_sale_from_gmt")
-    val dateOnSaleFromGmt: String? = null,
+    val dateOnSaleFromGmt: String,
     @ColumnInfo(name = "date_on_sale_to")
-    val dateOnSaleTo: String? = null,
+    val dateOnSaleTo: String,
     @ColumnInfo(name = "date_on_sale_to_gmt")
-    val dateOnSaleToGmt: String? = null,
+    val dateOnSaleToGmt: String,
     @ColumnInfo(name = "on_sale")
-    val onSale: Boolean? = null,
-    val status: String? = null,
-    val purchasable: Boolean? = null,
+    val onSale: Boolean,
+    val status: String,
+    val purchasable: Boolean,
     @ColumnInfo(name = "tax_status")
-    val taxStatus: String? = null,
+    val taxStatus: String,
     @ColumnInfo(name = "tax_class")
-    val taxClass: String? = null,
+    val taxClass: String,
     @ColumnInfo(name = "manage_stock")
-    val manageStock: Boolean? = null,
+    val manageStock: Boolean,
     @ColumnInfo(name = "stock_quantity")
-    val stockQuantity: Int? = null,
+    val stockQuantity: Int,
     @ColumnInfo(name = "stock_status")
-    val stockStatus: String? = null,
+    val stockStatus: String,
     @ColumnInfo(name = "shipping_class")
-    val shippingClass: String? = null,
+    val shippingClass: String,
     @ColumnInfo(name = "shipping_class_id")
-    val shippingClassId: Int? = null,
-    val image: ImageEntity? = null,
-    val attributes: List<AttributeEntity>? = null
+    val shippingClassId: Int,
+    val image: ImageEntity,
+    val attributes: List<AttributeEntity>
 )

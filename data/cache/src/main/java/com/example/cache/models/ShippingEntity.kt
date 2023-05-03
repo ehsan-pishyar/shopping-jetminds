@@ -1,13 +1,16 @@
 package com.example.cache.models
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class ShippingEntity(
-    val address1: String? = null,
-    val address2: String? = null,
-    val city: String? = null,
-    val company: String? = null,
-    val country: String? = null,
-    val firstName: String? = null,
-    val lastName: String? = null,
-    val postcode: String? = null,
-    val state: String? = null
+    val address1: String,
+    val address2: String,
+    val city: String,
+    val company: String,
+    val country: String,
+    val firstName: String,
+    val lastName: String,
+    val postcode: String,
+    val state: String
 )

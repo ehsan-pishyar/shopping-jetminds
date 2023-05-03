@@ -2,34 +2,21 @@ package com.example.cache.converters
 
 import androidx.room.TypeConverter
 import com.example.cache.models.ShippingEntity
-import com.squareup.moshi.Moshi
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class ShippingsConverter {
 
-    private val moshi = Moshi.Builder().build()
     @TypeConverter
-    fun toJson(shippingsEntity: ShippingEntity?): String? {
-        return shippingsEntity?.let {
-            moshi.adapter(ShippingEntity::class.java).toJson(it)
-        }
+    fun fromShipping(shippingEntity: ShippingEntity?): String? {
+        if (shippingEntity == null) return null
+        return Json.encodeToString(shippingEntity)
     }
 
     @TypeConverter
-    fun fromJson(value: String?): ShippingEntity? {
-        return value?.let {
-            moshi.adapter(ShippingEntity::class.java).fromJson(it)
-        }
+    fun toShipping(shippingItem: String?): ShippingEntity? {
+        if (shippingItem == null) return null
+        return Json.decodeFromString(shippingItem)
     }
-
-//    @TypeConverter
-//    fun fromShipping(shippingEntity: ShippingEntity?): String? {
-//        if (shippingEntity == null) return null
-//        return Json.encodeToString(shippingEntity)
-//    }
-//
-//    @TypeConverter
-//    fun toShipping(shippingItem: String?): ShippingEntity? {
-//        if (shippingItem == null) return null
-//        return Json.decodeFromString(shippingItem)
-//    }
 }

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface ProductCategoriesDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertOrIgnoreCategories(categories: List<ProductCategoriesResponseEntity>): List<Long>
+    suspend fun insertOrIgnoreCategories(categories: List<ProductCategoriesResponseEntity>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertProductCategoryDetails(categoryDetails: ProductCategoriesResponseEntity?)
