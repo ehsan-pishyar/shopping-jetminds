@@ -32,10 +32,8 @@ fun HomeScreen(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     categoriesViewModel: ProductCategoriesViewModel = hiltViewModel()
 ){
-    LaunchedEffect(Unit) {
-        categoriesViewModel.getCategories()
-    }
-    val categoriesState: HomeCategoriesUIState by categoriesViewModel.state.collectAsState()
+
+    val categoryState = categoriesViewModel.state.value
 
     Scaffold(
         modifier = Modifier
@@ -78,15 +76,16 @@ fun HomeScreen(
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                when(val categoryState = categoriesState.categories) {
-                    CategoriesUiState.Error -> {
-                        JetText(text = "Error")
-                    }
-                    CategoriesUiState.Loading -> {
-                        JetText(text = "Loading ...")
-                    }
-                    is CategoriesUiState.Success -> {
-                        JetText(text = "Success")
+                if (categoryState.loading) {
+                    JetText(text = "Loading...")
+                }
+                if (categoryState.error.isNotBlank()) {
+                    JetText(text = "Error: ${categoryState.error}")
+                }
+                if (categoryState.success.isNotEmpty()) {
+                    JetText(text = "Successful: ${categoryState.success[0].name}")
+                }
+
 //                        LazyRow(
 //                            modifier = Modifier
 //                                .fillMaxWidth(),
@@ -100,8 +99,6 @@ fun HomeScreen(
 //                                )
 //                            }
 //                        }
-                    }
-                }
 
 
 
