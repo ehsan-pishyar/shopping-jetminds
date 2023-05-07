@@ -4,24 +4,31 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.example.cache.models.CouponsResponseEntity
-import com.example.cache.models.ProductCategoriesResponseEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CouponsDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCoupons(coupons: List<CouponsResponseEntity>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertOrIgnoreCoupons(coupons: List<CouponsResponseEntity>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCouponDetails(couponDetails: CouponsResponseEntity)
 
     @Query("SELECT * FROM `coupons_table`")
-    suspend fun fetchCoupons(): List<CouponsResponseEntity>
+    fun fetchCoupons(): Flow<List<CouponsResponseEntity>>
 
     @Query("SELECT * FROM `coupons_table` WHERE id = :couponId")
-    suspend fun fetchCouponDetails(couponId: Int): CouponsResponseEntity
+    fun fetchCouponDetails(couponId: Int): CouponsResponseEntity
 
-    @Query("SELECT COUNT(*) FROM `coupons_table`")
-    suspend fun isCouponsCacheAvailable(): Int
+    @Query("DELETE FROM `coupons_table`")
+    suspend fun deleteCoupons()
+
+    @Transaction
+    suspend fun deleteAndInsertCoupons(coupons: List<CouponsResponseEntity>) {
+        deleteCoupons()
+        insertOrIgnoreCoupons(coupons)
+    }
 }

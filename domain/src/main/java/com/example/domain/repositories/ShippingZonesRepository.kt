@@ -1,9 +1,10 @@
 package com.example.domain.repositories
 
 import com.example.domain.models.ShippingZonesResponse
-import com.example.domain.utils.ServiceResult
+import kotlinx.coroutines.flow.Flow
 
 interface ShippingZonesRepository {
 
-    suspend fun getShippingZones(): ServiceResult<List<ShippingZonesResponse>>
+    fun getShippingZones(): Flow<List<ShippingZonesResponse>>
+    suspend fun refreshShippingZones()
 }

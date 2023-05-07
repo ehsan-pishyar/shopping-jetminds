@@ -17,17 +17,17 @@ fun CouponsResponseEntity.toDomain(): CouponsResponse =
         this.dateExpiresGmt,
         this.usageCount,
         this.individualUse,
-        this.productIds?.map { it },
-        this.excludedProductIds?.map { it },
+        this.productIds.map { it },
+        this.excludedProductIds.map { it },
         this.usageLimit,
         this.usageLimitPerUser,
         this.limitUsageToXItems,
         this.freeShipping,
-        this.productCategories?.map { it.toDomain() },
+        this.productCategories.map { it.toDomain() },
         this.excludeSaleItems,
         this.maximumAmount,
         this.minimumAmount,
-        this.emailRestrictions!!
+        this.emailRestrictions
     )
 
 fun OrdersResponseEntity.toDomain(): OrdersResponse =
@@ -48,8 +48,8 @@ fun OrdersResponseEntity.toDomain(): OrdersResponse =
         this.totalTax,
         this.customerId,
         this.orderKey,
-        this.billing?.toDomain(),
-        this.shipping?.toDomain(),
+        this.billing.toDomain(),
+        this.shipping.toDomain(),
         this.paymentMethod,
         this.paymentMethodTitle,
         this.transactionId,
@@ -59,9 +59,9 @@ fun OrdersResponseEntity.toDomain(): OrdersResponse =
         this.datePaid,
         this.cartHash,
         this.number,
-        this.lineItems?.map { it.toDomain() },
-        this.taxLines?.map { it.toDomain() },
-        this.shippingLines?.map { it.toDomain() },
+        this.lineItems.map { it.toDomain() },
+        this.taxLines.map { it.toDomain() },
+        this.shippingLines.map { it.toDomain() },
         this.paymentUrl,
         this.dateCreatedGmt,
         this.dateModifiedGmt,
@@ -88,7 +88,7 @@ fun ProductCategoriesResponseEntity.toDomain(): ProductCategoriesResponse =
         this.parent,
         this.description,
         this.display,
-        this.image?.toDomain(),
+        this.image.toDomain(),
         this.menuOrder,
         this.count
     )
@@ -149,11 +149,11 @@ fun ProductsResponseEntity.toDomain(): ProductsResponse =
         this.reviewsAllowed,
         this.averageRating,
         this.ratingCount,
-        this.categories?.map { it.toDomain() },
-        this.tags?.map { it.toDomain() },
-        this.images?.map { it.toDomain() },
-        this.attributes?.map { it.toDomain() },
-        this.defaultAttributes?.map { it.toDomain() },
+        this.categories.map { it.toDomain() },
+        this.tags.map { it.toDomain() },
+        this.images.map { it.toDomain() },
+        this.attributes.map { it.toDomain() },
+        this.defaultAttributes.map { it.toDomain() },
         this.stockStatus
     )
 
@@ -191,8 +191,8 @@ fun ProductVariationsResponseEntity.toDomain(): ProductVariationsResponse =
         this.stockStatus,
         this.shippingClass,
         this.shippingClassId,
-        this.image?.toDomain(),
-        this.attributes?.map { it.toDomain() }
+        this.image.toDomain(),
+        this.attributes.map { it.toDomain() }
     )
 
 fun ShippingZonesResponseEntity.toDomain(): ShippingZonesResponse =
@@ -258,7 +258,7 @@ fun LineItemEntity.toDomain(): LineItem = LineItem(
     this.subtotal,
     this.subtotalTax,
     this.taxClass,
-    this.taxes?.map { it.toDomain() },
+    this.taxes.map { it.toDomain() },
     this.total,
     this.totalTax,
     this.variationId
@@ -282,7 +282,7 @@ fun ShippingLineEntity.toDomain(): ShippingLine =
         this.id,
         this.methodId,
         this.methodTitle,
-        this.taxes?.map { it.toDomain() },
+        this.taxes.map { it.toDomain() },
         this.total,
         this.totalTax
     )

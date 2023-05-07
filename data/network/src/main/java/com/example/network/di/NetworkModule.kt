@@ -1,7 +1,6 @@
 package com.example.network.di
 
 import com.example.network.ApiService
-import com.example.network.BuildConfig
 import com.example.network.utils.Constants
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -20,8 +19,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesAuthQueryAppenderInterceptor(): Interceptor =
         Interceptor { chain ->
             val requestBuilder = chain.request().newBuilder()
@@ -39,15 +37,13 @@ object NetworkModule {
             )
         }
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesOkHttpsBuilder(
         authQueryAppenderInterceptor: Interceptor,
         httpLoggingInterceptor: HttpLoggingInterceptor
@@ -57,13 +53,11 @@ object NetworkModule {
             .addInterceptor(httpLoggingInterceptor)
             .build()
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesJson(): Json =
         Json { ignoreUnknownKeys = true }
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesRetrofit(json: Json, okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
@@ -71,8 +65,7 @@ object NetworkModule {
             .client(okHttpClient)
             .build()
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesApiService(retrofit: Retrofit): ApiService =
         retrofit.create(ApiService::class.java)
 }

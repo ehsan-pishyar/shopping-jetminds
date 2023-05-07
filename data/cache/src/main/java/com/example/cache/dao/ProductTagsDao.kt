@@ -4,24 +4,32 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.cache.models.ProductCategoriesResponseEntity
+import androidx.room.Transaction
 import com.example.cache.models.ProductTagsResponseEntity
+import kotlinx.coroutines.flow.Flow
 
+// برچسب محصولات سایت. منظور مثل دسته بندی محصولات، همه برچسب ها رو شامل میشه واسه لیست کردن
 @Dao
 interface ProductTagsDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertProductTags(tags: List<ProductTagsResponseEntity>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertOrIgnoreProductTags(tags: List<ProductTagsResponseEntity>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertProductTagDetails(tagDetails: ProductTagsResponseEntity)
 
     @Query("SELECT * FROM `product_tags_table`")
-    suspend fun fetchProductTags(): List<ProductTagsResponseEntity>
+    fun fetchProductTags(): Flow<List<ProductTagsResponseEntity>>
 
     @Query("SELECT * FROM `product_tags_table` WHERE id = :tagId")
-    suspend fun fetchProductTagDetails(tagId: Int): ProductTagsResponseEntity
+    fun fetchProductTagDetails(tagId: Int): Flow<ProductTagsResponseEntity>
 
-    @Query("SELECT COUNT(*) FROM `product_tags_table`")
-    suspend fun isProductTagsCacheAvailable(): Int
+    @Query("DELETE FROM `product_tags_table`")
+    suspend fun deleteProductTags()
+
+    @Transaction
+    suspend fun deleteAndInsertProductTags(tags: List<ProductTagsResponseEntity>) {
+        deleteProductTags()
+        insertOrIgnoreProductTags(tags)
+    }
 }

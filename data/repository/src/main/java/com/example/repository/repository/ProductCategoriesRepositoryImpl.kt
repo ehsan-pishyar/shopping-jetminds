@@ -4,18 +4,13 @@ import com.example.cache.dao.ProductCategoriesDao
 import com.example.cache.models.ProductCategoriesResponseEntity
 import com.example.domain.models.ProductCategoriesResponse
 import com.example.domain.repositories.ProductCategoriesRepository
-import com.example.domain.utils.ServiceResult
 import com.example.network.ApiService
 import com.example.network.models.ProductCategoriesResponseDto
-import com.example.repository.data_source.local.LocalProductCategoriesDataSource
-import com.example.repository.data_source.remote.RemoteProductCategoriesDataSource
 import com.example.repository.mappers.toDomain
 import com.example.repository.mappers.toEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import java.io.IOException
 import javax.inject.Inject
 
 class ProductCategoriesRepositoryImpl @Inject constructor(
@@ -34,14 +29,19 @@ class ProductCategoriesRepositoryImpl @Inject constructor(
     }
 
     override fun getProductCategoryDetails(categoryId: Int): Flow<ProductCategoriesResponse> {
-        TODO("Not yet implemented")
+        return dao.fetchProductCategoryDetails(categoryId).map { productCategoryDetails ->
+            productCategoryDetails.toDomain()
+        }
     }
 
 
     override suspend fun refreshCategories() {
-        api.getProductCategories()
-            .also { categoriesDto ->
-                dao.deleteAndInsertCategories(categories = categoriesDto.map {it.toEntity()})
-            }
+        api.getProductCategories().also { categoriesDto ->
+            dao.deleteAndInsertCategories(
+                categories = categoriesDto.map(
+                    ProductCategoriesResponseDto::toEntity
+                )
+            )
+        }
     }
 }

@@ -4,18 +4,25 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.cache.models.ProductCategoriesResponseEntity
+import androidx.room.Transaction
 import com.example.cache.models.ProductShippingClassesResponseEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductShippingClassesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertProductShippingClasses(productShippingClasses: List<ProductShippingClassesResponseEntity>)
+    suspend fun insertOrIgnoreProductShippingClasses(productShippingClasses: List<ProductShippingClassesResponseEntity>)
 
     @Query("SELECT * FROM `product_shipping_classes_table`")
-    suspend fun fetchProductShippingClasses(): List<ProductShippingClassesResponseEntity>
+    fun fetchProductShippingClasses(): Flow<List<ProductShippingClassesResponseEntity>>
 
-    @Query("SELECT COUNT(*) FROM `product_shipping_classes_table`")
-    suspend fun isProductShippingClassesCacheAvailable(): Int
+    @Query("DELETE FROM `product_shipping_classes_table`")
+    suspend fun deleteProductShippingClasses()
+
+    @Transaction
+    suspend fun deleteAndInsertProductShippingClasses(productShippingClasses: List<ProductShippingClassesResponseEntity>) {
+        deleteProductShippingClasses()
+        insertOrIgnoreProductShippingClasses(productShippingClasses)
+    }
 }

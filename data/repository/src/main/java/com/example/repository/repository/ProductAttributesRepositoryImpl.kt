@@ -1,27 +1,44 @@
 package com.example.repository.repository
 
 import com.example.cache.dao.ProductAttributesDao
+import com.example.cache.models.ProductAttributesResponseEntity
 import com.example.domain.models.ProductAttributesResponse
 import com.example.domain.repositories.ProductAttributesRepository
-import com.example.domain.utils.ServiceResult
 import com.example.network.ApiService
 import com.example.network.models.ProductAttributesResponseDto
 import com.example.repository.mappers.toDomain
 import com.example.repository.mappers.toEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import java.io.IOException
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class ProductAttributesRepositoryImpl @Inject constructor(
-    private val apiService: ApiService,
-    private val productAttributesDao: ProductAttributesDao
+    private val api: ApiService,
+    private val dao: ProductAttributesDao
 ): ProductAttributesRepository {
-    override fun getProductAttributes(): Flow<ServiceResult<List<ProductAttributesResponse>>> {
+
+    override fun getProductAttributes(): Flow<List<ProductAttributesResponse>> {
+        return dao.fetchProductAttrs().map { attrsEntity ->
+            attrsEntity.map(ProductAttributesResponseEntity::toDomain)
+        }.onEach {
+            if (it.isEmpty()) {
+                refreshProductAttributes()
+            }
+        }
+    }
+
+    override fun getProductAttributeDetails(attrId: Int): Flow<ProductAttributesResponse> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getProductAttributeDetails(attrId: Int): ServiceResult<ProductAttributesResponse> {
-        TODO("Not yet implemented")
+    override suspend fun refreshProductAttributes() {
+        api.getProductAttributes().also { attrsDto ->
+            dao.deleteAndInsertProductAttributes(
+                attrs = attrsDto.map(
+                    ProductAttributesResponseDto::toEntity
+                )
+            )
+        }
     }
 }

@@ -4,24 +4,31 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.example.cache.models.OrdersResponseEntity
-import com.example.cache.models.ProductCategoriesResponseEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface OrdersDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOrders(orders: List<OrdersResponseEntity>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertOrIgnoreOrders(orders: List<OrdersResponseEntity>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertOrderDetails(orderDetails: OrdersResponseEntity)
 
     @Query("SELECT * FROM `orders_table`")
-    suspend fun fetchOrders(): List<OrdersResponseEntity>
+    fun fetchOrders(): Flow<List<OrdersResponseEntity>>
 
     @Query("SELECT * FROM `orders_table` WHERE id = :orderId")
-    suspend fun fetchOrderDetails(orderId: Int): OrdersResponseEntity
+    fun fetchOrderDetails(orderId: Int): Flow<OrdersResponseEntity>
 
-    @Query("SELECT COUNT(*) FROM `orders_table`")
-    suspend fun isOrdersCacheAvailable(): Int
+    @Query("DELETE FROM `orders_table`")
+    suspend fun deleteOrders()
+
+    @Transaction
+    suspend fun deleteAndInsertOrders(orders: List<OrdersResponseEntity>) {
+        deleteOrders()
+        insertOrIgnoreOrders(orders)
+    }
 }

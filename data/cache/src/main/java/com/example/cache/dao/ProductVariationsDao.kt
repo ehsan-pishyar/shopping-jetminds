@@ -4,24 +4,31 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.cache.models.ProductCategoriesResponseEntity
+import androidx.room.Transaction
 import com.example.cache.models.ProductVariationsResponseEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductVariationsDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertProductVariations(variations: List<ProductVariationsResponseEntity>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertOrIgnoreProductVariations(variations: List<ProductVariationsResponseEntity>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertProductVariationDetails(variationDetails: ProductVariationsResponseEntity)
 
     @Query("SELECT * FROM `product_variations_table` WHERE id = :productId")
-    suspend fun fetchProductVariations(productId: Int): List<ProductVariationsResponseEntity>
+    fun fetchProductVariations(productId: Int): Flow<List<ProductVariationsResponseEntity>>
 
     @Query("SELECT * FROM `product_variations_table` WHERE id = :variationId")
-    suspend fun fetchProductVariationsDetails(variationId: Int): ProductVariationsResponseEntity
+    fun fetchProductVariationsDetails(variationId: Int): Flow<ProductVariationsResponseEntity>
 
-    @Query("SELECT COUNT(*) FROM `product_variations_table`")
-    suspend fun isProductVariationsCacheAvailable(): Int
+    @Query("DELETE FROM `product_variations_table`")
+    suspend fun deleteProductVariations()
+
+    @Transaction
+    suspend fun deleteAndInsertProductVariations(variations: List<ProductVariationsResponseEntity>) {
+        deleteProductVariations()
+        insertOrIgnoreProductVariations(variations)
+    }
 }

@@ -4,15 +4,17 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.example.cache.models.ProductsResponseEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductsDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertProducts(products: List<ProductsResponseEntity>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertOrIgnoreProducts(products: List<ProductsResponseEntity>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertProductsDetails(productDetails: ProductsResponseEntity)
 
     @Query(
@@ -21,18 +23,18 @@ interface ProductsDao {
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility"
     )
-    suspend fun fetchProducts(
+    fun fetchProducts(
         stockStatus: String = "instock",
         status: String = "publish",
         catalogVisibility: String = "visible"
-    ): List<ProductsResponseEntity>
+    ): Flow<List<ProductsResponseEntity>>
 
     @Query(
         "SELECT * FROM `products_table` " +
                 "WHERE id = :productId " +
                 "ORDER BY date_created"
     )
-    suspend fun fetchProductDetails(productId: Int): ProductsResponseEntity
+    fun fetchProductDetails(productId: Int): Flow<ProductsResponseEntity>
 
     @Query(
         "SELECT * FROM `products_table` " +
@@ -41,12 +43,12 @@ interface ProductsDao {
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility"
     )
-    suspend fun fetchProductsByCategoryId(
+    fun fetchProductsByCategoryId(
         categoryId: Int,
         stockStatus: String = "instock",
         status: String = "publish",
         catalogVisibility: String = "visible"
-    ): List<ProductsResponseEntity>
+    ): Flow<List<ProductsResponseEntity>>
 
     @Query(
         "SELECT * FROM `products_table` " +
@@ -55,12 +57,12 @@ interface ProductsDao {
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility"
     )
-    suspend fun fetchProductsByTagId(
+    fun fetchProductsByTagId(
         tagId: Int,
         stockStatus: String = "instock",
         status: String = "publish",
         catalogVisibility: String = "visible"
-    ): List<ProductsResponseEntity>
+    ): Flow<List<ProductsResponseEntity>>
 
     @Query(
         "SELECT * FROM `products_table` " +
@@ -69,12 +71,12 @@ interface ProductsDao {
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility"
     )
-    suspend fun fetchProductsByAttrId(
+    fun fetchProductsByAttrId(
         attrId: Int,
         stockStatus: String = "instock",
         status: String = "status",
         catalogVisibility: String = "visible"
-    ): List<ProductsResponseEntity>
+    ): Flow<List<ProductsResponseEntity>>
 
     // OnSale Products
     @Query(
@@ -84,12 +86,12 @@ interface ProductsDao {
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility"
     )
-    suspend fun fetchOnSaleProducts(
+    fun fetchOnSaleProducts(
         onSale: Boolean = true,
         stockStatus: String = "instock",
         status: String = "publish",
         catalogVisibility: String = "visible"
-    ): List<ProductsResponseEntity>
+    ): Flow<List<ProductsResponseEntity>>
 
     // Popular Products
     @Query(
@@ -99,11 +101,11 @@ interface ProductsDao {
                 "AND catalog_visibility = :catalogVisibility " +
                 "ORDER BY total_sales DESC"
     )
-    suspend fun fetchPopularProducts(
+    fun fetchPopularProducts(
         stockStatus: String = "instock",
         status: String = "publish",
         catalogVisibility: String = "visible"
-    ): List<ProductsResponseEntity>
+    ): Flow<List<ProductsResponseEntity>>
 
     // Top Sales Products
     @Query(
@@ -113,11 +115,11 @@ interface ProductsDao {
                 "AND catalog_visibility = :catalogVisibility " +
                 "ORDER BY total_sales DESC"
     )
-    suspend fun fetchTopSalesProducts(
+    fun fetchTopSalesProducts(
         stockStatus: String = "instock",
         status: String = "publish",
         catalogVisibility: String = "visible"
-    ): List<ProductsResponseEntity>
+    ): Flow<List<ProductsResponseEntity>>
 
     // Newest Products
     @Query(
@@ -127,11 +129,11 @@ interface ProductsDao {
                 "AND catalog_visibility = :catalogVisibility " +
                 "ORDER BY date_created DESC"
     )
-    suspend fun fetchNewestProducts(
+    fun fetchNewestProducts(
         stockStatus: String = "instock",
         status: String = "publish",
         catalogVisibility: String = "visible"
-    ): List<ProductsResponseEntity>
+    ): Flow<List<ProductsResponseEntity>>
 
     // Top Rated Products
     @Query(
@@ -141,12 +143,18 @@ interface ProductsDao {
                 "AND catalog_visibility = :catalogVisibility " +
                 "ORDER BY average_rating DESC"
     )
-    suspend fun fetchTopRatedProducts(
+    fun fetchTopRatedProducts(
         stockStatus: String = "instock",
         status: String = "publish",
         catalogVisibility: String = "visible"
-    ): List<ProductsResponseEntity>
+    ): Flow<List<ProductsResponseEntity>>
 
-    @Query("SELECT COUNT(*) FROM `products_table`")
-    suspend fun isProductsCacheAvailable(): Int
+    @Query("DELETE FROM `products_table`")
+    suspend fun deleteProducts()
+
+    @Transaction
+    suspend fun deleteAndInsertProducts(products: List<ProductsResponseEntity>) {
+        deleteProducts()
+        insertOrIgnoreProducts(products)
+    }
 }

@@ -4,25 +4,31 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.cache.models.CouponsResponseEntity
+import androidx.room.Transaction
 import com.example.cache.models.ProductAttributesResponseEntity
-import com.example.cache.models.ProductCategoriesResponseEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductAttributesDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertProductAttributes(attrs: List<ProductAttributesResponseEntity>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertOrIgnoreProductAttributes(attrs: List<ProductAttributesResponseEntity>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertProductAttrDetails(attrDetails: ProductAttributesResponseEntity)
 
     @Query("SELECT * FROM `product_attrs_table`")
-    suspend fun fetchProductAttrs(): List<ProductAttributesResponseEntity>
+    fun fetchProductAttrs(): Flow<List<ProductAttributesResponseEntity>>
 
     @Query("SELECT * FROM `product_attrs_table` WHERE id = :attrId")
-    suspend fun fetchProductAttrDetails(attrId: Int): ProductAttributesResponseEntity
+    fun fetchProductAttrDetails(attrId: Int): Flow<ProductAttributesResponseEntity>
 
-    @Query("SELECT COUNT(*) FROM `product_attrs_table`")
-    suspend fun isProductAttributesCacheAvailable(): Int
+    @Query("DELETE FROM `product_attrs_table`")
+    suspend fun deleteProductAttrs()
+
+    @Transaction
+    suspend fun deleteAndInsertProductAttributes(attrs: List<ProductAttributesResponseEntity>) {
+        deleteProductAttrs()
+        insertOrIgnoreProductAttributes(attrs)
+    }
 }
