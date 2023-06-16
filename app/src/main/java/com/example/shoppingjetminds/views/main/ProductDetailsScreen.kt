@@ -31,7 +31,7 @@ fun ProductDetailsScreen() {
 
             Image(
                 modifier = Modifier.size(350.dp),
-                painter = painterResource(id = R.drawable.varta_recharge_accu_power_aa_2100mah),
+                painter = painterResource(id = R.drawable.jetminds_shop_feature_image_example),
                 contentDescription = null
             )
 

@@ -15,7 +15,7 @@ interface ProductReviewsDao {
     suspend fun insertOrIgnoreProductReviews(reviews: List<ProductReviewsResponseEntity>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertProductReviewDetails(reviewId: Int)
+    suspend fun insertProductReviewDetails(review: ProductReviewsResponseEntity)
 
     @Query("SELECT * FROM `product_reviews_table` WHERE product_id = :productId")
     fun fetchProductReviews(productId: Int): Flow<List<ProductReviewsResponseEntity>>

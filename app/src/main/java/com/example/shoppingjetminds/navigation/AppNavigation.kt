@@ -13,7 +13,6 @@ import com.example.shoppingjetminds.views.auth.*
 import com.example.shoppingjetminds.views.main.*
 import com.example.shoppingjetminds.views.start.*
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavigation(navHostController: NavHostController) {
     NavHost(
@@ -63,7 +62,6 @@ fun NavGraphBuilder.addAuthTopLevel(navController: NavController) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.addMainTopLevel(navController: NavController) {
     navigation(
         route = Graph.MAIN,

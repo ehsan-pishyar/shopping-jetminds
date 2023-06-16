@@ -11,11 +11,11 @@ import com.example.shoppingjetminds.R
 @Composable
 fun JetCoilImage(
     modifier: Modifier = Modifier,
-    imageUrl: String? = null
+    imageUrl: String
 ) {
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
-            .data(imageUrl!!)
+            .data(imageUrl)
             .placeholder(R.drawable.favorite)
             .crossfade(300)
             .build(),

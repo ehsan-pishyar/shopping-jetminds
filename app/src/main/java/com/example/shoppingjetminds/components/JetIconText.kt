@@ -1,11 +1,12 @@
 package com.example.shoppingjetminds.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -14,38 +15,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.example.shoppingjetminds.R
-import com.example.shoppingjetminds.ui.theme.Background
 import com.example.shoppingjetminds.ui.theme.BlackColor
-import com.example.shoppingjetminds.ui.theme.YellowColor
+import com.example.shoppingjetminds.ui.theme.Primary
 
 @Composable
 fun JetIconText(
-    modifier: Modifier = Modifier,
-    icon: Int = R.drawable.star,
-    title: String = "تخفیفات این هفته آنارام",
-    iconSize: Int = 15,
-    iconColor: Color = YellowColor,
-    titleSize: Int = 12,
-    titleColor: Color = BlackColor
+    onClick: () -> Unit
 ) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+    Button(
+        modifier = Modifier.width(80.dp).height(25.dp),
+        onClick = { onClick() },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.White
+        ),
+        shape = RoundedCornerShape(4.dp),
+        contentPadding = PaddingValues(2.dp)
     ) {
-        Icon(
-            modifier = modifier.size(iconSize.dp),
-            painter = painterResource(id = icon),
-            contentDescription = null,
-            tint = iconColor
+        JetText(
+            text = "مشاهده همه",
+            fontSize = 10,
+            color = BlackColor
         )
 
-        Spacer(modifier = modifier.width(2.dp))
+        Spacer(modifier = Modifier.width(2.dp))
 
-        JetText(
-            text = title,
-            fontSize = titleSize,
-            lineHeight = 1.0,
-            color = titleColor
+        Icon(
+            modifier = Modifier.size(12.dp),
+            painter = painterResource(id = R.drawable.play),
+            contentDescription = null,
+            tint = Primary
         )
     }
 }
@@ -53,22 +51,8 @@ fun JetIconText(
 
 @Composable
 @Preview
-fun PreviewJetIconText() {
+fun Preview_JetIconText() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        Row(
-            modifier = Modifier
-                .background(Background)
-                .height(50.dp)
-                .width(100.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            JetIconText(
-                icon = R.drawable.star,
-                title = "4.5",
-                iconSize = 15,
-                iconColor = YellowColor,
-                titleSize = 11
-            )
-        }
+        JetIconText {}
     }
 }

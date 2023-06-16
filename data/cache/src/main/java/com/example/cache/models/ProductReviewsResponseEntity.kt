@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.cache.utils.CacheConstants
-import kotlinx.serialization.Serializable
 
 @Entity(tableName = CacheConstants.PRODUCT_REVIEWS_TABLE)
 data class ProductReviewsResponseEntity(

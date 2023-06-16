@@ -176,7 +176,7 @@ fun Indicator(isSelected:Boolean){
                 if (isSelected) Background
                 else Background.copy(alpha = 0.5f)
             )
-    ){}
+    )
 }
 
 @Preview
