@@ -38,7 +38,7 @@ interface ProductsDao {
 
     @Query(
         "SELECT * FROM `products_table` " +
-                "WHERE categories = :categoryId " +
+                "WHERE :categoryId IN (SELECT id FROM `categories_table`) " +
                 "AND stock_status = :stockStatus " +
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility"
@@ -52,7 +52,7 @@ interface ProductsDao {
 
     @Query(
         "SELECT * FROM `products_table` " +
-                "WHERE tags = :tagId " +
+                "WHERE :tagId IN (SELECT id FROM `tags_table`) " +
                 "AND stock_status = :stockStatus " +
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility"
@@ -66,7 +66,7 @@ interface ProductsDao {
 
     @Query(
         "SELECT * FROM `products_table` " +
-                "WHERE tags = :attrId " +
+                "WHERE :attrId IN (SELECT id FROM `attrs_table`) " +
                 "AND stock_status = :stockStatus " +
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility"

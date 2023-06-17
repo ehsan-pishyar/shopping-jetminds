@@ -27,8 +27,8 @@ object NetworkModule {
             val url = chain.request().url
             val keyBuilder = url.newBuilder()
             if (url.queryParameter("consumer_key") == null) {
-                keyBuilder.addQueryParameter(name = "consumer_key", value = Constants.CONSUMER_KEY)
-                keyBuilder.addQueryParameter(name = "consumer_secret", value = Constants.CONSUMER_SECRET)
+                keyBuilder.addQueryParameter(name = "consumer_key", value = "")
+                keyBuilder.addQueryParameter(name = "consumer_secret", value = "")
             }
             chain.proceed(
                 requestBuilder

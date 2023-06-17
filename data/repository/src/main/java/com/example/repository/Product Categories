@@ -1,0 +1,14 @@
+ui8                     = 115
+ui8-ui-kit              = 119 - parent = 115
+ui8-icon                = 117 - parent = 115
+ui8-illustration        = 118 - parent = 115
+
+other                   = 120
+other-ui-kit            = 123 - parent = 120
+other-icon              = 122 - parent = 120
+other-illustration      = 121 - parent = 120
+
+android                 = 111
+android-app             = 112 - parent = 111
+android-source-code     = 114 - parent = 111
+android-components      = 113 - parent = 111

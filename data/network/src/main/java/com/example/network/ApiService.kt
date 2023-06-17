@@ -49,7 +49,7 @@ interface ApiService {
     suspend fun getProductShippingClasses(): List<ProductShippingClassesResponseDto>
 
     @GET("products/tags")
-    suspend fun getProductsTags(
+    suspend fun getProductTags(
         @Query("page") page: Int = 1
     ): List<ProductTagsResponseDto>
 

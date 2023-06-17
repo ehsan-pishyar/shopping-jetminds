@@ -1,9 +1,12 @@
 package com.example.cache.models
 
-import kotlinx.serialization.Serializable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.cache.utils.CacheConstants
 
-@Serializable
+@Entity(tableName = CacheConstants.CATEGORIES_TABLE)
 data class CategoryEntity(
+    @PrimaryKey(autoGenerate = false)
     val id: Int,
     val name: String
 )

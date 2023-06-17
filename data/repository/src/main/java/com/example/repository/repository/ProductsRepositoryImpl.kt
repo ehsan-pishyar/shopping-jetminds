@@ -62,56 +62,6 @@ class ProductsRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun getOnSaleProductsForHome(): Flow<List<ProductsResponse>> {
-        return dao.fetchOnSaleProducts().map { productsEntity ->
-            productsEntity.map(ProductsResponseEntity::toDomain)
-        }.onEach {
-            if (it.isEmpty()) {
-                refreshProducts()
-            }
-        }
-    }
-
-    override fun getPopularProductsForHome(): Flow<List<ProductsResponse>> {
-        return dao.fetchPopularProducts().map { productsEntity ->
-            productsEntity.map(ProductsResponseEntity::toDomain)
-        }.onEach {
-            if (it.isEmpty()) {
-                refreshProducts()
-            }
-        }
-    }
-
-    override fun getTopSalesProductsForHome(): Flow<List<ProductsResponse>> {
-        return dao.fetchTopSalesProducts().map { productsEntity ->
-            productsEntity.map(ProductsResponseEntity::toDomain)
-        }.onEach {
-            if (it.isEmpty()) {
-                refreshProducts()
-            }
-        }
-    }
-
-    override fun getNewestProductsForHome(): Flow<List<ProductsResponse>> {
-        return dao.fetchNewestProducts().map { productsEntity ->
-            productsEntity.map(ProductsResponseEntity::toDomain)
-        }.onEach {
-            if (it.isEmpty()) {
-                refreshProducts()
-            }
-        }
-    }
-
-    override fun getTopRatedProductsForHome(): Flow<List<ProductsResponse>> {
-        return dao.fetchTopRatedProducts().map { productsEntity ->
-            productsEntity.map(ProductsResponseEntity::toDomain)
-        }.onEach {
-            if (it.isEmpty()) {
-                refreshProducts()
-            }
-        }
-    }
-
     override suspend fun refreshProducts() {
         api.getProducts().also { productsResponseDto ->
             dao.deleteAndInsertProducts(

@@ -6,10 +6,7 @@ import com.example.domain.utils.Result
 import com.example.domain.utils.asResult
 import kotlinx.coroutines.flow.Flow
 
-class GetTopRatedProductsForHomeUseCase constructor(
+class GetTopRatedProductsUseCase constructor(
     private val productsRepository: ProductsRepository
 ) {
-
-    operator fun invoke(): Flow<Result<List<ProductsResponse>>> =
-        productsRepository.getTopRatedProductsForHome().asResult()
 }

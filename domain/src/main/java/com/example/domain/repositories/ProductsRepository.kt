@@ -11,11 +11,5 @@ interface ProductsRepository {
     fun getProductsByAttrId(attrId: Int): Flow<List<ProductsResponse>>
     suspend fun getProductDetails(productId: Int): Flow<ProductsResponse>
 
-    fun getOnSaleProductsForHome(): Flow<List<ProductsResponse>>
-    fun getPopularProductsForHome(): Flow<List<ProductsResponse>>
-    fun getTopSalesProductsForHome(): Flow<List<ProductsResponse>>
-    fun getNewestProductsForHome(): Flow<List<ProductsResponse>>
-    fun getTopRatedProductsForHome(): Flow<List<ProductsResponse>>
-
     suspend fun refreshProducts()
 }

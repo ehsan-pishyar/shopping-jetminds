@@ -33,7 +33,7 @@ class ProductTagsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun refreshProductTags() {
-        api.getProductsTags().also { tagsDto ->
+        api.getProductTags().also { tagsDto ->
             dao.deleteAndInsertProductTags(
                 tags = tagsDto.map(
                     ProductTagsResponseDto::toEntity
