@@ -7,9 +7,9 @@ import com.example.domain.utils.asResult
 import kotlinx.coroutines.flow.Flow
 
 class GetProductDetailsUseCase constructor(
-    private val productsRepository: ProductsRepository
+    private val repository: ProductsRepository
 ) {
 
     suspend operator fun invoke(productId: Int): Flow<Result<ProductsResponse>> =
-        productsRepository.getProductDetails(productId).asResult()
+        repository.getProductDetails(productId).asResult()
 }

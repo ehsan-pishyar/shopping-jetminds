@@ -9,7 +9,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
@@ -24,7 +23,7 @@ import com.example.shoppingjetminds.ui.theme.*
 @Composable
 fun JetProduct(
     title: String,
-    image: Int? = null,
+    image: String? = null,
     price: String? = null,
     rating: String? = "4.5",
     category: String? = null
@@ -47,13 +46,11 @@ fun JetProduct(
                 contentAlignment = Alignment.TopEnd
             ) {
                 if (image != null) {
-                    Image(
-                        painter = painterResource(id = image),
-                        contentDescription = "Product Image",
+                    JetCoilImage(
+                        imageUrl = image,
                         modifier = Modifier
                             .fillMaxSize()
-                            .clip(shape = RoundedCornerShape(8.dp)),
-                        contentScale = ContentScale.FillWidth
+                            .clip(shape = RoundedCornerShape(8.dp))
                     )
                 }
                 LikeButton()
@@ -274,7 +271,7 @@ fun Preview_JetProduct() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
         JetProduct(
             title = "کیت رابط کاربری Magenest – eCommerce App UI Kit",
-            image = R.drawable.jetminds_shop_feature_image_example,
+            image = "",
             price = "39000",
             rating = "4.6",
             category = "کیت رابط کاربری"

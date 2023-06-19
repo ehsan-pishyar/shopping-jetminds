@@ -1,6 +1,8 @@
 package com.example.repository.di
 
 import com.example.domain.repositories.ProductsRepository
+import com.example.domain.use_cases.products.GetHighestPriceProductsUseCase
+import com.example.domain.use_cases.products.GetLowestPriceProductsUseCase
 import com.example.domain.use_cases.products.GetNewestProductsUseCase
 import com.example.domain.use_cases.products.GetOnSaleProductsUseCase
 import com.example.domain.use_cases.products.GetPopularProductsUseCase
@@ -45,6 +47,16 @@ object ProductsUseCaseModule {
     fun providesGetTopSalesProductsUseCase(
         repository: ProductsRepository
     ): GetTopSalesProductsUseCase = GetTopSalesProductsUseCase(repository)
+
+    @[Provides Singleton]
+    fun providesGetLowestPriceProductsUseCase(
+        repository: ProductsRepository
+    ): GetLowestPriceProductsUseCase = GetLowestPriceProductsUseCase(repository)
+
+    @[Provides Singleton]
+    fun providesGetHighestPriceProductsUseCase(
+        repository: ProductsRepository
+    ): GetHighestPriceProductsUseCase = GetHighestPriceProductsUseCase(repository)
 
     @[Provides Singleton]
     fun providesGetProductsUseCase(

@@ -62,6 +62,76 @@ class ProductsRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override fun getNewestProducts(): Flow<List<ProductsResponse>> {
+        return dao.fetchNewestProducts().map { newest ->
+            newest.map(ProductsResponseEntity::toDomain)
+        }.onEach {
+            if (it.isEmpty()) {
+                refreshProducts()
+            }
+        }
+    }
+
+    override fun getPopularProducts(): Flow<List<ProductsResponse>> {
+        return dao.fetchPopularProducts().map { popular ->
+            popular.map(ProductsResponseEntity::toDomain)
+        }.onEach {
+            if (it.isEmpty()) {
+                refreshProducts()
+            }
+        }
+    }
+
+    override fun getTopRatedProducts(): Flow<List<ProductsResponse>> {
+        return dao.fetchTopRatedProducts().map { topRated ->
+            topRated.map(ProductsResponseEntity::toDomain)
+        }.onEach {
+            if (it.isEmpty()) {
+                refreshProducts()
+            }
+        }
+    }
+
+    override fun getOnSalesProducts(): Flow<List<ProductsResponse>> {
+        return dao.fetchOnSaleProducts().map { onSale ->
+            onSale.map(ProductsResponseEntity::toDomain)
+        }.onEach {
+            if (it.isEmpty()) {
+                refreshProducts()
+            }
+        }
+    }
+
+    override fun getTopSalesProducts(): Flow<List<ProductsResponse>> {
+        return dao.fetchTopSalesProducts().map { topSales ->
+            topSales.map(ProductsResponseEntity::toDomain)
+        }.onEach {
+            if (it.isEmpty()) {
+                refreshProducts()
+            }
+        }
+    }
+
+    override fun getLowestPriceProducts(): Flow<List<ProductsResponse>> {
+        return dao.fetchLowestPriceProducts().map { popular ->
+            popular.map(ProductsResponseEntity::toDomain)
+        }.onEach {
+            if (it.isEmpty()) {
+                refreshProducts()
+            }
+        }
+    }
+
+    override fun getHighestPriceProducts(): Flow<List<ProductsResponse>> {
+        return dao.fetchHighestPriceProducts().map { popular ->
+            popular.map(ProductsResponseEntity::toDomain)
+        }.onEach {
+            if (it.isEmpty()) {
+                refreshProducts()
+            }
+        }
+    }
+
     override suspend fun refreshProducts() {
         api.getProducts().also { productsResponseDto ->
             dao.deleteAndInsertProducts(

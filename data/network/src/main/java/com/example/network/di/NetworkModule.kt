@@ -1,6 +1,7 @@
 package com.example.network.di
 
 import com.example.network.ApiService
+import com.example.network.BuildConfig
 import com.example.network.utils.Constants
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -27,8 +28,8 @@ object NetworkModule {
             val url = chain.request().url
             val keyBuilder = url.newBuilder()
             if (url.queryParameter("consumer_key") == null) {
-                keyBuilder.addQueryParameter(name = "consumer_key", value = "")
-                keyBuilder.addQueryParameter(name = "consumer_secret", value = "")
+                keyBuilder.addQueryParameter(name = "consumer_key", value = BuildConfig.CONSUMER_KEY)
+                keyBuilder.addQueryParameter(name = "consumer_secret", value = BuildConfig.CONSUMER_SECRET)
             }
             chain.proceed(
                 requestBuilder

@@ -7,9 +7,9 @@ import com.example.domain.utils.asResult
 import kotlinx.coroutines.flow.Flow
 
 class GetProductsByAttrIdUseCase constructor(
-    private val productsRepository: ProductsRepository
+    private val repository: ProductsRepository
 ) {
 
     operator fun invoke(attrId: Int): Flow<Result<List<ProductsResponse>>> =
-        productsRepository.getProductsByAttrId(attrId).asResult()
+        repository.getProductsByAttrId(attrId).asResult()
 }

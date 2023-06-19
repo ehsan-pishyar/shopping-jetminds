@@ -7,6 +7,10 @@ plugins {
 
 }
 
+def localPropertiesFile = rootProject.file("local.properties")
+def properties = new Properties()
+properties.load(new FileInputStream(localPropertiesFile))
+
 android {
     namespace 'com.example.network'
     compileSdk 33
@@ -17,6 +21,14 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField("String", "CONSUMER_KEY", properties['CONSUMER_KEY'])
+        buildConfigField("String", "CONSUMER_SECRET", properties['CONSUMER_SECRET'])
+
+//        Properties properties = new Properties()
+//        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+//        manifestPlaceholders = [CONSUMER_KEY: "${properties.getProperty('CONSUMER_KEY')}"]
+//        manifestPlaceholders = [CONSUMER_SECRET: "${properties.getProperty('CONSUMER_SECRET')}"]
     }
 
     buildTypes {

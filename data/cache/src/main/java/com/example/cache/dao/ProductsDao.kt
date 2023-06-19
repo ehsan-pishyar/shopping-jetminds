@@ -37,8 +37,9 @@ interface ProductsDao {
     fun fetchProductDetails(productId: Int): Flow<ProductsResponseEntity>
 
     @Query(
-        "SELECT * FROM `products_table` " +
-                "WHERE :categoryId IN (SELECT id FROM `categories_table`) " +
+        "SELECT * FROM `products_table` pt " +
+                "INNER JOIN `mtm_product_category_table` ct ON pt.id = ct.product_id " +
+                "WHERE ct.category_id = :categoryId " +
                 "AND stock_status = :stockStatus " +
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility"
@@ -51,8 +52,9 @@ interface ProductsDao {
     ): Flow<List<ProductsResponseEntity>>
 
     @Query(
-        "SELECT * FROM `products_table` " +
-                "WHERE :tagId IN (SELECT id FROM `tags_table`) " +
+        "SELECT * FROM `products_table` pt " +
+                "INNER JOIN `mtm_product_tag_table` tt ON pt.id = tt.product_id " +
+                "WHERE tt.tag_id = :tagId " +
                 "AND stock_status = :stockStatus " +
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility"
@@ -65,8 +67,9 @@ interface ProductsDao {
     ): Flow<List<ProductsResponseEntity>>
 
     @Query(
-        "SELECT * FROM `products_table` " +
-                "WHERE :attrId IN (SELECT id FROM `attrs_table`) " +
+        "SELECT * FROM `products_table` pt " +
+                "INNER JOIN `mtm_product_attr_table` at ON pt.id = at.product_id " +
+                "WHERE at.product_id = :attrId " +
                 "AND stock_status = :stockStatus " +
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility"
@@ -144,6 +147,32 @@ interface ProductsDao {
                 "ORDER BY average_rating DESC"
     )
     fun fetchTopRatedProducts(
+        stockStatus: String = "instock",
+        status: String = "publish",
+        catalogVisibility: String = "visible"
+    ): Flow<List<ProductsResponseEntity>>
+
+    @Query(
+        "SELECT * FROM `products_table` " +
+                "WHERE stock_status = :stockStatus " +
+                "AND status = :status " +
+                "AND catalog_visibility = :catalogVisibility " +
+                "ORDER BY regular_price ASC"
+    )
+    fun fetchLowestPriceProducts(
+        stockStatus: String = "instock",
+        status: String = "publish",
+        catalogVisibility: String = "visible"
+    ): Flow<List<ProductsResponseEntity>>
+
+    @Query(
+        "SELECT * FROM `products_table` " +
+                "WHERE stock_status = :stockStatus " +
+                "AND status = :status " +
+                "AND catalog_visibility = :catalogVisibility " +
+                "ORDER BY regular_price ASC"
+    )
+    fun fetchHighestPriceProducts(
         stockStatus: String = "instock",
         status: String = "publish",
         catalogVisibility: String = "visible"
