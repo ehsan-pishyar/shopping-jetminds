@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ScaffoldState
@@ -45,7 +46,6 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 @Composable
 fun HomeScreen(
     navController: NavController,
-    uiState: HomeUiState,
     productsViewModel: ProductsViewModel = hiltViewModel(),
     scaffoldState: ScaffoldState = rememberScaffoldState()
 ){
@@ -135,7 +135,29 @@ fun Ui8ProductsSection(ui8State: Ui8ProductsUiState) {
             }
             is Ui8ProductsUiState.Error -> {
                 item {
-                    JetText(text = "خطا در بارگذاری")
+                    Column {
+                        JetText(
+                            text = "message: ${ui8State.throwable?.message} ",
+                            maxLines = 10,
+                            modifier = Modifier
+                                .wrapContentHeight()
+                                .fillMaxWidth()
+                        )
+                        JetText(
+                            text = "cause: ${ui8State.throwable?.cause} ",
+                            maxLines = 10,
+                            modifier = Modifier
+                                .wrapContentHeight()
+                                .fillMaxWidth()
+                        )
+                        JetText(
+                            text = "localizedMessage: ${ui8State.throwable?.localizedMessage}",
+                            maxLines = 10,
+                            modifier = Modifier
+                                .wrapContentHeight()
+                                .fillMaxWidth()
+                        )
+                    }
                 }
             }
         }

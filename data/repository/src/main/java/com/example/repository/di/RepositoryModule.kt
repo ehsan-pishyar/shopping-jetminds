@@ -14,7 +14,52 @@ import dagger.hilt.components.SingletonComponent
 interface RepositoryModule {
 
     @Binds
-    fun productCategoriesRepository(
-        productCategoriesRepositoryImpl: ProductCategoriesRepositoryImpl
+    fun providesProductCategoriesRepository(
+        impl: ProductCategoriesRepositoryImpl
     ): ProductCategoriesRepository
+
+    @Binds
+    fun providesProductsRepository(
+        impl: ProductsRepositoryImpl
+    ): ProductsRepository
+
+    @Binds
+    fun providesCouponsRepository(
+        impl: CouponsRepositoryImpl
+    ): CouponsRepository
+
+    @Binds
+    fun providesOrdersRepository(
+        impl: OrdersRepositoryImpl
+    ): OrdersRepository
+
+    @Binds
+    fun providesProductAttrsRepository(
+        impl: ProductAttributesRepositoryImpl
+    ): ProductAttributesRepository
+
+    @Binds
+    fun providesProductReviewsRepository(
+        impl: ProductReviewsRepositoryImpl
+    ): ProductReviewsRepository
+
+    @Binds
+    fun providesProductShippingClassesRepository(
+        impl: ProductShippingClassesRepositoryImpl
+    ): ProductShippingClassesRepository
+
+    @Binds
+    fun providesProductTagsRepository(
+        impl: ProductTagsRepositoryImpl
+    ): ProductTagsRepository
+
+    @Binds
+    fun providesProductVariationRepository(
+        impl: ProductVariationsRepositoryImpl
+    ): ProductVariationsRepository
+
+    @Binds
+    fun providesShippingZonesRepository(
+        impl: ShippingZonesRepositoryImpl
+    ): ShippingZonesRepository
 }

@@ -9,9 +9,7 @@ interface ApiService {
 
     // Products -----------------------------------------------------------------------
     @GET("products")
-    suspend fun getProducts(
-        @Query("page") page: Int = 1
-    ): List<ProductsResponseDto>
+    suspend fun getProducts(): List<ProductsResponseDto>
 
     @GET("products/{id}")
     suspend fun getProductDetails(

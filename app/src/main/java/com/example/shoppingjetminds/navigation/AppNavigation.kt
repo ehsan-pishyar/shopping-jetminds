@@ -1,7 +1,5 @@
 package com.example.shoppingjetminds.navigation
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -34,7 +32,8 @@ fun NavGraphBuilder.addStartTopLevel(navController: NavController) {
         composable(route = StartScreens.Splash.route) {
             SplashScreen(
                 toOnBoardingScreen = { navController.navigate(route = StartScreens.OnBoarding.route) },
-                toHomeScreen = { navController.navigate(route = MainScreens.Home.route) }
+                toHomeScreen = { navController.navigate(route = MainScreens.Home.route) },
+                toCategoryScreen = { navController.navigate(route = MainScreens.Category.route) }
             )
         }
         composable(route = StartScreens.OnBoarding.route) {
