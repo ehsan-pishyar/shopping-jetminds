@@ -6,13 +6,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object ProductShippingClassesUseCaseModule {
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetProductShippingClassesUseCase(
         repository: ProductShippingClassesRepository
     ): GetProductShippingClassesUseCase = GetProductShippingClassesUseCase(repository)

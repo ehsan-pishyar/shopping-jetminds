@@ -54,8 +54,8 @@ android {
 }
 
 dependencies {
-    api project(":domain")
-    api project(":data:repository")
+    implementation project(path: ':domain')
+    implementation project(path: ':data:repository')
 
     def palette_version = "1.0.0"
 

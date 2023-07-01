@@ -4,18 +4,18 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import java.io.IOException
 
-private const val RETRY_TIME_IN_MILLIS = 5_000L
+private const val RETRY_TIME_IN_MILLIS = 15_000L
 
-sealed class ServiceResult<T>(val data: T? = null, val error: String? = null) {
-    class Loading<T>(isLoading: Boolean = true): ServiceResult<T>()
-    class Success<T>(data: T? = null): ServiceResult<T>(data = data)
-    class Error<T>(data: T? = null, error: String? = null): ServiceResult<T>(data = data, error = error)
-}
+//sealed class ServiceResult<T>(val data: T? = null, val error: String? = null) {
+//    class Loading<T>(isLoading: Boolean = true): ServiceResult<T>()
+//    class Success<T>(data: T? = null): ServiceResult<T>(data = data)
+//    class Error<T>(data: T? = null, error: String? = null): ServiceResult<T>(data = data, error = error)
+//}
 
-sealed interface Result<out T> {
-    data class Success<T>(val data: T): Result<T>
-    data class Error(val throwable: Throwable? = null): Result<Nothing>
-    object Loading: Result<Nothing>
+sealed interface ServiceResult<out T> {
+    data class Success<T>(val data: T): ServiceResult<T>
+    data class Error(val throwable: Throwable? = null): ServiceResult<Nothing>
+    object Loading: ServiceResult<Nothing>
 }
 
 
@@ -35,22 +35,22 @@ sealed interface Result<out T> {
  * اصلی ترین مزیتش اینه که چون ما باید کد Result رو توی همه repository ها مون تکرار میکردیم، با این تابع فقط کافیه که asResult رو به آخر
  * توابع repository هامون اضافه کنیم و تمام. دیگه از کدهای تکراری خبری نیست.
  */
-fun <T> Flow<T>.asResult(): Flow<Result<T>> {
+fun <T> Flow<T>.asResult(): Flow<ServiceResult<T>> {
     return this
-        .map<T, Result<T>> {
-            Result.Success(it)
+        .map<T, ServiceResult<T>> {
+            ServiceResult.Success(it)
         }
-        .onStart { emit(Result.Loading) }
+        .onStart { emit(ServiceResult.Loading) }
         .retryWhen { cause, _ ->
             if (cause is IOException) {
-                emit(Result.Error(cause))
+                emit(ServiceResult.Error(cause))
                 delay(RETRY_TIME_IN_MILLIS)
                 true
             } else {
                 false
             }
         }
-        .catch { Result.Error(it) }
+        .catch { ServiceResult.Error(it) }
 }
 
 

@@ -16,41 +16,53 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DaoModule {
 
     @Provides
+    @Singleton
     fun providesCouponsDao(database: AppDatabase): CouponsDao = database.couponsDao()
 
     @Provides
+    @Singleton
     fun providesCustomersDao(database: AppDatabase): CustomersDao = database.customersDao()
 
     @Provides
+    @Singleton
     fun providesOrdersDao(database: AppDatabase): OrdersDao = database.ordersDao()
 
     @Provides
+    @Singleton
     fun providesProductAttributesDao(database: AppDatabase): ProductAttributesDao = database.productAttributesDao()
 
     @Provides
+    @Singleton
     fun providesProductCategoriesDao(database: AppDatabase): ProductCategoriesDao = database.productCategoriesDao()
 
     @Provides
+    @Singleton
     fun providesProductReviewsDao(database: AppDatabase): ProductReviewsDao = database.productReviewsDao()
 
     @Provides
+    @Singleton
     fun providesProductsDao(database: AppDatabase): ProductsDao = database.productsDao()
 
     @Provides
+    @Singleton
     fun providesProductShippingClassesDao(database: AppDatabase): ProductShippingClassesDao = database.productShippingClassesDao()
 
     @Provides
+    @Singleton
     fun providesProductTagsDao(database: AppDatabase): ProductTagsDao = database.productTagsDao()
 
     @Provides
+    @Singleton
     fun providesProductVariationsDao(database: AppDatabase): ProductVariationsDao = database.productVariationsDao()
 
     @Provides
+    @Singleton
     fun providesShippingZonesDao(database: AppDatabase): ShippingZonesDao = database.shippingZonesDao()
 }

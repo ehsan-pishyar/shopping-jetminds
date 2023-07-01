@@ -1,8 +1,8 @@
 package com.example.shoppingjetminds.views.main
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,105 +11,80 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.shoppingjetminds.R
 import com.example.shoppingjetminds.components.JetProduct
-import com.example.shoppingjetminds.components.JetSectionTitle
 import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.ui.theme.Background
 import com.example.shoppingjetminds.viewmodels.HomeUiState
 import com.example.shoppingjetminds.viewmodels.ProductsViewModel
-import com.example.shoppingjetminds.viewmodels.Ui8ProductsUiState
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.example.shoppingjetminds.viewmodels.NewestProductUiState
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     navController: NavController,
-    productsViewModel: ProductsViewModel = hiltViewModel(),
-    scaffoldState: ScaffoldState = rememberScaffoldState()
+    productsViewModel: ProductsViewModel = hiltViewModel()
 ){
 
-    val errorMessage = "لطفا از متصل بودن خود به اینترنت مطمئن شوید"
-    val okText = "انجام شد"
+    val uiState: HomeUiState by productsViewModel.newestUiState.collectAsStateWithLifecycle()
 
-    val uiState: HomeUiState by productsViewModel.homeUiState.collectAsStateWithLifecycle()
-
-    if (uiState.isError) {
-        LaunchedEffect(scaffoldState.snackbarHostState) {
-            scaffoldState.snackbarHostState.showSnackbar(
-                message = errorMessage,
-                actionLabel = okText
-            )
-            productsViewModel.onErrorConsumed()
-        }
-    }
-
-    Scaffold(modifier = Modifier
-        .fillMaxSize()
-        .background(Background)
-    ) {
-        SwipeRefresh(
-            state = rememberSwipeRefreshState(isRefreshing = uiState.isRefreshing),
-            onRefresh = { /*TODO*/ },
-            modifier = Modifier.padding(it)
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(15.dp)
+            .background(Background),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(15.dp),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.jetminds_slider_1),
-                    contentDescription = "main Banner",
-                    modifier = Modifier.clip(RoundedCornerShape(12.dp))
-                )
-
-                SectionSpacer(20)
-
-                // UI8 section start
-                JetSectionTitle(title = "کیت های رابط کاربری") {}
-                SectionSpacer(10)
-                Ui8ProductsSection(ui8State = uiState.ui8ProductsUiState)
-                // UI Kit section end
-
-                SectionSpacer(20)
-
-                // Android source code section start
-                JetSectionTitle(title = "سورس کد اندروید") {}
-
-                SectionSpacer(10)
-
-                // Android source code section end
+            when (val state = uiState.newestProductList) {
+                NewestProductUiState.Loading -> {
+                    Text(
+                        text = "در حال بارگزاری ...",
+                        color = Color.Black,
+                        fontSize = 15.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                is NewestProductUiState.Success -> {
+                    Text(
+                        text = state.data[0].name,
+                        color = Color.Black,
+                        fontSize = 15.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                is NewestProductUiState.Error -> {
+                    Text(
+                        text = state.toString(),
+                        color = Color.Black,
+                        fontSize = 15.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun Ui8ProductsSection(ui8State: Ui8ProductsUiState) {
+fun Ui8ProductsSection(ui8State: NewestProductUiState) {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth(),
@@ -117,12 +92,12 @@ fun Ui8ProductsSection(ui8State: Ui8ProductsUiState) {
         userScrollEnabled = true
     ) {
         when (ui8State) {
-            Ui8ProductsUiState.Loading -> {
+            NewestProductUiState.Loading -> {
                 item {
                     JetText(text = "در حال بارگذاری محصولات ...")
                 }
             }
-            is Ui8ProductsUiState.Success -> {
+            is NewestProductUiState.Success -> {
                 items(ui8State.data.size) {
                     JetProduct(
                         title = ui8State.data[it].name,
@@ -133,7 +108,7 @@ fun Ui8ProductsSection(ui8State: Ui8ProductsUiState) {
                     )
                 }
             }
-            is Ui8ProductsUiState.Error -> {
+            is NewestProductUiState.Error -> {
                 item {
                     Column {
                         JetText(

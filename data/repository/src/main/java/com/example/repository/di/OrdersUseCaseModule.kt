@@ -7,18 +7,17 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object OrdersUseCaseModule {
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetOrdersUseCase(
         repository: OrdersRepository
     ): GetOrdersUseCase = GetOrdersUseCase(repository)
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetOrderDetailsUseCase(
         repository: OrdersRepository
     ): GetOrderDetailsUseCase = GetOrderDetailsUseCase(repository)

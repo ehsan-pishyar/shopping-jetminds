@@ -47,9 +47,9 @@ dependencies {
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
     // Room
-    api "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
-    api "androidx.room:room-ktx:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
 
     // Kotlinx.serialization converter
     implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0"

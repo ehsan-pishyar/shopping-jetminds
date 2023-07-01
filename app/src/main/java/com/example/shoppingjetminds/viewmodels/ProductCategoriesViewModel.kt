@@ -10,7 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.domain.utils.asResult
-import com.example.domain.utils.Result
+import com.example.domain.utils.ServiceResult
 
 @HiltViewModel
 class ProductCategoriesViewModel @Inject constructor(
@@ -28,18 +28,18 @@ class ProductCategoriesViewModel @Inject constructor(
         viewModelScope.launch {
             productCategoriesRepository.getProductCategories().asResult().collect { result ->
                 when (result) {
-                    is Result.Loading -> {
+                    is ServiceResult.Loading -> {
                         _state.value = _state.value.copy(
                             loading = true
                         )
                     }
-                    is Result.Success -> {
+                    is ServiceResult.Success -> {
                         _state.value = _state.value.copy(
                             loading = false,
                             success = result.data
                         )
                     }
-                    is Result.Error -> {
+                    is ServiceResult.Error -> {
                         _state.value = _state.value.copy(
                             loading = false,
                             success = emptyList(),

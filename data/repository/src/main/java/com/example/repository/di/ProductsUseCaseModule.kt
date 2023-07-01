@@ -17,68 +17,67 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object ProductsUseCaseModule {
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetNewestProductsUseCase(
         repository: ProductsRepository
     ): GetNewestProductsUseCase = GetNewestProductsUseCase(repository)
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetOnSaleProductsUseCase(
         repository: ProductsRepository
     ): GetOnSaleProductsUseCase = GetOnSaleProductsUseCase(repository)
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetPopularProductsUseCase(
         repository: ProductsRepository
     ): GetPopularProductsUseCase = GetPopularProductsUseCase(repository)
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetTopRatedProductsUseCase(
         repository: ProductsRepository
     ): GetTopRatedProductsUseCase = GetTopRatedProductsUseCase(repository)
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetTopSalesProductsUseCase(
         repository: ProductsRepository
     ): GetTopSalesProductsUseCase = GetTopSalesProductsUseCase(repository)
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetLowestPriceProductsUseCase(
         repository: ProductsRepository
     ): GetLowestPriceProductsUseCase = GetLowestPriceProductsUseCase(repository)
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetHighestPriceProductsUseCase(
         repository: ProductsRepository
     ): GetHighestPriceProductsUseCase = GetHighestPriceProductsUseCase(repository)
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetProductsUseCase(
         repository: ProductsRepository
     ): GetProductsUseCase = GetProductsUseCase(repository)
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetProductDetailsUseCase(
         repository: ProductsRepository
     ): GetProductDetailsUseCase = GetProductDetailsUseCase(repository)
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetProductsByAttrIdUseCase(
         repository: ProductsRepository
     ): GetProductsByAttrIdUseCase = GetProductsByAttrIdUseCase(repository)
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetProductsByCategoryIdUseCase(
         repository: ProductsRepository
     ): GetProductsByCategoryIdUseCase = GetProductsByCategoryIdUseCase(repository)
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetProductsByTagIdUseCase(
         repository: ProductsRepository
     ): GetProductsByTagIdUseCase = GetProductsByTagIdUseCase(repository)

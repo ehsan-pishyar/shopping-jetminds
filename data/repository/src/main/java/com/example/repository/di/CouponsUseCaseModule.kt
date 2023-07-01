@@ -13,12 +13,12 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object CouponsUseCaseModule {
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetCouponsUseCase(
         repository: CouponsRepository
     ): GetCouponsUseCase = GetCouponsUseCase(repository)
 
-    @[Provides Singleton]
+    @Provides
     fun providesGetCouponsDetailsUseCase(
         repository: CouponsRepository
     ): GetCouponDetailsUseCase = GetCouponDetailsUseCase(repository)

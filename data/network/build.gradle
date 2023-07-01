@@ -4,7 +4,6 @@ plugins {
     id 'org.jetbrains.kotlin.kapt'
     id 'dagger.hilt.android.plugin'
     id 'kotlinx-serialization'
-
 }
 
 def localPropertiesFile = rootProject.file("local.properties")
@@ -24,11 +23,6 @@ android {
 
         buildConfigField("String", "CONSUMER_KEY", properties['CONSUMER_KEY'])
         buildConfigField("String", "CONSUMER_SECRET", properties['CONSUMER_SECRET'])
-
-//        Properties properties = new Properties()
-//        properties.load(project.rootProject.file('local.properties').newDataInputStream())
-//        manifestPlaceholders = [CONSUMER_KEY: "${properties.getProperty('CONSUMER_KEY')}"]
-//        manifestPlaceholders = [CONSUMER_SECRET: "${properties.getProperty('CONSUMER_SECRET')}"]
     }
 
     buildTypes {
@@ -58,8 +52,8 @@ dependencies {
     implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0'
 
     // OkHttp
-    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
-    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
 
     // Dagger - Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"

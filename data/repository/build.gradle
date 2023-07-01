@@ -33,9 +33,9 @@ android {
 }
 
 dependencies {
-    api project(":domain")
-    api project(":data:cache")
-    api project(":data:network")
+    implementation project(path: ':domain')
+    implementation project(path: ':data:cache')
+    implementation project(path: ':data:network')
 
     implementation "androidx.core:core-ktx:$androidCore_version"
 

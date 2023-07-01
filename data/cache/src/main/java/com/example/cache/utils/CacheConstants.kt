@@ -23,5 +23,5 @@ object CacheConstants {
     const val MTM_PRODUCT_ATTR_TABLE = "mtm_product_attr_table"
 
     const val DB_NAME = "jetminds-db"
-    const val DB_VERSION = 5
+    const val DB_VERSION = 6
 }
