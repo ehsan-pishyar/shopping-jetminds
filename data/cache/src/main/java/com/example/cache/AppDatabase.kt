@@ -27,6 +27,7 @@ import com.example.cache.utils.CacheConstants
         CategoryEntity::class,
         TagEntity::class,
         AttributeEntity::class,
+        ImageEntity::class,
         MTMProductAndCategoryEntity::class,
         MTMProductAndTagEntity::class,
         MTMProductAndAttrEntity::class

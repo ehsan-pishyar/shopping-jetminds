@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,22 +24,21 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.shoppingjetminds.components.JetProduct
 import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.ui.theme.Background
-import com.example.shoppingjetminds.viewmodels.HomeUiState
-import com.example.shoppingjetminds.viewmodels.ProductsViewModel
 import com.example.shoppingjetminds.viewmodels.NewestProductUiState
+import com.example.shoppingjetminds.viewmodels.ProductCategoriesViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavController,
-    productsViewModel: ProductsViewModel = hiltViewModel()
+    productsViewModel: ProductCategoriesViewModel = hiltViewModel()
 ){
 
-    val uiState: HomeUiState by productsViewModel.newestUiState.collectAsStateWithLifecycle()
+    //val uiState: HomeUiState by productsViewModel.newestUiState.collectAsStateWithLifecycle()
+    val uiState = productsViewModel.state.value
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier
@@ -50,35 +48,62 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            when (val state = uiState.newestProductList) {
-                NewestProductUiState.Loading -> {
-                    Text(
-                        text = "در حال بارگزاری ...",
-                        color = Color.Black,
-                        fontSize = 15.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-                is NewestProductUiState.Success -> {
-                    Text(
-                        text = state.data[0].name,
-                        color = Color.Black,
-                        fontSize = 15.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-                is NewestProductUiState.Error -> {
-                    Text(
-                        text = state.toString(),
-                        color = Color.Black,
-                        fontSize = 15.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
+
+            if (uiState.loading) {
+                Text(
+                    text = "در حال بارگزاری ...",
+                    color = Color.Black,
+                    fontSize = 15.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            } else if (uiState.success.isNotEmpty()) {
+                Text(
+                    text = uiState.success[0].name,
+                    color = Color.Black,
+                    fontSize = 15.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            } else if (uiState.error.isNotEmpty()) {
+                Text(
+                    text = uiState.error,
+                    color = Color.Black,
+                    fontSize = 15.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
+
+//            when (val state = uiState.newestProductList) {
+//                NewestProductUiState.Loading -> {
+//                    Text(
+//                        text = "در حال بارگزاری ...",
+//                        color = Color.Black,
+//                        fontSize = 15.sp,
+//                        textAlign = TextAlign.Center,
+//                        modifier = Modifier.fillMaxWidth()
+//                    )
+//                }
+//                is NewestProductUiState.Success -> {
+//                    Text(
+//                        text = state.data[0].name,
+//                        color = Color.Black,
+//                        fontSize = 15.sp,
+//                        textAlign = TextAlign.Center,
+//                        modifier = Modifier.fillMaxWidth()
+//                    )
+//                }
+//                is NewestProductUiState.Error -> {
+//                    Text(
+//                        text = state.toString(),
+//                        color = Color.Black,
+//                        fontSize = 15.sp,
+//                        textAlign = TextAlign.Center,
+//                        modifier = Modifier.fillMaxWidth()
+//                    )
+//                }
+//            }
         }
     }
 }

@@ -2,21 +2,26 @@ package com.example.cache.converters
 
 import androidx.room.TypeConverter
 import com.example.cache.models.AttributeEntity
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class AttributesConverter {
 
+    private val gson = Gson()
+
     @TypeConverter
-    fun fromAttributes(attributeEntity: List<AttributeEntity>?): String? {
-        if (attributeEntity == null) return null
-        return Json.encodeToString(attributeEntity)
+    fun from(attrEntity: List<AttributeEntity>?): String?{
+        if (attrEntity.isNullOrEmpty()) return null
+
+        val type = object : TypeToken<List<AttributeEntity>?>() {}.type
+        return gson.toJson(attrEntity, type)
     }
 
     @TypeConverter
-    fun toAttributes(attributesItem: String?): List<AttributeEntity>? {
-        if (attributesItem == null) return null
-        return Json.decodeFromString(attributesItem)
+    fun to(attrItem: String?): List<AttributeEntity>?{
+        if (attrItem.isNullOrEmpty()) return null
+
+        val type = object : TypeToken<List<AttributeEntity>?>() {}.type
+        return gson.fromJson(attrItem, type)
     }
 }
