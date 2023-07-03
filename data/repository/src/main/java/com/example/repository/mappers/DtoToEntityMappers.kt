@@ -82,15 +82,15 @@ fun ProductAttributesResponseDto.toEntity(): ProductAttributesResponseEntity =
 
 fun ProductCategoriesResponseDto.toEntity(): ProductCategoriesResponseEntity =
     ProductCategoriesResponseEntity(
-        id = id,
-        name = name,
-        slug = slug,
-        parent = parent,
-        description = description,
-        display = display,
-        image = image.toEntity(),
-        menuOrder = menuOrder,
-        count = count
+        this.id,
+        this.name,
+        this.slug,
+        this.parent,
+        this.description,
+        this.display,
+        this.image.toEntity(),
+        this.menuOrder,
+        this.count
     )
 
 fun ProductReviewsResponseDto.toEntity(): ProductReviewsResponseEntity =
@@ -242,10 +242,10 @@ fun DefaultAttributeDto.toEntity(): DefaultAttributeEntity =
 
 fun ImageDto.toEntity(): ImageEntity =
     ImageEntity(
-        id = id,
-        name = name,
-        src = src,
-        alt = alt
+        this.id,
+        this.name,
+        this.src,
+        this.alt
     )
 
 fun LineItemDto.toEntity(): LineItemEntity = LineItemEntity(

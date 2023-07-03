@@ -7,6 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.cache.dao.ProductCategoriesDao
 import com.example.cache.models.ImageEntity
 import com.example.cache.models.ProductCategoriesResponseEntity
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
 
@@ -41,23 +42,73 @@ class AppDatabaseTest {
     fun productCategoriesDao() = runBlocking{
         val categories = listOf(
             ProductCategoriesResponseEntity(
-                id = 1,
-                name = "Battery AA",
-                image = ImageEntity(id = 1, src = "image 1")
+                id = 10,
+                name = "Application Ui Kit",
+                slug = "application-ui-kit",
+                parent = 1,
+                description = "Application ui kit for mobile devices",
+                display = "default",
+                image = ImageEntity(
+                    id = 1,
+                    name = "image 1",
+                    src = "https://jetminds.ir/wp-content/uploads/2023/06/android-banner.webp",
+                    alt = "application ui kit"
+                ),
+                menuOrder = 0,
+                count = 59
             ),
             ProductCategoriesResponseEntity(
-                id = 2,
-                name = "Battery AAA",
-                image = ImageEntity(id = 2, src = "image 2")
+                id = 11,
+                name = "3D Icons",
+                slug = "3d-icons",
+                parent = 1,
+                description = "3D icons for mobile devices",
+                display = "default",
+                image = ImageEntity(
+                    id = 2,
+                    name = "image 2",
+                    src = "https://jetminds.ir/wp-content/uploads/2023/06/android-banner.webp",
+                    alt = "3d icons"
+                ),
+                menuOrder = 0,
+                count = 13
             ),
             ProductCategoriesResponseEntity(
-                id = 3,
-                name = "Battery C",
-                image = ImageEntity(id = 3, src = "image 3")
-            )
+                id = 12,
+                name = "3D Illustrations",
+                slug = "3d-illustrations",
+                parent = 1,
+                description = "3D illustrations for mobile devices",
+                display = "default",
+                image = ImageEntity(
+                    id = 2,
+                    name = "image 3",
+                    src = "https://jetminds.ir/wp-content/uploads/2023/06/android-banner.webp",
+                    alt = "3d illustrations"
+                ),
+                menuOrder = 0,
+                count = 7
+            ),
+            ProductCategoriesResponseEntity(
+                id = 13,
+                name = "Android",
+                slug = "android",
+                parent = 1,
+                description = "3D illustrations for mobile devices",
+                display = "default",
+                image = ImageEntity(
+                    id = 2,
+                    name = "image 3",
+                    src = "https://jetminds.ir/wp-content/uploads/2023/06/android-banner.webp",
+                    alt = "3d illustrations"
+                ),
+                menuOrder = 0,
+                count = 7
+            ),
         )
 
         categoryDao.deleteAndInsertCategories(categories)
-        val getCategories = categoryDao.fetchProductCategories()
+        val getCategories = categoryDao.fetchProductCategories().first()
+        assertEquals(categories, getCategories)
     }
 }

@@ -72,25 +72,25 @@ fun OrdersResponseEntity.toDomain(): OrdersResponse =
 
 fun ProductAttributesResponseEntity.toDomain(): ProductAttributesResponse =
     ProductAttributesResponse(
-        id = id,
-        name = name,
-        slug = slug,
-        type = type,
-        orderBy = orderBy,
-        hasArchives = hasArchives
+        this.id,
+        this.name,
+        this.slug,
+        this.type,
+        this.orderBy,
+        this.hasArchives
     )
 
 fun ProductCategoriesResponseEntity.toDomain(): ProductCategoriesResponse =
     ProductCategoriesResponse(
-        id = id,
-        name = name,
-        slug = slug,
-        parent = parent,
-        description = description,
-        display = display,
-        image = image.toDomain(),
-        menuOrder = menuOrder,
-        count = count
+        this.id,
+        this.name,
+        this.slug,
+        this.parent,
+        this.description,
+        this.display,
+        this.image.toDomain(),
+        this.menuOrder,
+        this.count
     )
 
 fun ProductReviewsResponseEntity.toDomain(): ProductReviewsResponse =
@@ -242,10 +242,10 @@ fun DefaultAttributeEntity.toDomain(): DefaultAttribute =
 
 fun ImageEntity.toDomain(): Image =
     Image(
-        id = id,
-        name = name,
-        src = src,
-        alt = alt
+        this.id,
+        this.name,
+        this.src,
+        this.alt
     )
 
 fun LineItemEntity.toDomain(): LineItem = LineItem(
