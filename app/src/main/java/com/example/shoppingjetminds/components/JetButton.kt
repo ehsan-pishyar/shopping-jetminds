@@ -25,7 +25,7 @@ import com.example.shoppingjetminds.ui.theme.Primary
 @Composable
 fun JetSimpleButton(
     modifier: Modifier = Modifier,
-    height: Int = 66,
+    height: Int = 56,
     onClick: () -> Unit,
     color: ButtonColors = ButtonDefaults.buttonColors(containerColor = Primary),
     shape: Int = 10,
@@ -69,7 +69,7 @@ fun JetSimpleButton(
 
 @Preview
 @Composable
-fun PreviewJetButton() {
+fun Preview_JetButton() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         JetSimpleButton(
             onClick = {},

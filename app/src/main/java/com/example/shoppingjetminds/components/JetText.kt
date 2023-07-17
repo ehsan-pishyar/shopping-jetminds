@@ -33,7 +33,7 @@ fun JetText(
 ) {
 
     Text(
-        modifier = modifier.wrapContentSize(),
+        modifier = modifier,
         text = text,
         fontFamily = fontFamily,
         fontWeight = fontWeight,

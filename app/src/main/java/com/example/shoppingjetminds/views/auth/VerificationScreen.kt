@@ -1,20 +1,21 @@
 package com.example.shoppingjetminds.views.auth
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.shoppingjetminds.R
 import com.example.shoppingjetminds.components.JetSimpleButton
 import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.components.JetTextField
@@ -47,18 +48,13 @@ fun VerificationScreen() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                JetText(
-                    text = "Anaram",
-                    fontSize = 35,
-                    textAlign = TextAlign.Center,
-                    color = BlackColor,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1,
-                    lineHeight = 0.0
+                Image(
+                    painter = painterResource(id = R.drawable.jetminds_logo),
+                    contentDescription = null,
+                    modifier = Modifier.width(200.dp)
                 )
 
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(40.dp))
 
                 JetText(
                     text = "خوش اومـــــدی",

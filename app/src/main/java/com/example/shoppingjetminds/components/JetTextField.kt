@@ -29,7 +29,7 @@ import com.example.shoppingjetminds.ui.theme.Yekanbakh
 fun JetTextField(
     modifier: Modifier = Modifier,
     title: String = "",
-    height: Int = 66,
+    height: Int = 56,
     value: String = "",
     placeholder: String,
     style: TextStyle = TextStyle(
@@ -42,7 +42,7 @@ fun JetTextField(
     ),
     singleLine: Boolean = true,
     maxLines: Int = 1,
-    shape: Int = 100,
+    shape: Int = 8,
     readOnly: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
     isPasswordToggleDisplayed: Boolean = keyboardType == KeyboardType.Password,
@@ -62,7 +62,7 @@ fun JetTextField(
                 text = title,
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 30.dp),
+                    .padding(horizontal = 10.dp),
                 fontFamily = Yekanbakh,
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.SemiBold,
@@ -124,8 +124,8 @@ fun JetTextField(
 }
 
 @Composable
-@Preview
-fun PreviewJetTextField() {
+@Preview(showBackground = true)
+fun Preview_JetTextField() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         JetTextField(
             title = "عنوان",

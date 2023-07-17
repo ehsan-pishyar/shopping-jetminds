@@ -1,15 +1,12 @@
 package com.example.shoppingjetminds.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
-import com.example.shoppingjetminds.views.auth.*
-import com.example.shoppingjetminds.views.main.*
-import com.example.shoppingjetminds.views.start.*
+import com.example.shoppingjetminds.navigation.auth.addAuthTopLevel
+import com.example.shoppingjetminds.navigation.main.MainScreen
+import com.example.shoppingjetminds.navigation.start.addStartTopLevel
 
 @Composable
 fun AppNavigation(navHostController: NavHostController) {
@@ -20,68 +17,8 @@ fun AppNavigation(navHostController: NavHostController) {
     ) {
         addStartTopLevel(navHostController)
         addAuthTopLevel(navHostController)
-        addMainTopLevel(navHostController)
-    }
-}
-
-fun NavGraphBuilder.addStartTopLevel(navController: NavController) {
-    navigation(
-        route = Graph.START,
-        startDestination = StartScreens.Splash.route
-    ) {
-        composable(route = StartScreens.Splash.route) {
-            SplashScreen(
-                toOnBoardingScreen = { navController.navigate(route = StartScreens.OnBoarding.route) },
-                toHomeScreen = { navController.navigate(route = MainScreens.Home.route) },
-                toCategoryScreen = { navController.navigate(route = MainScreens.Category.route) }
-            )
-        }
-        composable(route = StartScreens.OnBoarding.route) {
-            OnBoardingScreen {
-                navController.navigate(route = MainScreens.Home.route)
-            }
-        }
-    }
-}
-
-fun NavGraphBuilder.addAuthTopLevel(navController: NavController) {
-    navigation(
-        route = Graph.AUTH,
-        startDestination = AuthScreens.Login.route
-    ) {
-        composable(route = AuthScreens.Login.route) {
-            LoginScreen(
-                toHomeScreen = { navController.navigate(route = MainScreens.Home.route) },
-                toVerificationScreen = { navController.navigate(route = AuthScreens.Verification.route) }
-            )
-        }
-        composable(route = AuthScreens.Verification.route) {
-            VerificationScreen()
-        }
-    }
-}
-
-fun NavGraphBuilder.addMainTopLevel(navController: NavController) {
-    navigation(
-        route = Graph.MAIN,
-        startDestination = MainScreens.Home.route
-    ) {
-        composable(route = MainScreens.Home.route) {
-            HomeScreen(navController = navController)
-        }
-        composable(route = MainScreens.Shop.route) {
-            ShopScreen()
-        }
-        composable(route = MainScreens.Category.route) {
-            CategoryScreen()
-        }
-        composable(route = MainScreens.Favorites.route) {
-            FavoritesScreen()
-        }
-        composable(route = MainScreens.Account.route) {
-            AccountScreen {
-                navController.navigate(route = AuthScreens.Login.route)
-            }
+        composable(route = Graph.MAIN) {
+            MainScreen()
         }
     }
 }

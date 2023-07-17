@@ -57,7 +57,7 @@ fun SplashScreen(
         ) {
             Image(
                 modifier = Modifier.width(200.dp),
-                painter = painterResource(id = R.drawable.anaram_logo),
+                painter = painterResource(id = R.drawable.jetminds_fav_icon),
                 contentDescription = "logo"
             )
         }
