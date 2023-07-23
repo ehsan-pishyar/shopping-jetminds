@@ -3,7 +3,10 @@ package com.example.shoppingjetminds.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,9 +25,11 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.shoppingjetminds.ui.theme.BlackColor
+import com.example.shoppingjetminds.ui.theme.LighterGray
 import com.example.shoppingjetminds.ui.theme.Primary
 import com.example.shoppingjetminds.ui.theme.Yekanbakh
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JetTextField(
     modifier: Modifier = Modifier,
@@ -33,7 +38,7 @@ fun JetTextField(
     value: String = "",
     placeholder: String,
     style: TextStyle = TextStyle(
-        color = MaterialTheme.colors.onBackground,
+        color = MaterialTheme.colorScheme.onBackground,
         fontSize = 14.sp,
         fontFamily = Yekanbakh,
         fontWeight = FontWeight.Normal,
@@ -90,10 +95,10 @@ fun JetTextField(
             textStyle = style,
             readOnly = readOnly,
             placeholder = {
-                Text(
+                JetText(
                     modifier = modifier.fillMaxWidth(),
                     text = placeholder,
-                    style = style,
+                    color = LighterGray
                 )
             },
 //            if (onValueChange.toString().length > maxLength) {
@@ -112,7 +117,7 @@ fun JetTextField(
             },
             singleLine = singleLine,
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.White,
+                containerColor = Color.White,
                 cursorColor = BlackColor,
                 focusedIndicatorColor = Primary,
                 unfocusedIndicatorColor = Color.Transparent,

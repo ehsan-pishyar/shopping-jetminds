@@ -12,6 +12,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import com.example.shoppingjetminds.ui.theme.Background
@@ -29,7 +30,8 @@ fun JetText(
     textAlign: TextAlign = TextAlign.Start,
     maxLines: Int = 1,
     fontFamily: FontFamily = Yekanbakh,
-    fontStyle: FontStyle = FontStyle.Normal
+    fontStyle: FontStyle = FontStyle.Normal,
+    overflow: TextOverflow = TextOverflow.Visible
 ) {
 
     Text(
@@ -42,7 +44,8 @@ fun JetText(
         color = color,
         lineHeight = (lineHeight).em,
         textAlign = textAlign,
-        maxLines = maxLines
+        maxLines = maxLines,
+        overflow = overflow
     )
 }
 
