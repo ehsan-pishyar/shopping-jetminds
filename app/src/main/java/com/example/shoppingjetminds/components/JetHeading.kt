@@ -1,0 +1,102 @@
+package com.example.shoppingjetminds.components
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.example.shoppingjetminds.R
+import com.example.shoppingjetminds.ui.theme.RedColor
+
+@Composable
+fun JetHeading(title: String? = null, icon: Int? = null) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .height(40.dp)
+        .background(Color.Transparent)
+    ) {
+
+        Box(modifier = Modifier
+            .background(Color.Transparent)
+            .fillMaxHeight()
+            .weight(1f),
+            contentAlignment = Alignment.CenterStart
+        ) {
+            icon?.let {
+                Image(
+                    painter = painterResource(id = it),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(30.dp)
+                        .padding(start = 2.dp),
+                    contentScale = ContentScale.Crop
+                )
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Transparent)
+                    .padding(top = 10.dp),
+                    contentAlignment = Alignment.TopStart
+                ) {
+                    // Red dot for notification
+                    Image(
+                        painter = painterResource(R.drawable.ic_launcher_background),
+                        contentDescription = "",
+                        colorFilter = ColorFilter.tint(RedColor),
+                        modifier = Modifier
+                            // Set image size to 4 dp
+                            .size(9.dp)
+                            // Clip image to be shaped as a circle
+                            .clip(CircleShape)
+                    )
+                }
+            }
+        }
+
+        // Title
+        title?.let {
+            Column(modifier = Modifier
+                .fillMaxHeight()
+                .weight(8f),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                JetText(
+                    text = "سبد خرید",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 23
+                )
+            }
+        }
+
+        // Back button
+        Column(modifier = Modifier
+            .fillMaxHeight()
+            .weight(1f),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.arrow_left),
+                contentDescription = null
+            )
+        }
+    }
+}
