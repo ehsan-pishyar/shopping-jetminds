@@ -2,7 +2,7 @@ package com.example.shoppingjetminds.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
@@ -26,12 +26,13 @@ fun JetText(
     fontSize: Int = 14,
     fontWeight: FontWeight = FontWeight.Normal,
     color: Color = BlackColor,
-    lineHeight: Double = 1.0,
+    lineHeight: Double = 1.5,
     textAlign: TextAlign = TextAlign.Start,
-    maxLines: Int = 1,
+    maxLines: Int = Int.MAX_VALUE,
     fontFamily: FontFamily = Yekanbakh,
     fontStyle: FontStyle = FontStyle.Normal,
-    overflow: TextOverflow = TextOverflow.Visible
+    overflow: TextOverflow = TextOverflow.Visible,
+    softWrap: Boolean = true
 ) {
 
     Text(
@@ -45,7 +46,8 @@ fun JetText(
         lineHeight = (lineHeight).em,
         textAlign = textAlign,
         maxLines = maxLines,
-        overflow = overflow
+        overflow = overflow,
+        softWrap = softWrap
     )
 }
 

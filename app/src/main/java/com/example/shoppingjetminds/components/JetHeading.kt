@@ -100,3 +100,72 @@ fun JetHeading(title: String? = null, icon: Int? = null) {
         }
     }
 }
+
+@Composable
+fun HeadingSection() {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .height(40.dp)
+        .background(Color.Transparent)
+    ) {
+
+        Box(modifier = Modifier
+            .background(Color.Transparent)
+            .fillMaxHeight()
+            .weight(1f),
+            contentAlignment = Alignment.CenterStart
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.cart),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(30.dp)
+                    .padding(start = 2.dp),
+                contentScale = ContentScale.Crop
+            )
+
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Transparent)
+                .padding(top = 10.dp),
+                contentAlignment = Alignment.TopStart
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.ic_launcher_background),
+                    contentDescription = "",
+                    colorFilter = ColorFilter.tint(RedColor),
+                    modifier = Modifier
+                        // Set image size to 4 dp
+                        .size(9.dp)
+                        // Clip image to be shaped as a circle
+                        .clip(CircleShape)
+                )
+            }
+        }
+
+        Column(modifier = Modifier
+            .fillMaxHeight()
+            .weight(8f),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            JetText(
+                text = "سبد خرید",
+                fontWeight = FontWeight.Bold,
+                fontSize = 23
+            )
+        }
+
+        Column(modifier = Modifier
+            .fillMaxHeight()
+            .weight(1f),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.arrow_left),
+                contentDescription = null
+            )
+        }
+    }
+}
