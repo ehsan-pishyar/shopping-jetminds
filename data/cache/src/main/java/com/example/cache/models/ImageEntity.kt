@@ -7,8 +7,8 @@ import com.example.cache.utils.CacheConstants
 @Entity(tableName = CacheConstants.IMAGES_TABLE)
 data class ImageEntity(
     @PrimaryKey(autoGenerate = false)
-    val id: Int,
-    val name: String,
-    val src: String,
-    val alt: String
+    val id: Int? = null,
+    val name: String = "",
+    val src: String = "",
+    val alt: String = ""
 )

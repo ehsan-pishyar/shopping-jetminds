@@ -1,68 +1,66 @@
 package com.example.network.models
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
 data class ProductsResponseDto(
     val id: Int,
     val name: String,
     val slug: String,
-    @SerialName("date_created")
+    @SerializedName("date_created")
     val dateCreated: String,
     val type: String,
     val status: String,
     val featured: Boolean,
-    @SerialName("catalog_visibility")
+    @SerializedName("catalog_visibility")
     val catalogVisibility: String,
     val description: String,
-    @SerialName("short_description")
+    @SerializedName("short_description")
     val shortDescription: String,
     val sku: String,
     val price: String,
-    @SerialName("regular_price")
+    @SerializedName("regular_price")
     val regularPrice: String,
-    @SerialName("sale_price")
+    @SerializedName("sale_price")
     val salePrice: String,
-    @SerialName("date_on_sale_from")
+    @SerializedName("date_on_sale_from")
     val dateOnSaleFrom: String,
-    @SerialName("date_on_sale_to")
+    @SerializedName("date_on_sale_to")
     val dateOnSaleTo: String,
-    @SerialName("on_sale")
+    @SerializedName("on_sale")
     val onSale: Boolean,
     val purchasable: Boolean,
-    @SerialName("total_sales")
+    @SerializedName("total_sales")
     val totalSales: Int,
-    @SerialName("tax_status")
+    @SerializedName("tax_status")
     val taxStatus: String,
-    @SerialName("tax_class")
+    @SerializedName("tax_class")
     val taxClass: String,
-    @SerialName("manage_stock")
+    @SerializedName("manage_stock")
     val manageStock: Boolean,
-    @SerialName("stock_quantity")
+    @SerializedName("stock_quantity")
     val stockQuantity: Int,
-    @SerialName("sold_individually")
+    @SerializedName("sold_individually")
     val soldIndividually: Boolean,
-    @SerialName("shipping_required")
+    @SerializedName("shipping_required")
     val shippingRequired: Boolean,
-    @SerialName("shipping_taxable")
+    @SerializedName("shipping_taxable")
     val shippingTaxable: Boolean,
-    @SerialName("shipping_class")
+    @SerializedName("shipping_class")
     val shippingClass: String,
-    @SerialName("shipping_class_id")
+    @SerializedName("shipping_class_id")
     val shippingClassId: Int,
-    @SerialName("reviews_allowed")
+    @SerializedName("reviews_allowed")
     val reviewsAllowed: Boolean,
-    @SerialName("average_rating")
+    @SerializedName("average_rating")
     val averageRating: String,
-    @SerialName("rating_count")
+    @SerializedName("rating_count")
     val ratingCount: Int,
     val categories: List<CategoryDto>,
     val tags: List<TagDto>,
     val images: List<ImageDto>,
     val attributes: List<AttributeDto>,
-    @SerialName("default_attributes")
+    @SerializedName("default_attributes")
     val defaultAttributes: List<DefaultAttributeDto>,
-    @SerialName("stock_status")
+    @SerializedName("stock_status")
     val stockStatus: String
 )

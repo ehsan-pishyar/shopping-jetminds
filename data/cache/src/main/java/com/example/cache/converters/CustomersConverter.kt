@@ -2,21 +2,26 @@ package com.example.cache.converters
 
 import androidx.room.TypeConverter
 import com.example.cache.models.CustomersResponseEntity
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class CustomersConverter {
 
+    private val gson = Gson()
+
     @TypeConverter
-    fun fromCustomer(customer: CustomersResponseEntity?): String? {
-        if (customer == null) return null
-        return Json.encodeToString(customer)
+    fun from(customerEntity: CustomersResponseEntity?): String?{
+        if (customerEntity == null) return null
+
+        val type = object : TypeToken<CustomersResponseEntity?>() {}.type
+        return gson.toJson(customerEntity, type)
     }
 
     @TypeConverter
-    fun toCustomer(customerString: String?): CustomersResponseEntity? {
-        if (customerString.isNullOrEmpty()) return null
-        return Json.decodeFromString(customerString)
+    fun to(customerItem: String?): CustomersResponseEntity?{
+        if (customerItem.isNullOrEmpty()) return null
+
+        val type = object : TypeToken<CustomersResponseEntity?>() {}.type
+        return gson.fromJson(customerItem, type)
     }
 }

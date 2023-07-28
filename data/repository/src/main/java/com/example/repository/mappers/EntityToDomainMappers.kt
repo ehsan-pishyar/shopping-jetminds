@@ -88,7 +88,7 @@ fun ProductCategoriesResponseEntity.toDomain(): ProductCategoriesResponse =
         this.parent,
         this.description,
         this.display,
-        this.image.toDomain(),
+        this.image?.toDomain(),
         this.menuOrder,
         this.count
     )

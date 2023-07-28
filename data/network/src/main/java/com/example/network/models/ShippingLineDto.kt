@@ -1,17 +1,15 @@
 package com.example.network.models
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
 data class ShippingLineDto(
     val id: Int,
-    @SerialName("method_id")
+    @SerializedName("method_id")
     val methodId: String,
-    @SerialName("method_title")
+    @SerializedName("method_title")
     val methodTitle: String,
     val taxes: List<TaxDto>,
     val total: String,
-    @SerialName("total_tax")
+    @SerializedName("total_tax")
     val totalTax: String
 )

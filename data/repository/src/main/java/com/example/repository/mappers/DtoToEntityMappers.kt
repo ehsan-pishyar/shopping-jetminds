@@ -88,7 +88,7 @@ fun ProductCategoriesResponseDto.toEntity(): ProductCategoriesResponseEntity =
         this.parent,
         this.description,
         this.display,
-        this.image.toEntity(),
+        this.image?.toEntity(),
         this.menuOrder,
         this.count
     )

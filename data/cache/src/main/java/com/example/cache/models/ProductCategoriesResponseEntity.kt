@@ -9,21 +9,21 @@ import com.example.cache.utils.CacheConstants
 data class ProductCategoriesResponseEntity(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
-    val id: Int,
+    val id: Int? = null,
     @ColumnInfo(name = "name")
-    var name: String,
+    var name: String = "",
     @ColumnInfo(name = "slug")
-    val slug: String,
+    val slug: String = "",
     @ColumnInfo(name = "parent")
-    val parent: Int,
+    val parent: Int = 0,
     @ColumnInfo(name = "description")
-    val description: String,
+    val description: String = "",
     @ColumnInfo(name = "display")
-    val display: String,
+    val display: String = "",
     @ColumnInfo(name = "image")
-    val image: ImageEntity,
+    val image: ImageEntity? = null,
     @ColumnInfo(name = "menu_order")
-    val menuOrder: Int,
+    val menuOrder: Int = 0,
     @ColumnInfo(name = "count")
-    val count: Int,
+    val count: Int = 0,
 )

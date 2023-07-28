@@ -11,99 +11,82 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.shoppingjetminds.components.JetProduct
 import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.ui.theme.Background
+import com.example.shoppingjetminds.viewmodels.HomeScreenProductCategoriesUiState
 import com.example.shoppingjetminds.viewmodels.NewestProductUiState
+import com.example.shoppingjetminds.viewmodels.ProductCategoriesUiState
 import com.example.shoppingjetminds.viewmodels.ProductCategoriesViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavController,
-    productsViewModel: ProductCategoriesViewModel = hiltViewModel()
+    productCategoriesViewModel: ProductCategoriesViewModel = hiltViewModel()
 ){
+    val categoriesUiState: HomeScreenProductCategoriesUiState by productCategoriesViewModel.categoriesState.collectAsState()
 
-    //val uiState: HomeUiState by productsViewModel.newestUiState.collectAsStateWithLifecycle()
-    val uiState = productsViewModel.state.value
+    HomeContent(
+        navController = navController,
+        categoriesUiState = categoriesUiState
+    )
+}
 
-    Box(modifier = Modifier.fillMaxSize()) {
+@Composable
+private fun HomeContent(
+    navController: NavController,
+    categoriesUiState: HomeScreenProductCategoriesUiState? = null
+) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(Background)
+    ) {
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(15.dp)
-            .background(Background),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            .padding(15.dp),
+            verticalArrangement = Arrangement.Top
         ) {
 
-            if (uiState.loading) {
-                Text(
-                    text = "در حال بارگزاری ...",
-                    color = Color.Black,
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            } else if (uiState.success.isNotEmpty()) {
-                Text(
-                    text = uiState.success[0].name,
-                    color = Color.Black,
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            } else if (uiState.error.isNotEmpty()) {
-                Text(
-                    text = uiState.error,
-                    color = Color.Black,
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
+            when (val state = categoriesUiState?.categoriesUiState) {
+                ProductCategoriesUiState.Loading -> {
+                    JetText(
+                        text = "در حال بارگزاری ...",
+                        fontSize = 15,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                is ProductCategoriesUiState.Success -> {
+                    JetText(
+                        text = state.categories[0].name,
+                        fontSize = 15,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                is ProductCategoriesUiState.Error -> {
+                    JetText(
+                        text = state.message,
+                        fontSize = 15,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                else -> {}
             }
-
-//            when (val state = uiState.newestProductList) {
-//                NewestProductUiState.Loading -> {
-//                    Text(
-//                        text = "در حال بارگزاری ...",
-//                        color = Color.Black,
-//                        fontSize = 15.sp,
-//                        textAlign = TextAlign.Center,
-//                        modifier = Modifier.fillMaxWidth()
-//                    )
-//                }
-//                is NewestProductUiState.Success -> {
-//                    Text(
-//                        text = state.data[0].name,
-//                        color = Color.Black,
-//                        fontSize = 15.sp,
-//                        textAlign = TextAlign.Center,
-//                        modifier = Modifier.fillMaxWidth()
-//                    )
-//                }
-//                is NewestProductUiState.Error -> {
-//                    Text(
-//                        text = state.toString(),
-//                        color = Color.Black,
-//                        fontSize = 15.sp,
-//                        textAlign = TextAlign.Center,
-//                        modifier = Modifier.fillMaxWidth()
-//                    )
-//                }
-//            }
         }
     }
 }
@@ -172,6 +155,10 @@ fun SectionSpacer(value: Int) {
 
 @Preview
 @Composable
-fun Preview_HomeScreen() {
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {}
+fun Preview_HomeContent() {
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
+        HomeContent(
+            navController = NavController(LocalContext.current)
+        )
+    }
 }

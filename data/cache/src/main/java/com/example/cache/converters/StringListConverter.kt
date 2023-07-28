@@ -1,22 +1,27 @@
 package com.example.cache.converters
 
 import androidx.room.TypeConverter
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 
 class StringListConverter {
 
+    private val gson = Gson()
+
     @TypeConverter
-    fun fromStringList(list: List<String>?): String? {
-        if (list == null) return null
-        return Json.encodeToString(list)
+    fun from(string: List<String>?): String?{
+        if (string.isNullOrEmpty()) return null
+
+        val type = object : TypeToken<List<String>?>() {}.type
+        return gson.toJson(string, type)
     }
 
     @TypeConverter
-    fun toStringList(item: String?): List<String>? {
-        if (item == null) return null
-        return Json.decodeFromString(item)
+    fun to(stringItem: String?): List<String>?{
+        if (stringItem.isNullOrEmpty()) return null
+
+        val type = object : TypeToken<List<String>?>() {}.type
+        return gson.fromJson(stringItem, type)
     }
 }

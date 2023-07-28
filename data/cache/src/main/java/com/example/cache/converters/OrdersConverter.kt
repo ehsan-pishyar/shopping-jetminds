@@ -2,21 +2,26 @@ package com.example.cache.converters
 
 import androidx.room.TypeConverter
 import com.example.cache.models.OrdersResponseEntity
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class OrdersConverter {
 
+    private val gson = Gson()
+
     @TypeConverter
-    fun fromOrder(order: OrdersResponseEntity?): String? {
-        if (order == null) return null
-        return Json.encodeToString(order)
+    fun from(orderEntity: OrdersResponseEntity?): String?{
+        if (orderEntity == null) return null
+
+        val type = object : TypeToken<OrdersResponseEntity?>() {}.type
+        return gson.toJson(orderEntity, type)
     }
 
     @TypeConverter
-    fun toOrder(orderString: String?): OrdersResponseEntity? {
-        if (orderString.isNullOrEmpty()) return null
-        return Json.decodeFromString(orderString)
+    fun to(orderItem: String?): OrdersResponseEntity?{
+        if (orderItem.isNullOrEmpty()) return null
+
+        val type = object : TypeToken<OrdersResponseEntity?>() {}.type
+        return gson.fromJson(orderItem, type)
     }
 }

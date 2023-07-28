@@ -2,21 +2,26 @@ package com.example.cache.converters
 
 import androidx.room.TypeConverter
 import com.example.cache.models.TaxLineEntity
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class TaxLinesConverter {
 
+    private val gson = Gson()
+
     @TypeConverter
-    fun fromTaxLines(taxLines: List<TaxLineEntity>?): String? {
-        if (taxLines == null) return null
-        return Json.encodeToString(taxLines)
+    fun from(taxLinesEntity: List<TaxLineEntity>?): String?{
+        if (taxLinesEntity.isNullOrEmpty()) return null
+
+        val type = object : TypeToken<List<TaxLineEntity>?>() {}.type
+        return gson.toJson(taxLinesEntity, type)
     }
 
     @TypeConverter
-    fun toTaxLines(taxLinesString: String?): List<TaxLineEntity>? {
-        if (taxLinesString == null) return null
-        return Json.decodeFromString(taxLinesString)
+    fun to(taxLinesItem: String?): List<TaxLineEntity>?{
+        if (taxLinesItem.isNullOrEmpty()) return null
+
+        val type = object : TypeToken<List<TaxLineEntity>?>() {}.type
+        return gson.fromJson(taxLinesItem, type)
     }
 }

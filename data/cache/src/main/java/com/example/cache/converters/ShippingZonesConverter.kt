@@ -2,21 +2,26 @@ package com.example.cache.converters
 
 import androidx.room.TypeConverter
 import com.example.cache.models.ShippingZonesResponseEntity
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class ShippingZonesConverter {
 
+    private val gson = Gson()
+
     @TypeConverter
-    fun fromShippingZones(shippingZones: ShippingZonesResponseEntity?): String? {
-        if (shippingZones == null) return null
-        return Json.encodeToString(shippingZones)
+    fun from(shippingZoneEntity: ShippingZonesResponseEntity?): String?{
+        if (shippingZoneEntity== null) return null
+
+        val type = object : TypeToken<ShippingZonesResponseEntity?>() {}.type
+        return gson.toJson(shippingZoneEntity, type)
     }
 
     @TypeConverter
-    fun toShippingZones(shippingZonesString: String?): ShippingZonesResponseEntity? {
-        if (shippingZonesString.isNullOrEmpty()) return null
-        return Json.decodeFromString(shippingZonesString)
+    fun to(shippingZoneItem: String?): ShippingZonesResponseEntity?{
+        if (shippingZoneItem.isNullOrEmpty()) return null
+
+        val type = object : TypeToken<ShippingZonesResponseEntity?>() {}.type
+        return gson.fromJson(shippingZoneItem, type)
     }
 }

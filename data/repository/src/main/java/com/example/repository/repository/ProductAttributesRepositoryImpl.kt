@@ -34,10 +34,13 @@ class ProductAttributesRepositoryImpl @Inject constructor(
 
     override suspend fun refreshProductAttributes() {
         api.getProductAttributes().also { attrsDto ->
+            println("Product Attr Dto: ${attrsDto[0].name}")
             dao.deleteAndInsertProductAttributes(
                 attrs = attrsDto.map(
                     ProductAttributesResponseDto::toEntity
-                )
+                ).also { attrsEntity ->
+                    println("Product Attr Entity: ${attrsEntity[0].name}")
+                }
             )
         }
     }

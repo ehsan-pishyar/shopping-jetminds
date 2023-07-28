@@ -1,28 +1,26 @@
 package com.example.network.models
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
 data class CustomersResponseDto(
     val id: Int,
-    @SerialName("date_created")
+    @SerializedName("date_created")
     val dateCreated: String,
-    @SerialName("date_created_gmt")
+    @SerializedName("date_created_gmt")
     val dateCreatedGmt: String,
     val email: String,
-    @SerialName("first_name")
+    @SerializedName("first_name")
     val firstName: String,
-    @SerialName("last_name")
+    @SerializedName("last_name")
     val lastName: String,
     val role: String,
     val username: String,
-    @SerialName("billing")
+    @SerializedName("billing")
     val billingDto: BillingDto,
-    @SerialName("shipping")
+    @SerializedName("shipping")
     val shippingDto: ShippingDto,
-    @SerialName("is_paying_customer")
+    @SerializedName("is_paying_customer")
     val isPayingCustomer: Boolean,
-    @SerialName("avatar_url")
+    @SerializedName("avatar_url")
     val avatarUrl: String
 )

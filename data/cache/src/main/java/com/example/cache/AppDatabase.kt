@@ -37,8 +37,16 @@ import com.example.cache.utils.CacheConstants
 )
 
 @TypeConverters(
+    AttributesConverter::class,
+    BillingsConverter::class,
+    CategoriesConverter::class,
     CouponsConverter::class,
     CustomersConverter::class,
+    DefaultAttributesConverter::class,
+    ImageConverter::class,
+    ImagesConverter::class,
+    IntegerListConverter::class,
+    LineItemsConverter::class,
     OrdersConverter::class,
     ProductAttributesConverter::class,
     ProductCategoriesConverter::class,
@@ -47,19 +55,13 @@ import com.example.cache.utils.CacheConstants
     ProductShippingClassesConverter::class,
     ProductTagsConverter::class,
     ProductVariationsConverter::class,
-    ShippingZonesConverter::class,
-    CategoriesConverter::class,
-    BillingsConverter::class,
-    ShippingsConverter::class,
-    LineItemsConverter::class,
     ShippingLinesConverter::class,
-    TaxLinesConverter::class,
-    ImagesConverter::class,
+    ShippingsConverter::class,
+    ShippingZonesConverter::class,
+    StringListConverter::class,
     TagsConverter::class,
-    AttributesConverter::class,
-    DefaultAttributesConverter::class,
-    IntegerListConverter::class,
-    StringListConverter::class
+    TaxesConverter::class,
+    TaxLinesConverter::class,
 )
 abstract class AppDatabase: RoomDatabase() {
 

@@ -2,21 +2,26 @@ package com.example.cache.converters
 
 import androidx.room.TypeConverter
 import com.example.cache.models.TagEntity
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class TagsConverter {
 
+    private val gson = Gson()
+
     @TypeConverter
-    fun fromTags(tags: List<TagEntity>?): String? {
-        if (tags == null) return null
-        return Json.encodeToString(tags)
+    fun from(tagsEntity: List<TagEntity>?): String?{
+        if (tagsEntity.isNullOrEmpty()) return null
+
+        val type = object : TypeToken<List<TagEntity>?>() {}.type
+        return gson.toJson(tagsEntity, type)
     }
 
     @TypeConverter
-    fun toTags(tagsItem: String?): List<TagEntity>? {
-        if (tagsItem == null) return null
-        return Json.decodeFromString(tagsItem)
+    fun to(tagsItem: String?): List<TagEntity>?{
+        if (tagsItem.isNullOrEmpty()) return null
+
+        val type = object : TypeToken<List<TagEntity>?>() {}.type
+        return gson.fromJson(tagsItem, type)
     }
 }

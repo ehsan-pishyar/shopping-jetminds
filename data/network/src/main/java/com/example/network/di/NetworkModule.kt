@@ -3,17 +3,16 @@ package com.example.network.di
 import com.example.network.ApiService
 import com.example.network.BuildConfig
 import com.example.network.utils.Constants
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.security.KeyStore
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -83,10 +82,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providesRetrofit(json: Json, okHttpClient: OkHttpClient): Retrofit =
+    fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+//            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
 

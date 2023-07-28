@@ -11,7 +11,7 @@ interface ProductCategoriesDao {
     suspend fun insertOrIgnoreCategories(categories: List<ProductCategoriesResponseEntity>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertProductCategoryDetails(categoryDetails: ProductCategoriesResponseEntity?)
+    suspend fun insertProductCategoryDetails(categoryDetails: ProductCategoriesResponseEntity)
 
     @Query("SELECT * FROM `product_categories_table`")
     fun fetchProductCategories(): Flow<List<ProductCategoriesResponseEntity>>
@@ -25,6 +25,6 @@ interface ProductCategoriesDao {
     @Transaction
     suspend fun deleteAndInsertCategories(categories: List<ProductCategoriesResponseEntity>) {
         deleteCategories()
-        insertOrIgnoreCategories(categories)
+        insertOrIgnoreCategories(categories = categories)
     }
 }

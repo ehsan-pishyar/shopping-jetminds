@@ -1,75 +1,73 @@
 package com.example.network.models
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
 data class OrdersResponseDto(
     val id: Int,
-    @SerialName("parent_id")
+    @SerializedName("parent_id")
     val parentId: Int,
     val status: String,
     val currency: String,
-    @SerialName("prices_include_tax")
+    @SerializedName("prices_include_tax")
     val pricesIncludeTax: Boolean,
-    @SerialName("date_created")
+    @SerializedName("date_created")
     val dateCreated: String,
-    @SerialName("date_modified")
+    @SerializedName("date_modified")
     val dateModified: String,
-    @SerialName("discount_total")
+    @SerializedName("discount_total")
     val discountTotal: String,
-    @SerialName("discount_tax")
+    @SerializedName("discount_tax")
     val discountTax: String,
-    @SerialName("shipping_total")
+    @SerializedName("shipping_total")
     val shippingTotal: String,
-    @SerialName("shipping_tax")
+    @SerializedName("shipping_tax")
     val shippingTax: String,
-    @SerialName("cart_tax")
+    @SerializedName("cart_tax")
     val cartTax: String,
     val total: String,
-    @SerialName("total_tax")
+    @SerializedName("total_tax")
     val totalTax: String,
-    @SerialName("customer_id")
+    @SerializedName("customer_id")
     val customerId: Int,
-    @SerialName("order_key")
+    @SerializedName("order_key")
     val orderKey: String,
-    @SerialName("billing")
+    @SerializedName("billing")
     val billing: BillingDto,
-    @SerialName("shipping")
+    @SerializedName("shipping")
     val shipping: ShippingDto,
-    @SerialName("payment_method")
+    @SerializedName("payment_method")
     val paymentMethod: String,
-    @SerialName("payment_method_title")
+    @SerializedName("payment_method_title")
     val paymentMethodTitle: String,
-    @SerialName("transaction_id")
+    @SerializedName("transaction_id")
     val transactionId: String,
-    @SerialName("customer_ip_address")
+    @SerializedName("customer_ip_address")
     val customerIpAddress: String,
-    @SerialName("customer_note")
+    @SerializedName("customer_note")
     val customerNote: String,
-    @SerialName("date_completed")
+    @SerializedName("date_completed")
     val dateCompleted: String,
-    @SerialName("date_paid")
+    @SerializedName("date_paid")
     val datePaid: String,
-    @SerialName("cart_hash")
+    @SerializedName("cart_hash")
     val cartHash: String,
     val number: String,
-    @SerialName("line_items")
+    @SerializedName("line_items")
     val lineItems: List<LineItemDto>,
-    @SerialName("tax_lines")
+    @SerializedName("tax_lines")
     val taxLines: List<TaxLineDto>,
-    @SerialName("shipping_lines")
+    @SerializedName("shipping_lines")
     val shippingLines: List<ShippingLineDto>,
-    @SerialName("payment_url")
+    @SerializedName("payment_url")
     val paymentUrl: String,
-    @SerialName("date_created_gmt")
+    @SerializedName("date_created_gmt")
     val dateCreatedGmt: String,
-    @SerialName("date_modified_gmt")
+    @SerializedName("date_modified_gmt")
     val dateModifiedGmt: String,
-    @SerialName("date_completed_gmt")
+    @SerializedName("date_completed_gmt")
     val dateCompletedGmt: String,
-    @SerialName("date_paid_gmt")
+    @SerializedName("date_paid_gmt")
     val datePaidGmt: String,
-    @SerialName("currency_symbol")
+    @SerializedName("currency_symbol")
     val currencySymbol: String
 )

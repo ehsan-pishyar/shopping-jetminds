@@ -29,6 +29,6 @@ interface ProductAttributesDao {
     @Transaction
     suspend fun deleteAndInsertProductAttributes(attrs: List<ProductAttributesResponseEntity>) {
         deleteProductAttrs()
-        insertOrIgnoreProductAttributes(attrs)
+        insertOrIgnoreProductAttributes(attrs = attrs)
     }
 }

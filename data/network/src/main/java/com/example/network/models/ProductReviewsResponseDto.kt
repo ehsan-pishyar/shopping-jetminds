@@ -1,20 +1,18 @@
 package com.example.network.models
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
 data class ProductReviewsResponseDto(
     val id: Int,
-    @SerialName("date_created")
+    @SerializedName("date_created")
     val dateCreated: String,
-    @SerialName("date_created_gmt")
+    @SerializedName("date_created_gmt")
     val dateCreatedGmt: String,
-    @SerialName("product_id")
+    @SerializedName("product_id")
     val productId: Int,
     val status: String,
     val reviewer: String,
-    @SerialName("reviewer_email")
+    @SerializedName("reviewer_email")
     val reviewerEmail: String,
     val review: String,
     val rating: Int,

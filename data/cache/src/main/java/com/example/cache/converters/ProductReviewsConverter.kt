@@ -2,21 +2,26 @@ package com.example.cache.converters
 
 import androidx.room.TypeConverter
 import com.example.cache.models.ProductReviewsResponseEntity
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class ProductReviewsConverter {
 
+    private val gson = Gson()
+
     @TypeConverter
-    fun fromProductReviews(productReviews: ProductReviewsResponseEntity?): String? {
-        if (productReviews == null) return null
-        return Json.encodeToString(productReviews)
+    fun from(productReviewEntity: ProductReviewsResponseEntity?): String?{
+        if (productReviewEntity == null) return null
+
+        val type = object : TypeToken<ProductReviewsResponseEntity?>() {}.type
+        return gson.toJson(productReviewEntity, type)
     }
 
     @TypeConverter
-    fun toProductReviews(productReviewsString: String?): ProductReviewsResponseEntity? {
-        if (productReviewsString.isNullOrEmpty()) return null
-        return Json.decodeFromString(productReviewsString)
+    fun to(productReviewItem: String?): ProductReviewsResponseEntity?{
+        if (productReviewItem.isNullOrEmpty()) return null
+
+        val type = object : TypeToken<ProductReviewsResponseEntity?>() {}.type
+        return gson.fromJson(productReviewItem, type)
     }
 }

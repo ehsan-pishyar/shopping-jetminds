@@ -2,21 +2,26 @@ package com.example.cache.converters
 
 import androidx.room.TypeConverter
 import com.example.cache.models.BillingEntity
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class BillingsConverter {
 
+    private val gson = Gson()
+
     @TypeConverter
-    fun fromBilling(billingEntity: BillingEntity?): String? {
+    fun from(billingEntity: BillingEntity?): String?{
         if (billingEntity == null) return null
-        return Json.encodeToString(billingEntity)
+
+        val type = object : TypeToken<BillingEntity?>() {}.type
+        return gson.toJson(billingEntity, type)
     }
 
     @TypeConverter
-    fun toBilling(billingItem: String?): BillingEntity? {
-        if (billingItem == null) return null
-        return Json.decodeFromString(billingItem)
+    fun to(billingItem: String?): BillingEntity?{
+        if (billingItem.isNullOrEmpty()) return null
+
+        val type = object : TypeToken<BillingEntity?>() {}.type
+        return gson.fromJson(billingItem, type)
     }
 }
