@@ -1,9 +1,12 @@
 package com.example.shoppingjetminds.views.main
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,25 +14,30 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.shoppingjetminds.R
+import com.example.shoppingjetminds.components.JetHomeHeading
+import com.example.shoppingjetminds.components.JetIconText
 import com.example.shoppingjetminds.components.JetProduct
 import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.ui.theme.Background
 import com.example.shoppingjetminds.viewmodels.HomeScreenProductCategoriesUiState
-import com.example.shoppingjetminds.viewmodels.NewestProductUiState
-import com.example.shoppingjetminds.viewmodels.ProductCategoriesUiState
 import com.example.shoppingjetminds.viewmodels.ProductCategoriesViewModel
 
 @Composable
@@ -39,126 +47,158 @@ fun HomeScreen(
 ){
     val categoriesUiState: HomeScreenProductCategoriesUiState by productCategoriesViewModel.categoriesState.collectAsState()
 
-    HomeContent(
-        navController = navController,
-        categoriesUiState = categoriesUiState
-    )
+    HomeContent()
 }
 
 @Composable
-private fun HomeContent(
-    navController: NavController,
-    categoriesUiState: HomeScreenProductCategoriesUiState? = null
-) {
+private fun HomeContent() {
+
+    val scrollState = rememberScrollState()
+
     Box(modifier = Modifier
         .fillMaxSize()
         .background(Background)
     ) {
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(15.dp),
-            verticalArrangement = Arrangement.Top
+            .padding(15.dp)
+            .verticalScroll(state = scrollState, enabled = true)
         ) {
 
-            when (val state = categoriesUiState?.categoriesUiState) {
-                ProductCategoriesUiState.Loading -> {
-                    JetText(
-                        text = "در حال بارگزاری ...",
-                        fontSize = 15,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-                is ProductCategoriesUiState.Success -> {
-                    JetText(
-                        text = state.categories[0].name,
-                        fontSize = 15,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-                is ProductCategoriesUiState.Error -> {
-                    JetText(
-                        text = state.message,
-                        fontSize = 15,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-                else -> {}
+            // Heading
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .height(60.dp),
+                verticalArrangement = Arrangement.Top
+            ) {
+                JetHomeHeading(
+                    toProfileScreen = {},
+                    toCartScreen = {},
+                    toNotificationScreen = {}
+                )
             }
+
+            // Main slider
+            Image(
+                painter = painterResource(id = R.drawable.jetminds_slider_1),
+                contentDescription = "slider",
+                modifier = Modifier.clip(shape = RoundedCornerShape(12.dp))
+            )
+
+            SectionSpacer()
+
+            // Application UI Kit
+            AndroidSourceCodeSection()
+
+            SectionSpacer()
+
+            // Android Source Code
+            ApplicationUiKitSection()
+
+            SectionSpacer()
+
+            // Illustration banner
+            Image(
+                painter = painterResource(id = R.drawable.illustrations_3d_banner),
+                contentDescription = "3d illustration banner",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(12.dp))
+            )
+
+            SectionSpacer()
+
+            // 3D illustration products
+            Illustrations3DSection()
         }
     }
 }
 
 @Composable
-fun Ui8ProductsSection(ui8State: NewestProductUiState) {
-    LazyRow(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
-        userScrollEnabled = true
+private fun AndroidSourceCodeSection() {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight(),
+        verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
-        when (ui8State) {
-            NewestProductUiState.Loading -> {
-                item {
-                    JetText(text = "در حال بارگذاری محصولات ...")
+        ProductsHeadingSection(title = "سورس کد اندروید")
+        LazyRow(
+            contentPadding = PaddingValues(0.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            userScrollEnabled = true,
+            content = {
+                items(count = 5) { position ->
+                    JetProduct(title = "رابط کاربری اپلیکیشن فروشگاهی اندروید JetMinds")
                 }
             }
-            is NewestProductUiState.Success -> {
-                items(ui8State.data.size) {
-                    JetProduct(
-                        title = ui8State.data[it].name,
-                        image = ui8State.data[it].images[0].src,
-                        price = ui8State.data[it].price,
-                        rating = ui8State.data[it].averageRating,
-                        category = ui8State.data[it].categories[0].name
-                    )
-                }
-            }
-            is NewestProductUiState.Error -> {
-                item {
-                    Column {
-                        JetText(
-                            text = "message: ${ui8State.throwable?.message} ",
-                            maxLines = 10,
-                            modifier = Modifier
-                                .wrapContentHeight()
-                                .fillMaxWidth()
-                        )
-                        JetText(
-                            text = "cause: ${ui8State.throwable?.cause} ",
-                            maxLines = 10,
-                            modifier = Modifier
-                                .wrapContentHeight()
-                                .fillMaxWidth()
-                        )
-                        JetText(
-                            text = "localizedMessage: ${ui8State.throwable?.localizedMessage}",
-                            maxLines = 10,
-                            modifier = Modifier
-                                .wrapContentHeight()
-                                .fillMaxWidth()
-                        )
-                    }
-                }
-            }
-        }
+        )
     }
 }
 
 @Composable
-fun SectionSpacer(value: Int) {
+private fun ApplicationUiKitSection() {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight(),
+        verticalArrangement = Arrangement.spacedBy(5.dp)
+    ) {
+        ProductsHeadingSection(title = "رابط کاربری اپلیکیشن")
+        LazyRow(
+            contentPadding = PaddingValues(0.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            userScrollEnabled = true,
+            content = {
+                items(count = 5) { position ->
+                    JetProduct(title = "رابط کاربری اپلیکیشن فروشگاهی اندروید JetMinds")
+                }
+            }
+        )
+    }
+}
+
+@Composable
+private fun Illustrations3DSection() {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight(),
+        verticalArrangement = Arrangement.spacedBy(5.dp)
+    ) {
+        ProductsHeadingSection(title = "طرح های سه بعدی")
+        LazyRow(
+            contentPadding = PaddingValues(0.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            userScrollEnabled = true,
+            content = {
+                items(count = 5) { position ->
+                    JetProduct(title = "رابط کاربری اپلیکیشن فروشگاهی اندروید JetMinds")
+                }
+            }
+        )
+    }
+}
+
+@Composable
+private fun ProductsHeadingSection(title: String) {
+    Row(modifier = Modifier
+        .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        JetText(text = title)
+        JetIconText {}
+    }
+}
+
+@Composable
+private fun SectionSpacer(value: Int = 20) {
     Spacer(modifier = Modifier.height(value.dp))
 }
 
 
 @Preview
 @Composable
-fun Preview_HomeContent() {
+fun Preview_HomeScreen() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        HomeContent(
-            navController = NavController(LocalContext.current)
-        )
+        HomeContent()
     }
 }

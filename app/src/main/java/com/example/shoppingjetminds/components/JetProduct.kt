@@ -89,20 +89,18 @@ fun JetProduct(
                         verticalAlignment = Alignment.Top,
                         horizontalArrangement = Arrangement.End
                     ) {
-                        Icon(
+                        JetText(
+                            text = "($rating)",
+                            fontSize = 12
+                        )
+
+                        androidx.compose.material3.Icon(
                             painter = painterResource(id = R.drawable.star),
                             contentDescription = null,
                             tint = YellowColor,
                             modifier = Modifier
-                                .size(13.dp)
-                                .padding(top = 2.dp)
-                        )
-
-                        Spacer(modifier = Modifier.width(1.dp))
-
-                        JetText(
-                            text = "($rating)",
-                            fontSize = 12
+                                .size(14.dp)
+                                .padding(top = 1.dp)
                         )
                     }
                 }
