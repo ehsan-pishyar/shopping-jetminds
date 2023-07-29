@@ -3,45 +3,45 @@ package com.example.network.models
 import com.google.gson.annotations.SerializedName
 
 data class ProductVariationsResponseDto(
-    val id: Int,
+    val id: Int?,
     @SerializedName("date_created")
-    val dateCreated: String,
+    val dateCreated: String?,
     @SerializedName("date_created_gmt")
-    val dateCreatedGmt: String,
-    val description: String,
-    val permalink: String,
-    val sku: String,
-    val price: String,
+    val dateCreatedGmt: String?,
+    val description: String?,
+    val permalink: String?,
+    val sku: String?,
+    val price: String?,
     @SerializedName("regular_price")
-    val regularPrice: String,
+    val regularPrice: String?,
     @SerializedName("sale_price")
-    val salePrice: String,
+    val salePrice: String?,
     @SerializedName("date_on_sale_from")
-    val dateOnSaleFrom: String,
+    val dateOnSaleFrom: String?,
     @SerializedName("date_on_sale_from_gmt")
-    val dateOnSaleFromGmt: String,
+    val dateOnSaleFromGmt: String?,
     @SerializedName("date_on_sale_to")
-    val dateOnSaleTo: String,
+    val dateOnSaleTo: String?,
     @SerializedName("date_on_sale_to_gmt")
-    val dateOnSaleToGmt: String,
+    val dateOnSaleToGmt: String?,
     @SerializedName("on_sale")
-    val onSale: Boolean,
-    val status: String,
-    val purchasable: Boolean,
+    val onSale: Boolean?,
+    val status: String?,
+    val purchasable: Boolean?,
     @SerializedName("tax_status")
-    val taxStatus: String,
+    val taxStatus: String?,
     @SerializedName("tax_class")
-    val taxClass: String,
+    val taxClass: String?,
     @SerializedName("manage_stock")
-    val manageStock: Boolean,
+    val manageStock: Boolean?,
     @SerializedName("stock_quantity")
-    val stockQuantity: Int,
+    val stockQuantity: Int?,
     @SerializedName("stock_status")
-    val stockStatus: String,
+    val stockStatus: String?,
     @SerializedName("shipping_class")
-    val shippingClass: String,
+    val shippingClass: String?,
     @SerializedName("shipping_class_id")
-    val shippingClassId: Int,
-    val image: ImageDto,
-    val attribute: List<AttributeDto>
+    val shippingClassId: Int?,
+    val image: ImageDto?,
+    val attribute: List<AttributeDto>?
 )

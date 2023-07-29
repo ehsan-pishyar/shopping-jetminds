@@ -20,8 +20,8 @@ interface ProductVariationsDao {
     @Query("SELECT * FROM `product_variations_table` WHERE id = :productId")
     fun fetchProductVariations(productId: Int): Flow<List<ProductVariationsResponseEntity>>
 
-    @Query("SELECT * FROM `product_variations_table` WHERE id = :variationId")
-    fun fetchProductVariationsDetails(variationId: Int): Flow<ProductVariationsResponseEntity>
+    @Query("SELECT * FROM `product_variations_table` WHERE id = :productId")
+    fun fetchProductVariationsDetails(productId: Int, variationId: Int): Flow<ProductVariationsResponseEntity>
 
     @Query("DELETE FROM `product_variations_table`")
     suspend fun deleteProductVariations()

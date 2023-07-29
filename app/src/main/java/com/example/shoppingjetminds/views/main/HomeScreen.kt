@@ -19,8 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,7 +27,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.shoppingjetminds.R
 import com.example.shoppingjetminds.components.JetHomeHeading
@@ -37,16 +34,11 @@ import com.example.shoppingjetminds.components.JetIconText
 import com.example.shoppingjetminds.components.JetProduct
 import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.ui.theme.Background
-import com.example.shoppingjetminds.viewmodels.HomeScreenProductCategoriesUiState
-import com.example.shoppingjetminds.viewmodels.ProductCategoriesViewModel
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
-    productCategoriesViewModel: ProductCategoriesViewModel = hiltViewModel()
+    navController: NavController
 ){
-    val categoriesUiState: HomeScreenProductCategoriesUiState by productCategoriesViewModel.categoriesState.collectAsState()
-
     HomeContent()
 }
 

@@ -21,7 +21,7 @@ interface CouponsDao {
     fun fetchCoupons(): Flow<List<CouponsResponseEntity>>
 
     @Query("SELECT * FROM `coupons_table` WHERE id = :couponId")
-    fun fetchCouponDetails(couponId: Int): CouponsResponseEntity
+    fun fetchCouponDetails(couponId: Int): Flow<CouponsResponseEntity>
 
     @Query("DELETE FROM `coupons_table`")
     suspend fun deleteCoupons()

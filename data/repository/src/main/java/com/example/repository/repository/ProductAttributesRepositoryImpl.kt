@@ -29,7 +29,7 @@ class ProductAttributesRepositoryImpl @Inject constructor(
     }
 
     override fun getProductAttributeDetails(attrId: Int): Flow<ProductAttributesResponse> {
-        TODO("Not yet implemented")
+        return dao.fetchProductAttrDetails(attrId = attrId).map(ProductAttributesResponseEntity::toDomain)
     }
 
     override suspend fun refreshProductAttributes() {

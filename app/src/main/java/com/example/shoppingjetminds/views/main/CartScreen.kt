@@ -114,6 +114,7 @@ fun PromoSection() {
             )
         }
 
+        // Promo button
         Column(modifier = Modifier
             .fillMaxHeight()
             .weight(1.2f),

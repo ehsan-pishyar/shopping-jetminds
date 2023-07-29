@@ -17,13 +17,13 @@ fun CouponsResponseDto.toEntity(): CouponsResponseEntity =
         this.dateExpiresGmt,
         this.usageCount,
         this.individualUse,
-        this.productIds.map { it },
-        this.excludedProductIds.map { it },
+        this.productIds?.map { it },
+        this.excludedProductIds?.map { it },
         this.usageLimit,
         this.usageLimitPerUser,
         this.limitUsageToXItems,
         this.freeShipping,
-        this.productCategories.map { it.toEntity() },
+        this.productCategories?.map { it.toEntity() },
         this.excludeSaleItems,
         this.maximumAmount,
         this.minimumAmount,
@@ -48,8 +48,8 @@ fun OrdersResponseDto.toEntity(): OrdersResponseEntity =
         this.totalTax,
         this.customerId,
         this.orderKey,
-        this.billing.toEntity(),
-        this.shipping.toEntity(),
+        this.billing?.toEntity(),
+        this.shipping?.toEntity(),
         this.paymentMethod,
         this.paymentMethodTitle,
         this.transactionId,
@@ -59,9 +59,9 @@ fun OrdersResponseDto.toEntity(): OrdersResponseEntity =
         this.datePaid,
         this.cartHash,
         this.number,
-        this.lineItems.map { it.toEntity() },
-        this.taxLines.map { it.toEntity() },
-        this.shippingLines.map { it.toEntity() },
+        this.lineItems?.map { it.toEntity() },
+        this.taxLines?.map { it.toEntity() },
+        this.shippingLines?.map { it.toEntity() },
         this.paymentUrl,
         this.dateCreatedGmt,
         this.dateModifiedGmt,
@@ -149,11 +149,11 @@ fun ProductsResponseDto.toEntity(): ProductsResponseEntity =
         this.reviewsAllowed,
         this.averageRating,
         this.ratingCount,
-        this.categories.map { it.toEntity() },
-        this.tags.map { it.toEntity() },
-        this.images.map { it.toEntity() },
-        this.attributes.map { it.toEntity() },
-        this.defaultAttributes.map { it.toEntity() },
+        this.categories?.map { it.toEntity() },
+        this.tags?.map { it.toEntity() },
+        this.images?.map { it.toEntity() },
+        this.attributes?.map { it.toEntity() },
+        this.defaultAttributes?.map { it.toEntity() },
         this.stockStatus
     )
 
@@ -191,8 +191,8 @@ fun ProductVariationsResponseDto.toEntity(): ProductVariationsResponseEntity =
         this.stockStatus,
         this.shippingClass,
         this.shippingClassId,
-        this.image.toEntity(),
-        this.attribute.map { it.toEntity() }
+        this.image?.toEntity(),
+        this.attribute?.map { it.toEntity() }
     )
 
 fun ShippingZonesResponseDto.toEntity(): ShippingZonesResponseEntity =
@@ -258,7 +258,7 @@ fun LineItemDto.toEntity(): LineItemEntity = LineItemEntity(
     this.subtotal,
     this.subtotalTax,
     this.taxClass,
-    this.taxes.map { it.toEntity() },
+    this.taxes?.map { it.toEntity() },
     this.total,
     this.totalTax,
     this.variationId
@@ -282,7 +282,7 @@ fun ShippingLineDto.toEntity(): ShippingLineEntity =
         this.id,
         this.methodId,
         this.methodTitle,
-        this.taxes.map { it.toEntity() },
+        this.taxes?.map { it.toEntity() },
         this.total,
         this.totalTax
     )

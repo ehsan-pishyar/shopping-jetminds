@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class DefaultAttributeEntity(
-    val id: Int,
-    val name: String,
-    val option: String
+    val id: Int?,
+    val name: String?,
+    val option: String?
 )

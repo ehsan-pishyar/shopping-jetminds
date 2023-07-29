@@ -29,7 +29,7 @@ class ProductTagsRepositoryImpl @Inject constructor(
     }
 
     override fun getProductTagDetails(tagId: Int): Flow<ProductTagsResponse> {
-        TODO("Not yet implemented")
+        return dao.fetchProductTagDetails(tagId = tagId).map(ProductTagsResponseEntity::toDomain)
     }
 
     override suspend fun refreshProductTags() {

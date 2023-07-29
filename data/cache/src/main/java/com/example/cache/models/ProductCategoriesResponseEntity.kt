@@ -8,22 +8,14 @@ import com.example.cache.utils.CacheConstants
 @Entity(tableName = CacheConstants.PRODUCT_CATEGORIES_TABLE)
 data class ProductCategoriesResponseEntity(
     @PrimaryKey(autoGenerate = false)
-    @ColumnInfo(name = "id")
-    val id: Int? = null,
-    @ColumnInfo(name = "name")
-    var name: String = "",
-    @ColumnInfo(name = "slug")
-    val slug: String = "",
-    @ColumnInfo(name = "parent")
-    val parent: Int = 0,
-    @ColumnInfo(name = "description")
-    val description: String = "",
-    @ColumnInfo(name = "display")
-    val display: String = "",
-    @ColumnInfo(name = "image")
-    val image: ImageEntity? = null,
+    val id: Int?,
+    var name: String?,
+    val slug: String?,
+    val parent: Int?,
+    val description: String?,
+    val display: String?,
+    val image: ImageEntity?,
     @ColumnInfo(name = "menu_order")
-    val menuOrder: Int = 0,
-    @ColumnInfo(name = "count")
-    val count: Int = 0,
+    val menuOrder: Int?,
+    val count: Int?,
 )

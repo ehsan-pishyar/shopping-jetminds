@@ -3,14 +3,14 @@ package com.example.network.models
 import com.google.gson.annotations.SerializedName
 
 data class ProductCategoriesResponseDto(
-    val id: Int? = null,
-    val name: String = "",
-    val slug: String = "",
-    val parent: Int = 0,
-    val description: String = "",
-    val display: String = "",
-    val image: ImageDto? = null,
+    val id: Int?,
+    val name: String?,
+    val slug: String?,
+    val parent: Int?,
+    val description: String?,
+    val display: String?,
+    val image: ImageDto?,
     @SerializedName("menu_order")
-    val menuOrder: Int = 0,
-    val count: Int = 0,
+    val menuOrder: Int?,
+    val count: Int?,
 )

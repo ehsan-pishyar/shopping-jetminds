@@ -29,9 +29,7 @@ class ProductCategoriesRepositoryImpl @Inject constructor(
     }
 
     override fun getProductCategoryDetails(categoryId: Int): Flow<ProductCategoriesResponse> {
-        return dao.fetchProductCategoryDetails(categoryId).map { productCategoryDetails ->
-            productCategoryDetails.toDomain()
-        }
+        return dao.fetchProductCategoryDetails(categoryId).map(ProductCategoriesResponseEntity::toDomain)
     }
 
 

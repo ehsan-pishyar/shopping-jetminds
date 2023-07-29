@@ -59,7 +59,7 @@ class ProductsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getProductDetails(productId: Int): Flow<ProductsResponse> {
-        TODO("Not yet implemented")
+        return dao.fetchProductDetails(productId = productId).map(ProductsResponseEntity::toDomain)
     }
 
     override fun getNewestProducts(): Flow<List<ProductsResponse>> {

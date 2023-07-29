@@ -4,13 +4,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ShippingEntity(
-    val address1: String,
-    val address2: String,
-    val city: String,
-    val company: String,
-    val country: String,
-    val firstName: String,
-    val lastName: String,
-    val postcode: String,
-    val state: String
+    val address1: String?,
+    val address2: String?,
+    val city: String?,
+    val company: String?,
+    val country: String?,
+    val firstName: String?,
+    val lastName: String?,
+    val postcode: String?,
+    val state: String?
 )

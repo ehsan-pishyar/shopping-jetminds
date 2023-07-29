@@ -29,7 +29,7 @@ class OrdersRepositoryImpl @Inject constructor(
     }
 
     override fun getOrderDetails(orderId: Int): Flow<OrdersResponse> {
-        TODO("Not yet implemented")
+        return dao.fetchOrderDetails(orderId = orderId).map(OrdersResponseEntity::toDomain)
     }
 
     override suspend fun refreshOrders() {

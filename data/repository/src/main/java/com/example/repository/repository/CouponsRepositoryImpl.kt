@@ -29,7 +29,7 @@ class CouponsRepositoryImpl @Inject constructor(
     }
 
     override fun getCouponDetails(couponId: Int): Flow<CouponsResponse> {
-        TODO("Not yet implemented")
+        return dao.fetchCouponDetails(couponId = couponId).map(CouponsResponseEntity::toDomain)
     }
 
     override suspend fun refreshCoupons() {
