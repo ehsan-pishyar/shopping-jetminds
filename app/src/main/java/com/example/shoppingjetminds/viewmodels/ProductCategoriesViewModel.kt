@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.models.ProductCategoriesResponse
 import com.example.domain.use_cases.product_categories.GetProductCategoriesUseCase
+import com.example.domain.use_cases.product_categories.GetProductCategoryDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,17 +18,31 @@ sealed interface ProductCategoriesUiState {
     data class Error(val message: String): ProductCategoriesUiState
 }
 
-data class HomeScreenProductCategoriesUiState(
+sealed interface ProductCategoryDetailsUiState {
+    object Loading: ProductCategoryDetailsUiState
+    data class Success(val categoryDetails: ProductCategoriesResponse): ProductCategoryDetailsUiState
+    data class Error(val message: String): ProductCategoryDetailsUiState
+}
+
+data class MainProductCategoriesUiState(
     val categoriesUiState: ProductCategoriesUiState
+)
+
+data class MainProductCategoryDetailsUiState(
+    val categoryDetailsUiState: ProductCategoryDetailsUiState
 )
 
 @HiltViewModel
 class ProductCategoriesViewModel @Inject constructor(
-    private val getProductCategoriesUseCase: GetProductCategoriesUseCase
+    private val getProductCategoriesUseCase: GetProductCategoriesUseCase,
+    private val getProductCategoryDetailsUseCase: GetProductCategoryDetailsUseCase
 ): ViewModel() {
 
-    private var _categoriesState = MutableStateFlow(HomeScreenProductCategoriesUiState(ProductCategoriesUiState.Loading))
+    private var _categoriesState = MutableStateFlow(MainProductCategoriesUiState(ProductCategoriesUiState.Loading))
     val categoriesState = _categoriesState.asStateFlow()
+
+    private var _categoryDetailsState = MutableStateFlow(MainProductCategoryDetailsUiState(ProductCategoryDetailsUiState.Loading))
+    val categoryDetailsState = _categoryDetailsState.asStateFlow()
 
     init {
         getCategories()
@@ -42,7 +57,26 @@ class ProductCategoriesViewModel @Inject constructor(
                     is ServiceResult.Error -> ProductCategoriesUiState.Error(message = categoriesResult.throwable?.message!!)
                 }
 
-               _categoriesState.value = HomeScreenProductCategoriesUiState(categoriesUiStateResult)
+               _categoriesState.value = MainProductCategoriesUiState(categoriesUiStateResult)
+            }
+        }
+    }
+
+    fun getCategoryDetails(categoryId: Int) {
+        viewModelScope.launch {
+            getProductCategoryDetailsUseCase.invoke(categoryId = categoryId).collect { categoryDetailsResult ->
+                val categoryDetailsUiStateResult = when (categoryDetailsResult) {
+                    ServiceResult.Loading -> ProductCategoryDetailsUiState.Loading
+                    is ServiceResult.Success -> ProductCategoryDetailsUiState.Success(
+                        categoryDetails = categoryDetailsResult.data
+                    )
+                    is ServiceResult.Error -> ProductCategoryDetailsUiState.Error(
+                        message = categoryDetailsResult.throwable?.message!!
+                    )
+                }
+                _categoryDetailsState.value = MainProductCategoryDetailsUiState(
+                    categoryDetailsUiState = categoryDetailsUiStateResult
+                )
             }
         }
     }

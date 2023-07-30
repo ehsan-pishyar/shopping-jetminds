@@ -23,7 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.shoppingjetminds.R
 import com.example.shoppingjetminds.components.JetCategory
 import com.example.shoppingjetminds.ui.theme.Background
-import com.example.shoppingjetminds.viewmodels.HomeScreenProductCategoriesUiState
+import com.example.shoppingjetminds.viewmodels.MainProductCategoriesUiState
 import com.example.shoppingjetminds.viewmodels.ProductCategoriesViewModel
 
 @Composable
@@ -31,7 +31,7 @@ fun CategoryScreen(
     viewModel: ProductCategoriesViewModel = hiltViewModel()
 ){
 
-    val categoryState: HomeScreenProductCategoriesUiState by viewModel.categoriesState.collectAsState()
+    val categoryState: MainProductCategoriesUiState by viewModel.categoriesState.collectAsState()
 
     Box(
         modifier = Modifier
