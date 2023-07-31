@@ -2,35 +2,18 @@ package com.example.shoppingjetminds.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.models.ProductCategoriesResponse
 import com.example.domain.use_cases.product_categories.GetProductCategoriesUseCase
 import com.example.domain.use_cases.product_categories.GetProductCategoryDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.domain.utils.ServiceResult
+import com.example.shoppingjetminds.uistates.MainProductCategoriesUiState
+import com.example.shoppingjetminds.uistates.MainProductCategoryDetailsUiState
+import com.example.shoppingjetminds.uistates.ProductCategoriesUiState
+import com.example.shoppingjetminds.uistates.ProductCategoryDetailsUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-
-sealed interface ProductCategoriesUiState {
-    object Loading: ProductCategoriesUiState
-    data class Success(val categories: List<ProductCategoriesResponse>): ProductCategoriesUiState
-    data class Error(val message: String): ProductCategoriesUiState
-}
-
-sealed interface ProductCategoryDetailsUiState {
-    object Loading: ProductCategoryDetailsUiState
-    data class Success(val categoryDetails: ProductCategoriesResponse): ProductCategoryDetailsUiState
-    data class Error(val message: String): ProductCategoryDetailsUiState
-}
-
-data class MainProductCategoriesUiState(
-    val categoriesUiState: ProductCategoriesUiState
-)
-
-data class MainProductCategoryDetailsUiState(
-    val categoryDetailsUiState: ProductCategoryDetailsUiState
-)
 
 @HiltViewModel
 class ProductCategoriesViewModel @Inject constructor(

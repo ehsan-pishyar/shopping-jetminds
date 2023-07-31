@@ -2,35 +2,18 @@ package com.example.shoppingjetminds.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.models.ProductAttributesResponse
 import com.example.domain.use_cases.product_attrs.GetProductAttrDetailsUseCase
 import com.example.domain.use_cases.product_attrs.GetProductAttrsUseCase
 import com.example.domain.utils.ServiceResult
+import com.example.shoppingjetminds.uistates.MainProductAttrDetailsUiState
+import com.example.shoppingjetminds.uistates.MainProductAttrsUiState
+import com.example.shoppingjetminds.uistates.ProductAttrDetailsUiState
+import com.example.shoppingjetminds.uistates.ProductAttrsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-sealed interface ProductAttrsUiState {
-    object Loading: ProductAttrsUiState
-    data class Success(val attrs: List<ProductAttributesResponse>): ProductAttrsUiState
-    data class Error(val message: String): ProductAttrsUiState
-}
-
-sealed interface ProductAttrDetailsUiState {
-    object Loading: ProductAttrDetailsUiState
-    data class Success(val attrDetails: ProductAttributesResponse): ProductAttrDetailsUiState
-    data class Error(val message: String): ProductAttrDetailsUiState
-}
-
-data class MainProductAttrsUiState(
-    val attrsUiState: ProductAttrsUiState
-)
-
-data class MainProductAttrDetailsUiState(
-    val attrDetailsUiState: ProductAttrDetailsUiState
-)
 
 @HiltViewModel
 class ProductAttributesViewModel @Inject constructor(

@@ -2,35 +2,18 @@ package com.example.shoppingjetminds.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.models.ProductTagsResponse
 import com.example.domain.use_cases.product_tags.GetProductTagDetailsUseCase
 import com.example.domain.use_cases.product_tags.GetProductTagsUseCase
 import com.example.domain.utils.ServiceResult
+import com.example.shoppingjetminds.uistates.MainProductTagDetailsUiState
+import com.example.shoppingjetminds.uistates.MainProductTagsUiState
+import com.example.shoppingjetminds.uistates.ProductTagDetailsUiState
+import com.example.shoppingjetminds.uistates.ProductTagsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-sealed interface ProductTagsUiState {
-    object Loading: ProductTagsUiState
-    data class Success(val tags: List<ProductTagsResponse>): ProductTagsUiState
-    data class Error(val message: String): ProductTagsUiState
-}
-
-sealed interface ProductTagDetailsUiState {
-    object Loading: ProductTagDetailsUiState
-    data class Success(val tagDetails: ProductTagsResponse): ProductTagDetailsUiState
-    data class Error(val message: String): ProductTagDetailsUiState
-}
-
-data class MainProductTagsUiState(
-    val tagsUiState: ProductTagsUiState
-)
-
-data class MainProductTagDetailsUiState(
-    val tagDetailsUiState: ProductTagDetailsUiState
-)
 
 @HiltViewModel
 class ProductTagsViewModel @Inject constructor(

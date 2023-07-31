@@ -2,35 +2,18 @@ package com.example.shoppingjetminds.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.models.OrdersResponse
 import com.example.domain.use_cases.orders.GetOrderDetailsUseCase
 import com.example.domain.use_cases.orders.GetOrdersUseCase
 import com.example.domain.utils.ServiceResult
+import com.example.shoppingjetminds.uistates.MainOrderDetailsUiState
+import com.example.shoppingjetminds.uistates.MainOrdersUiState
+import com.example.shoppingjetminds.uistates.OrderDetailsUiState
+import com.example.shoppingjetminds.uistates.OrdersUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-sealed interface OrdersUiState {
-    object Loading: OrdersUiState
-    data class Success(val orders: List<OrdersResponse>): OrdersUiState
-    data class Error(val message: String): OrdersUiState
-}
-
-sealed interface OrderDetailsUiState {
-    object Loading: OrderDetailsUiState
-    data class Success(val orderDetails: OrdersResponse): OrderDetailsUiState
-    data class Error(val message: String): OrderDetailsUiState
-}
-
-data class MainOrdersUiState(
-    val ordersUiState: OrdersUiState
-)
-
-data class MainOrderDetailsUiState(
-    val orderDetailsUiState: OrderDetailsUiState
-)
 
 @HiltViewModel
 class OrdersViewModel @Inject constructor(

@@ -2,24 +2,15 @@ package com.example.shoppingjetminds.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.models.ProductReviewsResponse
 import com.example.domain.use_cases.product_reviews.GetProductReviewsUseCase
 import com.example.domain.utils.ServiceResult
+import com.example.shoppingjetminds.uistates.MainProductReviewsUiState
+import com.example.shoppingjetminds.uistates.ProductReviewsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-sealed interface ProductReviewsUiState {
-    object Loading: ProductReviewsUiState
-    data class Success(val reviews: List<ProductReviewsResponse>): ProductReviewsUiState
-    data class Error(val message: String): ProductReviewsUiState
-}
-
-data class MainProductReviewsUiState(
-    val reviewsUiState: ProductReviewsUiState
-)
 
 @HiltViewModel
 class ProductReviewsViewModel @Inject constructor(

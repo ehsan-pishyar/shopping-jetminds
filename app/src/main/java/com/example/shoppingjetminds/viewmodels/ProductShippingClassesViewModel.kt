@@ -2,24 +2,15 @@ package com.example.shoppingjetminds.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.models.ProductShippingClassesResponse
 import com.example.domain.use_cases.product_shipping_classes.GetProductShippingClassesUseCase
 import com.example.domain.utils.ServiceResult
+import com.example.shoppingjetminds.uistates.MainProductShippingClassesUiState
+import com.example.shoppingjetminds.uistates.ProductShippingClassesUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-sealed interface ProductShippingClassesUiState {
-    object Loading: ProductShippingClassesUiState
-    data class Success(val shippingClasses: List<ProductShippingClassesResponse>): ProductShippingClassesUiState
-    data class Error(val message: String): ProductShippingClassesUiState
-}
-
-data class MainProductShippingClassesUiState(
-    val shippingClassesUiState: ProductShippingClassesUiState
-)
 
 @HiltViewModel
 class ProductShippingClassesViewModel @Inject constructor(
@@ -28,7 +19,8 @@ class ProductShippingClassesViewModel @Inject constructor(
 
     private var _shippingClassesState = MutableStateFlow(MainProductShippingClassesUiState(
         ProductShippingClassesUiState.Loading
-    ))
+    )
+    )
     val shippingClassesState = _shippingClassesState.asStateFlow()
 
     init {

@@ -2,47 +2,94 @@ package com.example.shoppingjetminds.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.models.ProductsResponse
-import com.example.domain.use_cases.products.GetNewestProductsUseCase
+import com.example.domain.use_cases.products.GetProductsByCategoryIdUseCase
 import com.example.domain.utils.ServiceResult
+import com.example.shoppingjetminds.uistates.AndroidUiState
+import com.example.shoppingjetminds.uistates.ApplicationUiKitUiState
+import com.example.shoppingjetminds.uistates.HomeUiState
+import com.example.shoppingjetminds.uistates.Illustrations3DUiState
+import com.example.shoppingjetminds.utils.Categories
+import com.example.shoppingjetminds.utils.WhileUiSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class HomeUiState(
-    val newestProductList: NewestProductUiState
-)
-
-sealed interface NewestProductUiState {
-    data class Success(val data: List<ProductsResponse>): NewestProductUiState
-    data class Error(val throwable: Throwable? = null): NewestProductUiState
-    object Loading: NewestProductUiState
-}
-
 @HiltViewModel
 class ProductsViewModel @Inject constructor(
-    private val getNewestProductsUseCase: GetNewestProductsUseCase
+    getApplicationUiKitUseCase: GetProductsByCategoryIdUseCase,
+    getAndroidUseCase: GetProductsByCategoryIdUseCase,
+    getIllustrations3DUseCase: GetProductsByCategoryIdUseCase
 ): ViewModel() {
 
-    private var _newestUiState = MutableStateFlow(HomeUiState(NewestProductUiState.Loading))
-    val newestUiState = _newestUiState.asStateFlow()
+    private val isRefreshing = MutableStateFlow(false)
+    private val isError = MutableStateFlow(false)
 
-    init {
-        getNewestProducts()
-    }
+    val homeUiState: StateFlow<HomeUiState> = combine(
+        getApplicationUiKitUseCase.invoke(Categories.APPLICATION_UI_KIT.id),
+        getAndroidUseCase.invoke(Categories.ANDROID.id),
+        getIllustrations3DUseCase.invoke(Categories.ILLUSTRATIONS_3D.id),
+        isRefreshing,
+        isError
+    ) { applicationUiKitUiState, androidUiState, illustrations3DUiState, refreshing, errorConsumed ->
 
-    private fun getNewestProducts() =
-        viewModelScope.launch {
-            getNewestProductsUseCase.invoke().collect { newestResult ->
-                val newestUiStateResult = when (newestResult) {
-                    ServiceResult.Loading -> NewestProductUiState.Loading
-                    is ServiceResult.Success -> NewestProductUiState.Success(newestResult.data)
-                    is ServiceResult.Error -> NewestProductUiState.Error(newestResult.throwable?.cause)
-                }
-                _newestUiState.value = HomeUiState(newestProductList = newestUiStateResult)
-            }
+        val applicationUiKit: ApplicationUiKitUiState = when (applicationUiKitUiState) {
+            ServiceResult.Loading -> ApplicationUiKitUiState.Loading
+            is ServiceResult.Success -> ApplicationUiKitUiState.Success(
+                applicationUiKits = applicationUiKitUiState.data
+            )
+            is ServiceResult.Error -> ApplicationUiKitUiState.Error(
+                message = applicationUiKitUiState.throwable
+            )
         }
+
+        val androidSourceCodes: AndroidUiState = when (androidUiState) {
+            ServiceResult.Loading -> AndroidUiState.Loading
+            is ServiceResult.Success -> AndroidUiState.Success(
+                androidSourceCodes = androidUiState.data
+            )
+            is ServiceResult.Error -> AndroidUiState.Error(
+                message = androidUiState.throwable
+            )
+        }
+
+        val illustration3Ds: Illustrations3DUiState = when (illustrations3DUiState) {
+            ServiceResult.Loading -> Illustrations3DUiState.Loading
+            is ServiceResult.Success -> Illustrations3DUiState.Success(
+                illustration3Ds = illustrations3DUiState.data
+            )
+            is ServiceResult.Error -> Illustrations3DUiState.Error(
+                message = illustrations3DUiState.throwable
+            )
+        }
+
+        HomeUiState(
+            applicationUiKit,
+            androidSourceCodes,
+            illustration3Ds,
+            refreshing,
+            errorConsumed
+        )
+    }
+        .stateIn(
+            scope = viewModelScope,
+            started = WhileUiSubscribed,
+            initialValue = HomeUiState(
+                ApplicationUiKitUiState.Loading,
+                AndroidUiState.Loading,
+                Illustrations3DUiState.Loading,
+                isRefreshing = false,
+                isError = false
+            )
+        )
+
+    fun onErrorConsumed() {
+        viewModelScope.launch {
+            isError.emit(false)
+        }
+    }
 }
 

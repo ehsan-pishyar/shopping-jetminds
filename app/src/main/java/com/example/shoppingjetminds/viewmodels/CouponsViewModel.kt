@@ -2,35 +2,18 @@ package com.example.shoppingjetminds.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.models.CouponsResponse
 import com.example.domain.use_cases.coupons.GetCouponDetailsUseCase
 import com.example.domain.use_cases.coupons.GetCouponsUseCase
 import com.example.domain.utils.ServiceResult
+import com.example.shoppingjetminds.uistates.CouponDetailsUiState
+import com.example.shoppingjetminds.uistates.CouponsUiState
+import com.example.shoppingjetminds.uistates.MainCouponDetailsUiState
+import com.example.shoppingjetminds.uistates.MainCouponsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-sealed interface CouponsUiState {
-    object Loading: CouponsUiState
-    data class Success(val coupons: List<CouponsResponse>): CouponsUiState
-    data class Error(val message: String): CouponsUiState
-}
-
-sealed interface CouponDetailsUiState {
-    object Loading: CouponDetailsUiState
-    data class Success(val couponDetails: CouponsResponse): CouponDetailsUiState
-    data class Error(val message: String): CouponDetailsUiState
-}
-
-data class MainCouponsUiState(
-    val couponsUiState: CouponsUiState
-)
-
-data class MainCouponDetailsUiState(
-    val couponDetailsUiState: CouponDetailsUiState
-)
 
 @HiltViewModel
 class CouponsViewModel @Inject constructor(

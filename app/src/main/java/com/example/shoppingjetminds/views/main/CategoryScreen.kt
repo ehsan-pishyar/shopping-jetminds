@@ -23,7 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.shoppingjetminds.R
 import com.example.shoppingjetminds.components.JetCategory
 import com.example.shoppingjetminds.ui.theme.Background
-import com.example.shoppingjetminds.viewmodels.MainProductCategoriesUiState
+import com.example.shoppingjetminds.uistates.MainProductCategoriesUiState
 import com.example.shoppingjetminds.viewmodels.ProductCategoriesViewModel
 
 @Composable

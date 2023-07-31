@@ -19,6 +19,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.shoppingjetminds.R
 import com.example.shoppingjetminds.components.JetHomeHeading
@@ -34,16 +37,26 @@ import com.example.shoppingjetminds.components.JetIconText
 import com.example.shoppingjetminds.components.JetProduct
 import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.ui.theme.Background
+import com.example.shoppingjetminds.uistates.AndroidUiState
+import com.example.shoppingjetminds.viewmodels.TestUiState
+import com.example.shoppingjetminds.viewmodels.TestViewModel
 
 @Composable
 fun HomeScreen(
-    navController: NavController
+    navController: NavController,
+    testViewModel: TestViewModel = hiltViewModel()
 ){
-    HomeContent()
+    val testUiState: TestUiState by testViewModel.testState.collectAsState()
+
+    HomeContent(
+        testState = testUiState
+    )
 }
 
 @Composable
-private fun HomeContent() {
+private fun HomeContent(
+    testState: TestUiState? = null
+) {
 
     val scrollState = rememberScrollState()
 
@@ -80,7 +93,9 @@ private fun HomeContent() {
             SectionSpacer()
 
             // Application UI Kit
-            AndroidSourceCodeSection()
+            if (testState != null) {
+                AndroidSourceCodeSection(testUiState = testState)
+            }
 
             SectionSpacer()
 
@@ -107,23 +122,42 @@ private fun HomeContent() {
 }
 
 @Composable
-private fun AndroidSourceCodeSection() {
+private fun AndroidSourceCodeSection(
+    testUiState: TestUiState
+) {
+
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight(),
         verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         ProductsHeadingSection(title = "سورس کد اندروید")
-        LazyRow(
-            contentPadding = PaddingValues(0.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            userScrollEnabled = true,
-            content = {
-                items(count = 5) { position ->
-                    JetProduct(title = "رابط کاربری اپلیکیشن فروشگاهی اندروید JetMinds")
-                }
+        when (val androidUiState = testUiState.testState) {
+            AndroidUiState.Loading -> {
+                JetText(text = "در حال باگذاری ...")
             }
-        )
+            is AndroidUiState.Success -> {
+                LazyRow(
+                    contentPadding = PaddingValues(0.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    userScrollEnabled = true,
+                    content = {
+                        items(count = 5) { position ->
+                            JetProduct(
+                                title = "${androidUiState.androidSourceCodes[position].name}",
+                                image = androidUiState.androidSourceCodes[position].images?.get(0)?.src,
+                                price = androidUiState.androidSourceCodes[position].price,
+                                rating = androidUiState.androidSourceCodes[position].averageRating,
+                                category = androidUiState.androidSourceCodes[position].categories?.get(0)?.name
+                            )
+                        }
+                    }
+                )
+            }
+            is AndroidUiState.Error -> {
+                JetText(text = "${androidUiState.message}")
+            }
+        }
     }
 }
 
@@ -170,7 +204,9 @@ private fun Illustrations3DSection() {
 }
 
 @Composable
-private fun ProductsHeadingSection(title: String) {
+private fun ProductsHeadingSection(
+    title: String
+) {
     Row(modifier = Modifier
         .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
