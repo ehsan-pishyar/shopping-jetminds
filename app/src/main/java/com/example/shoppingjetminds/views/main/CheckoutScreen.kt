@@ -51,7 +51,9 @@ fun CheckoutScreen() {
                 .weight(1f)
             ) {
                 JetHeading(
-                    title = "تسویه حساب"
+                    title = "تسویه حساب",
+                    hasCartIcon = true
+                    // TODO: Handle toCartScreen click
                 )
             }
 

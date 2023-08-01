@@ -22,11 +22,11 @@ import com.example.shoppingjetminds.ui.theme.YellowColor
 
 @Composable
 fun JetIconText(
-    onClick: () -> Unit
+    toShopScreen: () -> Unit
 ) {
     Button(
         modifier = Modifier.width(80.dp).height(25.dp),
-        onClick = { onClick() },
+        onClick = { toShopScreen() },
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.White
         ),

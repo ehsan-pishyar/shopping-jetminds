@@ -29,7 +29,11 @@ import com.example.shoppingjetminds.R
 import com.example.shoppingjetminds.ui.theme.RedColor
 
 @Composable
-fun JetHeading(title: String? = null, icon: Int? = null) {
+fun JetHeading(
+    title: String,
+    hasCartIcon: Boolean,
+    toCartScreen: () -> Unit = {}
+) {
     Row(modifier = Modifier
         .fillMaxWidth()
         .height(40.dp)
@@ -42,19 +46,22 @@ fun JetHeading(title: String? = null, icon: Int? = null) {
             .weight(1f),
             contentAlignment = Alignment.CenterStart
         ) {
-            icon?.let {
-                Image(
-                    painter = painterResource(id = it),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(30.dp)
-                        .padding(start = 2.dp),
-                    contentScale = ContentScale.Crop
-                )
+            if(hasCartIcon) {
+                IconButton(
+                    onClick = { toCartScreen() }
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.cart),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(25.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                }
                 Box(modifier = Modifier
                     .fillMaxSize()
                     .background(Color.Transparent)
-                    .padding(top = 10.dp),
+                    .padding(top = 10.dp, start = 5.dp),
                     contentAlignment = Alignment.TopStart
                 ) {
                     // Red dot for notification
@@ -73,78 +80,6 @@ fun JetHeading(title: String? = null, icon: Int? = null) {
         }
 
         // Title
-        title?.let {
-            Column(modifier = Modifier
-                .fillMaxHeight()
-                .weight(8f),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                JetText(
-                    text = "سبد خرید",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 23
-                )
-            }
-        }
-
-        // Back button
-        Column(modifier = Modifier
-            .fillMaxHeight()
-            .weight(1f),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.arrow_left),
-                contentDescription = null
-            )
-        }
-    }
-}
-
-@Composable
-fun HeadingSection() {
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .height(40.dp)
-        .background(Color.Transparent)
-    ) {
-
-        Box(modifier = Modifier
-            .background(Color.Transparent)
-            .fillMaxHeight()
-            .weight(1f),
-            contentAlignment = Alignment.CenterStart
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.cart),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(30.dp)
-                    .padding(start = 2.dp),
-                contentScale = ContentScale.Crop
-            )
-
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Transparent)
-                .padding(top = 10.dp),
-                contentAlignment = Alignment.TopStart
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.ic_launcher_background),
-                    contentDescription = "",
-                    colorFilter = ColorFilter.tint(RedColor),
-                    modifier = Modifier
-                        // Set image size to 4 dp
-                        .size(9.dp)
-                        // Clip image to be shaped as a circle
-                        .clip(CircleShape)
-                )
-            }
-        }
-
         Column(modifier = Modifier
             .fillMaxHeight()
             .weight(8f),
@@ -154,10 +89,11 @@ fun HeadingSection() {
             JetText(
                 text = "سبد خرید",
                 fontWeight = FontWeight.Bold,
-                fontSize = 23
+                fontSize = 20
             )
         }
 
+        // Back button
         Column(modifier = Modifier
             .fillMaxHeight()
             .weight(1f),
@@ -265,7 +201,7 @@ fun JetHomeHeading(
             JetText(
                 text = "جت مایندز",
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 23
+                fontSize = 20
             )
         }
 

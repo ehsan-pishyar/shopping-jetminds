@@ -29,7 +29,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.example.shoppingjetminds.R
 import com.example.shoppingjetminds.components.CartListItem
 import com.example.shoppingjetminds.components.JetHeading
 import com.example.shoppingjetminds.components.JetSimpleButton
@@ -55,7 +54,8 @@ fun CartScreen() {
             ) {
                 JetHeading(
                     title = "سبد خرید",
-                    icon = R.drawable.cart
+                    hasCartIcon = true
+                    // TODO: Handle toCartScreen Click
                 )
             }
             Column(modifier = Modifier

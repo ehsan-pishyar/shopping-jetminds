@@ -20,48 +20,87 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.shoppingjetminds.R
 import com.example.shoppingjetminds.components.JetCategory
+import com.example.shoppingjetminds.components.JetHeading
+import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.ui.theme.Background
 import com.example.shoppingjetminds.uistates.MainProductCategoriesUiState
+import com.example.shoppingjetminds.uistates.ProductCategoriesUiState
 import com.example.shoppingjetminds.viewmodels.ProductCategoriesViewModel
 
 @Composable
 fun CategoryScreen(
-    viewModel: ProductCategoriesViewModel = hiltViewModel()
+    viewModel: ProductCategoriesViewModel = hiltViewModel(),
+    toCartScreen: () -> Unit = {}
 ){
-
     val categoryState: MainProductCategoriesUiState by viewModel.categoriesState.collectAsState()
 
+    CategoryScreenContent(
+        categoryState = categoryState,
+        toCartScreen = { toCartScreen() }
+    )
+}
+
+@Composable
+private fun CategoryScreenContent(
+    categoryState: MainProductCategoriesUiState? = null,
+    toCartScreen: () -> Unit = {}
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Background),
         contentAlignment = Alignment.TopCenter
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(15.dp)
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(15.dp)
         ) {
-//            if (uiState.loading) {
-//                JetText(text = "در حال بارگذاری ...")
-//            } else if (uiState.success.isNotEmpty()) {
-//                JetText(text = uiState.success[0].name)
-//            } else {
-//                JetText(text = uiState.error)
-//            }
-
-            LazyColumn(modifier = Modifier
+            Column(modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+                .weight(1f)
             ) {
-                items(count = 5) {
-                    JetCategory(
-                        image = R.drawable.jetminds_shop_feature_image_example,
-                        title = "رابط کاربری اپلیکیشن"
-                    )
+                JetHeading(
+                    title = "دسته بندی محصولات",
+                    hasCartIcon = true,
+                    toCartScreen = { toCartScreen() }
+                )
+            }
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .weight(11f)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(15.dp)
+                ) {
+                    when(val state = categoryState?.categoriesUiState) {
+                        ProductCategoriesUiState.Loading -> {
+                            JetText(text = "در حال بارگذازی ...")
+                        }
+                        is ProductCategoriesUiState.Success -> {
+                            LazyColumn(modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight(),
+                                verticalArrangement = Arrangement.spacedBy(10.dp),
+                                userScrollEnabled = true
+                            ) {
+                                items(count = state.categories.size) { position ->
+                                    state.categories[position].image?.src?.let {
+                                        JetCategory(
+                                            imagePath = it,
+                                            title = state.categories[position].name!!
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                        is ProductCategoriesUiState.Error -> {
+                            JetText(text = state.message)
+                        }
+                        else -> {}
+                    }
                 }
             }
         }
@@ -72,6 +111,6 @@ fun CategoryScreen(
 @Composable
 fun Preview_CategoryScreen() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        CategoryScreen()
+        CategoryScreenContent()
     }
 }

@@ -30,7 +30,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.shoppingjetminds.R
 import com.example.shoppingjetminds.components.JetHomeHeading
 import com.example.shoppingjetminds.components.JetIconText
@@ -43,21 +42,31 @@ import com.example.shoppingjetminds.viewmodels.TestViewModel
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
-    testViewModel: TestViewModel = hiltViewModel()
+    testViewModel: TestViewModel = hiltViewModel(),
+    toCartScreen: () -> Unit,
+    toNotificationScreen: () -> Unit,
+    toProfileScreen: () -> Unit,
+    toShopScreen: () -> Unit
 ){
     val testUiState: TestUiState by testViewModel.testState.collectAsState()
 
     HomeContent(
-        testState = testUiState
+        testState = testUiState,
+        toCartScreen = { toCartScreen() },
+        toNotificationScreen = { toNotificationScreen() },
+        toProfileScreen = { toProfileScreen() },
+        toShopScreen = { toShopScreen() }
     )
 }
 
 @Composable
 private fun HomeContent(
-    testState: TestUiState? = null
+    testState: TestUiState? = null,
+    toCartScreen: () -> Unit,
+    toNotificationScreen: () -> Unit,
+    toProfileScreen: () -> Unit,
+    toShopScreen: () -> Unit
 ) {
-
     val scrollState = rememberScrollState()
 
     Box(modifier = Modifier
@@ -77,9 +86,9 @@ private fun HomeContent(
                 verticalArrangement = Arrangement.Top
             ) {
                 JetHomeHeading(
-                    toProfileScreen = {},
-                    toCartScreen = {},
-                    toNotificationScreen = {}
+                    toProfileScreen = { toProfileScreen() }, // TODO: Handle toProfileScreen Click
+                    toCartScreen = { toCartScreen() },
+                    toNotificationScreen = { toNotificationScreen() } // TODO: Handle toNotificationScreen Click
                 )
             }
 
@@ -94,13 +103,18 @@ private fun HomeContent(
 
             // Application UI Kit
             if (testState != null) {
-                AndroidSourceCodeSection(testUiState = testState)
+                AndroidSourceCodeSection(
+                    testUiState = testState,
+                    toShopScreen = { toShopScreen() }
+                )
             }
 
             SectionSpacer()
 
             // Android Source Code
-            ApplicationUiKitSection()
+            ApplicationUiKitSection(
+                toShopScreen = { toShopScreen() }
+            )
 
             SectionSpacer()
 
@@ -116,22 +130,27 @@ private fun HomeContent(
             SectionSpacer()
 
             // 3D illustration products
-            Illustrations3DSection()
+            Illustrations3DSection(
+                toShopScreen = { toShopScreen() }
+            )
         }
     }
 }
 
 @Composable
 private fun AndroidSourceCodeSection(
-    testUiState: TestUiState
+    testUiState: TestUiState,
+    toShopScreen: () -> Unit
 ) {
-
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight(),
         verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
-        ProductsHeadingSection(title = "سورس کد اندروید")
+        ProductsHeadingSection(
+            title = "سورس کد اندروید",
+            toShopScreen = { toShopScreen() }
+        )
         when (val androidUiState = testUiState.testState) {
             AndroidUiState.Loading -> {
                 JetText(text = "در حال باگذاری ...")
@@ -162,13 +181,18 @@ private fun AndroidSourceCodeSection(
 }
 
 @Composable
-private fun ApplicationUiKitSection() {
+private fun ApplicationUiKitSection(
+    toShopScreen: () -> Unit
+) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight(),
         verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
-        ProductsHeadingSection(title = "رابط کاربری اپلیکیشن")
+        ProductsHeadingSection(
+            title = "رابط کاربری اپلیکیشن",
+            toShopScreen = { toShopScreen() }
+        )
         LazyRow(
             contentPadding = PaddingValues(0.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -183,13 +207,18 @@ private fun ApplicationUiKitSection() {
 }
 
 @Composable
-private fun Illustrations3DSection() {
+private fun Illustrations3DSection(
+    toShopScreen: () -> Unit
+) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight(),
         verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
-        ProductsHeadingSection(title = "طرح های سه بعدی")
+        ProductsHeadingSection(
+            title = "طرح های سه بعدی",
+            toShopScreen = { toShopScreen() }
+        )
         LazyRow(
             contentPadding = PaddingValues(0.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -205,7 +234,8 @@ private fun Illustrations3DSection() {
 
 @Composable
 private fun ProductsHeadingSection(
-    title: String
+    title: String,
+    toShopScreen: () -> Unit
 ) {
     Row(modifier = Modifier
         .fillMaxWidth(),
@@ -213,7 +243,9 @@ private fun ProductsHeadingSection(
         verticalAlignment = Alignment.CenterVertically
     ) {
         JetText(text = title)
-        JetIconText {}
+        JetIconText {
+            toShopScreen()
+        }
     }
 }
 
@@ -227,6 +259,11 @@ private fun SectionSpacer(value: Int = 20) {
 @Composable
 fun Preview_HomeScreen() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        HomeContent()
+        HomeContent(
+            toCartScreen = {},
+            toNotificationScreen = {},
+            toProfileScreen = {},
+            toShopScreen = {}
+        )
     }
 }

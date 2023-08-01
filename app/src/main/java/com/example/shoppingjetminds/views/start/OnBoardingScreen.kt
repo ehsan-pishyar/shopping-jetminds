@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.shoppingjetminds.components.JetSimpleButton
 import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.ui.theme.Background
@@ -33,6 +34,7 @@ import com.example.shoppingjetminds.ui.theme.LighterBlack
 import com.example.shoppingjetminds.ui.theme.Primary
 import com.example.shoppingjetminds.ui.theme.Yekanbakh
 import com.example.shoppingjetminds.utils.OnBoardingItems
+import com.example.shoppingjetminds.viewmodels.OnBoardingViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.pager.HorizontalPager
@@ -42,6 +44,7 @@ import kotlinx.coroutines.*
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnBoardingScreen(
+    viewModel: OnBoardingViewModel = hiltViewModel(),
     toHomeScreen: () -> Unit
 ){
 
@@ -57,7 +60,8 @@ fun OnBoardingScreen(
         items = onBoardingItems,
         scope = scope,
         pagerState = pagerState,
-        toHomeScreen = toHomeScreen
+        toHomeScreen = { toHomeScreen() },
+        onBoardingStateCompleted = { viewModel.saveOnBoardingState(completed = true) }
     )
 }
 
@@ -67,7 +71,8 @@ fun OnBoardingContent(
     items: List<OnBoardingItems> = emptyList(),
     scope: CoroutineScope? = null,
     pagerState: PagerState? = null,
-    toHomeScreen: () -> Unit
+    toHomeScreen: () -> Unit,
+    onBoardingStateCompleted: () -> Unit
 ) {
     Box(modifier = Modifier
         .fillMaxSize()
@@ -113,7 +118,7 @@ fun OnBoardingContent(
                             }
                         } else {
                             // Using this method to save OnBoarding state to DataStore
-                            // viewModel.saveOnBoardingState(completed = true)
+                            onBoardingStateCompleted()
                             toHomeScreen()
                         }
                     }
@@ -237,8 +242,11 @@ fun Indicator(isSelected:Boolean){
 @OptIn(ExperimentalPagerApi::class)
 @Preview
 @Composable
-fun PreviewOnBoardingScreen() {
+fun Preview_OnBoardingScreen() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        OnBoardingContent{}
+        OnBoardingContent(
+            toHomeScreen = {},
+            onBoardingStateCompleted = {}
+        )
     }
 }

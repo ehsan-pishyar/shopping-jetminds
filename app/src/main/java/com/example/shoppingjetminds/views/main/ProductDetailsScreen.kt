@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.example.shoppingjetminds.ui.theme.Background
 import com.example.shoppingjetminds.R
-import com.example.shoppingjetminds.components.HeadingSection
+import com.example.shoppingjetminds.components.JetHeading
 import com.example.shoppingjetminds.components.JetSimpleButton
 import com.example.shoppingjetminds.components.JetStarText
 import com.example.shoppingjetminds.components.JetText
@@ -70,7 +70,11 @@ fun ProductDetailsScreen() {
                 .fillMaxWidth()
                 .weight(1f)
             ) {
-                HeadingSection()
+                JetHeading(
+                    title = "محصول تکی",
+                    hasCartIcon = true
+                    // TODO: Handle toCartScreen Click
+                )
             }
             Column(modifier = Modifier
                 .fillMaxWidth()

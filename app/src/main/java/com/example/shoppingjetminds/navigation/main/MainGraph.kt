@@ -24,13 +24,20 @@ fun MainGraph(
         startDestination = BottomNavigationScreens.Home.route
     ) {
         composable(route = BottomNavigationScreens.Home.route) {
-            HomeScreen(navController = navController)
+            HomeScreen(
+                toCartScreen = { navController.navigate(BottomNavigationScreens.Cart.route) },
+                toNotificationScreen = {  } ,
+                toProfileScreen = {  },
+                toShopScreen = { navController.navigate(BottomNavigationScreens.Shop.route) }
+            )
         }
         composable(route = BottomNavigationScreens.Shop.route) {
             ShopScreen()
         }
         composable(route = BottomNavigationScreens.Category.route) {
-            CategoryScreen()
+            CategoryScreen(
+                toCartScreen = { navController.navigate(BottomNavigationScreens.Cart.route) }
+            )
         }
         composable(route = BottomNavigationScreens.Favorites.route) {
             FavoritesScreen()
