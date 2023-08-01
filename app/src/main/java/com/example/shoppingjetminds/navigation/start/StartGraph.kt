@@ -18,8 +18,7 @@ fun NavGraphBuilder.addStartTopLevel(navController: NavHostController) {
         composable(route = StartScreens.Splash.route) {
             SplashScreen(
                 toOnBoardingScreen = { navController.navigate(route = StartScreens.OnBoarding.route) },
-                toHomeScreen = { navController.navigate(route = Graph.MAIN) },
-                toCategoryScreen = { navController.navigate(route = BottomNavigationScreens.Category.route) }
+                toHomeScreen = { navController.navigate(route = Graph.MAIN) }
             )
         }
         composable(route = StartScreens.OnBoarding.route) {

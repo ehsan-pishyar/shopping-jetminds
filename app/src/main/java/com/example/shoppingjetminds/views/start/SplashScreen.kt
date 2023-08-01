@@ -8,22 +8,31 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.shoppingjetminds.R
+import com.example.shoppingjetminds.navigation.StartScreens
 import com.example.shoppingjetminds.ui.theme.Background
+import com.example.shoppingjetminds.viewmodels.SplashViewModel
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
+    viewModel: SplashViewModel = hiltViewModel(),
     toOnBoardingScreen: () -> Unit,
-    toHomeScreen: () -> Unit,
-    toCategoryScreen: () -> Unit
+    toHomeScreen: () -> Unit
 ){
     // AnimationEffect
     LaunchedEffect(key1 = true) {
         delay(1000L)
-        toHomeScreen()
+
+        !viewModel.isLoading.value
+
+        if (viewModel.startDestination.value == StartScreens.OnBoarding.route) {
+            toOnBoardingScreen()
+        } else {
+            toHomeScreen()
+        }
     }
 
     Box(
@@ -38,10 +47,4 @@ fun SplashScreen(
             contentDescription = "logo"
         )
     }
-}
-
-@Preview
-@Composable
-fun Preview_SplashScreen() {
-    SplashScreen(toOnBoardingScreen = { /*TODO*/ }, toHomeScreen = { /*TODO*/ }) {}
 }

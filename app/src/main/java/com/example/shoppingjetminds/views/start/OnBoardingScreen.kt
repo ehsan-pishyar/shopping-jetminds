@@ -53,6 +53,22 @@ fun OnBoardingScreen(
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState(initialPage = 0)
 
+    OnBoardingContent(
+        items = onBoardingItems,
+        scope = scope,
+        pagerState = pagerState,
+        toHomeScreen = toHomeScreen
+    )
+}
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun OnBoardingContent(
+    items: List<OnBoardingItems> = emptyList(),
+    scope: CoroutineScope? = null,
+    pagerState: PagerState? = null,
+    toHomeScreen: () -> Unit
+) {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(Background)
@@ -68,14 +84,18 @@ fun OnBoardingScreen(
                 .fillMaxWidth()
                 .weight(4f)
             ) {
-                ImageSection(onBoardingItems = onBoardingItems, pagerState = pagerState)
+                if (pagerState != null) {
+                    ImageSection(onBoardingItems = items, pagerState = pagerState)
+                }
             }
 
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .weight(3f)
             ) {
-                ContentSection(onBoardingItems = onBoardingItems, pagerState = pagerState)
+                if (pagerState != null) {
+                    ContentSection(onBoardingItems = items, pagerState = pagerState)
+                }
             }
 
             Column(
@@ -85,15 +105,17 @@ fun OnBoardingScreen(
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                ButtonSection(pagerState = pagerState) {
-                    if (pagerState.currentPage != 2) {
-                        scope.launch {
-                            pagerState.scrollToPage(page = pagerState.currentPage + 1)
+                if (pagerState != null) {
+                    ButtonSection(pagerState = pagerState) {
+                        if (pagerState.currentPage != 2) {
+                            scope?.launch {
+                                pagerState.scrollToPage(page = pagerState.currentPage + 1)
+                            }
+                        } else {
+                            // Using this method to save OnBoarding state to DataStore
+                            // viewModel.saveOnBoardingState(completed = true)
+                            toHomeScreen()
                         }
-                    } else {
-                        // Using this method to save OnBoarding state to DataStore
-                        // viewModel.saveOnBoardingState(completed = true)
-                        toHomeScreen()
                     }
                 }
             }
@@ -197,7 +219,7 @@ fun PagerIndicator(currentPage: Int, items: List<OnBoardingItems>) {
 fun Indicator(isSelected:Boolean){
     val width = animateDpAsState(
         targetValue = if (isSelected) 40.dp else 8.dp,
-        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy)
+        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy), label = ""
     )
 
     Box(
@@ -212,12 +234,11 @@ fun Indicator(isSelected:Boolean){
     )
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Preview
 @Composable
 fun PreviewOnBoardingScreen() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        OnBoardingScreen {
-
-        }
+        OnBoardingContent{}
     }
 }
