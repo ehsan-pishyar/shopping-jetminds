@@ -4,7 +4,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.example.shoppingjetminds.navigation.BottomNavigationScreens
 import com.example.shoppingjetminds.navigation.Graph
 import com.example.shoppingjetminds.navigation.StartScreens
 import com.example.shoppingjetminds.views.start.OnBoardingScreen
@@ -29,7 +28,7 @@ fun NavGraphBuilder.addStartTopLevel(navController: NavHostController) {
         }
         composable(route = StartScreens.OnBoarding.route) {
             OnBoardingScreen {
-                navController.navigate(route = BottomNavigationScreens.Home.route)
+                navController.navigate(route = Graph.MAIN)
             }
         }
     }

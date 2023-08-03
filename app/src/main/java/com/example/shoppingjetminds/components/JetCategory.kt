@@ -1,5 +1,6 @@
 package com.example.shoppingjetminds.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,13 +16,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.shoppingjetminds.R
 import com.example.shoppingjetminds.ui.theme.Primary
 
 @Composable
 fun JetCategory(
-    imagePath: String = "",
+    imagePath: String? = null,
     title: String
 ) {
     Card(modifier = Modifier
@@ -33,13 +37,28 @@ fun JetCategory(
             .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            JetCoilImage(
-                imageUrl = imagePath
-            )
+            if (imagePath.isNullOrEmpty()) {
+                Image(
+                    painter = painterResource(id = R.drawable.category_default_image),
+                    contentDescription = "category image",
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                JetCoilImage(
+                    imageUrl = imagePath
+                )
+            }
             Column(
                 Modifier
                     .fillMaxSize()
-                    .background(brush = Brush.verticalGradient(colors = listOf(Color.Transparent, Primary.copy(alpha = 0.5f)))),
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                Color.Transparent,
+                                Primary.copy(alpha = 0.5f)
+                            )
+                        )
+                    ),
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.Start
             ) {

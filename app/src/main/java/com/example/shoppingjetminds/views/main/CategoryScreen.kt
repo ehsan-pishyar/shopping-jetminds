@@ -73,7 +73,6 @@ private fun CategoryScreenContent(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(15.dp)
                 ) {
                     when(val state = categoryState?.categoriesUiState) {
                         ProductCategoriesUiState.Loading -> {
@@ -87,12 +86,10 @@ private fun CategoryScreenContent(
                                 userScrollEnabled = true
                             ) {
                                 items(count = state.categories.size) { position ->
-                                    state.categories[position].image?.src?.let {
-                                        JetCategory(
-                                            imagePath = it,
-                                            title = state.categories[position].name!!
-                                        )
-                                    }
+                                    JetCategory(
+                                        imagePath = state.categories[position].image?.src,
+                                        title = state.categories[position].name!!
+                                    )
                                 }
                             }
                         }

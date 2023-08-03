@@ -24,6 +24,6 @@ fun JetSectionTitle(title: String, onClick: () -> Unit) {
             fontSize = 16,
             fontWeight = FontWeight.Bold,
         )
-        JetIconText(onClick = onClick)
+        JetIconText { onClick() }
     }
 }
