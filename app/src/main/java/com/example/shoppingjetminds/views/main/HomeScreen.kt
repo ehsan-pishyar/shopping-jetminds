@@ -161,7 +161,7 @@ private fun AndroidSourceCodeSection(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     userScrollEnabled = true,
                     content = {
-                        items(count = 5) { position ->
+                        items(count = androidUiState.androidSourceCodes.size) { position ->
                             JetProduct(
                                 title = "${androidUiState.androidSourceCodes[position].name}",
                                 image = androidUiState.androidSourceCodes[position].images?.get(0)?.src,

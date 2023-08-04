@@ -16,7 +16,7 @@ fun JetCoilImage(
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
             .data(imageUrl)
-            .placeholder(R.drawable.jetminds_logo)
+            .placeholder(R.drawable.jetminds_fav_icon)
             .crossfade(300)
             .build(),
         contentDescription = null,

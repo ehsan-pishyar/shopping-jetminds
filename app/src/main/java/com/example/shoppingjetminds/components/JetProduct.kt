@@ -54,9 +54,9 @@ fun JetProduct(
                 .weight(6f),
                 contentAlignment = Alignment.TopEnd
             ) {
-                if (image != null) {
+                image?.let {
                     JetCoilImage(
-                        imageUrl = image,
+                        imageUrl = it,
                         modifier = Modifier
                             .fillMaxSize()
                             .clip(shape = RoundedCornerShape(8.dp))
@@ -155,6 +155,155 @@ fun JetProduct(
                     Column(modifier = Modifier
                         .fillMaxHeight()
                         .weight(2f)
+                    ) {
+                        BuyButton()
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun JetShopProduct(
+    title: String,
+    image: String? = null,
+    price: String? = null,
+    rating: String? = "4.5",
+    category: String? = null
+) {
+    Card(
+        modifier = Modifier
+            .width(200.dp)
+            .height(280.dp),
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 0.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            // Feature image
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .weight(6f),
+                contentAlignment = Alignment.TopCenter
+            ) {
+                // Feature image
+                image?.let {
+                    JetCoilImage(
+                        imageUrl = it,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(shape = RoundedCornerShape(8.dp))
+                    )
+                }
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // Rating
+                    Card(modifier = Modifier
+                        .wrapContentSize(),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color.White
+                        ),
+                        shape = RoundedCornerShape(4.dp),
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 4.dp
+                        )
+                    ) {
+                        Column(modifier = Modifier
+                            .padding(horizontal = 5.dp)
+                        ) {
+                            JetStarText(
+                                textSize = 14,
+                                iconSize = 15
+                            )
+                        }
+                    }
+                    // Like button
+                    LikeButton()
+                }
+            }
+
+            Spacer(modifier = Modifier.height(5.dp))
+
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .weight(3f),
+                verticalArrangement = Arrangement.Top
+            ) {
+                // Rating start
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.Top
+                ) {
+                    // Title
+                    JetText(
+                        text = title,
+                        fontSize = 13,
+                        fontWeight = FontWeight.SemiBold,
+                        maxLines = 2,
+                        textAlign = TextAlign.Start,
+                        lineHeight = 1.5
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(5.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    verticalAlignment = Alignment.Bottom
+                ) {
+                    Column(modifier = Modifier
+                        .wrapContentHeight()
+                        .weight(8f),
+                        verticalArrangement = Arrangement.Bottom
+                    ) {
+                        // Category
+                        if (category != null) {
+                            JetText(
+                                text = category,
+                                color = LighterGray,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 9
+                            )
+                        } else {
+                            JetText(
+                                text = "بدون دسته بندی",
+                                color = LighterBlack,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 9
+                            )
+                        }
+
+                        // Price
+                        Row(modifier = Modifier
+                            .fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(5.dp)
+                        ) {
+                            JetPriceText(price = price)
+                        }
+                    }
+                    Column(modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(2f)
+                        .padding(vertical = 5.dp),
+                        verticalArrangement = Arrangement.Bottom
                     ) {
                         BuyButton()
                     }
@@ -274,9 +423,23 @@ fun AddOnSaleProductTimers(
 
 @Preview
 @Composable
-fun Preview_JetProduct() {
+private fun Preview_JetProduct() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
         JetProduct(
+            title = "کیت رابط کاربری Magenest – eCommerce App UI Kit",
+            image = "",
+            price = "39000",
+            rating = "4.6",
+            category = "کیت رابط کاربری"
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun Preview_JetShopProduct() {
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
+        JetShopProduct(
             title = "کیت رابط کاربری Magenest – eCommerce App UI Kit",
             image = "",
             price = "39000",

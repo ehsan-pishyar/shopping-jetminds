@@ -51,7 +51,10 @@ fun JetIconText(
 }
 
 @Composable
-fun JetStarText() {
+fun JetStarText(
+    textSize: Int = 15,
+    iconSize: Int = 18
+) {
     Row(modifier = Modifier
         .wrapContentSize(),
         verticalAlignment = Alignment.CenterVertically,
@@ -59,11 +62,11 @@ fun JetStarText() {
     ) {
         JetText(
             text = "4.5",
-            fontSize = 15,
+            fontSize = textSize,
             color = BlackColor
         )
         Icon(
-            modifier = Modifier.size(18.dp),
+            modifier = Modifier.size(iconSize.dp),
             painter = painterResource(id = R.drawable.star),
             contentDescription = null,
             tint = YellowColor
