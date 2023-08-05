@@ -1,4 +1,4 @@
-package com.example.shoppingjetminds.views.main
+package com.example.shoppingjetminds.views.details
 
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.spring

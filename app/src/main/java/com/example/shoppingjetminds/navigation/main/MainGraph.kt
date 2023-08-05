@@ -7,9 +7,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.shoppingjetminds.navigation.BottomNavigationScreens
 import com.example.shoppingjetminds.navigation.Graph
-import com.example.shoppingjetminds.views.main.CartScreen
+import com.example.shoppingjetminds.views.payment.CartScreen
 import com.example.shoppingjetminds.views.main.CategoryScreen
-import com.example.shoppingjetminds.views.main.FavoritesScreen
+import com.example.shoppingjetminds.views.other.FavoritesScreen
 import com.example.shoppingjetminds.views.main.HomeScreen
 import com.example.shoppingjetminds.views.main.ShopScreen
 

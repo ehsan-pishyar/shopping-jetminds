@@ -1,4 +1,4 @@
-package com.example.shoppingjetminds.views.main
+package com.example.shoppingjetminds.views.payment
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

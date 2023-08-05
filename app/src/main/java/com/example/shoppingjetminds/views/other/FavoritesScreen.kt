@@ -1,4 +1,4 @@
-package com.example.shoppingjetminds.views.main
+package com.example.shoppingjetminds.views.other
 
 import androidx.compose.runtime.Composable
 

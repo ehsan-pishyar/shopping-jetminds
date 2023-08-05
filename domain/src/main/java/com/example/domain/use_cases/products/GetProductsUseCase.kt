@@ -10,6 +10,6 @@ class GetProductsUseCase constructor(
     private val repository: ProductsRepository
 ) {
 
-    operator fun invoke(): Flow<ServiceResult<List<ProductsResponse>>> =
+    operator fun invoke(categoryId: Int? = null): Flow<ServiceResult<List<ProductsResponse>>> =
         repository.getProducts().asResult()
 }
