@@ -2,15 +2,25 @@ package com.example.shoppingjetminds.navigation.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ContentAlpha
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -21,6 +31,7 @@ import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.navigation.BottomNavigationScreens
 import com.example.shoppingjetminds.ui.theme.LighterBlack
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     navController: NavHostController = rememberNavController()
@@ -48,13 +59,25 @@ fun BottomBar(navController: NavHostController) {
 
     val bottomBarDestination = screens.any { it.route == currentDestination?.route }
     if (bottomBarDestination) {
-        BottomNavigation {
-            screens.forEach { screen ->
-                AddItem(
-                    screen = screen,
-                    currentDestination = currentDestination,
-                    navController = navController
-                )
+        Card(modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentSize(),
+            shape = RoundedCornerShape(8.dp),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 8.dp
+            ),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White
+            )
+        ) {
+            BottomNavigation {
+                screens.forEach { screen ->
+                    AddItem(
+                        screen = screen,
+                        currentDestination = currentDestination,
+                        navController = navController
+                    )
+                }
             }
         }
     }

@@ -1,12 +1,7 @@
 package com.example.shoppingjetminds.views.details
 
-import androidx.compose.animation.core.animateDp
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.updateTransition
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,12 +9,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabPosition
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableIntState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -35,7 +28,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import com.example.shoppingjetminds.ui.theme.Background
 import com.example.shoppingjetminds.R
 import com.example.shoppingjetminds.components.JetHeading
@@ -45,8 +37,6 @@ import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.components.LikeButton
 import com.example.shoppingjetminds.ui.theme.LighterGray
 import com.example.shoppingjetminds.ui.theme.Primary
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.PagerState
 
 @Composable
 fun ProductDetailsScreen() {
@@ -137,7 +127,7 @@ private fun ImageContentSection() {
             ) {
                 Column(modifier = Modifier
                     .fillMaxHeight()
-                    .weight(1f),
+                    .weight(2f),
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.Start
                 ) {
@@ -165,7 +155,7 @@ private fun ImageContentSection() {
                 ) {
                     JetText(
                         text = "رابط کاربری اپلیکیشن",
-                        fontSize = 13,
+                        fontSize = 12,
                         fontWeight = FontWeight.Normal,
                         color = LighterGray
                     )
@@ -289,47 +279,6 @@ private fun BottomSection() {
         onClick = { /*TODO*/ },
         text = "افزودن به سبد خرید",
         height = 56
-    )
-}
-
-@OptIn(ExperimentalPagerApi::class)
-@Composable
-private fun CustomIndicator(tabPositions: List<TabPosition>, pagerState: PagerState) {
-    val transition = updateTransition(pagerState.currentPage, label = "")
-    val indicatorStart by transition.animateDp(
-        transitionSpec = {
-            if (initialState < targetState) {
-                spring(dampingRatio = 1f, stiffness = 50f)
-            } else {
-                spring(dampingRatio = 1f, stiffness = 1000f)
-            }
-        }, label = ""
-    ) {
-        tabPositions[it].left
-    }
-
-    val indicatorEnd by transition.animateDp(
-        transitionSpec = {
-            if (initialState < targetState) {
-                spring(dampingRatio = 1f, stiffness = 1000f)
-            } else {
-                spring(dampingRatio = 1f, stiffness = 50f)
-            }
-        }, label = ""
-    ) {
-        tabPositions[it].right
-    }
-
-    Box(
-        Modifier
-            .offset(x = indicatorStart)
-            .wrapContentSize(align = Alignment.BottomStart)
-            .width(indicatorEnd - indicatorStart)
-            .padding(2.dp)
-            .fillMaxSize()
-            .background(color = Color(0xFFFF7455), RoundedCornerShape(50))
-            .border(BorderStroke(2.dp, Color(0xFFC13D25)), RoundedCornerShape(50))
-            .zIndex(1f)
     )
 }
 
