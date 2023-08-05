@@ -9,7 +9,9 @@ interface ApiService {
 
     // Products -----------------------------------------------------------------------
     @GET("products")
-    suspend fun getProducts(): List<ProductsResponseDto>
+    suspend fun getProducts(
+        @Query("per_page") perPage: Int = 100
+    ): List<ProductsResponseDto>
 
     @GET("products/{id}")
     suspend fun getProductDetails(
@@ -36,7 +38,9 @@ interface ApiService {
     ): ProductAttributesResponseDto
 
     @GET("products/categories")
-    suspend fun getProductCategories(): List<ProductCategoriesResponseDto>
+    suspend fun getProductCategories(
+        @Query("per_page") perPage: Int = 100
+    ): List<ProductCategoriesResponseDto>
 
     @GET("products/categories/{id}")
     suspend fun getProductCategoryDetails(
@@ -48,7 +52,7 @@ interface ApiService {
 
     @GET("products/tags")
     suspend fun getProductTags(
-        @Query("page") page: Int = 1
+        @Query("per_page") perPage: Int = 100
     ): List<ProductTagsResponseDto>
 
     @GET("products/tags/{id}")
@@ -57,7 +61,10 @@ interface ApiService {
     ): ProductTagsResponseDto
 
     @GET("products/reviews")
-    suspend fun getProductReviews(): List<ProductReviewsResponseDto>
+    suspend fun getProductReviews(
+        @Query("page") page: Int = 1,
+        @Query("per_page") perPage: Int = 20,
+    ): List<ProductReviewsResponseDto>
 
     @GET("products/reviews/{id}")
     suspend fun getProductReviewDetails(
@@ -67,7 +74,8 @@ interface ApiService {
     // Orders -------------------------------------------------------------------------
     @GET("orders")
     suspend fun getOrders(
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("per_page") perPage: Int = 20,
     ): List<OrdersResponseDto>
 
     @GET("orders/{id}")
@@ -88,7 +96,8 @@ interface ApiService {
     // Coupons ----------------------------------------------------------------------
     @GET("coupons")
     suspend fun getCoupons(
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("per_page") perPage: Int = 20,
     ): List<CouponsResponseDto>
 
     @GET("coupons/{id}")

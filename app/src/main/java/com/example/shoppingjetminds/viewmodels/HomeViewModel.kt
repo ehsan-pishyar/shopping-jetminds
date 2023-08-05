@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductsViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     getApplicationUiKitUseCase: GetProductsByCategoryIdUseCase,
     getAndroidUseCase: GetProductsByCategoryIdUseCase,
     getIllustrations3DUseCase: GetProductsByCategoryIdUseCase

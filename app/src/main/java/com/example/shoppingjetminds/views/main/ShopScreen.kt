@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.shoppingjetminds.R
 import com.example.shoppingjetminds.components.JetHeading
 import com.example.shoppingjetminds.components.JetShopProduct
@@ -24,17 +25,26 @@ import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.components.JetTextField
 import com.example.shoppingjetminds.ui.theme.Background
 import com.example.shoppingjetminds.ui.theme.LighterGray
+import com.example.shoppingjetminds.uistates.MainShopProductsUiState
+import com.example.shoppingjetminds.uistates.ShopProductsUiState
+import com.example.shoppingjetminds.viewmodels.ShopViewModel
 
 @Composable
-fun ShopScreen() {
-
+fun ShopScreen(
+    viewModel: ShopViewModel = hiltViewModel()
+) {
+    val uiState: MainShopProductsUiState by viewModel.shopUiState.collectAsState()
     var search by remember { mutableStateOf("") }
 
-
+    ShopContent(
+        uiState = uiState
+    )
 }
 
 @Composable
-private fun ShopContent() {
+private fun ShopContent(
+    uiState: MainShopProductsUiState? = null
+) {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(Background)
@@ -44,7 +54,6 @@ private fun ShopContent() {
                 .fillMaxSize()
                 .padding(15.dp)
         ) {
-
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
@@ -67,7 +76,9 @@ private fun ShopContent() {
                 .fillMaxWidth()
                 .weight(9f)
             ) {
-                ProductsSection()
+                ProductsSection(
+                    uiState = uiState
+                )
             }
         }
     }
@@ -157,18 +168,50 @@ private fun SearchSection() {
 }
 
 @Composable
-private fun ProductsSection() {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        userScrollEnabled = true,
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
-        content = {
-            items(count = 10) {
-                JetShopProduct(title = "رابط کاربری فروشگاهی اندروید RealState Ui Kit")
+private fun ProductsSection(
+    uiState: MainShopProductsUiState? = null
+) {
+    when (val state = uiState?.shopProductsUiState) {
+        ShopProductsUiState.Loading -> {
+            Column(modifier = Modifier
+                .fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                JetText(text = "در حال بارگذاری ...")
             }
         }
-    )
+        is ShopProductsUiState.Success -> {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                userScrollEnabled = true,
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                content = {
+                    items(count = 10) { position ->
+                        JetShopProduct(
+                            title = "${state.products[position].name}",
+                            image = state.products[position].images?.get(0)?.src,
+                            price = state.products[position].price,
+                            rating = state.products[position].averageRating,
+                            category = state.products[position].categories?.get(0)?.name
+                        )
+                    }
+                }
+            )
+        }
+        is ShopProductsUiState.Error -> {
+            Column(modifier = Modifier
+                .fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                JetText(text = "${state.throwable.message}")
+            }
+        }
+
+        else -> {}
+    }
 }
 
 @Preview
