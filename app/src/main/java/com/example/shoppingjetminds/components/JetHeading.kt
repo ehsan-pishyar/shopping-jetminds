@@ -87,7 +87,7 @@ fun JetHeading(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             JetText(
-                text = "سبد خرید",
+                text = title,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20
             )

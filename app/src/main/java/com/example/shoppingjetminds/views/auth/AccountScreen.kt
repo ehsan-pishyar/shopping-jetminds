@@ -34,6 +34,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -51,17 +52,39 @@ import com.example.shoppingjetminds.viewmodels.AccountViewModel
 
 @Composable
 fun AccountScreen(
-    viewModel: AccountViewModel = hiltViewModel()
+    viewModel: AccountViewModel = hiltViewModel(),
+    toUserInformationScreen: () -> Unit,
+    toOrdersScreen: () -> Unit,
+    toDownloadScreen: () -> Unit,
+    toBillingScreen: () -> Unit,
+    toAddressScreen: () -> Unit,
+    toFavoritesScreen: () -> Unit,
+    toHomeScreen: () -> Unit
 ) {
     val uiState: MainAccountUiState by viewModel.accountUiState.collectAsState()
+
     AccountContent(
-        uiState = uiState
+        uiState = uiState,
+        toUserInformationScreen = { toUserInformationScreen() },
+        toOrdersScreen = { toOrdersScreen() },
+        toDownloadScreen = { toDownloadScreen() },
+        toBillingScreen = { toBillingScreen() },
+        toAddressScreen = { toAddressScreen() },
+        toFavoritesScreen = { toFavoritesScreen() },
+        toHomeScreen = { toHomeScreen() }
     )
 }
 
 @Composable
 private fun AccountContent(
-    uiState: MainAccountUiState? = null
+    uiState: MainAccountUiState? = null,
+    toUserInformationScreen: () -> Unit,
+    toOrdersScreen: () -> Unit,
+    toDownloadScreen: () -> Unit,
+    toBillingScreen: () -> Unit,
+    toAddressScreen: () -> Unit,
+    toFavoritesScreen: () -> Unit,
+    toHomeScreen: () -> Unit
 ) {
     Box(modifier = Modifier
         .fillMaxSize()
@@ -83,14 +106,22 @@ private fun AccountContent(
                 .weight(2f)
             ) {
                 UserSection(
-                    uiState = uiState
+                    uiState = uiState,
+                    toHomeScreen = { toHomeScreen() }
                 )
             }
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .weight(5f)
             ) {
-                MainMenuSection()
+                MainMenuSection(
+                    toUserInformationScreen = { toUserInformationScreen() },
+                    toOrdersScreen = { toOrdersScreen() },
+                    toDownloadScreen = { toDownloadScreen() },
+                    toBillingScreen = { toBillingScreen() },
+                    toAddressScreen = { toAddressScreen() },
+                    toFavoritesScreen = { toFavoritesScreen() }
+                )
             }
             Column(modifier = Modifier
                 .fillMaxWidth()
@@ -127,7 +158,8 @@ private fun AccountContent(
 
 @Composable
 private fun UserSection(
-    uiState: MainAccountUiState? = null
+    uiState: MainAccountUiState? = null,
+    toHomeScreen: () -> Unit
 ) {
     Card(modifier = Modifier
         .fillMaxWidth()
@@ -200,7 +232,7 @@ private fun UserSection(
                 horizontalAlignment = Alignment.End
             ) {
                 IconButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { toHomeScreen() },
                     modifier = Modifier.size(20.dp)
                 ) {
                     Image(
@@ -216,7 +248,14 @@ private fun UserSection(
 }
 
 @Composable
-private fun MainMenuSection() {
+private fun MainMenuSection(
+    toUserInformationScreen: () -> Unit,
+    toOrdersScreen: () -> Unit,
+    toDownloadScreen: () -> Unit,
+    toBillingScreen: () -> Unit,
+    toAddressScreen: () -> Unit,
+    toFavoritesScreen: () -> Unit
+) {
     Card(modifier = Modifier
         .fillMaxSize(),
         colors = CardDefaults.cardColors(
@@ -236,42 +275,42 @@ private fun MainMenuSection() {
                 icon = R.drawable.user_icon,
                 title = "مشاهده اطلاعات"
             ) {
-
+                toUserInformationScreen()
             }
             Divider(color = Background)
             MainMenuItemSection(
                 icon = R.drawable.orders_icon,
                 title = "سفارشات من"
             ) {
-
+                toOrdersScreen()
             }
             Divider(color = Background)
             MainMenuItemSection(
                 icon = R.drawable.download_icon,
                 title = "دانلود های من"
             ) {
-                
+                toDownloadScreen()
             }
             Divider(color = Background)
             MainMenuItemSection(
                 icon = R.drawable.billing_icon,
                 title = "جزئیات صورت حساب"
             ) {
-
+                toBillingScreen()
             }
             Divider(color = Background)
             MainMenuItemSection(
                 icon = R.drawable.location,
                 title = "آدرس من"
             ) {
-                
+                toAddressScreen()
             }
             Divider(color = Background)
             MainMenuItemSection(
                 icon = R.drawable.favorite,
                 title = "علاقه مندی های من"
             ) {
-
+                toFavoritesScreen()
             }
         }
     }
@@ -413,7 +452,9 @@ private fun NotificationSection() {
                     JetText(
                         text = "توضیحات اعلان، توضیحات اعلان",
                         fontSize = 12,
-                        fontWeight = FontWeight.Normal
+                        fontWeight = FontWeight.Normal,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }
@@ -435,8 +476,7 @@ private fun UserLastBuying() {
         )
         Card(modifier = Modifier
             .fillMaxWidth()
-            .weight(1f),
-            shape = RoundedCornerShape(12.dp),
+            .wrapContentHeight(),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 0.dp
             ),
@@ -444,24 +484,72 @@ private fun UserLastBuying() {
                 containerColor = Color.White
             )
         ) {
-            Column(modifier = Modifier
-                .fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start
+            Row(modifier = Modifier
+                .fillMaxSize()
+                .padding(15.dp),
+                horizontalArrangement = Arrangement.spacedBy(15.dp)
             ) {
                 Column(modifier = Modifier
-                    .padding(horizontal = 20.dp)
+                    .fillMaxHeight()
+                    .weight(1.2f),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.jetminds_shop_feature_image_example),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(shape = RoundedCornerShape(8.dp)),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+
+                Column(modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(2.7f),
+                    verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     JetText(
-                        text = "عنوان اعلان",
-                        fontSize = 15,
-                        fontWeight = FontWeight.SemiBold
+                        text = "سورس کد پروژه اندروید Jet OnBoarding Modern",
+                        fontSize = 12,
+                        fontWeight = FontWeight.Medium,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
                     )
                     JetText(
-                        text = "توضیحات اعلان، توضیحات اعلان",
-                        fontSize = 12,
-                        fontWeight = FontWeight.Normal
+                        text = "49.000 تومان",
+                        fontSize = 11,
+                        fontWeight = FontWeight.Medium
                     )
+                }
+
+                Column(modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1.1f),
+                    verticalArrangement = Arrangement.Bottom,
+                    horizontalAlignment = Alignment.End
+                ) {
+                    Card(modifier = Modifier
+                        .wrapContentSize(),
+                        shape = RoundedCornerShape(4.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color.Green.copy(alpha = 0.2f)
+                        ),
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 0.dp
+                        )
+                    ) {
+                        Column(modifier = Modifier
+                            .wrapContentSize()
+                            .padding(horizontal = 5.dp, vertical = 3.dp)
+                        ) {
+                            JetText(
+                                text = "پرداخت شده",
+                                fontSize = 10,
+                                fontWeight = FontWeight.Normal
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -472,6 +560,14 @@ private fun UserLastBuying() {
 @Composable
 private fun Preview_AccountContent() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        AccountContent()
+        AccountContent(
+            toUserInformationScreen = {},
+            toOrdersScreen = {},
+            toDownloadScreen = {},
+            toBillingScreen = {},
+            toAddressScreen = {},
+            toFavoritesScreen = {},
+            toHomeScreen = {}
+        )
     }
 }
