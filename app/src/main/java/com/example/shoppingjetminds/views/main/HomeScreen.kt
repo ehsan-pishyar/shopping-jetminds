@@ -258,7 +258,7 @@ private fun SectionSpacer(value: Int = 20) {
 @Preview
 @Composable
 fun Preview_HomeScreen() {
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         HomeContent(
             toCartScreen = {},
             toNotificationScreen = {},
