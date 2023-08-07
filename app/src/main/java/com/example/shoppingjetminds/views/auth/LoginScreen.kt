@@ -107,6 +107,15 @@ fun LoginScreen(
     }
 }
 
+@Composable
+fun LoginContent(
+    phoneNumber: String,
+    toHomeScreen: () -> Unit,
+    toVerificationScreen: () -> Unit
+) {
+
+}
+
 @Preview
 @Composable
 fun Preview_LoginScreen() {
