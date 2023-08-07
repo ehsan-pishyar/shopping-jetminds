@@ -2,7 +2,7 @@ package com.example.shoppingjetminds.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.use_cases.products.GetProductsUseCase
+import com.example.domain.use_cases.products.GetProductsByCategoryIdUseCase
 import com.example.domain.utils.ServiceResult
 import com.example.shoppingjetminds.uistates.AndroidUiState
 import com.example.shoppingjetminds.utils.Categories
@@ -18,7 +18,7 @@ data class TestUiState(
 
 @HiltViewModel
 class TestViewModel @Inject constructor(
-    private val getProductsUseCase: GetProductsUseCase
+    private val getProductsByCategoryIdUseCase: GetProductsByCategoryIdUseCase
 ): ViewModel() {
 
     private var _testState = MutableStateFlow(TestUiState(AndroidUiState.Loading))
@@ -30,7 +30,7 @@ class TestViewModel @Inject constructor(
 
     private fun getApplicationUiKits() {
         viewModelScope.launch {
-            getProductsUseCase.invoke(categoryId = Categories.ANDROID.id).collect {
+            getProductsByCategoryIdUseCase.invoke(categoryId = Categories.ANDROID.id).collect {
                 val testUiStateResult = when (it) {
                     ServiceResult.Loading -> AndroidUiState.Loading
                     is ServiceResult.Success -> AndroidUiState.Success(
