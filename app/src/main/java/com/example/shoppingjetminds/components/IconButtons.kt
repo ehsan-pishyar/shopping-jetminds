@@ -42,7 +42,9 @@ fun LikeButton() {
 }
 
 @Composable
-fun BuyButton() {
+fun BuyButton(
+    onCLick: () -> Unit
+) {
     Button(modifier = Modifier
         .fillMaxSize(),
         contentPadding = PaddingValues(5.dp),
@@ -50,7 +52,7 @@ fun BuyButton() {
         colors = ButtonDefaults.buttonColors(
             containerColor = Primary
         ),
-        onClick = {}
+        onClick = { onCLick() }
     ) {
         Image(
             imageVector = Icons.Filled.Add,
@@ -70,5 +72,5 @@ fun Preview_LikeButton() {
 @Preview
 @Composable
 fun Preview_BuyButton() {
-    BuyButton()
+    BuyButton {}
 }

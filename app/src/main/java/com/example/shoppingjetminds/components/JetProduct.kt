@@ -29,7 +29,8 @@ fun JetProduct(
     image: String? = null,
     price: String? = null,
     rating: String? = "4.5",
-    category: String? = null
+    category: String? = null,
+    onAddToCartClick: () -> Unit
 ) {
 
     Card(
@@ -156,7 +157,9 @@ fun JetProduct(
                         .fillMaxHeight()
                         .weight(2f)
                     ) {
-                        BuyButton()
+                        BuyButton(
+                            onCLick = { onAddToCartClick() }
+                        )
                     }
                 }
             }
@@ -170,7 +173,8 @@ fun JetShopProduct(
     image: String? = null,
     price: String? = null,
     rating: String? = "4.5",
-    category: String? = null
+    category: String? = null,
+    onAddToCartClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -305,7 +309,9 @@ fun JetShopProduct(
                         .padding(vertical = 5.dp),
                         verticalArrangement = Arrangement.Bottom
                     ) {
-                        BuyButton()
+                        BuyButton(
+                            onCLick = { onAddToCartClick() }
+                        )
                     }
                 }
             }
@@ -430,7 +436,8 @@ private fun Preview_JetProduct() {
             image = "",
             price = "39000",
             rating = "4.6",
-            category = "کیت رابط کاربری"
+            category = "کیت رابط کاربری",
+            onAddToCartClick = {}
         )
     }
 }
@@ -444,7 +451,8 @@ private fun Preview_JetShopProduct() {
             image = "",
             price = "39000",
             rating = "4.6",
-            category = "کیت رابط کاربری"
+            category = "کیت رابط کاربری",
+            onAddToCartClick = {}
         )
     }
 }

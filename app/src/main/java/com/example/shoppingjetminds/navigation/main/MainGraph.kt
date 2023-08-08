@@ -32,7 +32,9 @@ fun MainGraph(
             )
         }
         composable(route = BottomNavigationScreens.Shop.route) {
-            ShopScreen()
+            ShopScreen(
+                toCartScreen = { navController.navigate(BottomNavigationScreens.Cart.route) }
+            )
         }
         composable(route = BottomNavigationScreens.Category.route) {
             CategoryScreen(

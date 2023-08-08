@@ -40,6 +40,7 @@ import com.example.shoppingjetminds.uistates.AndroidUiState
 import com.example.shoppingjetminds.uistates.ApplicationUiKitUiState
 import com.example.shoppingjetminds.uistates.HomeUiState
 import com.example.shoppingjetminds.uistates.Illustrations3DUiState
+import com.example.shoppingjetminds.utils.carouselProductsSize
 import com.example.shoppingjetminds.viewmodels.HomeViewModel
 
 @Composable
@@ -107,7 +108,8 @@ private fun HomeContent(
             if (homeUiState != null) {
                 AndroidSourceCodeSection(
                     homeUiState = homeUiState,
-                    toShopScreen = { toShopScreen() }
+                    toShopScreen = { toShopScreen() },
+                    toCartScreen = { toCartScreen() }
                 )
             }
 
@@ -116,7 +118,8 @@ private fun HomeContent(
             // Android Source Code
             ApplicationUiKitSection(
                 homeUiState = homeUiState!!,
-                toShopScreen = { toShopScreen() }
+                toShopScreen = { toShopScreen() },
+                toCartScreen = { toCartScreen() }
             )
 
             SectionSpacer()
@@ -135,16 +138,19 @@ private fun HomeContent(
             // 3D illustration products
             Illustrations3DSection(
                 homeUiState = homeUiState,
-                toShopScreen = { toShopScreen() }
+                toShopScreen = { toShopScreen() },
+                toCartScreen = { toCartScreen() }
             )
         }
     }
 }
 
+// Android carousel section
 @Composable
 private fun AndroidSourceCodeSection(
     homeUiState: HomeUiState,
-    toShopScreen: () -> Unit
+    toShopScreen: () -> Unit,
+    toCartScreen: () -> Unit
 ) {
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -165,13 +171,16 @@ private fun AndroidSourceCodeSection(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     userScrollEnabled = true,
                     content = {
-                        items(count = androidUiState.androidSourceCodes.size) { position ->
+                        items(count = carouselProductsSize(
+                            size = androidUiState.androidSourceCodes.size
+                        )) { position ->
                             JetProduct(
                                 title = "${androidUiState.androidSourceCodes[position].name}",
                                 image = androidUiState.androidSourceCodes[position].images?.get(0)?.src,
                                 price = androidUiState.androidSourceCodes[position].price,
                                 rating = androidUiState.androidSourceCodes[position].averageRating,
-                                category = androidUiState.androidSourceCodes[position].categories?.get(0)?.name
+                                category = androidUiState.androidSourceCodes[position].categories?.get(0)?.name,
+                                onAddToCartClick = { toCartScreen() }
                             )
                         }
                     }
@@ -184,10 +193,12 @@ private fun AndroidSourceCodeSection(
     }
 }
 
+// Application ui kits carousel section
 @Composable
 private fun ApplicationUiKitSection(
     homeUiState: HomeUiState,
-    toShopScreen: () -> Unit
+    toShopScreen: () -> Unit,
+    toCartScreen: () -> Unit
 ) {
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -208,13 +219,16 @@ private fun ApplicationUiKitSection(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     userScrollEnabled = true,
                     content = {
-                        items(count = applicationUiKitUiState.applicationUiKits.size) { position ->
+                        items(count = carouselProductsSize(
+                            size = applicationUiKitUiState.applicationUiKits.size
+                        )) { position ->
                             JetProduct(
                                 title = "${applicationUiKitUiState.applicationUiKits[position].name}",
                                 image = applicationUiKitUiState.applicationUiKits[position].images?.get(0)?.src,
                                 price = applicationUiKitUiState.applicationUiKits[position].price,
                                 rating = applicationUiKitUiState.applicationUiKits[position].averageRating,
-                                category = applicationUiKitUiState.applicationUiKits[position].categories?.get(0)?.name
+                                category = applicationUiKitUiState.applicationUiKits[position].categories?.get(0)?.name,
+                                onAddToCartClick = { toCartScreen() }
                             )
                         }
                     }
@@ -227,10 +241,12 @@ private fun ApplicationUiKitSection(
     }
 }
 
+// 3D illustrations carousel section
 @Composable
 private fun Illustrations3DSection(
     homeUiState: HomeUiState,
-    toShopScreen: () -> Unit
+    toShopScreen: () -> Unit,
+    toCartScreen: () -> Unit
 ) {
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -251,13 +267,16 @@ private fun Illustrations3DSection(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     userScrollEnabled = true,
                     content = {
-                        items(count = illustrations3DUiState.illustration3Ds.size) { position ->
+                        items(count = carouselProductsSize(
+                            size = illustrations3DUiState.illustration3Ds.size)
+                        ) { position ->
                             JetProduct(
                                 title = "${illustrations3DUiState.illustration3Ds[position].name}",
                                 image = illustrations3DUiState.illustration3Ds[position].images?.get(0)?.src,
                                 price = illustrations3DUiState.illustration3Ds[position].price,
                                 rating = illustrations3DUiState.illustration3Ds[position].averageRating,
-                                category = illustrations3DUiState.illustration3Ds[position].categories?.get(0)?.name
+                                category = illustrations3DUiState.illustration3Ds[position].categories?.get(0)?.name,
+                                onAddToCartClick = { toCartScreen() }
                             )
                         }
                     }

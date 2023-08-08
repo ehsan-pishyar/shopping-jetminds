@@ -31,19 +31,22 @@ import com.example.shoppingjetminds.viewmodels.ShopViewModel
 
 @Composable
 fun ShopScreen(
-    viewModel: ShopViewModel = hiltViewModel()
+    viewModel: ShopViewModel = hiltViewModel(),
+    toCartScreen: () -> Unit
 ) {
     val uiState: MainShopProductsUiState by viewModel.shopUiState.collectAsState()
     var search by remember { mutableStateOf("") }
 
     ShopContent(
-        uiState = uiState
+        uiState = uiState,
+        toCartScreen = { toCartScreen() }
     )
 }
 
 @Composable
 private fun ShopContent(
-    uiState: MainShopProductsUiState? = null
+    uiState: MainShopProductsUiState? = null,
+    toCartScreen: () -> Unit
 ) {
     Box(modifier = Modifier
         .fillMaxSize()
@@ -77,7 +80,8 @@ private fun ShopContent(
                 .weight(9f)
             ) {
                 ProductsSection(
-                    uiState = uiState
+                    uiState = uiState,
+                    toCartScreen = { toCartScreen() }
                 )
             }
         }
@@ -169,7 +173,8 @@ private fun SearchSection() {
 
 @Composable
 private fun ProductsSection(
-    uiState: MainShopProductsUiState? = null
+    uiState: MainShopProductsUiState? = null,
+    toCartScreen: () -> Unit
 ) {
     when (val state = uiState?.shopProductsUiState) {
         ShopProductsUiState.Loading -> {
@@ -194,7 +199,8 @@ private fun ProductsSection(
                             image = state.products[position].images?.get(0)?.src,
                             price = state.products[position].price,
                             rating = state.products[position].averageRating,
-                            category = state.products[position].categories?.get(0)?.name
+                            category = state.products[position].categories?.get(0)?.name,
+                            onAddToCartClick = { toCartScreen() }
                         )
                     }
                 }
@@ -218,6 +224,6 @@ private fun ProductsSection(
 @Composable
 private fun PreviewShopScreen() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        ShopContent()
+        ShopContent {}
     }
 }

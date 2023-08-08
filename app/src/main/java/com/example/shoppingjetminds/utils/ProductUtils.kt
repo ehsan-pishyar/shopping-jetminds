@@ -29,3 +29,7 @@ fun priceThousandsSeparator(price: String): String {
     val regex = "(\\d)(?=(\\d{3})+\$)".toRegex()
     return price.replace(regex, "$1,")
 }
+
+// Returns just 7 items if product list items are more than 7 else returns product items size
+fun carouselProductsSize(size: Int): Int =
+    if (size >= 7) 7 else size
