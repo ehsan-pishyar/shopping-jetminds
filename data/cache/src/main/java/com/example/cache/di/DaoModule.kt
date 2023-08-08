@@ -1,6 +1,7 @@
 package com.example.cache.di
 
 import com.example.cache.AppDatabase
+import com.example.cache.dao.CartDao
 import com.example.cache.dao.CouponsDao
 import com.example.cache.dao.CustomersDao
 import com.example.cache.dao.OrdersDao
@@ -65,4 +66,7 @@ object DaoModule {
     @Provides
     @Singleton
     fun providesShippingZonesDao(database: AppDatabase): ShippingZonesDao = database.shippingZonesDao()
+
+    @[Provides Singleton]
+    fun providesCartDao(db: AppDatabase): CartDao = db.cartDao()
 }

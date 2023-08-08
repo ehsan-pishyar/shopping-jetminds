@@ -28,6 +28,7 @@ import com.example.cache.utils.CacheConstants
         TagEntity::class,
         AttributeEntity::class,
         ImageEntity::class,
+        CartEntity::class,
         MTMProductAndCategoryEntity::class,
         MTMProductAndTagEntity::class,
         MTMProductAndAttrEntity::class
@@ -76,4 +77,5 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun productTagsDao(): ProductTagsDao
     abstract fun productVariationsDao(): ProductVariationsDao
     abstract fun shippingZonesDao(): ShippingZonesDao
+    abstract fun cartDao(): CartDao
 }

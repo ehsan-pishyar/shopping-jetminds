@@ -73,4 +73,9 @@ interface RepositoryModule {
     fun providesShippingZonesRepository(
         impl: ShippingZonesRepositoryImpl
     ): ShippingZonesRepository
+
+    @[Binds Singleton]
+    fun bindsCartRepository(
+        impl: CartRepositoryImpl
+    ): CartRepository
 }

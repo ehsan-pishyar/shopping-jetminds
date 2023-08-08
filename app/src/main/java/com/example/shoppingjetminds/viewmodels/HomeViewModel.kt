@@ -3,6 +3,7 @@ package com.example.shoppingjetminds.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.use_cases.products.GetProductsByCategoryIdUseCase
+import com.example.domain.use_cases.products.GetProductsUseCase
 import com.example.domain.utils.ServiceResult
 import com.example.shoppingjetminds.uistates.AndroidUiState
 import com.example.shoppingjetminds.uistates.ApplicationUiKitUiState
@@ -20,9 +21,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    getApplicationUiKitUseCase: GetProductsByCategoryIdUseCase,
-    getAndroidUseCase: GetProductsByCategoryIdUseCase,
-    getIllustrations3DUseCase: GetProductsByCategoryIdUseCase
+    getApplicationUiKitUseCase: GetProductsUseCase,
+    getAndroidUseCase: GetProductsUseCase,
+    getIllustrations3DUseCase: GetProductsUseCase
 ): ViewModel() {
 
     private val isRefreshing = MutableStateFlow(false)
