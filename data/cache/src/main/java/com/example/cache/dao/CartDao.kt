@@ -16,12 +16,12 @@ interface CartDao {
     @Query("SELECT * FROM `cart_table`")
     fun fetchItems(): Flow<List<CartEntity>>
 
-    @Query("DELETE FROM `cart_table` WHERE id = :itemId")
-    suspend fun deleteItem(itemId: Int)
+    @Query("DELETE FROM `cart_table`") /* TODO Fix this shit */
+    suspend fun deleteItem()
 
     @Query("DELETE FROM `cart_table`")
     suspend fun clearCart()
 
-    @Query("SELECT COUNT(*) FROM `cart_table`")
-    suspend fun hasItems(): Flow<Int>
+//    @Query("SELECT COUNT(*) FROM `cart_table`")
+//    suspend fun hasItems(): Flow<Int>
 }

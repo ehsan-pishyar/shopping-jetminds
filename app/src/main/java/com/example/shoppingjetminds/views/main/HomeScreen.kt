@@ -37,21 +37,23 @@ import com.example.shoppingjetminds.components.JetProduct
 import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.ui.theme.Background
 import com.example.shoppingjetminds.uistates.AndroidUiState
-import com.example.shoppingjetminds.viewmodels.TestUiState
-import com.example.shoppingjetminds.viewmodels.TestViewModel
+import com.example.shoppingjetminds.uistates.ApplicationUiKitUiState
+import com.example.shoppingjetminds.uistates.HomeUiState
+import com.example.shoppingjetminds.uistates.Illustrations3DUiState
+import com.example.shoppingjetminds.viewmodels.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    testViewModel: TestViewModel = hiltViewModel(),
+    viewModel: HomeViewModel = hiltViewModel(),
     toCartScreen: () -> Unit,
     toNotificationScreen: () -> Unit,
     toProfileScreen: () -> Unit,
     toShopScreen: () -> Unit
 ){
-    val testUiState: TestUiState by testViewModel.testState.collectAsState()
+    val homeUiState: HomeUiState by viewModel.homeUiState.collectAsState()
 
     HomeContent(
-        testState = testUiState,
+        homeUiState = homeUiState,
         toCartScreen = { toCartScreen() },
         toNotificationScreen = { toNotificationScreen() },
         toProfileScreen = { toProfileScreen() },
@@ -61,7 +63,7 @@ fun HomeScreen(
 
 @Composable
 private fun HomeContent(
-    testState: TestUiState? = null,
+    homeUiState: HomeUiState? = null,
     toCartScreen: () -> Unit,
     toNotificationScreen: () -> Unit,
     toProfileScreen: () -> Unit,
@@ -102,9 +104,9 @@ private fun HomeContent(
             SectionSpacer()
 
             // Application UI Kit
-            if (testState != null) {
+            if (homeUiState != null) {
                 AndroidSourceCodeSection(
-                    testUiState = testState,
+                    homeUiState = homeUiState,
                     toShopScreen = { toShopScreen() }
                 )
             }
@@ -113,6 +115,7 @@ private fun HomeContent(
 
             // Android Source Code
             ApplicationUiKitSection(
+                homeUiState = homeUiState!!,
                 toShopScreen = { toShopScreen() }
             )
 
@@ -131,6 +134,7 @@ private fun HomeContent(
 
             // 3D illustration products
             Illustrations3DSection(
+                homeUiState = homeUiState,
                 toShopScreen = { toShopScreen() }
             )
         }
@@ -139,7 +143,7 @@ private fun HomeContent(
 
 @Composable
 private fun AndroidSourceCodeSection(
-    testUiState: TestUiState,
+    homeUiState: HomeUiState,
     toShopScreen: () -> Unit
 ) {
     Column(modifier = Modifier
@@ -151,7 +155,7 @@ private fun AndroidSourceCodeSection(
             title = "سورس کد اندروید",
             toShopScreen = { toShopScreen() }
         )
-        when (val androidUiState = testUiState.testState) {
+        when (val androidUiState = homeUiState.androidUiState) {
             AndroidUiState.Loading -> {
                 JetText(text = "در حال باگذاری ...")
             }
@@ -182,6 +186,7 @@ private fun AndroidSourceCodeSection(
 
 @Composable
 private fun ApplicationUiKitSection(
+    homeUiState: HomeUiState,
     toShopScreen: () -> Unit
 ) {
     Column(modifier = Modifier
@@ -193,21 +198,38 @@ private fun ApplicationUiKitSection(
             title = "رابط کاربری اپلیکیشن",
             toShopScreen = { toShopScreen() }
         )
-        LazyRow(
-            contentPadding = PaddingValues(0.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            userScrollEnabled = true,
-            content = {
-                items(count = 5) { position ->
-                    JetProduct(title = "رابط کاربری اپلیکیشن فروشگاهی اندروید JetMinds")
-                }
+        when (val applicationUiKitUiState = homeUiState.applicationUiKitUiState) {
+            ApplicationUiKitUiState.Loading -> {
+                JetText(text = "در حال باگذاری ...")
             }
-        )
+            is ApplicationUiKitUiState.Success -> {
+                LazyRow(
+                    contentPadding = PaddingValues(0.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    userScrollEnabled = true,
+                    content = {
+                        items(count = applicationUiKitUiState.applicationUiKits.size) { position ->
+                            JetProduct(
+                                title = "${applicationUiKitUiState.applicationUiKits[position].name}",
+                                image = applicationUiKitUiState.applicationUiKits[position].images?.get(0)?.src,
+                                price = applicationUiKitUiState.applicationUiKits[position].price,
+                                rating = applicationUiKitUiState.applicationUiKits[position].averageRating,
+                                category = applicationUiKitUiState.applicationUiKits[position].categories?.get(0)?.name
+                            )
+                        }
+                    }
+                )
+            }
+            is ApplicationUiKitUiState.Error -> {
+                JetText(text = "${applicationUiKitUiState.message}")
+            }
+        }
     }
 }
 
 @Composable
 private fun Illustrations3DSection(
+    homeUiState: HomeUiState,
     toShopScreen: () -> Unit
 ) {
     Column(modifier = Modifier
@@ -219,16 +241,32 @@ private fun Illustrations3DSection(
             title = "طرح های سه بعدی",
             toShopScreen = { toShopScreen() }
         )
-        LazyRow(
-            contentPadding = PaddingValues(0.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            userScrollEnabled = true,
-            content = {
-                items(count = 5) { position ->
-                    JetProduct(title = "رابط کاربری اپلیکیشن فروشگاهی اندروید JetMinds")
-                }
+        when (val illustrations3DUiState = homeUiState.illustrations3DUiState) {
+            Illustrations3DUiState.Loading -> {
+                JetText(text = "در حال باگذاری ...")
             }
-        )
+            is Illustrations3DUiState.Success -> {
+                LazyRow(
+                    contentPadding = PaddingValues(0.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    userScrollEnabled = true,
+                    content = {
+                        items(count = illustrations3DUiState.illustration3Ds.size) { position ->
+                            JetProduct(
+                                title = "${illustrations3DUiState.illustration3Ds[position].name}",
+                                image = illustrations3DUiState.illustration3Ds[position].images?.get(0)?.src,
+                                price = illustrations3DUiState.illustration3Ds[position].price,
+                                rating = illustrations3DUiState.illustration3Ds[position].averageRating,
+                                category = illustrations3DUiState.illustration3Ds[position].categories?.get(0)?.name
+                            )
+                        }
+                    }
+                )
+            }
+            is Illustrations3DUiState.Error -> {
+                JetText(text = "${illustrations3DUiState.message}")
+            }
+        }
     }
 }
 

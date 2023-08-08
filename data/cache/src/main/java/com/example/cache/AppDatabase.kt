@@ -52,6 +52,7 @@ import com.example.cache.utils.CacheConstants
     ProductAttributesConverter::class,
     ProductCategoriesConverter::class,
     ProductReviewsConverter::class,
+    ProductConverter::class,
     ProductsConverter::class,
     ProductShippingClassesConverter::class,
     ProductTagsConverter::class,
@@ -63,6 +64,7 @@ import com.example.cache.utils.CacheConstants
     TagsConverter::class,
     TaxesConverter::class,
     TaxLinesConverter::class,
+    CartConverter::class
 )
 abstract class AppDatabase: RoomDatabase() {
 

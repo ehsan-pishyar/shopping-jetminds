@@ -10,18 +10,18 @@ class ProductsConverter {
     private val gson = Gson()
 
     @TypeConverter
-    fun from(productEntity: ProductsResponseEntity?): String?{
-        if (productEntity == null) return null
+    fun from(productsEntity: List<ProductsResponseEntity>?): String?{
+        if (productsEntity.isNullOrEmpty()) return null
 
-        val type = object : TypeToken<ProductsResponseEntity?>() {}.type
-        return gson.toJson(productEntity, type)
+        val type = object : TypeToken<List<ProductsResponseEntity>?>() {}.type
+        return gson.toJson(productsEntity, type)
     }
 
     @TypeConverter
-    fun to(productItem: String?): ProductsResponseEntity?{
-        if (productItem.isNullOrEmpty()) return null
+    fun to(productItems: String?): List<ProductsResponseEntity>?{
+        if (productItems.isNullOrEmpty()) return null
 
-        val type = object : TypeToken<ProductsResponseEntity?>() {}.type
-        return gson.fromJson(productItem, type)
+        val type = object : TypeToken<List<ProductsResponseEntity>?>() {}.type
+        return gson.fromJson(productItems, type)
     }
 }

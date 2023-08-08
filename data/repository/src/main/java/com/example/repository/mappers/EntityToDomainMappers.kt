@@ -310,3 +310,10 @@ fun TaxLineEntity.toDomain(): TaxLine =
         this.shippingTaxTotal,
         this.taxTotal
     )
+
+fun CartEntity.toDomain(): Cart =
+    Cart(
+        this.cartId,
+        this.count,
+        this.items?.map { it.toDomain() }
+    )
