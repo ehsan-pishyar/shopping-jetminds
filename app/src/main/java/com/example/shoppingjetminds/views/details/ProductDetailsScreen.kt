@@ -37,14 +37,19 @@ import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.components.LikeButton
 import com.example.shoppingjetminds.ui.theme.LighterGray
 import com.example.shoppingjetminds.ui.theme.Primary
+import com.example.shoppingjetminds.viewmodels.SharedViewModel
 
 @Composable
-fun ProductDetailsScreen() {
+fun ProductDetailsScreen(
+    sharedViewModel: SharedViewModel = SharedViewModel()
+) {
 
     val state = remember {
         mutableIntStateOf(0)
     }
     val items = listOf("توضیحات", "ویژگی ها", "نظرات")
+
+    val sharedUiState = sharedViewModel.productState
 
     Box(modifier = Modifier
         .fillMaxSize()

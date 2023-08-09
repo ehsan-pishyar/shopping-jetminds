@@ -42,14 +42,17 @@ import com.example.shoppingjetminds.uistates.HomeUiState
 import com.example.shoppingjetminds.uistates.Illustrations3DUiState
 import com.example.shoppingjetminds.utils.carouselProductsSize
 import com.example.shoppingjetminds.viewmodels.HomeViewModel
+import com.example.shoppingjetminds.viewmodels.SharedViewModel
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
+    sharedViewModel: SharedViewModel,
     toCartScreen: () -> Unit,
     toNotificationScreen: () -> Unit,
     toProfileScreen: () -> Unit,
-    toShopScreen: () -> Unit
+    toShopScreen: () -> Unit,
+    toProductDetailsScreen: () -> Unit
 ){
     val homeUiState: HomeUiState by viewModel.homeUiState.collectAsState()
 
@@ -58,17 +61,21 @@ fun HomeScreen(
         toCartScreen = { toCartScreen() },
         toNotificationScreen = { toNotificationScreen() },
         toProfileScreen = { toProfileScreen() },
-        toShopScreen = { toShopScreen() }
+        toShopScreen = { toShopScreen() },
+        toProductDetailsScreen = {
+            toProductDetailsScreen()
+        }
     )
 }
 
 @Composable
 private fun HomeContent(
-    homeUiState: HomeUiState? = null,
+    homeUiState: HomeUiState?,
     toCartScreen: () -> Unit,
     toNotificationScreen: () -> Unit,
     toProfileScreen: () -> Unit,
-    toShopScreen: () -> Unit
+    toShopScreen: () -> Unit,
+    toProductDetailsScreen: () -> Unit
 ) {
     val scrollState = rememberScrollState()
 
@@ -109,7 +116,8 @@ private fun HomeContent(
                 AndroidSourceCodeSection(
                     homeUiState = homeUiState,
                     toShopScreen = { toShopScreen() },
-                    toCartScreen = { toCartScreen() }
+                    toCartScreen = { toCartScreen() },
+                    toProductDetailsScreen = { toProductDetailsScreen() }
                 )
             }
 
@@ -117,9 +125,10 @@ private fun HomeContent(
 
             // Android Source Code
             ApplicationUiKitSection(
-                homeUiState = homeUiState!!,
+                homeUiState = homeUiState,
                 toShopScreen = { toShopScreen() },
-                toCartScreen = { toCartScreen() }
+                toCartScreen = { toCartScreen() },
+                toProductDetailsScreen = { toProductDetailsScreen() }
             )
 
             SectionSpacer()
@@ -139,7 +148,8 @@ private fun HomeContent(
             Illustrations3DSection(
                 homeUiState = homeUiState,
                 toShopScreen = { toShopScreen() },
-                toCartScreen = { toCartScreen() }
+                toCartScreen = { toCartScreen() },
+                toProductDetailsScreen = { toProductDetailsScreen() }
             )
         }
     }
@@ -148,9 +158,10 @@ private fun HomeContent(
 // Android carousel section
 @Composable
 private fun AndroidSourceCodeSection(
-    homeUiState: HomeUiState,
+    homeUiState: HomeUiState?,
     toShopScreen: () -> Unit,
-    toCartScreen: () -> Unit
+    toCartScreen: () -> Unit,
+    toProductDetailsScreen: () -> Unit
 ) {
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -161,7 +172,7 @@ private fun AndroidSourceCodeSection(
             title = "سورس کد اندروید",
             toShopScreen = { toShopScreen() }
         )
-        when (val androidUiState = homeUiState.androidUiState) {
+        when (val androidUiState = homeUiState?.androidUiState) {
             AndroidUiState.Loading -> {
                 JetText(text = "در حال باگذاری ...")
             }
@@ -180,7 +191,8 @@ private fun AndroidSourceCodeSection(
                                 price = androidUiState.androidSourceCodes[position].price,
                                 rating = androidUiState.androidSourceCodes[position].averageRating,
                                 category = androidUiState.androidSourceCodes[position].categories?.get(0)?.name,
-                                onAddToCartClick = { toCartScreen() }
+                                onAddToCartClick = { toCartScreen() },
+                                onProductClick = { toProductDetailsScreen() }
                             )
                         }
                     }
@@ -189,6 +201,7 @@ private fun AndroidSourceCodeSection(
             is AndroidUiState.Error -> {
                 JetText(text = "${androidUiState.message}")
             }
+            else -> {}
         }
     }
 }
@@ -196,9 +209,10 @@ private fun AndroidSourceCodeSection(
 // Application ui kits carousel section
 @Composable
 private fun ApplicationUiKitSection(
-    homeUiState: HomeUiState,
+    homeUiState: HomeUiState?,
     toShopScreen: () -> Unit,
-    toCartScreen: () -> Unit
+    toCartScreen: () -> Unit,
+    toProductDetailsScreen: () -> Unit
 ) {
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -209,7 +223,7 @@ private fun ApplicationUiKitSection(
             title = "رابط کاربری اپلیکیشن",
             toShopScreen = { toShopScreen() }
         )
-        when (val applicationUiKitUiState = homeUiState.applicationUiKitUiState) {
+        when (val applicationUiKitUiState = homeUiState?.applicationUiKitUiState) {
             ApplicationUiKitUiState.Loading -> {
                 JetText(text = "در حال باگذاری ...")
             }
@@ -228,7 +242,8 @@ private fun ApplicationUiKitSection(
                                 price = applicationUiKitUiState.applicationUiKits[position].price,
                                 rating = applicationUiKitUiState.applicationUiKits[position].averageRating,
                                 category = applicationUiKitUiState.applicationUiKits[position].categories?.get(0)?.name,
-                                onAddToCartClick = { toCartScreen() }
+                                onAddToCartClick = { toCartScreen() },
+                                onProductClick = { toProductDetailsScreen() }
                             )
                         }
                     }
@@ -237,6 +252,7 @@ private fun ApplicationUiKitSection(
             is ApplicationUiKitUiState.Error -> {
                 JetText(text = "${applicationUiKitUiState.message}")
             }
+            else -> {}
         }
     }
 }
@@ -244,9 +260,10 @@ private fun ApplicationUiKitSection(
 // 3D illustrations carousel section
 @Composable
 private fun Illustrations3DSection(
-    homeUiState: HomeUiState,
+    homeUiState: HomeUiState?,
     toShopScreen: () -> Unit,
-    toCartScreen: () -> Unit
+    toCartScreen: () -> Unit,
+    toProductDetailsScreen: () -> Unit
 ) {
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -257,7 +274,7 @@ private fun Illustrations3DSection(
             title = "طرح های سه بعدی",
             toShopScreen = { toShopScreen() }
         )
-        when (val illustrations3DUiState = homeUiState.illustrations3DUiState) {
+        when (val illustrations3DUiState = homeUiState?.illustrations3DUiState) {
             Illustrations3DUiState.Loading -> {
                 JetText(text = "در حال باگذاری ...")
             }
@@ -276,7 +293,8 @@ private fun Illustrations3DSection(
                                 price = illustrations3DUiState.illustration3Ds[position].price,
                                 rating = illustrations3DUiState.illustration3Ds[position].averageRating,
                                 category = illustrations3DUiState.illustration3Ds[position].categories?.get(0)?.name,
-                                onAddToCartClick = { toCartScreen() }
+                                onAddToCartClick = { toCartScreen() },
+                                onProductClick = { toProductDetailsScreen() }
                             )
                         }
                     }
@@ -285,6 +303,7 @@ private fun Illustrations3DSection(
             is Illustrations3DUiState.Error -> {
                 JetText(text = "${illustrations3DUiState.message}")
             }
+            else -> {}
         }
     }
 }
@@ -317,10 +336,12 @@ private fun SectionSpacer(value: Int = 20) {
 fun Preview_HomeScreen() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         HomeContent(
+            homeUiState = null,
             toCartScreen = {},
             toNotificationScreen = {},
             toProfileScreen = {},
-            toShopScreen = {}
+            toShopScreen = {},
+            toProductDetailsScreen = {}
         )
     }
 }
