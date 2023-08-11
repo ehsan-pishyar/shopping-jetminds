@@ -1,7 +1,6 @@
 package com.example.shoppingjetminds.navigation.main
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -43,7 +42,9 @@ fun MainGraph(
         }
         composable(route = BottomNavigationScreens.Shop.route) {
             ShopScreen(
-                toCartScreen = { navController.navigate(BottomNavigationScreens.Cart.route) }
+                sharedViewModel = sharedViewModel,
+                toCartScreen = { navController.navigate(BottomNavigationScreens.Cart.route) },
+                toProductDetailsScreen = { navController.navigate(DetailScreens.ProductDetails.route) }
             )
         }
         composable(route = BottomNavigationScreens.Category.route) {
@@ -58,11 +59,9 @@ fun MainGraph(
             CartScreen()
         }
         composable(route = DetailScreens.ProductDetails.route) {
-            LaunchedEffect(key1 = it) {
-
-            }
             ProductDetailsScreen(
-                sharedViewModel = sharedViewModel
+                sharedViewModel = sharedViewModel,
+                toCartScreen = { navController.navigate(BottomNavigationScreens.Cart.route) }
             )
         }
     }

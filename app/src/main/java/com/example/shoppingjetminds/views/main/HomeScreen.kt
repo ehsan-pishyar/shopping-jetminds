@@ -47,7 +47,7 @@ import com.example.shoppingjetminds.viewmodels.SharedViewModel
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    sharedViewModel: SharedViewModel,
+    sharedViewModel: SharedViewModel = SharedViewModel(),
     toCartScreen: () -> Unit,
     toNotificationScreen: () -> Unit,
     toProfileScreen: () -> Unit,
@@ -64,7 +64,8 @@ fun HomeScreen(
         toShopScreen = { toShopScreen() },
         toProductDetailsScreen = {
             toProductDetailsScreen()
-        }
+        },
+        sharedViewModel = sharedViewModel
     )
 }
 
@@ -75,7 +76,8 @@ private fun HomeContent(
     toNotificationScreen: () -> Unit,
     toProfileScreen: () -> Unit,
     toShopScreen: () -> Unit,
-    toProductDetailsScreen: () -> Unit
+    toProductDetailsScreen: () -> Unit,
+    sharedViewModel: SharedViewModel? = null
 ) {
     val scrollState = rememberScrollState()
 
@@ -117,7 +119,8 @@ private fun HomeContent(
                     homeUiState = homeUiState,
                     toShopScreen = { toShopScreen() },
                     toCartScreen = { toCartScreen() },
-                    toProductDetailsScreen = { toProductDetailsScreen() }
+                    toProductDetailsScreen = { toProductDetailsScreen() },
+                    sharedViewModel = sharedViewModel!!
                 )
             }
 
@@ -161,7 +164,8 @@ private fun AndroidSourceCodeSection(
     homeUiState: HomeUiState?,
     toShopScreen: () -> Unit,
     toCartScreen: () -> Unit,
-    toProductDetailsScreen: () -> Unit
+    toProductDetailsScreen: () -> Unit,
+    sharedViewModel: SharedViewModel? = null
 ) {
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -192,7 +196,10 @@ private fun AndroidSourceCodeSection(
                                 rating = androidUiState.androidSourceCodes[position].averageRating,
                                 category = androidUiState.androidSourceCodes[position].categories?.get(0)?.name,
                                 onAddToCartClick = { toCartScreen() },
-                                onProductClick = { toProductDetailsScreen() }
+                                onProductClick = {
+                                    sharedViewModel?.addProduct(androidUiState.androidSourceCodes[position])
+                                    toProductDetailsScreen()
+                                }
                             )
                         }
                     }

@@ -1,6 +1,5 @@
 package com.example.shoppingjetminds.views.details
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -19,17 +18,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.example.domain.models.ProductsResponse
 import com.example.shoppingjetminds.ui.theme.Background
-import com.example.shoppingjetminds.R
+import com.example.shoppingjetminds.components.JetCoilImage
 import com.example.shoppingjetminds.components.JetHeading
 import com.example.shoppingjetminds.components.JetSimpleButton
 import com.example.shoppingjetminds.components.JetStarText
@@ -37,12 +35,16 @@ import com.example.shoppingjetminds.components.JetText
 import com.example.shoppingjetminds.components.LikeButton
 import com.example.shoppingjetminds.ui.theme.LighterGray
 import com.example.shoppingjetminds.ui.theme.Primary
+import com.example.shoppingjetminds.utils.priceThousandsSeparator
 import com.example.shoppingjetminds.viewmodels.SharedViewModel
 
 @Composable
 fun ProductDetailsScreen(
-    sharedViewModel: SharedViewModel = SharedViewModel()
+    sharedViewModel: SharedViewModel = SharedViewModel(),
+    toCartScreen: () -> Unit
 ) {
+
+    val scrollState = rememberScrollState()
 
     val state = remember {
         mutableIntStateOf(0)
@@ -57,7 +59,8 @@ fun ProductDetailsScreen(
     ) {
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(15.dp),
+            .padding(15.dp)
+            .verticalScroll(state = scrollState, enabled = true),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -75,28 +78,38 @@ fun ProductDetailsScreen(
                 .fillMaxWidth()
                 .weight(5.5f)
             ) {
-                ImageContentSection()
+                ImageContentSection(
+                    sharedUiState = sharedUiState
+                )
             }
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .weight(4.5f)
             ) {
                 Spacer(modifier = Modifier.height(10.dp))
-                ContentTabsSection(tabs = items, state = state)
+                ContentTabsSection(
+                    tabs = items,
+                    state = state,
+                    sharedUiState = sharedUiState
+                )
             }
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
                 verticalArrangement = Arrangement.Bottom
             ) {
-                BottomSection()
+                BottomSection(
+                    toCartScreen = { toCartScreen() }
+                )
             }
         }
     }
 }
 
 @Composable
-private fun ImageContentSection() {
+private fun ImageContentSection(
+    sharedUiState: ProductsResponse? = null
+) {
     Card(modifier = Modifier
         .fillMaxSize(),
         shape = RoundedCornerShape(12.dp),
@@ -114,13 +127,11 @@ private fun ImageContentSection() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Feature image
-            Image(
+            JetCoilImage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(shape = RoundedCornerShape(8.dp)),
-                painter = painterResource(id = R.drawable.jetminds_shop_feature_image_example),
-                contentDescription = null,
-                contentScale = ContentScale.Crop
+                imageUrl = sharedUiState?.images?.get(0)?.src!!
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -137,14 +148,14 @@ private fun ImageContentSection() {
                     horizontalAlignment = Alignment.Start
                 ) {
                     JetText(
-                        text = "رابط کاربری Masmas – Food Delivery Mobile App UI Kit",
+                        text = sharedUiState.name!!,
                         fontSize = 15,
                         fontWeight = FontWeight.SemiBold,
                         overflow = TextOverflow.Clip,
                         maxLines = 2,
                     )
                     JetText(
-                        text = "49.000 تومان",
+                        text = priceThousandsSeparator(sharedUiState.price!!),
                         fontSize = 16,
                         fontWeight = FontWeight.SemiBold,
                         color = Primary
@@ -159,7 +170,7 @@ private fun ImageContentSection() {
                     horizontalAlignment = Alignment.End
                 ) {
                     JetText(
-                        text = "رابط کاربری اپلیکیشن",
+                        text = sharedUiState.categories?.get(0)?.name!!,
                         fontSize = 12,
                         fontWeight = FontWeight.Normal,
                         color = LighterGray
@@ -183,7 +194,8 @@ private fun ImageContentSection() {
 @Composable
 private fun ContentTabsSection(
     tabs: List<String>,
-    state: MutableIntState
+    state: MutableIntState,
+    sharedUiState: ProductsResponse? = null
 ) {
 
     Card(modifier = Modifier
@@ -215,7 +227,9 @@ private fun ContentTabsSection(
 //                style = MaterialTheme.typography.bodyLarge
 //            )
             when (state.intValue) {
-                0 -> DescriptionTab()
+                0 -> DescriptionTab(
+                    sharedUiState = sharedUiState
+                )
                 1 -> FeaturesTab()
                 2 -> CommentsTab()
             }
@@ -224,7 +238,9 @@ private fun ContentTabsSection(
 }
 
 @Composable
-private fun DescriptionTab() {
+private fun DescriptionTab(
+    sharedUiState: ProductsResponse? = null
+) {
 
     val state = rememberScrollState()
 
@@ -234,7 +250,7 @@ private fun DescriptionTab() {
         .verticalScroll(state = state, enabled = true)
     ) {
         JetText(
-            text = "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.",
+            text = sharedUiState?.description!!,
             fontSize = 13,
             lineHeight = 1.5,
             textAlign = TextAlign.Justify
@@ -279,9 +295,11 @@ private fun CommentsTab() {
 }
 
 @Composable
-private fun BottomSection() {
+private fun BottomSection(
+    toCartScreen: () -> Unit
+) {
     JetSimpleButton(
-        onClick = { /*TODO*/ },
+        onClick = { toCartScreen() },
         text = "افزودن به سبد خرید",
         height = 56
     )
@@ -291,6 +309,8 @@ private fun BottomSection() {
 @Composable
 fun PreviewProductDetailsScreen() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        ProductDetailsScreen()
+        ProductDetailsScreen(
+            toCartScreen = {}
+        )
     }
 }

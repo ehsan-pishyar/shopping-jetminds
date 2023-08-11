@@ -27,26 +27,33 @@ import com.example.shoppingjetminds.ui.theme.Background
 import com.example.shoppingjetminds.ui.theme.LighterGray
 import com.example.shoppingjetminds.uistates.MainShopProductsUiState
 import com.example.shoppingjetminds.uistates.ShopProductsUiState
+import com.example.shoppingjetminds.viewmodels.SharedViewModel
 import com.example.shoppingjetminds.viewmodels.ShopViewModel
 
 @Composable
 fun ShopScreen(
     viewModel: ShopViewModel = hiltViewModel(),
-    toCartScreen: () -> Unit
+    sharedViewModel: SharedViewModel = SharedViewModel(),
+    toCartScreen: () -> Unit,
+    toProductDetailsScreen: () -> Unit
 ) {
     val uiState: MainShopProductsUiState by viewModel.shopUiState.collectAsState()
     var search by remember { mutableStateOf("") }
 
     ShopContent(
         uiState = uiState,
-        toCartScreen = { toCartScreen() }
+        sharedViewModel = sharedViewModel,
+        toCartScreen = { toCartScreen() },
+        toProductDetailsScreen = { toProductDetailsScreen() }
     )
 }
 
 @Composable
 private fun ShopContent(
     uiState: MainShopProductsUiState? = null,
-    toCartScreen: () -> Unit
+    sharedViewModel: SharedViewModel? = null,
+    toCartScreen: () -> Unit,
+    toProductDetailsScreen: () -> Unit
 ) {
     Box(modifier = Modifier
         .fillMaxSize()
@@ -81,7 +88,9 @@ private fun ShopContent(
             ) {
                 ProductsSection(
                     uiState = uiState,
-                    toCartScreen = { toCartScreen() }
+                    sharedViewModel = sharedViewModel,
+                    toCartScreen = { toCartScreen() },
+                    toProductDetailsScreen = { toProductDetailsScreen() }
                 )
             }
         }
@@ -174,7 +183,9 @@ private fun SearchSection() {
 @Composable
 private fun ProductsSection(
     uiState: MainShopProductsUiState? = null,
-    toCartScreen: () -> Unit
+    sharedViewModel: SharedViewModel? = null,
+    toCartScreen: () -> Unit,
+    toProductDetailsScreen: () -> Unit
 ) {
     when (val state = uiState?.shopProductsUiState) {
         ShopProductsUiState.Loading -> {
@@ -200,7 +211,11 @@ private fun ProductsSection(
                             price = state.products[position].price,
                             rating = state.products[position].averageRating,
                             category = state.products[position].categories?.get(0)?.name,
-                            onAddToCartClick = { toCartScreen() }
+                            onAddToCartClick = { toCartScreen() },
+                            onProductClick = {
+                                sharedViewModel?.addProduct(state.products[position])
+                                toProductDetailsScreen()
+                            }
                         )
                     }
                 }
@@ -224,6 +239,9 @@ private fun ProductsSection(
 @Composable
 private fun PreviewShopScreen() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        ShopContent {}
+        ShopContent(
+            toCartScreen = {},
+            toProductDetailsScreen = {}
+        )
     }
 }

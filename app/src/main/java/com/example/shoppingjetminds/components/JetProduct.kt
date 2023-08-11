@@ -176,12 +176,14 @@ fun JetShopProduct(
     price: String? = null,
     rating: String? = "4.5",
     category: String? = null,
-    onAddToCartClick: () -> Unit
+    onAddToCartClick: () -> Unit,
+    onProductClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
             .width(200.dp)
-            .height(280.dp),
+            .height(280.dp)
+            .clickable(enabled = true, onClick = { onProductClick() }),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 0.dp
@@ -455,7 +457,8 @@ private fun Preview_JetShopProduct() {
             price = "39000",
             rating = "4.6",
             category = "کیت رابط کاربری",
-            onAddToCartClick = {}
+            onAddToCartClick = {},
+            onProductClick = {}
         )
     }
 }
