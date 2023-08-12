@@ -17,6 +17,25 @@
             <option value="$PROJECT_DIR$/data/network" />
             <option value="$PROJECT_DIR$/data/repository" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/billing" />
+            <option value="$PROJECT_DIR$/features/cart" />
+            <option value="$PROJECT_DIR$/features/category" />
+            <option value="$PROJECT_DIR$/features/checkout" />
+            <option value="$PROJECT_DIR$/features/compare" />
+            <option value="$PROJECT_DIR$/features/downloads" />
+            <option value="$PROJECT_DIR$/features/favorites" />
+            <option value="$PROJECT_DIR$/features/home" />
+            <option value="$PROJECT_DIR$/features/login" />
+            <option value="$PROJECT_DIR$/features/onboarding" />
+            <option value="$PROJECT_DIR$/features/orders" />
+            <option value="$PROJECT_DIR$/features/productdetails" />
+            <option value="$PROJECT_DIR$/features/search" />
+            <option value="$PROJECT_DIR$/features/shop" />
+            <option value="$PROJECT_DIR$/features/splash" />
+            <option value="$PROJECT_DIR$/libraries" />
+            <option value="$PROJECT_DIR$/libraries/core" />
+            <option value="$PROJECT_DIR$/libraries/designsystem" />
           </set>
         </option>
       </GradleProjectSettings>
