@@ -1,0 +1,26 @@
+package com.example.designsystem.components
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.example.designsystem.R
+
+@Composable
+fun JetCoilImage(
+    modifier: Modifier = Modifier,
+    imageUrl: String
+) {
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(imageUrl)
+            .placeholder(R.drawable.jetminds_fav_icon)
+            .crossfade(300)
+            .build(),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = modifier
+    )
+}
