@@ -34,10 +34,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.shoppingjetminds.R
-import com.example.shoppingjetminds.components.JetHeading
-import com.example.shoppingjetminds.components.JetText
-import com.example.shoppingjetminds.ui.theme.Background
+import com.example.designsystem.Background
+import com.example.designsystem.R
+import com.example.designsystem.components.JetHeading
+import com.example.designsystem.components.JetText
 import com.example.shoppingjetminds.uistates.MainOrdersUiState
 import com.example.shoppingjetminds.viewmodels.OrdersViewModel
 

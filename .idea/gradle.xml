@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/data/repository" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/account" />
             <option value="$PROJECT_DIR$/features/billing" />
             <option value="$PROJECT_DIR$/features/cart" />
             <option value="$PROJECT_DIR$/features/category" />
@@ -36,6 +37,7 @@
             <option value="$PROJECT_DIR$/libraries" />
             <option value="$PROJECT_DIR$/libraries/core" />
             <option value="$PROJECT_DIR$/libraries/designsystem" />
+            <option value="$PROJECT_DIR$/libraries/navigation" />
           </set>
         </option>
       </GradleProjectSettings>

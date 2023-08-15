@@ -2,34 +2,18 @@ package com.example.shoppingjetminds.navigation.start
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.example.shoppingjetminds.navigation.Graph
-import com.example.shoppingjetminds.navigation.StartScreens
-import com.example.shoppingjetminds.views.start.OnBoardingScreen
-import com.example.shoppingjetminds.views.start.SplashScreen
+import com.example.navigation.Graph
+import com.example.navigation.StartScreens
+import com.example.onboarding.navigation.onBoardingScreen
+import com.example.splash.navigation.splashScreen
 
 fun NavGraphBuilder.addStartTopLevel(navController: NavHostController) {
     navigation(
         route = Graph.START,
         startDestination = StartScreens.Splash.route
     ) {
-        composable(route = StartScreens.Splash.route) {
-            SplashScreen(
-                toOnBoardingScreen = {
-                    navController.popBackStack()
-                    navController.navigate(route = StartScreens.OnBoarding.route)
-                },
-                toHomeScreen = {
-                    navController.popBackStack()
-                    navController.navigate(route = Graph.MAIN)
-                }
-            )
-        }
-        composable(route = StartScreens.OnBoarding.route) {
-            OnBoardingScreen {
-                navController.navigate(route = Graph.MAIN)
-            }
-        }
+        splashScreen(navController = navController)
+        onBoardingScreen(navController = navController)
     }
 }

@@ -8,8 +8,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.navigation.compose.rememberNavController
+import com.example.designsystem.ShoppingJetMindsTheme
 import com.example.shoppingjetminds.navigation.AppNavigation
-import com.example.shoppingjetminds.ui.theme.ShoppingJetMindsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

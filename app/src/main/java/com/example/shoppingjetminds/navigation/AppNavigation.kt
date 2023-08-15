@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.navigation.Graph
 import com.example.shoppingjetminds.navigation.auth.addAuthTopLevel
 import com.example.shoppingjetminds.navigation.main.MainScreen
 import com.example.shoppingjetminds.navigation.start.addStartTopLevel
@@ -21,11 +22,4 @@ fun AppNavigation(navHostController: NavHostController) {
             MainScreen()
         }
     }
-}
-
-object Graph {
-    const val ROOT = "root"
-    const val START = "start"
-    const val AUTH = "auth"
-    const val MAIN = "main"
 }

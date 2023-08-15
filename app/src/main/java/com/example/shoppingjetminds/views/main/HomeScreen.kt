@@ -30,17 +30,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.shoppingjetminds.R
-import com.example.shoppingjetminds.components.JetHomeHeading
-import com.example.shoppingjetminds.components.JetIconText
-import com.example.shoppingjetminds.components.JetProduct
-import com.example.shoppingjetminds.components.JetText
-import com.example.shoppingjetminds.ui.theme.Background
+import com.example.core.utils.carouselProductsSize
+import com.example.designsystem.Background
+import com.example.designsystem.R
+import com.example.designsystem.components.JetHomeHeading
+import com.example.designsystem.components.JetIconText
+import com.example.designsystem.components.JetProduct
+import com.example.designsystem.components.JetText
 import com.example.shoppingjetminds.uistates.AndroidUiState
 import com.example.shoppingjetminds.uistates.ApplicationUiKitUiState
 import com.example.shoppingjetminds.uistates.HomeUiState
 import com.example.shoppingjetminds.uistates.Illustrations3DUiState
-import com.example.shoppingjetminds.utils.carouselProductsSize
 import com.example.shoppingjetminds.viewmodels.HomeViewModel
 import com.example.shoppingjetminds.viewmodels.SharedViewModel
 

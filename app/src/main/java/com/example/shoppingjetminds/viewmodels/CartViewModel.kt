@@ -3,7 +3,6 @@ package com.example.shoppingjetminds.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.models.ProductsResponse
-import com.example.domain.use_cases.products.GetProductDetailsUseCase
 import com.example.domain.use_cases.products.GetProductsUseCase
 import com.example.domain.utils.ServiceResult
 import com.example.shoppingjetminds.uistates.CartUiState

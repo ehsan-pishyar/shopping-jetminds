@@ -2,7 +2,7 @@ package com.example.shoppingjetminds.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.use_cases.products.GetProductsByCategoryIdUseCase
+import com.example.core.utils.WhileUiSubscribed
 import com.example.domain.use_cases.products.GetProductsUseCase
 import com.example.domain.utils.ServiceResult
 import com.example.shoppingjetminds.uistates.AndroidUiState
@@ -10,7 +10,6 @@ import com.example.shoppingjetminds.uistates.ApplicationUiKitUiState
 import com.example.shoppingjetminds.uistates.HomeUiState
 import com.example.shoppingjetminds.uistates.Illustrations3DUiState
 import com.example.shoppingjetminds.utils.Categories
-import com.example.shoppingjetminds.utils.WhileUiSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

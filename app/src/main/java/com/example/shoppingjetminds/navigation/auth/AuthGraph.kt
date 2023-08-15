@@ -4,9 +4,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.example.shoppingjetminds.navigation.AuthScreens
-import com.example.shoppingjetminds.navigation.BottomNavigationScreens
-import com.example.shoppingjetminds.navigation.Graph
+import com.example.navigation.AuthScreens
+import com.example.navigation.BottomNavigationScreens
+import com.example.navigation.Graph
 import com.example.shoppingjetminds.views.auth.LoginScreen
 import com.example.shoppingjetminds.views.auth.VerificationScreen
 

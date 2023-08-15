@@ -6,9 +6,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.shoppingjetminds.navigation.BottomNavigationScreens
-import com.example.shoppingjetminds.navigation.DetailScreens
-import com.example.shoppingjetminds.navigation.Graph
+import com.example.navigation.BottomNavigationScreens
+import com.example.navigation.DetailScreens
+import com.example.navigation.Graph
 import com.example.shoppingjetminds.viewmodels.SharedViewModel
 import com.example.shoppingjetminds.views.details.ProductDetailsScreen
 import com.example.shoppingjetminds.views.payment.CartScreen

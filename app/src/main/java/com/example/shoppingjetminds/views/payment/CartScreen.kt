@@ -29,14 +29,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.example.shoppingjetminds.components.CartListItem
-import com.example.shoppingjetminds.components.JetHeading
-import com.example.shoppingjetminds.components.JetSimpleButton
-import com.example.shoppingjetminds.components.JetText
-import com.example.shoppingjetminds.components.JetTextField
-import com.example.shoppingjetminds.ui.theme.Background
-import com.example.shoppingjetminds.ui.theme.LighterGray
-import com.example.shoppingjetminds.ui.theme.Primary
+import com.example.designsystem.Background
+import com.example.designsystem.LighterGray
+import com.example.designsystem.Primary
+import com.example.designsystem.components.CartListItem
+import com.example.designsystem.components.JetHeading
+import com.example.designsystem.components.JetSimpleButton
+import com.example.designsystem.components.JetText
+import com.example.designsystem.components.JetTextField
 
 @Composable
 fun CartScreen() {

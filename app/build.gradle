@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.shoppingjetminds"
-        minSdk 23
+        minSdk 24
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -47,15 +47,39 @@ android {
         }
     }
     lint {
-        abortOnError false
-        baseline file('lint-baseline.xml')
-        warningsAsErrors false
+        warningsAsErrors = true
+        abortOnError = true
+        htmlReport = true
+        checkDependencies = true
+
+        lintConfig = file("${rootDir}/config/filters/lint.xml")
+        htmlOutput = file("${buildDir}/reports/lint.html")
+
+        project.tasks.check.dependsOn("lint")
     }
 }
 
 dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':data:repository')
+    implementation project(path: ':features:splash')
+    implementation project(path: ':libraries:navigation')
+    implementation project(path: ':libraries:designsystem')
+    implementation project(path: ':libraries:core')
+    implementation project(path: ':features:home')
+    implementation project(path: ':features:category')
+    implementation project(path: ':features:login')
+    implementation project(path: ':features:shop')
+    implementation project(path: ':features:compare')
+    implementation project(path: ':features:favorites')
+    implementation project(path: ':features:cart')
+    implementation project(path: ':features:search')
+    implementation project(path: ':features:downloads')
+    implementation project(path: ':features:billing')
+    implementation project(path: ':features:checkout')
+    implementation project(path: ':features:productdetails')
+    implementation project(path: ':features:onboarding')
+    implementation project(path: ':features:orders')
 
     def palette_version = "1.0.0"
 

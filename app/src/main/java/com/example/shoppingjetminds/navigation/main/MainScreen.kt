@@ -17,9 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -27,9 +25,9 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.shoppingjetminds.components.JetText
-import com.example.shoppingjetminds.navigation.BottomNavigationScreens
-import com.example.shoppingjetminds.ui.theme.LighterBlack
+import com.example.designsystem.LighterBlack
+import com.example.designsystem.components.JetText
+import com.example.navigation.BottomNavigationScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
