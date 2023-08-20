@@ -1,28 +1,19 @@
 package com.example.shoppingjetminds.navigation.auth
 
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigation
+import com.example.login.navigation.loginScreen
 import com.example.navigation.AuthScreens
-import com.example.navigation.BottomNavigationScreens
 import com.example.navigation.Graph
-import com.example.shoppingjetminds.views.auth.LoginScreen
-import com.example.shoppingjetminds.views.auth.VerificationScreen
+import com.example.verification.navigation.verificationScreen
 
-fun NavGraphBuilder.addAuthTopLevel(navController: NavController) {
+fun NavGraphBuilder.addAuthTopLevel(navController: NavHostController) {
     navigation(
         route = Graph.AUTH,
         startDestination = AuthScreens.Login.route
     ) {
-        composable(route = AuthScreens.Login.route) {
-            LoginScreen(
-                toHomeScreen = { navController.navigate(route = BottomNavigationScreens.Home.route) },
-                toVerificationScreen = { navController.navigate(route = AuthScreens.Verification.route) }
-            )
-        }
-        composable(route = AuthScreens.Verification.route) {
-            VerificationScreen()
-        }
+        loginScreen(navController)
+        verificationScreen(navController)
     }
 }

@@ -2,8 +2,6 @@ package com.example.account
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.shoppingjetminds.uistates.AccountUiState
-import com.example.shoppingjetminds.uistates.MainAccountUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

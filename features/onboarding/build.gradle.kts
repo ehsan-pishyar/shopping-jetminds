@@ -51,6 +51,7 @@ dependencies {
     val androidCoreVersion = "1.10.1"
     val lifecycleVersion = "2.6.1"
     val hiltVersion = "2.45"
+    val accompanistVersion = "0.27.0"
 
     implementation("androidx.core:core-ktx:$androidCoreVersion")
     implementation("androidx.activity:activity-compose:1.7.2")
@@ -80,4 +81,13 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+    // Pager and Indicators - Accompanist - System ui controller - Swipe to refresh
+    implementation("com.google.accompanist:accompanist-pager:$accompanistVersion") 
+    implementation("com.google.accompanist:accompanist-pager-indicators:$accompanistVersion")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.31.3-beta")
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.30.1")
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.30.0")
+    implementation("com.google.accompanist:accompanist-flowlayout:$accompanistVersion")
+    implementation("com.google.accompanist:accompanist-insets-ui:0.23.1")
 }

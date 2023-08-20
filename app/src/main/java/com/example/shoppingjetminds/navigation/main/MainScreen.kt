@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material3.Card
@@ -28,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.designsystem.LighterBlack
 import com.example.designsystem.components.JetText
 import com.example.navigation.BottomNavigationScreens
+import com.google.accompanist.insets.ui.BottomNavigation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

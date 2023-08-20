@@ -13,15 +13,21 @@ sealed class AuthScreens(val route: String) {
 
 sealed class DetailScreens(val route: String) {
     object ProductDetails: DetailScreens(route = "product_details")
+    object UserInformation: DetailScreens(route = "user_information")
 }
 
 sealed class PaymentScreens(val route: String) {
     object Cart: PaymentScreens(route = "cart")
     object Checkout: PaymentScreens(route = "checkout")
+    object Billing: PaymentScreens(route = "billing")
+    object Orders: PaymentScreens(route = "orders")
 }
 
 sealed class OtherScreens(val route: String) {
     object Favorite: OtherScreens(route = "favorites")
     object Compare: OtherScreens(route = "compare")
     object Search: OtherScreens(route = "search")
+    object Address: OtherScreens(route = "address")
+    object Downloads: OtherScreens(route = "downloads")
+    object Notifications: OtherScreens(route = "notifications")
 }

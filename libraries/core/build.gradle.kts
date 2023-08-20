@@ -40,6 +40,7 @@ android {
 
 dependencies {
 
+    implementation(project(mapOf("path" to ":domain")))
     val androidCoreVersion = "1.10.1"
 
     implementation("androidx.core:core-ktx:$androidCoreVersion")

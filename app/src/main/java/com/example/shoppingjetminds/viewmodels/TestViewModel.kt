@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.use_cases.products.GetProductsByCategoryIdUseCase
 import com.example.domain.utils.ServiceResult
-import com.example.shoppingjetminds.uistates.AndroidUiState
-import com.example.shoppingjetminds.utils.Categories
+import com.example.home.AndroidUiState
+import com.example.home.Categories
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
