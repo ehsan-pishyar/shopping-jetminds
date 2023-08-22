@@ -25,6 +25,7 @@
             <option value="$PROJECT_DIR$/features/category" />
             <option value="$PROJECT_DIR$/features/checkout" />
             <option value="$PROJECT_DIR$/features/compare" />
+            <option value="$PROJECT_DIR$/features/coupons" />
             <option value="$PROJECT_DIR$/features/downloads" />
             <option value="$PROJECT_DIR$/features/favorites" />
             <option value="$PROJECT_DIR$/features/home" />

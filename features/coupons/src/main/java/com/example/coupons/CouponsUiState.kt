@@ -1,4 +1,4 @@
-package com.example.shoppingjetminds.uistates
+package com.example.coupons
 
 import com.example.domain.models.CouponsResponse
 

@@ -1,6 +1,7 @@
 package com.example.core.utils
 
 import android.os.Build
+import android.text.Html
 import androidx.annotation.RequiresApi
 import java.time.Duration
 import java.time.LocalDateTime
@@ -33,3 +34,5 @@ fun priceThousandsSeparator(price: String): String {
 // Returns just 7 items if product list items are more than 7 else returns product items size
 fun carouselProductsSize(size: Int): Int =
     if (size >= 7) 7 else size
+
+fun parseHtml(html: String): String = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString()

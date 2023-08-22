@@ -76,95 +76,102 @@ fun JetProduct(
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .weight(3f),
-                verticalArrangement = Arrangement.Top
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
-                // Rating start
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.Top
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
                 ) {
-                    // Title
-                    JetText(
-                        text = title,
-                        fontSize = 14,
-                        fontWeight = FontWeight.SemiBold,
-                        maxLines = 2,
-                        textAlign = TextAlign.Start,
-                        lineHeight = 1.5,
+                    Row(
                         modifier = Modifier
-                            .wrapContentHeight()
-                            .weight(8f)
-                    )
-
-                    Row(modifier = Modifier
-                        .wrapContentHeight()
-                        .weight(2f),
-                        verticalAlignment = Alignment.Top,
-                        horizontalArrangement = Arrangement.End
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.Top
                     ) {
+                        // Title
                         JetText(
-                            text = "($rating)",
-                            fontSize = 12
+                            text = title,
+                            fontSize = 14,
+                            fontWeight = FontWeight.SemiBold,
+                            maxLines = 2,
+                            textAlign = TextAlign.Start,
+                            lineHeight = 1.5,
+                            modifier = Modifier
+                                .wrapContentHeight()
+                                .weight(8f)
                         )
 
-                        Icon(
-                            painter = painterResource(id = R.drawable.star),
-                            contentDescription = null,
-                            tint = YellowColor,
-                            modifier = Modifier
-                                .size(14.dp)
-                                .padding(top = 1.dp)
-                        )
+                        Row(modifier = Modifier
+                            .wrapContentHeight()
+                            .weight(2f),
+                            verticalAlignment = Alignment.Top,
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            JetText(
+                                text = "($rating)",
+                                fontSize = 12
+                            )
+
+                            Icon(
+                                painter = painterResource(id = R.drawable.star),
+                                contentDescription = null,
+                                tint = YellowColor,
+                                modifier = Modifier
+                                    .size(14.dp)
+                                    .padding(top = 1.dp)
+                            )
+                        }
                     }
                 }
-                // Rating end
 
-                Spacer(modifier = Modifier.height(5.dp))
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight(),
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
                 ) {
-                    Column(modifier = Modifier
-                        .wrapContentHeight()
-                        .weight(8f)
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight(),
+                        verticalAlignment = Alignment.Bottom
                     ) {
-                        if (category != null) {
-                            JetText(
-                                text = category,
-                                color = LighterGray,
-                                fontWeight = FontWeight.Normal,
-                                fontSize = 9
-                            )
-                        } else {
-                            JetText(
-                                text = "بدون دسته بندی",
-                                color = LighterBlack,
-                                fontWeight = FontWeight.Normal,
-                                fontSize = 9
-                            )
-                        }
-
-                        // Price start
-                        Row(modifier = Modifier
-                            .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(5.dp)
+                        Column(modifier = Modifier
+                            .wrapContentHeight()
+                            .weight(8f)
                         ) {
-                            JetPriceText(price = price)
+                            if (category != null) {
+                                JetText(
+                                    text = category,
+                                    color = LighterGray,
+                                    fontWeight = FontWeight.Normal,
+                                    fontSize = 9
+                                )
+                            } else {
+                                JetText(
+                                    text = "بدون دسته بندی",
+                                    color = LighterBlack,
+                                    fontWeight = FontWeight.Normal,
+                                    fontSize = 9
+                                )
+                            }
+
+                            // Price start
+                            Row(modifier = Modifier
+                                .fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(5.dp)
+                            ) {
+                                JetPriceText(price = price)
+                            }
+                            // Price end
                         }
-                        // Price end
-                    }
-                    Column(modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(2f)
-                    ) {
-                        BuyButton(
-                            onCLick = { onAddToCartClick() }
-                        )
+                        Column(modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(2f)
+                        ) {
+                            BuyButton(
+                                onCLick = { onAddToCartClick() }
+                            )
+                        }
                     }
                 }
             }
@@ -251,74 +258,81 @@ fun JetShopProduct(
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .weight(3f),
-                verticalArrangement = Arrangement.Top
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
-                // Rating start
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.Top
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
                 ) {
-                    // Title
-                    JetText(
-                        text = title,
-                        fontSize = 13,
-                        fontWeight = FontWeight.SemiBold,
-                        maxLines = 2,
-                        textAlign = TextAlign.Start,
-                        lineHeight = 1.5
-                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.Top
+                    ) {
+                        // Title
+                        JetText(
+                            text = title,
+                            fontSize = 13,
+                            fontWeight = FontWeight.SemiBold,
+                            maxLines = 2,
+                            textAlign = TextAlign.Start,
+                            lineHeight = 1.5
+                        )
+                    }
                 }
 
-                Spacer(modifier = Modifier.height(5.dp))
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight(),
-                    verticalAlignment = Alignment.Bottom
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
                 ) {
-                    Column(modifier = Modifier
-                        .wrapContentHeight()
-                        .weight(8f),
-                        verticalArrangement = Arrangement.Bottom
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight(),
+                        verticalAlignment = Alignment.Bottom
                     ) {
-                        // Category
-                        if (category != null) {
-                            JetText(
-                                text = category,
-                                color = LighterGray,
-                                fontWeight = FontWeight.Normal,
-                                fontSize = 9
-                            )
-                        } else {
-                            JetText(
-                                text = "بدون دسته بندی",
-                                color = LighterBlack,
-                                fontWeight = FontWeight.Normal,
-                                fontSize = 9
-                            )
-                        }
-
-                        // Price
-                        Row(modifier = Modifier
-                            .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(5.dp)
+                        Column(modifier = Modifier
+                            .wrapContentHeight()
+                            .weight(8f),
+                            verticalArrangement = Arrangement.Bottom
                         ) {
-                            JetPriceText(price = price)
+                            // Category
+                            if (category != null) {
+                                JetText(
+                                    text = category,
+                                    color = LighterGray,
+                                    fontWeight = FontWeight.Normal,
+                                    fontSize = 9
+                                )
+                            } else {
+                                JetText(
+                                    text = "بدون دسته بندی",
+                                    color = LighterBlack,
+                                    fontWeight = FontWeight.Normal,
+                                    fontSize = 9
+                                )
+                            }
+
+                            // Price
+                            Row(modifier = Modifier
+                                .fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(5.dp)
+                            ) {
+                                JetPriceText(price = price)
+                            }
                         }
-                    }
-                    Column(modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(2f)
-                        .padding(vertical = 5.dp),
-                        verticalArrangement = Arrangement.Bottom
-                    ) {
-                        BuyButton(
-                            onCLick = { onAddToCartClick() }
-                        )
+                        Column(modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(2f)
+                            .padding(vertical = 5.dp),
+                            verticalArrangement = Arrangement.Bottom
+                        ) {
+                            BuyButton(
+                                onCLick = { onAddToCartClick() }
+                            )
+                        }
                     }
                 }
             }

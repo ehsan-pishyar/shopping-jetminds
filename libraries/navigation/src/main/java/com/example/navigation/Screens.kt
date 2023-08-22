@@ -21,6 +21,7 @@ sealed class PaymentScreens(val route: String) {
     object Checkout: PaymentScreens(route = "checkout")
     object Billing: PaymentScreens(route = "billing")
     object Orders: PaymentScreens(route = "orders")
+    object Coupons: PaymentScreens(route = "coupons")
 }
 
 sealed class OtherScreens(val route: String) {

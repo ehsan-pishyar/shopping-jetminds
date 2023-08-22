@@ -214,7 +214,8 @@ private fun ApplicationUiKitSection(
     homeUiState: HomeUiState?,
     toShopScreen: () -> Unit,
     toCartScreen: () -> Unit,
-    toProductDetailsScreen: () -> Unit
+    toProductDetailsScreen: () -> Unit,
+    sharedViewModel: SharedViewModel? = null
 ) {
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -245,7 +246,10 @@ private fun ApplicationUiKitSection(
                                 rating = applicationUiKitUiState.applicationUiKits[position].averageRating,
                                 category = applicationUiKitUiState.applicationUiKits[position].categories?.get(0)?.name,
                                 onAddToCartClick = { toCartScreen() },
-                                onProductClick = { toProductDetailsScreen() }
+                                onProductClick = {
+                                    sharedViewModel?.addProduct(applicationUiKitUiState.applicationUiKits[position])
+                                    toProductDetailsScreen()
+                                }
                             )
                         }
                     }
@@ -265,7 +269,8 @@ private fun Illustrations3DSection(
     homeUiState: HomeUiState?,
     toShopScreen: () -> Unit,
     toCartScreen: () -> Unit,
-    toProductDetailsScreen: () -> Unit
+    toProductDetailsScreen: () -> Unit,
+    sharedViewModel: SharedViewModel? = null
 ) {
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -296,7 +301,10 @@ private fun Illustrations3DSection(
                                 rating = illustrations3DUiState.illustration3Ds[position].averageRating,
                                 category = illustrations3DUiState.illustration3Ds[position].categories?.get(0)?.name,
                                 onAddToCartClick = { toCartScreen() },
-                                onProductClick = { toProductDetailsScreen() }
+                                onProductClick = {
+                                    sharedViewModel?.addProduct(illustrations3DUiState.illustration3Ds[position])
+                                    toProductDetailsScreen()
+                                }
                             )
                         }
                     }

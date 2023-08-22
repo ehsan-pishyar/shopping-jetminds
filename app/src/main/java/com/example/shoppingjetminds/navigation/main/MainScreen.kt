@@ -3,13 +3,10 @@ package com.example.shoppingjetminds.navigation.main
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ContentAlpha
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -57,25 +54,18 @@ fun BottomBar(navController: NavHostController) {
 
     val bottomBarDestination = screens.any { it.route == currentDestination?.route }
     if (bottomBarDestination) {
-        Card(modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentSize(),
-            shape = RoundedCornerShape(8.dp),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 8.dp
-            ),
-            colors = CardDefaults.cardColors(
-                containerColor = Color.White
-            )
+        BottomNavigation(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(64.dp),
+            backgroundColor = Color.White
         ) {
-            BottomNavigation {
-                screens.forEach { screen ->
-                    AddItem(
-                        screen = screen,
-                        currentDestination = currentDestination,
-                        navController = navController
-                    )
-                }
+            screens.forEach { screen ->
+                AddItem(
+                    screen = screen,
+                    currentDestination = currentDestination,
+                    navController = navController
+                )
             }
         }
     }
@@ -89,7 +79,10 @@ fun RowScope.AddItem(
 ) {
     BottomNavigationItem(
         label = {
-            JetText(text = screen.title)
+            JetText(
+                text = screen.title,
+                fontSize = 12
+            )
         },
         icon = {
             Image(

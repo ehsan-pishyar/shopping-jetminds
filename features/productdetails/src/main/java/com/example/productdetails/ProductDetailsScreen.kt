@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.example.core.utils.SharedViewModel
+import com.example.core.utils.parseHtml
 import com.example.core.utils.priceThousandsSeparator
 import com.example.designsystem.Background
 import com.example.designsystem.LighterGray
@@ -43,14 +44,9 @@ fun ProductDetailsScreen(
     sharedViewModel: SharedViewModel = SharedViewModel(),
     toCartScreen: () -> Unit
 ) {
-
     val scrollState = rememberScrollState()
-
-    val state = remember {
-        mutableIntStateOf(0)
-    }
+    val state = remember { mutableIntStateOf(0) }
     val items = listOf("توضیحات", "ویژگی ها", "نظرات")
-
     val sharedUiState = sharedViewModel.productState
 
     Box(modifier = Modifier
@@ -76,7 +72,7 @@ fun ProductDetailsScreen(
             }
             Column(modifier = Modifier
                 .fillMaxWidth()
-                .weight(5.5f)
+                .weight(3.5f)
             ) {
                 ImageContentSection(
                     sharedUiState = sharedUiState
@@ -84,7 +80,7 @@ fun ProductDetailsScreen(
             }
             Column(modifier = Modifier
                 .fillMaxWidth()
-                .weight(4.5f)
+                .weight(6.5f)
             ) {
                 Spacer(modifier = Modifier.height(10.dp))
                 ContentTabsSection(
@@ -250,7 +246,7 @@ private fun DescriptionTab(
         .verticalScroll(state = state, enabled = true)
     ) {
         JetText(
-            text = sharedUiState?.description!!,
+            text = parseHtml(sharedUiState?.description!!),
             fontSize = 13,
             lineHeight = 1.5,
             textAlign = TextAlign.Justify
