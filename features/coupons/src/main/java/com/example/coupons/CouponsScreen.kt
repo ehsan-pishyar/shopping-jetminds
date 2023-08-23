@@ -20,6 +20,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,19 +32,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.designsystem.Background
 import com.example.designsystem.LighterBlack
 import com.example.designsystem.Primary
 import com.example.designsystem.R
 import com.example.designsystem.components.JetText
+import com.example.domain.models.CouponsResponse
 
 @Composable
-fun CouponsScreen() {
-    CouponsContent()
+fun CouponsScreen(
+    viewModel: CouponsViewModel = hiltViewModel()
+) {
+    val uiState: MainCouponsUiState by viewModel.couponsState.collectAsState()
+
+    CouponsContent(uiState =  uiState)
 }
 
 @Composable
-private fun CouponsContent() {
+private fun CouponsContent(
+    uiState: MainCouponsUiState? = null
+) {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(Background)
@@ -51,7 +61,35 @@ private fun CouponsContent() {
             .fillMaxSize()
             .padding(15.dp)
         ) {
-            CouponsList()
+
+            when (val state = uiState?.couponsUiState) {
+                CouponsUiState.Loading -> {
+                    Column(modifier = Modifier
+                        .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        JetText(text = "در حال بارگذاری ...")
+                    }
+                }
+                is CouponsUiState.Success -> {
+                    if (state.coupons.isEmpty()) {
+                        CouponsNotFound()
+                    } else {
+                        CouponsList(state.coupons)
+                    }
+                }
+                is CouponsUiState.Error -> {
+                    Column(modifier = Modifier
+                        .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        JetText(text = state.message)
+                    }
+                }
+                else -> Unit
+            }
         }
     }
 }
@@ -85,7 +123,7 @@ private fun CouponsNotFound() {
 }
 
 @Composable
-private fun CouponsRowItem() {
+private fun CouponsRowItem(coupon: CouponsResponse) {
     Card(modifier = Modifier
         .fillMaxWidth()
         .height(70.dp),
@@ -107,7 +145,7 @@ private fun CouponsRowItem() {
                 verticalArrangement = Arrangement.Center
             ) {
                 JetText(
-                    text = "1DF50XY",
+                    text = "${coupon.code}",
                     fontSize = 16,
                     fontWeight = FontWeight.SemiBold,
                     color = Primary,
@@ -126,7 +164,7 @@ private fun CouponsRowItem() {
                 verticalArrangement = Arrangement.Center
             ) {
                 JetText(
-                    text = "40%",
+                    text = "${coupon.amount}",
                     fontSize = 25,
                     fontWeight = FontWeight.SemiBold,
                     color = Primary,
@@ -138,7 +176,7 @@ private fun CouponsRowItem() {
                 verticalArrangement = Arrangement.Center
             ) {
                 JetText(
-                    text = "تخفیف اولین خرید از جت مایندز",
+                    text = "${coupon.description}",
                     fontSize = 13
                 )
             }
@@ -147,15 +185,17 @@ private fun CouponsRowItem() {
 }
 
 @Composable
-private fun CouponsList() {
+private fun CouponsList(coupons: List<CouponsResponse>) {
     LazyColumn(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight(),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         userScrollEnabled = true
     ) {
-        items(count = 3) { position ->
-            CouponsRowItem()
+        items(count = coupons.size) { position ->
+            CouponsRowItem(
+                coupon = coupons[position]
+            )
         }
     }
 }

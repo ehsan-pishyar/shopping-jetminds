@@ -17,12 +17,12 @@ class CouponsViewModel @Inject constructor(
     private val getCouponDetailsUseCase: GetCouponDetailsUseCase
 ): ViewModel() {
 
-    private var _couponsState = MutableStateFlow(com.example.coupons.MainCouponsUiState(com.example.coupons.CouponsUiState.Loading))
+    private var _couponsState = MutableStateFlow(MainCouponsUiState(CouponsUiState.Loading))
     val couponsState = _couponsState.asStateFlow()
 
     private var _couponDetailsState = MutableStateFlow(
-        com.example.coupons.MainCouponDetailsUiState(
-            com.example.coupons.CouponDetailsUiState.Loading
+        MainCouponDetailsUiState(
+            CouponDetailsUiState.Loading
         )
     )
     val couponDetailsState = _couponDetailsState.asStateFlow()
@@ -35,12 +35,12 @@ class CouponsViewModel @Inject constructor(
         viewModelScope.launch {
             getCouponsUseCase.invoke().collect { couponsResult ->
                 val couponsUiStateResult = when (couponsResult) {
-                    ServiceResult.Loading -> com.example.coupons.CouponsUiState.Loading
-                    is ServiceResult.Success -> com.example.coupons.CouponsUiState.Success(coupons = couponsResult.data)
-                    is ServiceResult.Error -> com.example.coupons.CouponsUiState.Error(message = couponsResult.throwable?.message!!)
+                    ServiceResult.Loading -> CouponsUiState.Loading
+                    is ServiceResult.Success -> CouponsUiState.Success(coupons = couponsResult.data)
+                    is ServiceResult.Error -> CouponsUiState.Error(message = couponsResult.throwable?.message!!)
                 }
                 _couponsState.value =
-                    com.example.coupons.MainCouponsUiState(couponsUiState = couponsUiStateResult)
+                    MainCouponsUiState(couponsUiState = couponsUiStateResult)
             }
         }
     }
@@ -49,12 +49,12 @@ class CouponsViewModel @Inject constructor(
         viewModelScope.launch {
             getCouponDetailsUseCase.invoke(couponId = couponId).collect { couponDetailsResult ->
                 val couponDetailsUiStateResult = when (couponDetailsResult) {
-                    ServiceResult.Loading -> com.example.coupons.CouponDetailsUiState.Loading
-                    is ServiceResult.Success -> com.example.coupons.CouponDetailsUiState.Success(couponDetails = couponDetailsResult.data)
-                    is ServiceResult.Error -> com.example.coupons.CouponDetailsUiState.Error(message = couponDetailsResult.throwable?.message!!)
+                    ServiceResult.Loading -> CouponDetailsUiState.Loading
+                    is ServiceResult.Success -> CouponDetailsUiState.Success(couponDetails = couponDetailsResult.data)
+                    is ServiceResult.Error -> CouponDetailsUiState.Error(message = couponDetailsResult.throwable?.message!!)
                 }
                 _couponDetailsState.value =
-                    com.example.coupons.MainCouponDetailsUiState(couponDetailsUiState = couponDetailsUiStateResult)
+                    MainCouponDetailsUiState(couponDetailsUiState = couponDetailsUiStateResult)
             }
         }
     }
