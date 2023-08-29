@@ -1,53 +1,65 @@
 package com.example.productdetails
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.utils.SharedViewModel
 import com.example.core.utils.parseHtml
-import com.example.core.utils.priceThousandsSeparator
 import com.example.designsystem.Background
+import com.example.designsystem.LighterBlack
 import com.example.designsystem.LighterGray
-import com.example.designsystem.Primary
+import com.example.designsystem.R
+import com.example.designsystem.components.AttrsOptions
 import com.example.designsystem.components.JetCoilImage
 import com.example.designsystem.components.JetHeading
+import com.example.designsystem.components.JetPriceText
 import com.example.designsystem.components.JetSimpleButton
 import com.example.designsystem.components.JetStarText
 import com.example.designsystem.components.JetText
 import com.example.designsystem.components.LikeButton
+import com.example.domain.models.ProductReviewsResponse
 import com.example.domain.models.ProductsResponse
 
 @Composable
 fun ProductDetailsScreen(
     sharedViewModel: SharedViewModel = SharedViewModel(),
+    viewModel: ProductDetailsViewModel = hiltViewModel(),
     toCartScreen: () -> Unit
 ) {
+
+    // For whole content
     val scrollState = rememberScrollState()
+    // Tab states
     val state = remember { mutableIntStateOf(0) }
+    // Tab items
     val items = listOf("توضیحات", "ویژگی ها", "نظرات")
     val sharedUiState = sharedViewModel.productState
+
+    val likeState = remember { mutableStateOf(false) }
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -55,8 +67,7 @@ fun ProductDetailsScreen(
     ) {
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(15.dp)
-            .verticalScroll(state = scrollState, enabled = true),
+            .padding(15.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -72,21 +83,40 @@ fun ProductDetailsScreen(
             }
             Column(modifier = Modifier
                 .fillMaxWidth()
-                .weight(3.5f)
+                .weight(5f)
             ) {
                 ImageContentSection(
-                    sharedUiState = sharedUiState
+                    image = sharedUiState?.images?.get(0)?.src!!,
+                    title = sharedUiState.name!!,
+                    price = sharedUiState.price!!,
+                    category = sharedUiState.categories?.get(0)?.name!!,
+                    onFavoriteBtnClick = {
+                        if (sharedUiState.isFavorite == false) {
+                            viewModel.updateFavoriteProduct(
+                                productId = sharedUiState.id!!,
+                                isFavorite = true
+                            )
+                            likeState.value = true
+                        } else {
+                            viewModel.updateFavoriteProduct(
+                                productId = sharedUiState.id!!,
+                                isFavorite = false
+                            )
+                            likeState.value = false
+                        }
+                    },
+                    isFavorite = likeState.value
                 )
             }
             Column(modifier = Modifier
                 .fillMaxWidth()
-                .weight(6.5f)
+                .weight(5f)
             ) {
                 Spacer(modifier = Modifier.height(10.dp))
                 ContentTabsSection(
                     tabs = items,
                     state = state,
-                    sharedUiState = sharedUiState
+                    sharedUiState = sharedUiState!!
                 )
             }
             Column(modifier = Modifier
@@ -104,7 +134,12 @@ fun ProductDetailsScreen(
 
 @Composable
 private fun ImageContentSection(
-    sharedUiState: ProductsResponse? = null
+    image: String = "",
+    title: String,
+    category: String,
+    price: String = "",
+    onFavoriteBtnClick: () -> Unit,
+    isFavorite: Boolean = false
 ) {
     Card(modifier = Modifier
         .fillMaxSize(),
@@ -122,64 +157,103 @@ private fun ImageContentSection(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .weight(3f)
+            ) { 
             // Feature image
             JetCoilImage(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .clip(shape = RoundedCornerShape(8.dp)),
-                imageUrl = sharedUiState?.images?.get(0)?.src!!
+                imageUrl = image
             )
-
+            }
+            
             Spacer(modifier = Modifier.height(10.dp))
 
-            // Title and category
-            Row(modifier = Modifier
+            // Title and Category
+            Column(modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
+                .weight(0.7f)
             ) {
-                Column(modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(2f),
-                    verticalArrangement = Arrangement.SpaceBetween,
-                    horizontalAlignment = Alignment.Start
+                Row(modifier = Modifier
+                    .fillMaxSize(),
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.spacedBy(5.dp)
                 ) {
-                    JetText(
-                        text = sharedUiState.name!!,
-                        fontSize = 15,
-                        fontWeight = FontWeight.SemiBold,
-                        overflow = TextOverflow.Clip,
-                        maxLines = 2,
-                    )
-                    JetText(
-                        text = priceThousandsSeparator(sharedUiState.price!!),
-                        fontSize = 16,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Primary
-                    )
-                }
-
-                // Price, like and rating
-                Column(modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(1f),
-                    verticalArrangement = Arrangement.SpaceBetween,
-                    horizontalAlignment = Alignment.End
-                ) {
-                    JetText(
-                        text = sharedUiState.categories?.get(0)?.name!!,
-                        fontSize = 12,
-                        fontWeight = FontWeight.Normal,
-                        color = LighterGray
-                    )
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight(),
-                        horizontalArrangement = Arrangement.End,
-                        verticalAlignment = Alignment.CenterVertically
+                    // Title
+                    Column(modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(2f)
                     ) {
-                        JetStarText()
-                        Spacer(modifier = Modifier.width(5.dp))
-                        LikeButton()
+                        JetText(
+                            text = title,
+                            fontSize = 14,
+                            fontWeight = FontWeight.SemiBold,
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 2,
+                        )
+                    }
+                    // Category
+                    Column(modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.End
+                    ) {
+                        JetText(
+                            text = category,
+                            fontSize = 11,
+                            fontWeight = FontWeight.Normal,
+                            color = LighterGray,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+            }
+
+            // Price, Like and Rating
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.3f)
+            ) {
+                Row(modifier = Modifier
+                    .fillMaxSize(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    // Price
+                    Column(modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(2f),
+                        verticalArrangement = Arrangement.Bottom
+                    ) {
+                        JetPriceText(
+                            price = price,
+                            priceTextSize = 16,
+                            priceTomanSize = 14,
+                            priceFreeSize = 16
+                        )
+                    }
+                    // Like and Rating
+                    Column(modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f),
+                        verticalArrangement = Arrangement.Bottom
+                    ) {
+                        Row(modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight(),
+                            horizontalArrangement = Arrangement.End,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            JetStarText()
+                            Spacer(modifier = Modifier.width(10.dp))
+                            LikeButton(
+                                onCLick = { onFavoriteBtnClick() },
+                                isFavorite = isFavorite
+                            )
+                        }
                     }
                 }
             }
@@ -191,7 +265,7 @@ private fun ImageContentSection(
 private fun ContentTabsSection(
     tabs: List<String>,
     state: MutableIntState,
-    sharedUiState: ProductsResponse? = null
+    sharedUiState: ProductsResponse
 ) {
 
     Card(modifier = Modifier
@@ -226,8 +300,12 @@ private fun ContentTabsSection(
                 0 -> DescriptionTab(
                     sharedUiState = sharedUiState
                 )
-                1 -> FeaturesTab()
-                2 -> CommentsTab()
+                1 -> FeaturesTab(
+                    sharedUiState = sharedUiState
+                )
+                2 -> CommentsTab(
+                    sharedUiState = sharedUiState
+                )
             }
         }
     }
@@ -255,38 +333,115 @@ private fun DescriptionTab(
 }
 
 @Composable
-private fun FeaturesTab() {
-    val state = rememberScrollState()
+private fun FeaturesTab(
+    sharedUiState: ProductsResponse
+) {
 
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(15.dp)
-        .verticalScroll(state = state, enabled = true)
     ) {
-        JetText(
-            text = "ویژگی ها",
-            fontSize = 13,
-            lineHeight = 1.5,
-            textAlign = TextAlign.Justify
+        AttrsTabContent(
+            product = sharedUiState
         )
     }
 }
 
 @Composable
-private fun CommentsTab() {
+private fun CommentsTab(
+    sharedUiState: ProductsResponse? = null
+) {
     val state = rememberScrollState()
 
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(15.dp)
-        .verticalScroll(state = state, enabled = true)
     ) {
-        JetText(
-            text = "نظرات",
-            fontSize = 13,
-            lineHeight = 1.5,
-            textAlign = TextAlign.Justify
-        )
+//        when (val reviewsState = reviewsUiState?.reviewsUiState) {
+//            com.example.shoppingjetminds.viewmodels.ProductReviewsUiState.Loading -> {
+//                Column(modifier = Modifier
+//                    .fillMaxSize(),
+//                    verticalArrangement = Arrangement.Center,
+//                    horizontalAlignment = Alignment.CenterHorizontally
+//                ) {
+//                    JetText(text = "در حال بارگذاری ...")
+//                }
+//            }
+//            is com.example.shoppingjetminds.viewmodels.ProductReviewsUiState.Success -> {
+//
+//            }
+//            is com.example.shoppingjetminds.viewmodels.ProductReviewsUiState.Error -> {
+//                Column(modifier = Modifier
+//                    .fillMaxSize(),
+//                    verticalArrangement = Arrangement.Center,
+//                    horizontalAlignment = Alignment.CenterHorizontally
+//                ) {
+//                    JetText(text = reviewsState.message)
+//                }
+//            }
+//            else -> Unit
+//        }
+
+        ReviewsNotFound()
+    }
+}
+
+@Composable
+private fun AttrsTabContent(
+    product: ProductsResponse
+) {
+    product.attributes?.let {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(5.dp),
+            userScrollEnabled = true
+        ) {
+            items(count = it.size) { position ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(40.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .wrapContentHeight()
+                            .weight(1f)
+                    ) {
+                        JetText(
+                            text = "${product.attributes!![position].name}:",
+                            fontSize = 13,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                    Column(
+                        modifier = Modifier
+                            .wrapContentHeight()
+                            .weight(2f)
+                    ) {
+                        AttrsOptions(options = product.attributes!![position].options!!)
+                    }
+                }
+                Spacer(modifier = Modifier.height(5.dp))
+                Divider(
+                    color = Background
+                )
+            }
+        }
+    }
+    AttrsNotFound()
+}
+
+@Composable
+private fun ReviewsTabContent(
+    reviews: List<ProductReviewsResponse>
+) {
+    LazyColumn(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()
+    ) {
+
     }
 }
 
@@ -301,12 +456,62 @@ private fun BottomSection(
     )
 }
 
-@Preview
 @Composable
-fun PreviewProductDetailsScreen() {
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        ProductDetailsScreen(
-            toCartScreen = {}
+private fun AttrsNotFound() {
+    Column(modifier = Modifier
+        .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.attrs_404),
+            contentDescription = null,
+            modifier = Modifier.size(80.dp)
+        )
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        JetText(
+            text = "محصول، هیچ ویژگی نداره",
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        JetText(
+            text = "این محصولی که در حال مشاهده هستین هیچ ویژگی ای نداره",
+            color = LighterBlack,
+            fontSize = 12
+        )
+    }
+}
+
+@Composable
+private fun ReviewsNotFound() {
+    Column(modifier = Modifier
+        .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.reviews_404),
+            contentDescription = null,
+            modifier = Modifier.size(80.dp)
+        )
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        JetText(
+            text = "هیچ نظری ثبت نشده",
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        JetText(
+            text = "هیچ نظری برای محصول مورد نظر شما ثبت نشده",
+            color = LighterBlack,
+            fontSize = 12
         )
     }
 }

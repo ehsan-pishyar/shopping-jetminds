@@ -25,12 +25,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.ColorFilter import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.BlackColor
 import com.example.designsystem.LighterGray
@@ -39,7 +36,12 @@ import com.example.designsystem.R
 
 
 @Composable
-fun CartListItem() {
+fun CartListItem(
+    image: String = "",
+    title: String,
+    category: String = "",
+    price: String = ""
+) {
     Card(modifier = Modifier
         .fillMaxWidth()
         .height(85.dp),
@@ -60,13 +62,9 @@ fun CartListItem() {
                 .weight(1f),
                 verticalArrangement = Arrangement.Center
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.jetminds_shop_feature_image_example),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(75.dp)
-                        .clip(shape = RoundedCornerShape(8.dp)),
-                    contentScale = ContentScale.Crop
+                JetCoilImage(
+                    imageUrl = image,
+                    modifier = Modifier.size(75.dp).clip(shape = RoundedCornerShape(8.dp))
                 )
             }
 
@@ -153,10 +151,4 @@ fun CartListItem() {
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun Preview_CartListItem() {
-    CartListItem()
 }

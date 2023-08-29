@@ -36,3 +36,13 @@ fun carouselProductsSize(size: Int): Int =
     if (size >= 7) 7 else size
 
 fun parseHtml(html: String): String = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString()
+
+fun calculateTax(totalAmount: String): String {
+    val tax = "${(totalAmount.toInt() * 0.09)}"
+    return priceThousandsSeparator(tax)
+}
+
+fun calculatePayablePrice(totalAmount: String, tax: String): String {
+    val payableAmount = "${(totalAmount.toInt() + tax.toInt())}"
+    return priceThousandsSeparator(payableAmount)
+}

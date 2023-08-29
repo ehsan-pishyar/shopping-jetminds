@@ -37,5 +37,6 @@ data class ProductsResponse(
     val images: List<Image>?,
     val attributes: List<Attribute>?,
     val defaultAttributes: List<DefaultAttribute>?,
-    val stockStatus: String?
+    val stockStatus: String?,
+    val isFavorite: Boolean?
 )

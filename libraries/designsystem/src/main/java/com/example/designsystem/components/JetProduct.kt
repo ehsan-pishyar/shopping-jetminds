@@ -34,7 +34,9 @@ fun JetProduct(
     rating: String? = "4.5",
     category: String? = null,
     onAddToCartClick: () -> Unit,
-    onProductClick: () -> Unit
+    onProductClick: () -> Unit,
+    onFavoriteBtnClick: () -> Unit,
+    isFavorite: Boolean = false
 ) {
 
     Card(
@@ -68,7 +70,10 @@ fun JetProduct(
                             .clip(shape = RoundedCornerShape(8.dp))
                     )
                 }
-                LikeButton()
+                LikeButton(
+                    onCLick = { onFavoriteBtnClick() },
+                    isFavorite = isFavorite
+                )
             }
 
             Spacer(modifier = Modifier.height(5.dp))
@@ -160,7 +165,7 @@ fun JetProduct(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(5.dp)
                             ) {
-                                JetPriceText(price = price)
+                                JetPriceText(price = price!!)
                             }
                             // Price end
                         }
@@ -187,7 +192,9 @@ fun JetShopProduct(
     rating: String? = "4.5",
     category: String? = null,
     onAddToCartClick: () -> Unit,
-    onProductClick: () -> Unit
+    onProductClick: () -> Unit,
+    onFavoriteBtnClick: () -> Unit,
+    isFavorite: Boolean = false
 ) {
     Card(
         modifier = Modifier
@@ -249,7 +256,10 @@ fun JetShopProduct(
                         }
                     }
                     // Like button
-                    LikeButton()
+                    LikeButton(
+                        onCLick = { onFavoriteBtnClick() },
+                        isFavorite = isFavorite
+                    )
                 }
             }
 
@@ -273,7 +283,7 @@ fun JetShopProduct(
                         // Title
                         JetText(
                             text = title,
-                            fontSize = 13,
+                            fontSize = 12,
                             fontWeight = FontWeight.SemiBold,
                             maxLines = 2,
                             textAlign = TextAlign.Start,
@@ -303,14 +313,14 @@ fun JetShopProduct(
                                     text = category,
                                     color = LighterGray,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = 9
+                                    fontSize = 10
                                 )
                             } else {
                                 JetText(
                                     text = "بدون دسته بندی",
                                     color = LighterBlack,
                                     fontWeight = FontWeight.Normal,
-                                    fontSize = 9
+                                    fontSize = 10
                                 )
                             }
 
@@ -320,7 +330,7 @@ fun JetShopProduct(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(5.dp)
                             ) {
-                                JetPriceText(price = price)
+                                JetPriceText(price = price!!)
                             }
                         }
                         Column(modifier = Modifier
@@ -459,7 +469,9 @@ private fun Preview_JetProduct() {
             rating = "4.6",
             category = "کیت رابط کاربری",
             onAddToCartClick = {},
-            onProductClick = {}
+            onProductClick = {},
+            onFavoriteBtnClick = {},
+            isFavorite = false
         )
     }
 }
@@ -475,7 +487,9 @@ private fun Preview_JetShopProduct() {
             rating = "4.6",
             category = "کیت رابط کاربری",
             onAddToCartClick = {},
-            onProductClick = {}
+            onProductClick = {},
+            onFavoriteBtnClick = {},
+            isFavorite = false
         )
     }
 }

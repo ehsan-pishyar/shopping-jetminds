@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,6 +20,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,11 +39,14 @@ import com.example.designsystem.components.JetHomeHeading
 import com.example.designsystem.components.JetIconText
 import com.example.designsystem.components.JetProduct
 import com.example.designsystem.components.JetText
+import com.example.designsystem.components.SectionSpacer
+import com.example.home.navigation.FavoritesViewModel
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     sharedViewModel: SharedViewModel = SharedViewModel(),
+    favoritesViewModel: FavoritesViewModel = hiltViewModel(),
     toCartScreen: () -> Unit,
     toNotificationScreen: () -> Unit,
     toProfileScreen: () -> Unit,
@@ -60,7 +64,8 @@ fun HomeScreen(
         toProductDetailsScreen = {
             toProductDetailsScreen()
         },
-        sharedViewModel = sharedViewModel
+        sharedViewModel = sharedViewModel,
+        favoritesViewModel = favoritesViewModel
     )
 }
 
@@ -72,9 +77,11 @@ private fun HomeContent(
     toProfileScreen: () -> Unit,
     toShopScreen: () -> Unit,
     toProductDetailsScreen: () -> Unit,
-    sharedViewModel: SharedViewModel? = null
+    sharedViewModel: SharedViewModel? = null,
+    favoritesViewModel: FavoritesViewModel? = null
 ) {
     val scrollState = rememberScrollState()
+    val likeState = remember { mutableStateOf(false) }
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -115,7 +122,8 @@ private fun HomeContent(
                     toShopScreen = { toShopScreen() },
                     toCartScreen = { toCartScreen() },
                     toProductDetailsScreen = { toProductDetailsScreen() },
-                    sharedViewModel = sharedViewModel!!
+                    sharedViewModel = sharedViewModel!!,
+                    favoritesViewModel = favoritesViewModel
                 )
             }
 
@@ -160,8 +168,11 @@ private fun AndroidSourceCodeSection(
     toShopScreen: () -> Unit,
     toCartScreen: () -> Unit,
     toProductDetailsScreen: () -> Unit,
-    sharedViewModel: SharedViewModel? = null
+    sharedViewModel: SharedViewModel? = null,
+    favoritesViewModel: FavoritesViewModel? = null
 ) {
+    val likeState = remember { mutableStateOf(false) }
+
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight(),
@@ -194,7 +205,23 @@ private fun AndroidSourceCodeSection(
                                 onProductClick = {
                                     sharedViewModel?.addProduct(androidUiState.androidSourceCodes[position])
                                     toProductDetailsScreen()
-                                }
+                                },
+                                onFavoriteBtnClick = {
+                                    if (androidUiState.androidSourceCodes[position].isFavorite == false) {
+                                        favoritesViewModel?.updateFavoriteProduct(
+                                            productId = androidUiState.androidSourceCodes[position].id!!,
+                                            isFavorite = true
+                                        )
+                                        likeState.value = true
+                                    } else {
+                                        favoritesViewModel?.updateFavoriteProduct(
+                                            productId = androidUiState.androidSourceCodes[position].id!!,
+                                            isFavorite = false
+                                        )
+                                        likeState.value = false
+                                    }
+                                },
+                                isFavorite = likeState.value
                             )
                         }
                     }
@@ -215,8 +242,11 @@ private fun ApplicationUiKitSection(
     toShopScreen: () -> Unit,
     toCartScreen: () -> Unit,
     toProductDetailsScreen: () -> Unit,
-    sharedViewModel: SharedViewModel? = null
+    sharedViewModel: SharedViewModel? = null,
+    favoritesViewModel: FavoritesViewModel? = null
 ) {
+    val likeState = remember { mutableStateOf(false) }
+
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight(),
@@ -249,7 +279,23 @@ private fun ApplicationUiKitSection(
                                 onProductClick = {
                                     sharedViewModel?.addProduct(applicationUiKitUiState.applicationUiKits[position])
                                     toProductDetailsScreen()
-                                }
+                                },
+                                onFavoriteBtnClick = {
+                                    if (applicationUiKitUiState.applicationUiKits[position].isFavorite == false) {
+                                        favoritesViewModel?.updateFavoriteProduct(
+                                            productId = applicationUiKitUiState.applicationUiKits[position].id!!,
+                                            isFavorite = true
+                                        )
+                                        likeState.value = true
+                                    } else {
+                                        favoritesViewModel?.updateFavoriteProduct(
+                                            productId = applicationUiKitUiState.applicationUiKits[position].id!!,
+                                            isFavorite = false
+                                        )
+                                        likeState.value = false
+                                    }
+                                },
+                                isFavorite = likeState.value
                             )
                         }
                     }
@@ -270,8 +316,11 @@ private fun Illustrations3DSection(
     toShopScreen: () -> Unit,
     toCartScreen: () -> Unit,
     toProductDetailsScreen: () -> Unit,
-    sharedViewModel: SharedViewModel? = null
+    sharedViewModel: SharedViewModel? = null,
+    favoritesViewModel: FavoritesViewModel? = null
 ) {
+    val likeState = remember { mutableStateOf(false) }
+
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight(),
@@ -304,7 +353,23 @@ private fun Illustrations3DSection(
                                 onProductClick = {
                                     sharedViewModel?.addProduct(illustrations3DUiState.illustration3Ds[position])
                                     toProductDetailsScreen()
-                                }
+                                },
+                                onFavoriteBtnClick = {
+                                    if (illustrations3DUiState.illustration3Ds[position].isFavorite == false) {
+                                        favoritesViewModel?.updateFavoriteProduct(
+                                            productId = illustrations3DUiState.illustration3Ds[position].id!!,
+                                            isFavorite = true
+                                        )
+                                        likeState.value = true
+                                    } else {
+                                        favoritesViewModel?.updateFavoriteProduct(
+                                            productId = illustrations3DUiState.illustration3Ds[position].id!!,
+                                            isFavorite = false
+                                        )
+                                        likeState.value = false
+                                    }
+                                },
+                                isFavorite = likeState.value
                             )
                         }
                     }
@@ -334,12 +399,6 @@ private fun ProductsHeadingSection(
         }
     }
 }
-
-@Composable
-private fun SectionSpacer(value: Int = 20) {
-    Spacer(modifier = Modifier.height(value.dp))
-}
-
 
 @Preview
 @Composable

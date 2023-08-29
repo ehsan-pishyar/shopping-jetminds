@@ -132,6 +132,15 @@ class ProductsRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getFavoriteProducts(): Flow<List<ProductsResponse>> {
+        return dao.fetchFavoriteProducts().map { favorites ->
+            favorites.map(ProductsResponseEntity::toDomain)
+        }
+    }
+
+    override suspend fun updateFavoriteProduct(isFavorite: Boolean, productId: Int) =
+        dao.updateIsFavoriteProduct(id = productId, isFavorite = isFavorite)
+
     override suspend fun refreshProducts() {
         api.getProducts().also { productsResponseDto ->
             dao.deleteAndInsertProducts(

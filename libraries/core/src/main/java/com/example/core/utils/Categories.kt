@@ -1,4 +1,4 @@
-package com.example.home
+package com.example.core.utils
 
 enum class Categories(val id: Int) {
     ICONS_3D(id = 147),

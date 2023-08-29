@@ -31,6 +31,7 @@ import com.example.designsystem.components.JetTextField
 fun ShopScreen(
     viewModel: ShopViewModel = hiltViewModel(),
     sharedViewModel: SharedViewModel = SharedViewModel(),
+    favoritesViewModel: FavoritesViewModel = hiltViewModel(),
     toCartScreen: () -> Unit,
     toProductDetailsScreen: () -> Unit
 ) {
@@ -41,7 +42,8 @@ fun ShopScreen(
         uiState = uiState,
         sharedViewModel = sharedViewModel,
         toCartScreen = { toCartScreen() },
-        toProductDetailsScreen = { toProductDetailsScreen() }
+        toProductDetailsScreen = { toProductDetailsScreen() },
+        favoritesViewModel = favoritesViewModel
     )
 }
 
@@ -50,7 +52,8 @@ private fun ShopContent(
     uiState: MainShopProductsUiState? = null,
     sharedViewModel: SharedViewModel? = null,
     toCartScreen: () -> Unit,
-    toProductDetailsScreen: () -> Unit
+    toProductDetailsScreen: () -> Unit,
+    favoritesViewModel: FavoritesViewModel? = null
 ) {
     Box(modifier = Modifier
         .fillMaxSize()
@@ -182,8 +185,11 @@ private fun ProductsSection(
     uiState: MainShopProductsUiState? = null,
     sharedViewModel: SharedViewModel? = null,
     toCartScreen: () -> Unit,
-    toProductDetailsScreen: () -> Unit
+    toProductDetailsScreen: () -> Unit,
+    favoritesViewModel: FavoritesViewModel? = null
 ) {
+    val likeState = remember { mutableStateOf(false) }
+
     when (val state = uiState?.shopProductsUiState) {
         ShopProductsUiState.Loading -> {
             Column(modifier = Modifier
@@ -212,7 +218,23 @@ private fun ProductsSection(
                             onProductClick = {
                                 sharedViewModel?.addProduct(state.products[position])
                                 toProductDetailsScreen()
-                            }
+                            },
+                            onFavoriteBtnClick = {
+                                if (state.products[position].isFavorite == false) {
+                                    favoritesViewModel?.updateFavoriteProduct(
+                                        productId = state.products[position].id!!,
+                                        isFavorite = true
+                                    )
+                                    likeState.value = true
+                                } else {
+                                    favoritesViewModel?.updateFavoriteProduct(
+                                        productId = state.products[position].id!!,
+                                        isFavorite = false
+                                    )
+                                    likeState.value = false
+                                }
+                            },
+                            isFavorite = likeState.value
                         )
                     }
                 }

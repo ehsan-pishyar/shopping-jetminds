@@ -18,18 +18,22 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.Primary
+import com.example.designsystem.RedColor
 
 @Composable
-fun LikeButton() {
+fun LikeButton(
+    onCLick: () -> Unit,
+    isFavorite: Boolean = false
+) {
     Box {
         Button(modifier = Modifier
             .size(25.dp),
             contentPadding = PaddingValues(5.dp),
             shape = RoundedCornerShape(50.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Primary
+                containerColor = if (isFavorite) RedColor else Primary
             ),
-            onClick = {}
+            onClick = { onCLick() }
         ) {
             Image(
                 imageVector = Icons.Filled.Favorite,
@@ -66,7 +70,10 @@ fun BuyButton(
 @Preview
 @Composable
 fun Preview_LikeButton() {
-    LikeButton()
+    LikeButton(
+        onCLick = {},
+        isFavorite = false
+    )
 }
 
 @Preview

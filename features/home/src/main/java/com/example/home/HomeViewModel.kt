@@ -24,9 +24,9 @@ class HomeViewModel @Inject constructor(
     private val isError = MutableStateFlow(false)
 
     val homeUiState: StateFlow<HomeUiState> = combine(
-        getApplicationUiKitUseCase.invoke(Categories.APPLICATION_UI_KIT.id),
-        getAndroidUseCase.invoke(Categories.ANDROID.id),
-        getIllustrations3DUseCase.invoke(Categories.ILLUSTRATIONS_3D.id),
+        getApplicationUiKitUseCase.invoke(), //Categories.APPLICATION_UI_KIT.id
+        getAndroidUseCase.invoke(), //Categories.ANDROID.id
+        getIllustrations3DUseCase.invoke(), //Categories.ILLUSTRATIONS_3D.id
         isRefreshing,
         isError
     ) { applicationUiKitUiState, androidUiState, illustrations3DUiState, refreshing, errorConsumed ->

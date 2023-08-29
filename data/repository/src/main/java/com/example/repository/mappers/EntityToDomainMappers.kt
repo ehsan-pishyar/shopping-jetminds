@@ -154,7 +154,8 @@ fun ProductsResponseEntity.toDomain(): ProductsResponse =
         this.images?.map { it.toDomain() },
         this.attributes?.map { it.toDomain() },
         this.defaultAttributes?.map { it.toDomain() },
-        this.stockStatus
+        this.stockStatus,
+        this.isFavorite
     )
 
 fun ProductTagsResponseEntity.toDomain(): ProductTagsResponse =

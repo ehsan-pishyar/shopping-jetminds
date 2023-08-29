@@ -5,10 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.use_cases.product_attrs.GetProductAttrDetailsUseCase
 import com.example.domain.use_cases.product_attrs.GetProductAttrsUseCase
 import com.example.domain.utils.ServiceResult
-import com.example.shoppingjetminds.uistates.MainProductAttrDetailsUiState
-import com.example.shoppingjetminds.uistates.MainProductAttrsUiState
-import com.example.shoppingjetminds.uistates.ProductAttrDetailsUiState
-import com.example.shoppingjetminds.uistates.ProductAttrsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +20,11 @@ class ProductAttributesViewModel @Inject constructor(
     private var _attrsState = MutableStateFlow(MainProductAttrsUiState(ProductAttrsUiState.Loading))
     val attrsState = _attrsState.asStateFlow()
 
-    private var _attrDetailsState = MutableStateFlow(MainProductAttrDetailsUiState(ProductAttrDetailsUiState.Loading))
+    private var _attrDetailsState = MutableStateFlow(
+        MainProductAttrDetailsUiState(
+            ProductAttrDetailsUiState.Loading
+        )
+    )
     val attrDetailsState = _attrDetailsState.asStateFlow()
 
     init {

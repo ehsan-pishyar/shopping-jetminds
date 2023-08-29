@@ -116,7 +116,7 @@ fun ProductShippingClassesResponseDto.toEntity(): ProductShippingClassesResponse
         this.count
     )
 
-fun ProductsResponseDto.toEntity(): ProductsResponseEntity =
+fun ProductsResponseDto.toEntity(isFavorite: Boolean = false): ProductsResponseEntity =
     ProductsResponseEntity(
         this.id,
         this.name,
@@ -154,7 +154,8 @@ fun ProductsResponseDto.toEntity(): ProductsResponseEntity =
         this.images?.map { it.toEntity() },
         this.attributes?.map { it.toEntity() },
         this.defaultAttributes?.map { it.toEntity() },
-        this.stockStatus
+        this.stockStatus,
+        isFavorite = isFavorite
     )
 
 fun ProductTagsResponseDto.toEntity(): ProductTagsResponseEntity =

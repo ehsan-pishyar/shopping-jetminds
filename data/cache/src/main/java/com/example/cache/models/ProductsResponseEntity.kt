@@ -67,5 +67,7 @@ data class ProductsResponseEntity(
     @ColumnInfo(name = "default_attributes")
     val defaultAttributes: List<DefaultAttributeEntity>?,
     @ColumnInfo(name = "stock_status")
-    val stockStatus: String?
+    val stockStatus: String?,
+    @ColumnInfo(name = "is_favorite")
+    val isFavorite: Boolean?
 )

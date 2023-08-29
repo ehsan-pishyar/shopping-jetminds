@@ -1,4 +1,4 @@
-package com.example.shoppingjetminds.uistates
+package com.example.productdetails
 
 import com.example.domain.models.ProductReviewsResponse
 

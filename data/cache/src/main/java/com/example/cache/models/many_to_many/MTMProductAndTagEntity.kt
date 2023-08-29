@@ -3,6 +3,7 @@ package com.example.cache.models.many_to_many
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import com.example.cache.models.ProductsResponseEntity
 import com.example.cache.models.TagEntity
 import com.example.cache.utils.CacheConstants
@@ -11,8 +12,22 @@ import com.example.cache.utils.CacheConstants
     tableName = CacheConstants.MTM_PRODUCT_TAG_TABLE,
     primaryKeys = ["product_id", "tag_id"],
     foreignKeys = [
-        ForeignKey(entity = ProductsResponseEntity::class, parentColumns = ["id"], childColumns = ["product_id"]),
-        ForeignKey(entity = TagEntity::class, parentColumns = ["id"], childColumns = ["tag_id"])
+        ForeignKey(
+            entity = ProductsResponseEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["product_id"],
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = TagEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["tag_id"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
+    indices = [
+        Index(value = ["product_id"]),
+        Index(value = ["tag_id"])
     ]
 )
 data class MTMProductAndTagEntity(
