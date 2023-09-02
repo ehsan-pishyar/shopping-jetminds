@@ -218,20 +218,6 @@ interface ProductsDao {
         catalogVisibility: String = "visible"
     ): Flow<List<ProductsResponseEntity>>
 
-    @Query(
-        """
-            SELECT * FROM `products_table`
-            WHERE is_favorite = :isFavorite
-            ORDER BY date_created DESC
-        """
-    )
-    fun fetchFavoriteProducts(
-        isFavorite: Boolean = true
-    ): Flow<List<ProductsResponseEntity>>
-
-    @Query("UPDATE `products_table` SET is_favorite = :isFavorite WHERE id = :id")
-    suspend fun updateIsFavoriteProduct(id: Int, isFavorite: Boolean)
-
     @Query("DELETE FROM `products_table`")
     suspend fun deleteProducts()
 

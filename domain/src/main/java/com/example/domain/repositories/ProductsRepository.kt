@@ -19,8 +19,5 @@ interface ProductsRepository {
     fun getLowestPriceProducts(): Flow<List<ProductsResponse>>
     fun getHighestPriceProducts(): Flow<List<ProductsResponse>>
 
-    fun getFavoriteProducts(): Flow<List<ProductsResponse>>
-    suspend fun updateFavoriteProduct(isFavorite: Boolean, productId: Int)
-
     suspend fun refreshProducts()
 }

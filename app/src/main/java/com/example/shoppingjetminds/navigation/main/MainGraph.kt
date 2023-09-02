@@ -46,22 +46,26 @@ fun MainGraph(
             sharedViewModel = sharedViewModel
         )
         categoryScreen(navController = navController)
-        favoritesScreen(navController = navController)
-        cartScreen(navController = navController)
+        favoritesScreen(
+            navController = navController,
+            sharedViewModel = sharedViewModel
+        )
+        cartScreen(
+            navController = navController,
+            sharedViewModel = sharedViewModel
+        )
 
         productDetailsScreen(
             sharedViewModel = sharedViewModel,
             navController = navController
         )
-
-        favoritesScreen(navController = navController)
+        
         compareScreen(navController = navController)
         searchScreen(navController = navController)
         addressScreen(navController = navController)
         downloadsScreen(navController = navController)
         notificationsScreen(navController = navController)
 
-        cartScreen(navController = navController)
         billingScreen(navController = navController)
         checkoutScreen(navController = navController)
         ordersScreen(navController = navController)

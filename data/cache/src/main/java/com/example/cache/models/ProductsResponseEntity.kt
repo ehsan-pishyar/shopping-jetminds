@@ -69,5 +69,7 @@ data class ProductsResponseEntity(
     @ColumnInfo(name = "stock_status")
     val stockStatus: String?,
     @ColumnInfo(name = "is_favorite")
-    val isFavorite: Boolean?
+    val isFavorite: Boolean?,
+    @ColumnInfo("downloaded")
+    val downloaded: Boolean?
 )

@@ -2,7 +2,7 @@ package com.example.favorites
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.use_cases.products.GetFavoriteProductsUseCase
+import com.example.domain.use_cases.favorites.GetFavoriteProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

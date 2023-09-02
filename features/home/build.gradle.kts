@@ -46,6 +46,7 @@ dependencies {
     implementation(project(mapOf("path" to ":libraries:core")))
     implementation(project(mapOf("path" to ":libraries:designsystem")))
     implementation(project(mapOf("path" to ":libraries:navigation")))
+    implementation(project(mapOf("path" to ":features:navigationdialog")))
 
     val androidCoreVersion = "1.10.1"
     val lifecycleVersion = "2.6.1"

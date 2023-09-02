@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.core.utils.SharedViewModel
 import com.example.core.utils.calculateTax
 import com.example.designsystem.Background
 import com.example.designsystem.LighterBlack
@@ -52,7 +53,8 @@ import com.example.domain.models.ProductsResponse
 
 @Composable
 fun CartScreen(
-    viewModel: CartViewModel = hiltViewModel()
+    viewModel: CartViewModel = hiltViewModel(),
+    sharedViewModel: SharedViewModel
 ) {
     val uiState: MainCartUiState by viewModel.cartUiState.collectAsState()
 

@@ -1,9 +1,9 @@
-package com.example.domain.use_cases.products
+package com.example.domain.use_cases.favorites
 
-import com.example.domain.repositories.ProductsRepository
+import com.example.domain.repositories.FavoritesRepository
 
 class UpdateFavoriteProductUseCase constructor(
-    private val repository: ProductsRepository
+    private val repository: FavoritesRepository
 ) {
 
     suspend operator fun invoke(productId: Int, isFavorite: Boolean) {

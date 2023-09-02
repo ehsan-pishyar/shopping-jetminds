@@ -4,6 +4,8 @@ import com.example.cache.AppDatabase
 import com.example.cache.dao.CartDao
 import com.example.cache.dao.CouponsDao
 import com.example.cache.dao.CustomersDao
+import com.example.cache.dao.DownloadsDao
+import com.example.cache.dao.FavoritesDao
 import com.example.cache.dao.OrdersDao
 import com.example.cache.dao.ProductAttributesDao
 import com.example.cache.dao.ProductCategoriesDao
@@ -69,4 +71,10 @@ object DaoModule {
 
     @[Provides Singleton]
     fun providesCartDao(db: AppDatabase): CartDao = db.cartDao()
+
+    @[Provides Singleton]
+    fun providesFavoritesDao(db: AppDatabase): FavoritesDao = db.favoritesDao()
+
+    @[Provides Singleton]
+    fun providesDownloadsDao(db: AppDatabase): DownloadsDao = db.downloadsDao()
 }

@@ -1,7 +1,6 @@
 package com.example.repository.di
 
 import com.example.domain.repositories.ProductsRepository
-import com.example.domain.use_cases.products.GetFavoriteProductsUseCase
 import com.example.domain.use_cases.products.GetHighestPriceProductsUseCase
 import com.example.domain.use_cases.products.GetLowestPriceProductsUseCase
 import com.example.domain.use_cases.products.GetNewestProductsUseCase
@@ -14,7 +13,6 @@ import com.example.domain.use_cases.products.GetProductsByTagIdUseCase
 import com.example.domain.use_cases.products.GetProductsUseCase
 import com.example.domain.use_cases.products.GetTopRatedProductsUseCase
 import com.example.domain.use_cases.products.GetTopSalesProductsUseCase
-import com.example.domain.use_cases.products.UpdateFavoriteProductUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -83,14 +81,4 @@ object ProductsUseCaseModule {
     fun providesGetProductsByTagIdUseCase(
         repository: ProductsRepository
     ): GetProductsByTagIdUseCase = GetProductsByTagIdUseCase(repository = repository)
-
-    @Provides
-    fun providesGetFavoriteProductsUseCase(
-        repository: ProductsRepository
-    ): GetFavoriteProductsUseCase = GetFavoriteProductsUseCase(repository = repository)
-
-    @Provides
-    fun providesUpdateFavoriteProductUseCase(
-        repository: ProductsRepository
-    ): UpdateFavoriteProductUseCase = UpdateFavoriteProductUseCase(repository = repository)
 }

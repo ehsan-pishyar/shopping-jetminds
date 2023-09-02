@@ -80,4 +80,6 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun productVariationsDao(): ProductVariationsDao
     abstract fun shippingZonesDao(): ShippingZonesDao
     abstract fun cartDao(): CartDao
+    abstract fun favoritesDao(): FavoritesDao
+    abstract fun downloadsDao(): DownloadsDao
 }

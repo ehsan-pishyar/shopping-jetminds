@@ -2,6 +2,7 @@ package com.example.favorites
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.core.utils.SharedViewModel
 import com.example.designsystem.Background
 import com.example.designsystem.LighterBlack
 import com.example.designsystem.R
@@ -42,17 +44,25 @@ import com.example.designsystem.components.JetText
 
 @Composable
 fun FavoritesScreen(
-    viewModel: FavoritesViewModel = hiltViewModel()
+    viewModel: FavoritesViewModel = hiltViewModel(),
+    sharedViewModel: SharedViewModel = SharedViewModel(),
+    toProductDetailsScreen: () -> Unit
 ){
     val uiState: MainFavoritesUiState by viewModel.state.collectAsState()
 
-    FavoritesContent(uiState = uiState)
+    FavoritesContent(
+        uiState = uiState,
+        sharedViewModel = sharedViewModel,
+        toProductDetailsScreen = { toProductDetailsScreen() }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FavoritesContent(
-    uiState: MainFavoritesUiState? = null
+    uiState: MainFavoritesUiState? = null,
+    sharedViewModel: SharedViewModel? = null,
+    toProductDetailsScreen: () -> Unit
 ) {
     Scaffold(modifier = Modifier
         .fillMaxSize()
@@ -87,7 +97,11 @@ private fun FavoritesContent(
                                 FavoritesItem(
                                     image = uiState.favorites[position].images?.get(0)?.src!!,
                                     title = uiState.favorites[position].name!!,
-                                    price = uiState.favorites[position].price!!
+                                    price = uiState.favorites[position].price!!,
+                                    onProductClick = {
+                                        sharedViewModel?.addProduct(uiState.favorites[position])
+                                        toProductDetailsScreen()
+                                    }
                                 )
                             }
                         }
@@ -102,11 +116,13 @@ private fun FavoritesContent(
 private fun FavoritesItem(
     image: String = "",
     title: String,
-    price: String = ""
+    price: String = "",
+    onProductClick: () -> Unit
 ) {
     Card(modifier = Modifier
         .fillMaxWidth()
-        .height(90.dp),
+        .height(90.dp)
+        .clickable { onProductClick() },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 0.dp
         ),
@@ -186,5 +202,7 @@ private fun FavoritesNotFound() {
 @Preview
 @Composable
 private fun Preview_FavoritesScreen() {
-    FavoritesContent()
+    FavoritesContent(
+        toProductDetailsScreen = {}
+    )
 }

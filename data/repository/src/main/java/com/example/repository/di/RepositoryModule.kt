@@ -78,4 +78,14 @@ interface RepositoryModule {
     fun bindsCartRepository(
         impl: CartRepositoryImpl
     ): CartRepository
+
+    @[Binds Singleton]
+    fun bindsFavoritesRepository(
+        impl: FavoritesRepositoryImpl
+    ): FavoritesRepository
+
+    @[Binds Singleton]
+    fun bindsDownloadsRepository(
+        impl: DownloadsRepositoryImpl
+    ): DownloadsRepository
 }

@@ -24,7 +24,12 @@ fun NavGraphBuilder.homeScreen(
             toNotificationScreen = { navController.navigate(OtherScreens.Notifications.route) },
             toProfileScreen = { navController.navigate(AuthScreens.Account.route) },
             toShopScreen = { navController.navigate(BottomNavigationScreens.Shop.route) },
-            toProductDetailsScreen = { navController.navigate(DetailScreens.ProductDetails.route) }
+            toProductDetailsScreen = { navController.navigate(DetailScreens.ProductDetails.route) },
+            toOrdersScreen = { navController.navigate(PaymentScreens.Orders.route) },
+            toComparesScreen = { navController.navigate(OtherScreens.Compare.route) },
+            toFavoritesScreen = { navController.navigate(OtherScreens.Favorite.route) },
+            toDownloadsScreen = { navController.navigate(OtherScreens.Downloads.route) },
+            toCouponsScreen = { navController.navigate(PaymentScreens.Coupons.route) }
         )
     }
 }

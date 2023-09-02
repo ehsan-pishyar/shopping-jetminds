@@ -54,7 +54,8 @@ fun ProductsResponse.toEntity(): ProductsResponseEntity =
         this.attributes?.map { it.toEntity() },
         this.defaultAttributes?.map { it.toEntity() },
         this.stockStatus,
-        this.isFavorite
+        this.isFavorite,
+        this.downloaded
     )
 
 fun Category.toEntity(): CategoryEntity =

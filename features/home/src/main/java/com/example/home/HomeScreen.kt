@@ -22,6 +22,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,7 +41,7 @@ import com.example.designsystem.components.JetIconText
 import com.example.designsystem.components.JetProduct
 import com.example.designsystem.components.JetText
 import com.example.designsystem.components.SectionSpacer
-import com.example.home.navigation.FavoritesViewModel
+import com.example.navigationdrawer.NavigationDialogScreen
 
 @Composable
 fun HomeScreen(
@@ -51,7 +52,12 @@ fun HomeScreen(
     toNotificationScreen: () -> Unit,
     toProfileScreen: () -> Unit,
     toShopScreen: () -> Unit,
-    toProductDetailsScreen: () -> Unit
+    toProductDetailsScreen: () -> Unit,
+    toOrdersScreen: () -> Unit,
+    toComparesScreen: () -> Unit,
+    toFavoritesScreen: () -> Unit,
+    toDownloadsScreen: () -> Unit,
+    toCouponsScreen: () -> Unit
 ){
     val homeUiState: HomeUiState by viewModel.homeUiState.collectAsState()
 
@@ -65,7 +71,13 @@ fun HomeScreen(
             toProductDetailsScreen()
         },
         sharedViewModel = sharedViewModel,
-        favoritesViewModel = favoritesViewModel
+        favoritesViewModel = favoritesViewModel,
+        toOrdersScreen = { toOrdersScreen() },
+        toComparesScreen = { toComparesScreen() },
+        toFavoritesScreen = { toFavoritesScreen() },
+        toDownloadsScreen = { toDownloadsScreen() },
+        toNotificationsScreen = { toNotificationScreen() },
+        toCouponsScreen = { toCouponsScreen() }
     )
 }
 
@@ -78,10 +90,17 @@ private fun HomeContent(
     toShopScreen: () -> Unit,
     toProductDetailsScreen: () -> Unit,
     sharedViewModel: SharedViewModel? = null,
-    favoritesViewModel: FavoritesViewModel? = null
+    favoritesViewModel: FavoritesViewModel? = null,
+    toOrdersScreen: () -> Unit,
+    toComparesScreen: () -> Unit,
+    toFavoritesScreen: () -> Unit,
+    toDownloadsScreen: () -> Unit,
+    toNotificationsScreen: () -> Unit,
+    toCouponsScreen: () -> Unit
 ) {
     val scrollState = rememberScrollState()
     val likeState = remember { mutableStateOf(false) }
+    var openDialog by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -100,7 +119,9 @@ private fun HomeContent(
                 verticalArrangement = Arrangement.Top
             ) {
                 JetHomeHeading(
-                    toProfileScreen = { toProfileScreen() }, // TODO: Handle toProfileScreen Click
+                    toProfileScreen = {
+                        openDialog = true
+                    }, // TODO: Handle toProfileScreen Click
                     toCartScreen = { toCartScreen() },
                     toNotificationScreen = { toNotificationScreen() } // TODO: Handle toNotificationScreen Click
                 )
@@ -156,6 +177,19 @@ private fun HomeContent(
                 toShopScreen = { toShopScreen() },
                 toCartScreen = { toCartScreen() },
                 toProductDetailsScreen = { toProductDetailsScreen() }
+            )
+
+            NavigationDialogScreen(
+                openDialog = openDialog,
+                onDismiss = { openDialog = false },
+                toShopScreen = { toShopScreen() },
+                toOrdersScreen = { toOrdersScreen() },
+                toCartScreen = { toCartScreen() },
+                toComparesScreen = { toComparesScreen() },
+                toFavoritesScreen = { toFavoritesScreen() },
+                toDownloadsScreen = { toDownloadsScreen() },
+                toNotificationsScreen = { toNotificationsScreen() },
+                toCouponsScreen = { toCouponsScreen() }
             )
         }
     }
@@ -410,7 +444,13 @@ fun Preview_HomeScreen() {
             toNotificationScreen = {},
             toProfileScreen = {},
             toShopScreen = {},
-            toProductDetailsScreen = {}
+            toProductDetailsScreen = {},
+            toOrdersScreen = {},
+            toComparesScreen = {},
+            toFavoritesScreen = {},
+            toDownloadsScreen = {},
+            toNotificationsScreen = {},
+            toCouponsScreen = {}
         )
     }
 }

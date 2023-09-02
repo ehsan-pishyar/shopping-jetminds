@@ -30,6 +30,7 @@
             <option value="$PROJECT_DIR$/features/favorites" />
             <option value="$PROJECT_DIR$/features/home" />
             <option value="$PROJECT_DIR$/features/login" />
+            <option value="$PROJECT_DIR$/features/navigationdialog" />
             <option value="$PROJECT_DIR$/features/notifications" />
             <option value="$PROJECT_DIR$/features/onboarding" />
             <option value="$PROJECT_DIR$/features/orders" />

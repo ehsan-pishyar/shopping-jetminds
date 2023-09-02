@@ -2,7 +2,7 @@ package com.example.productdetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.use_cases.products.UpdateFavoriteProductUseCase
+import com.example.domain.use_cases.favorites.UpdateFavoriteProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
