@@ -21,4 +21,7 @@ interface FavoritesDao {
 
     @Query("UPDATE `products_table` SET is_favorite = :isFavorite WHERE id = :id")
     suspend fun updateIsFavoriteProduct(id: Int, isFavorite: Boolean)
+
+    @Query("SELECT is_favorite FROM `products_table` WHERE id = :productId AND is_favorite = :isFavorite")
+    fun isFavoriteProduct(productId: Int, isFavorite: Boolean = true): Flow<Boolean?>
 }

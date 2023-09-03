@@ -14,8 +14,14 @@ fun NavGraphBuilder.splashScreen(
         route = StartScreens.Splash.route
     ) {
         SplashScreen(
-            toOnBoardingScreen = { navController.navigate(StartScreens.OnBoarding.route) },
-            toHomeScreen = { navController.navigate(Graph.MAIN) }
+            toOnBoardingScreen = {
+                navController.popBackStack()
+                navController.navigate(StartScreens.OnBoarding.route)
+                    },
+            toHomeScreen = {
+                navController.popBackStack()
+                navController.navigate(Graph.MAIN)
+            }
         )
     }
 }

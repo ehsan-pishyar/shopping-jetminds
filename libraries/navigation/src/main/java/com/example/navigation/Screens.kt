@@ -31,4 +31,6 @@ sealed class OtherScreens(val route: String) {
     object Address: OtherScreens(route = "address")
     object Downloads: OtherScreens(route = "downloads")
     object Notifications: OtherScreens(route = "notifications")
+    object Settings: OtherScreens(route = "settings")
+    object AboutUs: OtherScreens(route = "about_us")
 }

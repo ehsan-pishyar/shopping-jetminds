@@ -7,4 +7,5 @@ interface FavoritesRepository {
 
     fun getFavoriteProducts(): Flow<List<ProductsResponse>>
     suspend fun updateFavoriteProduct(isFavorite: Boolean, productId: Int)
+    fun isFavoriteProduct(productId: Int): Flow<Boolean?>
 }

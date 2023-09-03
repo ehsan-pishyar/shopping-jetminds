@@ -1,4 +1,4 @@
-package com.example.repository.di
+package com.example.usecases
 
 import com.example.domain.repositories.CartRepository
 import com.example.domain.use_cases.cart.ClearCartUseCase
@@ -16,21 +16,21 @@ object CartUseCaseModule {
 
     @Provides
     fun providesGetCartItemsUseCase(
-        impl: CartRepository
-    ): GetCartItemsUseCase = GetCartItemsUseCase(repository = impl)
+        repository: CartRepository
+    ): GetCartItemsUseCase = GetCartItemsUseCase(repository = repository)
 
     @Provides
     fun providesInsertCartItemsUseCase(
-        impl: CartRepository
-    ): InsertCartItemUseCase = InsertCartItemUseCase(repository = impl)
+        repository: CartRepository
+    ): InsertCartItemUseCase = InsertCartItemUseCase(repository = repository)
 
     @Provides
     fun providesClearCartUseCase(
-        impl: CartRepository
-    ): ClearCartUseCase = ClearCartUseCase(repository = impl)
+        repository: CartRepository
+    ): ClearCartUseCase = ClearCartUseCase(repository = repository)
 
     @Provides
     fun providesDeleteCartItemUseCase(
-        impl: CartRepository
-    ): DeleteCartItemUseCase = DeleteCartItemUseCase(repository = impl)
+        repository: CartRepository
+    ): DeleteCartItemUseCase = DeleteCartItemUseCase(repository = repository)
 }

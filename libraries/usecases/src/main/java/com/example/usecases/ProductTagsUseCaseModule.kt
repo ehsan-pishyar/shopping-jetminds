@@ -1,4 +1,4 @@
-package com.example.repository.di
+package com.example.usecases
 
 import com.example.domain.repositories.ProductTagsRepository
 import com.example.domain.use_cases.product_tags.GetProductTagDetailsUseCase

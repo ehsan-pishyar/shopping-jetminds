@@ -64,6 +64,7 @@ fun NavigationDialogScreen(
     toDownloadsScreen: () -> Unit,
     toNotificationsScreen: () -> Unit,
     toCouponsScreen: () -> Unit,
+    toProfileScreen: () -> Unit
 ) {
     val ordersUiState: MainNavigationDialogOrdersUiState by viewModel.ordersState.collectAsState()
     val cartUiState = viewModel.cartState.collectAsState()
@@ -90,7 +91,8 @@ fun NavigationDialogScreen(
         toFavoritesScreen = { toFavoritesScreen() },
         toDownloadsScreen = { toDownloadsScreen() },
         toNotificationsScreen = { toNotificationsScreen() },
-        toCouponsScreen = { toCouponsScreen() }
+        toCouponsScreen = { toCouponsScreen() },
+        toProfileScreen = { toProfileScreen() }
     )
 }
 
@@ -113,6 +115,7 @@ private fun NavigationDialogContent(
     toDownloadsScreen: () -> Unit,
     toNotificationsScreen: () -> Unit,
     toCouponsScreen: () -> Unit,
+    toProfileScreen: () -> Unit
 ) {
     if (openDialog) {
         Dialog(
@@ -153,7 +156,8 @@ private fun NavigationDialogContent(
                         toFavoritesScreen = { toFavoritesScreen() },
                         toDownloadsScreen = { toDownloadsScreen() },
                         toNotificationsScreen = { toNotificationsScreen() },
-                        toCouponsScreen = { toCouponsScreen() }
+                        toCouponsScreen = { toCouponsScreen() },
+                        toProfileScreen = { toProfileScreen() }
                     )
                     DialogBottomSection(
                         toShopScreen = { toShopScreen() }
@@ -227,6 +231,7 @@ private fun DialogMainSection(
     toDownloadsScreen: () -> Unit,
     toNotificationsScreen: () -> Unit,
     toCouponsScreen: () -> Unit,
+    toProfileScreen: () -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(20.dp),
@@ -243,7 +248,9 @@ private fun DialogMainSection(
             .padding(15.dp),
             verticalArrangement = Arrangement.Top
         ) {
-            DialogMainSectionHeader()
+            DialogMainSectionHeader(
+                toProfileScreen = { toProfileScreen() }
+            )
             SectionSpacer(10)
             Divider(color = Color(0xFFE7EEF4))
             SectionSpacer(30)
@@ -269,7 +276,9 @@ private fun DialogMainSection(
 }
 
 @Composable
-private fun DialogMainSectionHeader() {
+private fun DialogMainSectionHeader(
+    toProfileScreen: () -> Unit
+) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .height(80.dp),
@@ -278,10 +287,11 @@ private fun DialogMainSectionHeader() {
         // Avatar, Title and Email
         Row(modifier = Modifier
             .fillMaxWidth()
-            .weight(3f),
+            .weight(3f)
+            .clickable(enabled = true, onClick = { toProfileScreen() }),
             horizontalArrangement = Arrangement.spacedBy(15.dp)
         ) {
-            // Avatar
+            // User Avatar -------------------------------------------------------------------------
             Column(modifier = Modifier
                 .fillMaxHeight()
                 .weight(1f),
@@ -296,21 +306,21 @@ private fun DialogMainSectionHeader() {
                         .clip(shape = RoundedCornerShape(50.dp))
                 )
             }
-            // Title and Email
+            // User Title and Email ----------------------------------------------------------------
             Column(modifier = Modifier
                 .fillMaxHeight()
                 .weight(4f),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.Start
             ) {
-                // Title
+                // User title ----------------------------------------------------------------------
                 JetText(
                     text = "احسان پیش یار",
                     fontSize = 13,
                     fontWeight = FontWeight.Medium,
                     color = BlackColor
                 )
-                // Email
+                // User email ----------------------------------------------------------------------
                 JetText(
                     text = "ehsan.pishyar@gmail.com",
                     fontSize = 11,
@@ -319,7 +329,7 @@ private fun DialogMainSectionHeader() {
                 )
             }
         }
-        // Role
+        // User role -------------------------------------------------------------------------------
         Column(modifier = Modifier
             .fillMaxWidth()
             .weight(1f),
@@ -370,6 +380,7 @@ private fun DialogMainSectionContent(
     val ordersBadge = remember { mutableIntStateOf(0) }
     val couponsBadge = remember { mutableIntStateOf(0) }
 
+    // Get badge from web service ------------------------------------------------------------------
     when (val orderState = ordersUiState?.response) {
         NavigationDialogOrdersUiState.Loading -> Unit
         is NavigationDialogOrdersUiState.Success -> {
@@ -379,6 +390,7 @@ private fun DialogMainSectionContent(
         else -> Unit
     }
 
+    // Get badge from web service ------------------------------------------------------------------
     when (val couponsState = couponsUiState?.response) {
         NavigationDialogCouponsUiState.Loading -> Unit
         is NavigationDialogCouponsUiState.Success -> {
@@ -387,7 +399,8 @@ private fun DialogMainSectionContent(
         is NavigationDialogCouponsUiState.Error -> Unit
         else -> Unit
     }
-    
+
+    // List of items -------------------------------------------------------------------------------
     val items = listOf(
         NavigationDialogItem(
             icon = R.drawable.orders_icon,
@@ -435,21 +448,20 @@ private fun DialogMainSectionContent(
 
     LazyColumn(modifier = Modifier
         .fillMaxWidth()
-        .wrapContentHeight(),
-        verticalArrangement = Arrangement.spacedBy(20.dp)
+        .wrapContentHeight()
     ) {
         items(count = items.size) { position ->
             Row(modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
+                .height(40.dp)
                 .clickable(
                     enabled = true,
                     onClick = { items[position].onClick() }
                 )
             ) {
-                // Screen icon
+                // Screen icon ---------------------------------------------------------------------
                 Column(modifier = Modifier
-                    .wrapContentHeight()
+                    .fillMaxHeight()
                     .weight(1f),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -462,9 +474,9 @@ private fun DialogMainSectionContent(
                         colorFilter = ColorFilter.tint(LighterGray)
                     )
                 }
-                // Screen title
+                // Screen title --------------------------------------------------------------------
                 Column(modifier = Modifier
-                    .wrapContentHeight()
+                    .fillMaxHeight()
                     .weight(5f),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.Start
@@ -475,9 +487,9 @@ private fun DialogMainSectionContent(
                         fontWeight = FontWeight.Normal
                     )
                 }
-                // Screen badge
+                // Screen badge --------------------------------------------------------------------
                 Column(modifier = Modifier
-                    .wrapContentHeight()
+                    .fillMaxHeight()
                     .weight(1f),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.End
@@ -604,7 +616,8 @@ private fun Preview_NavigationDialogScreen() {
             toFavoritesScreen = {},
             toDownloadsScreen = {},
             toNotificationsScreen = {},
-            toCouponsScreen = {}
+            toCouponsScreen = {},
+            toProfileScreen = {}
         )
     }
 }

@@ -15,7 +15,6 @@ import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -59,8 +58,6 @@ fun ProductDetailsScreen(
     val items = listOf("توضیحات", "ویژگی ها", "نظرات")
     val sharedUiState = sharedViewModel.productState
 
-    val likeState = remember { mutableStateOf(false) }
-
     Box(modifier = Modifier
         .fillMaxSize()
         .background(Background)
@@ -96,16 +93,14 @@ fun ProductDetailsScreen(
                                 productId = sharedUiState.id!!,
                                 isFavorite = true
                             )
-                            likeState.value = true
                         } else {
                             viewModel.updateFavoriteProduct(
                                 productId = sharedUiState.id!!,
                                 isFavorite = false
                             )
-                            likeState.value = false
                         }
                     },
-                    isFavorite = likeState.value
+                    isFavorite = false // todo: fix this shit
                 )
             }
             Column(modifier = Modifier

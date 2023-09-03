@@ -96,10 +96,9 @@ private fun HomeContent(
     toFavoritesScreen: () -> Unit,
     toDownloadsScreen: () -> Unit,
     toNotificationsScreen: () -> Unit,
-    toCouponsScreen: () -> Unit
+    toCouponsScreen: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
-    val likeState = remember { mutableStateOf(false) }
     var openDialog by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier
@@ -189,7 +188,8 @@ private fun HomeContent(
                 toFavoritesScreen = { toFavoritesScreen() },
                 toDownloadsScreen = { toDownloadsScreen() },
                 toNotificationsScreen = { toNotificationsScreen() },
-                toCouponsScreen = { toCouponsScreen() }
+                toCouponsScreen = { toCouponsScreen() },
+                toProfileScreen = { toProfileScreen() }
             )
         }
     }
@@ -205,7 +205,6 @@ private fun AndroidSourceCodeSection(
     sharedViewModel: SharedViewModel? = null,
     favoritesViewModel: FavoritesViewModel? = null
 ) {
-    val likeState = remember { mutableStateOf(false) }
 
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -229,6 +228,7 @@ private fun AndroidSourceCodeSection(
                         items(count = carouselProductsSize(
                             size = androidUiState.androidSourceCodes.size
                         )) { position ->
+                            favoritesViewModel?.isFavoriteProduct(androidUiState.androidSourceCodes[position].id!!)
                             JetProduct(
                                 title = "${androidUiState.androidSourceCodes[position].name}",
                                 image = androidUiState.androidSourceCodes[position].images?.get(0)?.src,
@@ -246,16 +246,14 @@ private fun AndroidSourceCodeSection(
                                             productId = androidUiState.androidSourceCodes[position].id!!,
                                             isFavorite = true
                                         )
-                                        likeState.value = true
                                     } else {
                                         favoritesViewModel?.updateFavoriteProduct(
                                             productId = androidUiState.androidSourceCodes[position].id!!,
                                             isFavorite = false
                                         )
-                                        likeState.value = false
                                     }
                                 },
-                                isFavorite = likeState.value
+                                isFavorite = false // todo: fix this shit
                             )
                         }
                     }
@@ -279,7 +277,6 @@ private fun ApplicationUiKitSection(
     sharedViewModel: SharedViewModel? = null,
     favoritesViewModel: FavoritesViewModel? = null
 ) {
-    val likeState = remember { mutableStateOf(false) }
 
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -303,6 +300,7 @@ private fun ApplicationUiKitSection(
                         items(count = carouselProductsSize(
                             size = applicationUiKitUiState.applicationUiKits.size
                         )) { position ->
+                            favoritesViewModel?.isFavoriteProduct(applicationUiKitUiState.applicationUiKits[position].id!!)
                             JetProduct(
                                 title = "${applicationUiKitUiState.applicationUiKits[position].name}",
                                 image = applicationUiKitUiState.applicationUiKits[position].images?.get(0)?.src,
@@ -320,16 +318,14 @@ private fun ApplicationUiKitSection(
                                             productId = applicationUiKitUiState.applicationUiKits[position].id!!,
                                             isFavorite = true
                                         )
-                                        likeState.value = true
                                     } else {
                                         favoritesViewModel?.updateFavoriteProduct(
                                             productId = applicationUiKitUiState.applicationUiKits[position].id!!,
                                             isFavorite = false
                                         )
-                                        likeState.value = false
                                     }
                                 },
-                                isFavorite = likeState.value
+                                isFavorite = false // todo: fix this shit
                             )
                         }
                     }
@@ -353,7 +349,6 @@ private fun Illustrations3DSection(
     sharedViewModel: SharedViewModel? = null,
     favoritesViewModel: FavoritesViewModel? = null
 ) {
-    val likeState = remember { mutableStateOf(false) }
 
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -394,16 +389,14 @@ private fun Illustrations3DSection(
                                             productId = illustrations3DUiState.illustration3Ds[position].id!!,
                                             isFavorite = true
                                         )
-                                        likeState.value = true
                                     } else {
                                         favoritesViewModel?.updateFavoriteProduct(
                                             productId = illustrations3DUiState.illustration3Ds[position].id!!,
                                             isFavorite = false
                                         )
-                                        likeState.value = false
                                     }
                                 },
-                                isFavorite = likeState.value
+                                isFavorite = false // todo: fix this shit
                             )
                         }
                     }

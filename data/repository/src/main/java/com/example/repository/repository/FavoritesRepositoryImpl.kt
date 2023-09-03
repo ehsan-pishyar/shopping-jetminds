@@ -21,4 +21,8 @@ class FavoritesRepositoryImpl @Inject constructor(
 
     override suspend fun updateFavoriteProduct(isFavorite: Boolean, productId: Int) =
         dao.updateIsFavoriteProduct(id = productId, isFavorite = isFavorite)
+
+    override fun isFavoriteProduct(productId: Int): Flow<Boolean?> {
+        return dao.isFavoriteProduct(productId = productId)
+    }
 }
