@@ -11,7 +11,14 @@ class SharedViewModel: ViewModel() {
     var productState by mutableStateOf<ProductsResponse?>(null)
         private set
 
+    var categoryId by mutableStateOf(0)
+        private set
+
     fun addProduct(product: ProductsResponse) {
         productState = product
+    }
+
+    fun addCategoryId(id: Int) {
+        categoryId = id
     }
 }

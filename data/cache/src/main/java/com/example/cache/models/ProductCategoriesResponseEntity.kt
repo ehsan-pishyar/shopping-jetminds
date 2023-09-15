@@ -9,7 +9,7 @@ import com.example.cache.utils.CacheConstants
 data class ProductCategoriesResponseEntity(
     @PrimaryKey(autoGenerate = false)
     val id: Int?,
-    var name: String?,
+    val name: String?,
     val slug: String?,
     val parent: Int?,
     val description: String?,

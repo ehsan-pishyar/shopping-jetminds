@@ -6,9 +6,9 @@ import androidx.room.TypeConverters
 import com.example.cache.converters.*
 import com.example.cache.dao.*
 import com.example.cache.models.*
-import com.example.cache.models.many_to_many.MTMProductAndAttrEntity
-import com.example.cache.models.many_to_many.MTMProductAndCategoryEntity
-import com.example.cache.models.many_to_many.MTMProductAndTagEntity
+import com.example.cache.models.relations.ProductAndAttrCrossRefEntity
+import com.example.cache.models.relations.ProductAndCategoryCrossRefEntity
+import com.example.cache.models.relations.ProductAndTagCrossRefEntity
 import com.example.cache.utils.CacheConstants
 
 @Database(
@@ -29,9 +29,9 @@ import com.example.cache.utils.CacheConstants
         AttributeEntity::class,
         ImageEntity::class,
         CartEntity::class,
-        MTMProductAndCategoryEntity::class,
-        MTMProductAndTagEntity::class,
-        MTMProductAndAttrEntity::class
+        ProductAndCategoryCrossRefEntity::class,
+        ProductAndTagCrossRefEntity::class,
+        ProductAndAttrCrossRefEntity::class
     ],
     version = CacheConstants.DB_VERSION,
     exportSchema = false

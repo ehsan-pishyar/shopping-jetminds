@@ -16,9 +16,9 @@ data class CustomersResponseDto(
     val role: String?,
     val username: String?,
     @SerializedName("billing")
-    val billingDto: BillingDto?,
+    val billing: BillingDto?,
     @SerializedName("shipping")
-    val shippingDto: ShippingDto?,
+    val shipping: ShippingDto?,
     @SerializedName("is_paying_customer")
     val isPayingCustomer: Boolean?,
     @SerializedName("avatar_url")

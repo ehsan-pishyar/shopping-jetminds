@@ -1,16 +1,16 @@
-package com.example.cache.models.many_to_many
+package com.example.cache.models.relations
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import com.example.cache.models.AttributeEntity
+import com.example.cache.models.ProductCategoriesResponseEntity
 import com.example.cache.models.ProductsResponseEntity
 import com.example.cache.utils.CacheConstants
 
 @Entity(
-    tableName = CacheConstants.MTM_PRODUCT_ATTR_TABLE,
-    primaryKeys = ["product_id", "attr_id"],
+    tableName = CacheConstants.PRODUCT_CATEGORY_CROSS_REF_TABLE,
+    primaryKeys = ["product_id", "category_id"],
     foreignKeys = [
         ForeignKey(
             entity = ProductsResponseEntity::class,
@@ -19,20 +19,20 @@ import com.example.cache.utils.CacheConstants
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
-            entity = AttributeEntity::class,
+            entity = ProductCategoriesResponseEntity::class,
             parentColumns = ["id"],
-            childColumns = ["attr_id"],
+            childColumns = ["category_id"],
             onDelete = ForeignKey.CASCADE
-        ),
+        )
     ],
     indices = [
         Index(value = ["product_id"]),
-        Index(value = ["attr_id"])
+        Index(value = ["category_id"])
     ]
 )
-data class MTMProductAndAttrEntity(
+data class ProductAndCategoryCrossRefEntity(
     @ColumnInfo(name = "product_id")
     val productId: Int,
-    @ColumnInfo(name = "attr_id")
-    val attrId: Int
+    @ColumnInfo(name = "category_id")
+    val categoryId: Int
 )

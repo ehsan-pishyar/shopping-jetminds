@@ -37,21 +37,13 @@ interface ProductsDao {
     )
     fun fetchProductDetails(productId: Int): Flow<ProductsResponseEntity>
 
-//    @Query(
-//        "SELECT * FROM `products_table` pt " +
-//                "INNER JOIN `mtm_product_category_table` ct ON pt.id = ct.product_id " +
-//                "WHERE ct.category_id = :categoryId " +
-//                "AND stock_status = :stockStatus " +
-//                "AND status = :status " +
-//                "AND catalog_visibility = :catalogVisibility"
-//    )
     @Transaction
     @Query(
         """
             SELECT * FROM products_table
             WHERE id IN
             (
-                SELECT product_id FROM mtm_product_category_table
+                SELECT product_id FROM product_category_cross_ref_table
                 WHERE category_id IN (:categoryId)
             )
             ORDER BY date_created DESC
@@ -64,10 +56,7 @@ interface ProductsDao {
 //    @Query(
 //        "SELECT * FROM `products_table` pt " +
 //                "INNER JOIN `mtm_product_tag_table` tt ON pt.id = tt.product_id " +
-//                "WHERE tt.tag_id = :tagId " +
-//                "AND stock_status = :stockStatus " +
-//                "AND status = :status " +
-//                "AND catalog_visibility = :catalogVisibility"
+//                "WHERE tt.tag_id = :tagId"
 //    )
     @Transaction
     @Query(
@@ -75,7 +64,7 @@ interface ProductsDao {
             SELECT * FROM products_table
             WHERE id IN
             (
-                SELECT product_id FROM mtm_product_tag_table
+                SELECT product_id FROM product_tag_cross_ref_table
                 WHERE tag_id IN (:tagId)
             )
             AND stock_status = :stockStatus
@@ -94,10 +83,7 @@ interface ProductsDao {
 //    @Query(
 //        "SELECT * FROM `products_table` pt " +
 //                "INNER JOIN `mtm_product_attr_table` at ON pt.id = at.product_id " +
-//                "WHERE at.product_id = :attrId " +
-//                "AND stock_status = :stockStatus " +
-//                "AND status = :status " +
-//                "AND catalog_visibility = :catalogVisibility"
+//                "WHERE at.product_id = :attrId"
 //    )
     @Transaction
     @Query(
@@ -105,7 +91,7 @@ interface ProductsDao {
             SELECT * FROM products_table
             WHERE id IN
             (
-                SELECT product_id FROM mtm_product_attr_table
+                SELECT product_id FROM product_attr_cross_ref_table
                 WHERE attr_id IN (:attrId)
             )
             AND stock_status = :stockStatus

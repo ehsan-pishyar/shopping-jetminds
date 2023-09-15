@@ -89,7 +89,7 @@ interface ApiService {
 
     // Customers ---------------------------------------------------------------------
     @GET("customers/{id}")
-    suspend fun getCustomerDetails(
+    suspend fun getCustomer(
         @Path("id") customerId: Int
     ): CustomersResponseDto
 

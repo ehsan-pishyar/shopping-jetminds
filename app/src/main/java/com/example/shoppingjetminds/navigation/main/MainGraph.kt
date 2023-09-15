@@ -45,7 +45,10 @@ fun MainGraph(
             navController = navController,
             sharedViewModel = sharedViewModel
         )
-        categoryScreen(navController = navController)
+        categoryScreen(
+            navController = navController,
+            sharedViewModel = sharedViewModel
+        )
         favoritesScreen(
             navController = navController,
             sharedViewModel = sharedViewModel

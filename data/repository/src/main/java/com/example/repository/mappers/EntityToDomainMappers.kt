@@ -319,3 +319,19 @@ fun CartEntity.toDomain(): Cart =
         this.count,
         this.items?.map { it.toDomain() }
     )
+
+fun CustomersResponseEntity.toDomain(): CustomersResponse =
+    CustomersResponse(
+        this.id,
+        this.dateCreated,
+        this.dateCreatedGmt,
+        this.email,
+        this.firstName,
+        this.lastName,
+        this.role,
+        this.username,
+        this.billing?.toDomain(),
+        this.shipping?.toDomain(),
+        this.isPayingCustomer,
+        this.avatarUrl
+    )

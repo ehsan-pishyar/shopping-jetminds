@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,13 +20,13 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.utils.SharedViewModel
+import com.example.core.utils.shopProductsSize
 import com.example.designsystem.Background
 import com.example.designsystem.LighterGray
 import com.example.designsystem.R
-import com.example.designsystem.components.JetHeading
+import com.example.designsystem.components.JetShopHeading
 import com.example.designsystem.components.JetShopProduct
 import com.example.designsystem.components.JetText
-import com.example.designsystem.components.JetTextField
 
 @Composable
 fun ShopScreen(
@@ -35,6 +36,15 @@ fun ShopScreen(
     toCartScreen: () -> Unit,
     toProductDetailsScreen: () -> Unit
 ) {
+
+    LaunchedEffect(key1 = null) {
+        if (sharedViewModel.categoryId > 0) {
+            viewModel.getProducts(categoryId = sharedViewModel.categoryId)
+        } else {
+            viewModel.getProducts()
+        }
+    }
+
     val uiState: MainShopProductsUiState by viewModel.shopUiState.collectAsState()
     var search by remember { mutableStateOf("") }
 
@@ -68,23 +78,24 @@ private fun ShopContent(
                 .fillMaxWidth()
                 .weight(1f)
             ) {
-                JetHeading(title = "فروشگاه جت مایندز", hasCartIcon = true)
+                JetShopHeading(
+                    toSearchScreen = {  },
+                    toCartScreen = {  },
+                    toNotificationScreen = {  }
+                )
             }
             Column(modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)
+                .weight(1f),
+                verticalArrangement = Arrangement.SpaceAround
             ) {
                 FilterAndOrderSection()
+                Divider()
             }
             Column(modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)
-            ) {
-                SearchSection()
-            }
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .weight(9f)
+                .weight(10f)
+                .padding(top = 10.dp)
             ) {
                 ProductsSection(
                     uiState = uiState,
@@ -122,7 +133,8 @@ private fun FilterAndOrderSection() {
                 Icon(
                     modifier = Modifier.size(22.dp),
                     painter = painterResource(id = R.drawable.filter_icon),
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = LighterGray
                 )
 
                 Spacer(modifier = Modifier.width(20.dp))
@@ -150,7 +162,8 @@ private fun FilterAndOrderSection() {
                 Icon(
                     modifier = Modifier.size(22.dp),
                     painter = painterResource(id = R.drawable.sort_icon),
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = LighterGray
                 )
 
                 Spacer(modifier = Modifier.width(20.dp))
@@ -164,23 +177,6 @@ private fun FilterAndOrderSection() {
 }
 
 @Composable
-private fun SearchSection() {
-    JetTextField(
-        placeholder = "جستجوی محصول ...",
-        onValueChange = {},
-        height = 50,
-        leadingIcon = {
-            Icon(
-                modifier = Modifier.size(22.dp),
-                painter = painterResource(id = R.drawable.search),
-                contentDescription = null,
-                tint = LighterGray
-            )
-        }
-    )
-}
-
-@Composable
 private fun ProductsSection(
     uiState: MainShopProductsUiState? = null,
     sharedViewModel: SharedViewModel? = null,
@@ -188,7 +184,6 @@ private fun ProductsSection(
     toProductDetailsScreen: () -> Unit,
     favoritesViewModel: FavoritesViewModel? = null
 ) {
-    val likeState = remember { mutableStateOf(false) }
 
     when (val state = uiState?.shopProductsUiState) {
         ShopProductsUiState.Loading -> {
@@ -207,7 +202,7 @@ private fun ProductsSection(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 content = {
-                    items(count = 10) { position ->
+                    items(count = shopProductsSize(state.products.size)) { position ->
                         JetShopProduct(
                             title = "${state.products[position].name}",
                             image = state.products[position].images?.get(0)?.src,
@@ -225,16 +220,14 @@ private fun ProductsSection(
                                         productId = state.products[position].id!!,
                                         isFavorite = true
                                     )
-                                    likeState.value = true
                                 } else {
                                     favoritesViewModel?.updateFavoriteProduct(
                                         productId = state.products[position].id!!,
                                         isFavorite = false
                                     )
-                                    likeState.value = false
                                 }
                             },
-                            isFavorite = likeState.value
+                            isFavorite = false
                         )
                     }
                 }

@@ -2,6 +2,7 @@ package com.example.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.core.utils.Categories
 import com.example.core.utils.WhileUiSubscribed
 import com.example.domain.use_cases.products.GetProductsUseCase
 import com.example.domain.utils.ServiceResult
@@ -24,9 +25,9 @@ class HomeViewModel @Inject constructor(
     private val isError = MutableStateFlow(false)
 
     val homeUiState: StateFlow<HomeUiState> = combine(
-        getApplicationUiKitUseCase.invoke(), //Categories.APPLICATION_UI_KIT.id
-        getAndroidUseCase.invoke(), //Categories.ANDROID.id
-        getIllustrations3DUseCase.invoke(), //Categories.ILLUSTRATIONS_3D.id
+        getApplicationUiKitUseCase.invoke(categoryId = Categories.APPLICATION_UI_KIT.id),
+        getAndroidUseCase.invoke(categoryId = Categories.ANDROID.id),
+        getIllustrations3DUseCase.invoke(categoryId = Categories.ILLUSTRATIONS_3D.id),
         isRefreshing,
         isError
     ) { applicationUiKitUiState, androidUiState, illustrations3DUiState, refreshing, errorConsumed ->

@@ -2,7 +2,6 @@ package com.example.shop
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.utils.Categories
 import com.example.domain.use_cases.products.GetHighestPriceProductsUseCase
 import com.example.domain.use_cases.products.GetLowestPriceProductsUseCase
 import com.example.domain.use_cases.products.GetNewestProductsUseCase
@@ -39,27 +38,23 @@ class ShopViewModel @Inject constructor(
         getProducts()
     }
 
-    private fun getProducts(
-        categoryId: Int? = null,
-        tagId: Int? = null,
-        attrId: Int? = null
+    fun getProducts(
+        categoryId: Int? = null
     ) {
        viewModelScope.launch {
-           categoryId?.let {
-               getProductsByCategoryIdUseCase.invoke(categoryId = Categories.ANDROID.id).collect { productResults ->
-                   val shopProductsUiStateResult = when (productResults) {
-                       ServiceResult.Loading -> ShopProductsUiState.Loading
-                       is ServiceResult.Success -> ShopProductsUiState.Success(
-                           products = productResults.data
-                       )
-                       is ServiceResult.Error -> ShopProductsUiState.Error(
-                           throwable = productResults.throwable!!
-                       )
-                   }
-                   _shopUiState.value = MainShopProductsUiState(
-                       shopProductsUiState = shopProductsUiStateResult
+           getProductsUseCase.invoke(categoryId = categoryId).collect { productResults ->
+               val shopProductsUiStateResult = when (productResults) {
+                   ServiceResult.Loading -> ShopProductsUiState.Loading
+                   is ServiceResult.Success -> ShopProductsUiState.Success(
+                       products = productResults.data
+                   )
+                   is ServiceResult.Error -> ShopProductsUiState.Error(
+                       throwable = productResults.throwable!!
                    )
                }
+               _shopUiState.value = MainShopProductsUiState(
+                   shopProductsUiState = shopProductsUiStateResult
+               )
            }
 //           getProductsUseCase.invoke().collect { productResults ->
 //               val shopProductsUiStateResult = when (productResults) {

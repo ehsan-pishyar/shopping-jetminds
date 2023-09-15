@@ -1,18 +1,24 @@
 package com.example.repository.mappers
 
 import com.example.cache.models.AttributeEntity
+import com.example.cache.models.BillingEntity
 import com.example.cache.models.CartEntity
 import com.example.cache.models.CategoryEntity
+import com.example.cache.models.CustomersResponseEntity
 import com.example.cache.models.DefaultAttributeEntity
 import com.example.cache.models.ImageEntity
 import com.example.cache.models.ProductsResponseEntity
+import com.example.cache.models.ShippingEntity
 import com.example.cache.models.TagEntity
 import com.example.domain.models.Attribute
+import com.example.domain.models.Billing
 import com.example.domain.models.Cart
 import com.example.domain.models.Category
+import com.example.domain.models.CustomersResponse
 import com.example.domain.models.DefaultAttribute
 import com.example.domain.models.Image
 import com.example.domain.models.ProductsResponse
+import com.example.domain.models.Shipping
 import com.example.domain.models.Tag
 
 fun ProductsResponse.toEntity(): ProductsResponseEntity =
@@ -100,4 +106,48 @@ fun Cart.toEntity(): CartEntity =
         this.cartId,
         this.count,
         this.items?.map { it.toEntity() }
+    )
+
+fun CustomersResponse.toEntity(): CustomersResponseEntity =
+    CustomersResponseEntity(
+        this.id,
+        this.dateCreated,
+        this.dateCreatedGmt,
+        this.email,
+        this.firstName,
+        this.lastName,
+        this.role,
+        this.username,
+        this.billing?.toEntity(),
+        this.shipping?.toEntity(),
+        this.isPayingCustomer,
+        this.avatarUrl
+    )
+
+fun Billing.toEntity(): BillingEntity =
+    BillingEntity(
+        this.address1,
+        this.address2,
+        this.city,
+        this.company,
+        this.country,
+        this.email,
+        this.firstName,
+        this.lastName,
+        this.phone,
+        this.postcode,
+        this.state
+    )
+
+fun Shipping.toEntity(): ShippingEntity =
+    ShippingEntity(
+        this.address1,
+        this.address2,
+        this.city,
+        this.company,
+        this.country,
+        this.firstName,
+        this.lastName,
+        this.postcode,
+        this.state
     )

@@ -57,7 +57,7 @@ fun BottomBar(navController: NavHostController) {
         BottomNavigation(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(64.dp),
+                .height(60.dp),
             backgroundColor = Color.White
         ) {
             screens.forEach { screen ->
@@ -81,7 +81,7 @@ fun RowScope.AddItem(
         label = {
             JetText(
                 text = screen.title,
-                fontSize = 12
+                fontSize = 10
             )
         },
         icon = {

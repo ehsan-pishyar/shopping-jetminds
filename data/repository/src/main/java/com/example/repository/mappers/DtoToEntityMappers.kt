@@ -315,3 +315,20 @@ fun TaxLineDto.toEntity(): TaxLineEntity =
         this.shippingTaxTotal,
         this.taxTotal
     )
+
+fun CustomersResponseDto.toEntity(): CustomersResponseEntity =
+    CustomersResponseEntity(
+        this.id,
+        this.dateCreated,
+        this.dateCreatedGmt,
+        this.email,
+        this.firstName,
+        this.lastName,
+        this.role,
+        this.username,
+        this.billing?.toEntity(),
+        this.shipping?.toEntity(),
+        this.isPayingCustomer,
+        this.avatarUrl
+    )
+

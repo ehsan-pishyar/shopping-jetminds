@@ -1,15 +1,15 @@
-package com.example.cache.models.many_to_many
+package com.example.cache.models.relations
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import com.example.cache.models.ProductTagsResponseEntity
 import com.example.cache.models.ProductsResponseEntity
-import com.example.cache.models.TagEntity
 import com.example.cache.utils.CacheConstants
 
 @Entity(
-    tableName = CacheConstants.MTM_PRODUCT_TAG_TABLE,
+    tableName = CacheConstants.PRODUCT_TAG_CROSS_REF_TABLE,
     primaryKeys = ["product_id", "tag_id"],
     foreignKeys = [
         ForeignKey(
@@ -19,7 +19,7 @@ import com.example.cache.utils.CacheConstants
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
-            entity = TagEntity::class,
+            entity = ProductTagsResponseEntity::class,
             parentColumns = ["id"],
             childColumns = ["tag_id"],
             onDelete = ForeignKey.CASCADE
@@ -30,7 +30,7 @@ import com.example.cache.utils.CacheConstants
         Index(value = ["tag_id"])
     ]
 )
-data class MTMProductAndTagEntity(
+data class ProductAndTagCrossRefEntity(
     @ColumnInfo(name = "product_id")
     val productId: Int,
     @ColumnInfo(name = "tag_id")

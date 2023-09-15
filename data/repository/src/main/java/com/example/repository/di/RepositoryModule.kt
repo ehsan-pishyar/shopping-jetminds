@@ -88,4 +88,9 @@ interface RepositoryModule {
     fun bindsDownloadsRepository(
         impl: DownloadsRepositoryImpl
     ): DownloadsRepository
+
+    @[Binds Singleton]
+    fun bindsCustomerRepository(
+        impl: CustomerRepositoryImpl
+    ): CustomerRepository
 }

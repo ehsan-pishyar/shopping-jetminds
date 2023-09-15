@@ -2,6 +2,7 @@ package com.example.designsystem.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,17 +23,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.Primary
 import com.example.designsystem.R
-import com.example.designsystem.components.JetCoilImage
-import com.example.designsystem.components.JetText
 
 @Composable
 fun JetCategory(
     imagePath: String? = null,
-    title: String
+    title: String,
+    onCategoryClick: () -> Unit
 ) {
     Card(modifier = Modifier
         .fillMaxWidth()
-        .height(120.dp),
+        .height(120.dp)
+        .clickable(enabled = true, onClick = { onCategoryClick() }),
         shape = RoundedCornerShape(12.dp)
     ) {
         Box(modifier = Modifier

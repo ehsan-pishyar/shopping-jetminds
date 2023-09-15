@@ -35,6 +35,10 @@ fun priceThousandsSeparator(price: String): String {
 fun carouselProductsSize(size: Int): Int =
     if (size >= 7) 7 else size
 
+// Returns just 10 items if product list items are more than 10 else returns product items size
+fun shopProductsSize(maxSize: Int): Int =
+    if (maxSize >= 20) 20 else maxSize
+
 fun parseHtml(html: String): String = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString()
 
 fun calculateTax(totalAmount: String): String {

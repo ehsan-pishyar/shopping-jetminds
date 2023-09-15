@@ -23,6 +23,7 @@ import com.example.designsystem.components.JetSimpleButton
 import com.example.designsystem.components.JetText
 import com.example.designsystem.components.JetTextField
 import com.example.designsystem.R
+import com.example.designsystem.components.SectionSpacer
 
 @Composable
 fun LoginScreen(
@@ -52,7 +53,7 @@ fun LoginScreen(
                 modifier = Modifier.width(200.dp)
             )
 
-            Spacer(modifier = Modifier.height(40.dp))
+            SectionSpacer(40)
 
             JetText(
                 text = "خوش اومـــــدی",
@@ -72,26 +73,47 @@ fun LoginScreen(
                 lineHeight = 0.0
             )
 
-            Spacer(modifier = Modifier.height(40.dp))
+            SectionSpacer(40)
 
             JetTextField(
                 onValueChange = {
                     phoneNumber = it
                 },
                 value = phoneNumber,
-                placeholder = "شماره همراه خودتو وارد کن",
+                placeholder = "نام کاربری یا ایمیل",
                 singleLine = true,
                 maxLines = 1,
                 keyboardType = KeyboardType.Number,
-                title = "شماره همراه",
+                title = "نام کاربری یا ایمیل",
                 style = TextStyle(
                     color = LighterBlack,
                     fontFamily = Yekanbakh,
                     fontSize = 14.sp
-                )
+                ),
+                height = 50
             )
 
-            Spacer(modifier = Modifier.height(15.dp))
+            SectionSpacer(10)
+
+            JetTextField(
+                onValueChange = {
+                    phoneNumber = it
+                },
+                value = phoneNumber,
+                placeholder = "رمز عبور خودتو وارد کن",
+                singleLine = true,
+                maxLines = 1,
+                keyboardType = KeyboardType.Number,
+                title = "رمز عبور",
+                style = TextStyle(
+                    color = LighterBlack,
+                    fontFamily = Yekanbakh,
+                    fontSize = 14.sp
+                ),
+                height = 50
+            )
+
+            SectionSpacer(30)
 
             JetSimpleButton(
                 onClick = {
@@ -104,7 +126,8 @@ fun LoginScreen(
 //                        toDashboardScreen()
 //                    }
                 },
-                text = "دریافت کد"
+                text = "دریافت کد",
+                height = 50
             )
         }
     }

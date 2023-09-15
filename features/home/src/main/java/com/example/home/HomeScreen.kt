@@ -84,13 +84,13 @@ fun HomeScreen(
 @Composable
 private fun HomeContent(
     homeUiState: HomeUiState?,
+    sharedViewModel: SharedViewModel? = null,
+    favoritesViewModel: FavoritesViewModel? = null,
     toCartScreen: () -> Unit,
     toNotificationScreen: () -> Unit,
     toProfileScreen: () -> Unit,
     toShopScreen: () -> Unit,
     toProductDetailsScreen: () -> Unit,
-    sharedViewModel: SharedViewModel? = null,
-    favoritesViewModel: FavoritesViewModel? = null,
     toOrdersScreen: () -> Unit,
     toComparesScreen: () -> Unit,
     toFavoritesScreen: () -> Unit,
@@ -107,7 +107,12 @@ private fun HomeContent(
     ) {
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(15.dp)
+            .padding(
+                top = 15.dp,
+                start = 15.dp,
+                end = 15.dp,
+                bottom = 70.dp
+            )
             .verticalScroll(state = scrollState, enabled = true)
         ) {
 
@@ -199,13 +204,12 @@ private fun HomeContent(
 @Composable
 private fun AndroidSourceCodeSection(
     homeUiState: HomeUiState?,
+    sharedViewModel: SharedViewModel? = null,
+    favoritesViewModel: FavoritesViewModel? = null,
     toShopScreen: () -> Unit,
     toCartScreen: () -> Unit,
-    toProductDetailsScreen: () -> Unit,
-    sharedViewModel: SharedViewModel? = null,
-    favoritesViewModel: FavoritesViewModel? = null
+    toProductDetailsScreen: () -> Unit
 ) {
-
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight(),

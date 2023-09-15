@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.core.utils.SharedViewModel
 import com.example.designsystem.Background
 import com.example.designsystem.components.JetCategory
 import com.example.designsystem.components.JetHeading
@@ -28,20 +29,26 @@ import com.example.designsystem.components.JetText
 @Composable
 fun CategoryScreen(
     viewModel: ProductCategoriesViewModel = hiltViewModel(),
-    toCartScreen: () -> Unit = {}
+    sharedViewModel: SharedViewModel = SharedViewModel(),
+    toCartScreen: () -> Unit,
+    toShopScreen: () -> Unit
 ){
     val categoryState: MainProductCategoriesUiState by viewModel.categoriesState.collectAsState()
 
     CategoryScreenContent(
         categoryState = categoryState,
-        toCartScreen = { toCartScreen() }
+        sharedViewModel = sharedViewModel,
+        toCartScreen = { toCartScreen() },
+        toShopScreen = { toShopScreen() }
     )
 }
 
 @Composable
 private fun CategoryScreenContent(
     categoryState: MainProductCategoriesUiState? = null,
-    toCartScreen: () -> Unit = {}
+    sharedViewModel: SharedViewModel? = null,
+    toCartScreen: () -> Unit,
+    toShopScreen: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -85,7 +92,11 @@ private fun CategoryScreenContent(
                                 items(count = state.categories.size) { position ->
                                     JetCategory(
                                         imagePath = state.categories[position].image?.src,
-                                        title = state.categories[position].name!!
+                                        title = state.categories[position].name!!,
+                                        onCategoryClick = {
+                                            sharedViewModel?.addCategoryId(state.categories[position].id!!)
+                                            toShopScreen()
+                                        }
                                     )
                                 }
                             }
@@ -105,6 +116,9 @@ private fun CategoryScreenContent(
 @Composable
 fun Preview_CategoryScreen() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        CategoryScreenContent()
+        CategoryScreenContent(
+            toCartScreen = {},
+            toShopScreen = {}
+        )
     }
 }

@@ -9,31 +9,31 @@ sealed class BottomNavigationScreens(
 ) {
     object Home: BottomNavigationScreens(
         route = "home",
-        title = "Home",
+        title = "خانه",
         icon = R.drawable.home
     )
 
     object Shop: BottomNavigationScreens(
         route = "shop",
-        title = "Shop",
+        title = "فروشگاه",
         icon = R.drawable.shop
     )
 
     object Category: BottomNavigationScreens(
         route = "category",
-        title = "Category",
+        title = "دسته بندی",
         icon = R.drawable.category
     )
 
     object Favorites: BottomNavigationScreens(
         route = "favorites",
-        title = "Favorites",
+        title = "علاقمندی",
         icon = R.drawable.favorite
     )
 
     object Cart: BottomNavigationScreens(
         route = "cart",
-        title = "Cart",
+        title = "سبد خرید",
         icon = R.drawable.cart
     )
 }
