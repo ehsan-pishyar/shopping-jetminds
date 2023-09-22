@@ -1,10 +1,10 @@
 package com.example.usecases
 
 import com.example.domain.repositories.CartRepository
-import com.example.domain.use_cases.cart.ClearCartUseCase
-import com.example.domain.use_cases.cart.DeleteCartItemUseCase
 import com.example.domain.use_cases.cart.GetCartItemsUseCase
-import com.example.domain.use_cases.cart.InsertCartItemUseCase
+import com.example.domain.use_cases.cart.IsInCartUseCase
+import com.example.domain.use_cases.cart.ItemCountInCartUseCase
+import com.example.domain.use_cases.cart.UpdateCartItemUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,17 +20,17 @@ object CartUseCaseModule {
     ): GetCartItemsUseCase = GetCartItemsUseCase(repository = repository)
 
     @Provides
-    fun providesInsertCartItemsUseCase(
+    fun providesUpdateCartItemUseCase(
         repository: CartRepository
-    ): InsertCartItemUseCase = InsertCartItemUseCase(repository = repository)
+    ): UpdateCartItemUseCase = UpdateCartItemUseCase(repository = repository)
 
     @Provides
-    fun providesClearCartUseCase(
+    fun providesIsInCartUseCase(
         repository: CartRepository
-    ): ClearCartUseCase = ClearCartUseCase(repository = repository)
+    ): IsInCartUseCase = IsInCartUseCase(repository = repository)
 
     @Provides
-    fun providesDeleteCartItemUseCase(
+    fun providesItemCountInCart(
         repository: CartRepository
-    ): DeleteCartItemUseCase = DeleteCartItemUseCase(repository = repository)
+    ): ItemCountInCartUseCase = ItemCountInCartUseCase(repository = repository)
 }

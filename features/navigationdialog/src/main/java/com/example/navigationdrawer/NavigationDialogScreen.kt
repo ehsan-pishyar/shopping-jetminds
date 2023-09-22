@@ -410,7 +410,7 @@ private fun DialogMainSectionContent(
         ),
         NavigationDialogItem(
             icon = R.drawable.cart,
-            title = "سبد بخیر",
+            title = "سبد خرید",
             badge = cartUiState?.value!!,
             onClick = { toCartScreen() }
         ),

@@ -57,13 +57,21 @@ fun CartScreen(
     sharedViewModel: SharedViewModel
 ) {
     val uiState: MainCartUiState by viewModel.cartUiState.collectAsState()
+    val cartItemCountState by viewModel.cartItemCountState.collectAsState()
+    val isInCartState by viewModel.isInCartState.collectAsState()
 
-    CartContent(uiState = uiState)
+    CartContent(
+        uiState = uiState,
+        cartItemCountState = cartItemCountState,
+        isInCartState = isInCartState
+    )
 }
 
 @Composable
 private fun CartContent(
-    uiState: MainCartUiState? = null
+    uiState: MainCartUiState? = null,
+    cartItemCountState: Int = 0,
+    isInCartState: Boolean = false
 ) {
     var totalPrice = remember { "" }
 
@@ -75,71 +83,66 @@ private fun CartContent(
             .fillMaxSize()
             .padding(15.dp)
         ) {
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-            ) {
-                JetHeading(
-                    title = "سبد خرید",
-                    hasCartIcon = true
-                    // TODO: Handle toCartScreen Click
-                )
-            }
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .weight(6f),
-                verticalArrangement = Arrangement.Top
-            ) {
-                when (val state = uiState?.cartUiState) {
-                    CartUiState.Loading -> {
-                        Column(modifier = Modifier
-                            .fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            JetText(text = "در حال بارگذاری ...")
-                        }
+
+            when (cartItemCountState) {
+                0 -> {
+                    Column(modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                    ) {
+                        JetHeading(
+                            title = "سبد خرید",
+                            hasCartIcon = true
+                            // TODO: Handle toCartScreen Click
+                        )
                     }
-                    is CartUiState.Success -> {
-                        if (state.items.isEmpty()) {
-                            CartItemNotFound()
-                        } else {
-                            CartList(items = state.items)
-                            state.items.forEach {
-                                totalPrice += it.price!!
-                            }
-                        }
+                    Column(modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(11f)
+                    ) {
+                        CartItemNotFound()
                     }
-                    is CartUiState.Error -> {
-                        Column(modifier = Modifier
-                            .fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            JetText(text ="${state?.throwable}")
-                        }
-                    }
-                    else -> Unit
                 }
-            }
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-            ) {
-                PromoSection()
-            }
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .weight(4f)
-            ) {
-                CheckoutSection()
+                else -> {
+                    Column(modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                    ) {
+                        JetHeading(
+                            title = "سبد خرید",
+                            hasCartIcon = true
+                            // TODO: Handle toCartScreen Click
+                        )
+                    }
+                    Column(modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(6f),
+                        verticalArrangement = Arrangement.Top
+                    ) {
+                        CartList(items = uiState?.cartUiState!!)
+                    }
+                    Column(modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                    ) {
+                        PromoSection()
+                    }
+                    Column(modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(4f)
+                    ) {
+                        //CheckoutSection()
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun CartList(items: List<ProductsResponse>) {
+fun CartList(
+    items: List<ProductsResponse>
+) {
     LazyColumn(verticalArrangement = Arrangement.spacedBy(15.dp),
         content = {
         items(count = items.size) { position ->
@@ -313,7 +316,7 @@ private fun CartItemNotFound() {
         Image(
             painter = painterResource(id = R.drawable.cart_404),
             contentDescription = null,
-            modifier = Modifier.size(150.dp)
+            modifier = Modifier.size(100.dp)
         )
 
         Spacer(modifier = Modifier.height(20.dp))

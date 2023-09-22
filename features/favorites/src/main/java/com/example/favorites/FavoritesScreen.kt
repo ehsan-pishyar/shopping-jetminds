@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -181,7 +182,8 @@ private fun FavoritesNotFound() {
         Image(
             painter = painterResource(id = R.drawable.favorite),
             contentDescription = null,
-            modifier = Modifier.size(150.dp)
+            modifier = Modifier.size(100.dp),
+            colorFilter = ColorFilter.tint(Color.Black.copy(alpha = 0.2f))
         )
 
         Spacer(modifier = Modifier.height(20.dp))

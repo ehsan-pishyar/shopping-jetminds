@@ -71,5 +71,9 @@ data class ProductsResponseEntity(
     @ColumnInfo(name = "is_favorite")
     val isFavorite: Boolean?,
     @ColumnInfo("downloaded")
-    val downloaded: Boolean?
+    val downloaded: Boolean?,
+    @ColumnInfo(name = "in_cart")
+    val inCart: Boolean?,
+    @ColumnInfo(name = "added_to_cart_date")
+    val addedToCartDate: String?
 )

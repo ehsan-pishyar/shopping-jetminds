@@ -2,9 +2,9 @@ package com.example.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.models.ProductsResponse
-import com.example.domain.use_cases.products.GetProductsUseCase
-import com.example.domain.utils.ServiceResult
+import com.example.domain.use_cases.cart.GetCartItemsUseCase
+import com.example.domain.use_cases.cart.IsInCartUseCase
+import com.example.domain.use_cases.cart.ItemCountInCartUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,41 +13,48 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CartViewModel @Inject constructor(
-    private val getProductsUseCase: GetProductsUseCase
+    private val getCartItemsUseCase: GetCartItemsUseCase,
+    private val isInCartUseCase: IsInCartUseCase,
+    private val itemCountInCartUseCase: ItemCountInCartUseCase
 ): ViewModel() {
 
-    private var _cartUiState = MutableStateFlow(MainCartUiState(CartUiState.Loading))
+    private var _cartUiState = MutableStateFlow(MainCartUiState(emptyList()))
     val cartUiState = _cartUiState.asStateFlow()
 
-    private var _hasItem = MutableStateFlow(false)
-    val hasItem = _hasItem.asStateFlow()
+    private var _isInCartState = MutableStateFlow(false)
+    val isInCartState = _isInCartState.asStateFlow()
+
+    private var _cartItemCountState = MutableStateFlow(0)
+    val cartItemCountState = _cartItemCountState.asStateFlow()
 
     init {
-        getItems()
+        getCartItems()
+        itemCountInCart()
     }
 
-    private fun getItems() {
+    private fun getCartItems() {
         viewModelScope.launch {
-            getProductsUseCase.invoke().collect { productsResult ->
-                val cartUiStateResult = when (productsResult) {
-                    ServiceResult.Loading -> CartUiState.Loading
-                    is ServiceResult.Success -> CartUiState.Success(
-                        items = productsResult.data
-                    )
-                    is ServiceResult.Error -> CartUiState.Error(
-                        throwable = productsResult.throwable!!
-                    )
-                }
+            getCartItemsUseCase.invoke().collect { cartItems ->
                 _cartUiState.value = MainCartUiState(
-                    cartUiState = cartUiStateResult
+                    cartUiState = cartItems
                 )
             }
         }
     }
 
-    fun saveItem(product: ProductsResponse) {
+    fun isInCart(productId: Int) {
         viewModelScope.launch {
+            isInCartUseCase.invoke(productId = productId).collect {
+                _isInCartState.value = it!!
+            }
+        }
+    }
 
+    private fun itemCountInCart() {
+        viewModelScope.launch {
+            itemCountInCartUseCase.invoke().collect {
+                _cartItemCountState.value = it!!
+            }
         }
     }
 }

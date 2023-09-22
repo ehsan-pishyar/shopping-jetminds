@@ -28,7 +28,6 @@ import com.example.cache.utils.CacheConstants
         TagEntity::class,
         AttributeEntity::class,
         ImageEntity::class,
-        CartEntity::class,
         ProductAndCategoryCrossRefEntity::class,
         ProductAndTagCrossRefEntity::class,
         ProductAndAttrCrossRefEntity::class
@@ -63,8 +62,7 @@ import com.example.cache.utils.CacheConstants
     StringListConverter::class,
     TagsConverter::class,
     TaxesConverter::class,
-    TaxLinesConverter::class,
-    CartConverter::class
+    TaxLinesConverter::class
 )
 abstract class AppDatabase: RoomDatabase() {
 

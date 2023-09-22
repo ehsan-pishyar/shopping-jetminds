@@ -5,7 +5,9 @@ import com.example.cache.models.ProductsResponseEntity
 import com.example.domain.models.ProductsResponse
 import com.example.domain.repositories.FavoritesRepository
 import com.example.repository.mappers.toDomain
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -23,6 +25,6 @@ class FavoritesRepositoryImpl @Inject constructor(
         dao.updateIsFavoriteProduct(id = productId, isFavorite = isFavorite)
 
     override fun isFavoriteProduct(productId: Int): Flow<Boolean?> {
-        return dao.isFavoriteProduct(productId = productId)
+        return dao.isFavoriteProduct(productId = productId).flowOn(Dispatchers.IO)
     }
 }

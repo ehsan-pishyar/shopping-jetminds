@@ -1,27 +1,33 @@
 package com.example.cache.dao
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.cache.models.CartEntity
+import com.example.cache.models.ProductsResponseEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CartDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertItem(item: CartEntity)
+    @Query("SELECT * FROM `products_table` WHERE in_cart = :inCart ORDER BY added_to_cart_date ASC")
+    fun fetchItems(
+        inCart: Boolean = true
+    ): Flow<List<ProductsResponseEntity>>
 
-    @Query("SELECT * FROM `cart_table`")
-    fun fetchItems(): Flow<List<CartEntity>>
+    @Query("UPDATE `products_table` SET in_cart = :inCart AND added_to_cart_date = :addedToCartDate WHERE id = :productId")
+    suspend fun updateInCartProduct(
+        productId: Int,
+        inCart: Boolean,
+        addedToCartDate: String = ""
+    )
 
-    @Query("DELETE FROM `cart_table`") /* TODO Fix this shit */
-    suspend fun deleteItem()
+    @Query("SELECT in_cart FROM `products_table` WHERE id = :productId AND in_cart = :inCart")
+    fun isInCart(
+        productId: Int,
+        inCart: Boolean = true
+    ): Flow<Boolean?>
 
-    @Query("DELETE FROM `cart_table`")
-    suspend fun clearCart()
-
-//    @Query("SELECT COUNT(*) FROM `cart_table`")
-//    suspend fun hasItems(): Flow<Int>
+    @Query("SELECT COUNT(*) FROM `products_table` WHERE in_cart = :inCart")
+    fun itemCountInCart(
+        inCart: Boolean = true
+    ): Flow<Int?>
 }
