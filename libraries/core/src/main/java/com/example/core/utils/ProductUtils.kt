@@ -3,9 +3,12 @@ package com.example.core.utils
 import android.os.Build
 import android.text.Html
 import androidx.annotation.RequiresApi
+import java.text.SimpleDateFormat
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Locale
 
 // Takes beginning and ending date times and converts to separate integers(days, hours, minutes, seconds)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -42,11 +45,21 @@ fun shopProductsSize(maxSize: Int): Int =
 fun parseHtml(html: String): String = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString()
 
 fun calculateTax(totalAmount: String): String {
-    val tax = "${(totalAmount.toInt() * 0.09)}"
-    return priceThousandsSeparator(tax)
+    return if (totalAmount.toInt() == 0) {
+        "رایگان"
+    } else {
+        val tax = "${(totalAmount.toInt() * 0.09)}"
+        priceThousandsSeparator(tax)
+    }
 }
 
 fun calculatePayablePrice(totalAmount: String, tax: String): String {
     val payableAmount = "${(totalAmount.toInt() + tax.toInt())}"
     return priceThousandsSeparator(payableAmount)
+}
+
+fun getCurrentDate(): String {
+    val calendar = Calendar.getInstance()
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+    return dateFormat.format(calendar.time)
 }

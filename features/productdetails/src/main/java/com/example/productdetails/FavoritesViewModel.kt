@@ -1,4 +1,4 @@
-package com.example.home
+package com.example.productdetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,8 +16,8 @@ class FavoritesViewModel @Inject constructor(
     private val isFavoriteProductUseCase: IsFavoriteProductUseCase
 ): ViewModel() {
 
-    private var _isFavorite = MutableStateFlow(false)
-    val isFavorite = _isFavorite.asStateFlow()
+    private var _isFavoriteState = MutableStateFlow(false)
+    val isFavoriteState = _isFavoriteState.asStateFlow()
 
     fun updateFavoriteProduct(productId: Int, isFavorite: Boolean) {
         viewModelScope.launch {
@@ -27,10 +27,10 @@ class FavoritesViewModel @Inject constructor(
 
     fun isFavoriteProduct(productId: Int) {
         viewModelScope.launch {
-            isFavoriteProductUseCase.invoke(
-                productId = productId
-            ).collect {
-                _isFavorite.value = it!!
+            isFavoriteProductUseCase.invoke(productId = productId).collect {
+                if (it != null) {
+                    _isFavoriteState.value = it
+                }
             }
         }
     }

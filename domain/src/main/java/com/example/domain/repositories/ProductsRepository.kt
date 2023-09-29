@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ProductsRepository {
 
+    suspend fun insertProductDetails(productDetails: ProductsResponse)
     fun getProducts(): Flow<List<ProductsResponse>>
     fun getProductsByCategoryId(categoryId: Int): Flow<List<ProductsResponse>>
     fun getProductsByTagId(tagId: Int): Flow<List<ProductsResponse>>

@@ -15,7 +15,8 @@ fun NavGraphBuilder.cartScreen(
         route = PaymentScreens.Cart.route
     ) {
         CartScreen(
-            sharedViewModel = sharedViewModel
+            sharedViewModel = sharedViewModel,
+            toProductDetailsScreen = { navController.navigate(PaymentScreens.Cart.route) }
         )
     }
 }

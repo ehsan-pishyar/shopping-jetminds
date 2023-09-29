@@ -13,13 +13,13 @@ import com.example.navigation.PaymentScreens
 
 fun NavGraphBuilder.homeScreen(
     navController: NavHostController,
-    sharedViewModel: SharedViewModel
+    sharedViewModel: SharedViewModel? = null
 ) {
     composable(
         route = BottomNavigationScreens.Home.route
     ) {
         HomeScreen(
-            sharedViewModel = sharedViewModel,
+            sharedViewModel = sharedViewModel!!,
             toCartScreen = { navController.navigate(PaymentScreens.Cart.route) },
             toNotificationScreen = { navController.navigate(OtherScreens.Notifications.route) },
             toProfileScreen = { navController.navigate(AuthScreens.Account.route) },

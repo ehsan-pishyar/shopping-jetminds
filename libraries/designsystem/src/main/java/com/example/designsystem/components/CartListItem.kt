@@ -1,6 +1,7 @@
 package com.example.designsystem.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -40,11 +41,13 @@ fun CartListItem(
     image: String = "",
     title: String,
     category: String = "",
-    price: String = ""
+    price: String = "",
+    onProductClick: () -> Unit
 ) {
     Card(modifier = Modifier
         .fillMaxWidth()
-        .height(85.dp),
+        .height(85.dp)
+        .clickable(enabled = true, onClick = { onProductClick() }),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 0.dp
         ),
@@ -74,21 +77,22 @@ fun CartListItem(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 JetText(
-                    text = "سورس کد پروژه اندروید Jet OnBoarding Modern",
+                    text = title,
                     fontSize = 14,
                     fontWeight = FontWeight.SemiBold,
                     overflow = TextOverflow.Ellipsis
                 )
                 JetText(
-                    text = "سورس کد اندروید",
+                    text = category,
                     fontSize = 11,
                     fontWeight = FontWeight.Normal,
                     color = LighterGray
                 )
-                JetText(
-                    text = "49.000 تومان",
-                    fontSize = 12,
-                    fontWeight = FontWeight.SemiBold
+                JetPriceText(
+                    price = price,
+                    priceTextSize = 11,
+                    priceTomanSize = 10,
+                    priceFreeSize = 11
                 )
             }
 

@@ -13,7 +13,10 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -45,18 +48,29 @@ import com.example.domain.models.ProductsResponse
 
 @Composable
 fun ProductDetailsScreen(
-    sharedViewModel: SharedViewModel = SharedViewModel(),
     viewModel: ProductDetailsViewModel = hiltViewModel(),
+    sharedViewModel: SharedViewModel = SharedViewModel(),
+    favoritesViewModel: FavoritesViewModel = hiltViewModel(),
+    reviewsViewModel: ProductReviewsViewModel = hiltViewModel(),
     toCartScreen: () -> Unit
 ) {
 
-    // For whole content
-    val scrollState = rememberScrollState()
     // Tab states
     val state = remember { mutableIntStateOf(0) }
     // Tab items
     val items = listOf("توضیحات", "ویژگی ها", "نظرات")
-    val sharedUiState = sharedViewModel.productState
+
+    // Add product id that we get from shared viewModel to viewModel to get stateFlow
+    viewModel.addProductId(sharedViewModel.productId)
+    val productIdState by viewModel.productIdState.collectAsState()
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getProductDetails(productId = productIdState)
+        reviewsViewModel.getProductReviews(productId = productIdState)
+    }
+
+    val productDetailsUiState: MainProductDetailsUiState by viewModel.productDetailsUiState.collectAsState()
+    val reviewsUiState: MainProductReviewsUiState by reviewsViewModel.reviewsState.collectAsState()
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -78,41 +92,66 @@ fun ProductDetailsScreen(
                     // TODO: Handle toCartScreen Click
                 )
             }
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .weight(5f)
-            ) {
-                ImageContentSection(
-                    image = sharedUiState?.images?.get(0)?.src!!,
-                    title = sharedUiState.name!!,
-                    price = sharedUiState.price!!,
-                    category = sharedUiState.categories?.get(0)?.name!!,
-                    onFavoriteBtnClick = {
-                        if (sharedUiState.isFavorite == false) {
-                            viewModel.updateFavoriteProduct(
-                                productId = sharedUiState.id!!,
-                                isFavorite = true
-                            )
-                        } else {
-                            viewModel.updateFavoriteProduct(
-                                productId = sharedUiState.id!!,
-                                isFavorite = false
-                            )
-                        }
-                    },
-                    isFavorite = false // todo: fix this shit
-                )
-            }
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .weight(5f)
-            ) {
-                Spacer(modifier = Modifier.height(10.dp))
-                ContentTabsSection(
-                    tabs = items,
-                    state = state,
-                    sharedUiState = sharedUiState!!
-                )
+            when (val uiState = productDetailsUiState.productDetailsUiState) {
+                ProductDetailsUiState.Loading -> {
+                    Column(modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(10f),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        JetText(text = "در حال بارگزاری ...")
+                    }
+                }
+                is ProductDetailsUiState.Success -> {
+                    Column(modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(5f)
+                    ) {
+                        ImageContentSection(
+                            image = uiState.productDetails.images?.get(0)?.src!!,
+                            title = uiState.productDetails.name!!,
+                            price = uiState.productDetails.price!!,
+                            category = uiState.productDetails.categories?.get(0)?.name!!,
+                            onFavoriteBtnClick = {
+                                if (uiState.productDetails.isFavorite == false) {
+                                    favoritesViewModel.updateFavoriteProduct(
+                                        productId = uiState.productDetails.id!!,
+                                        isFavorite = true
+                                    )
+                                } else {
+                                    favoritesViewModel.updateFavoriteProduct(
+                                        productId = uiState.productDetails.id!!,
+                                        isFavorite = false
+                                    )
+                                }
+                            },
+                            isFavorite = false // todo: fix this shit
+                        )
+                    }
+                    Column(modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(5f)
+                    ) {
+                        Spacer(modifier = Modifier.height(10.dp))
+                        ContentTabsSection(
+                            tabs = items,
+                            state = state,
+                            sharedUiState = uiState.productDetails,
+                            reviewsUiState = reviewsUiState
+                        )
+                    }
+                }
+                is ProductDetailsUiState.Error -> {
+                    Column(modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(10f),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        JetText(text = "${uiState.throwable}")
+                    }
+                }
             }
             Column(modifier = Modifier
                 .fillMaxWidth()
@@ -260,7 +299,8 @@ private fun ImageContentSection(
 private fun ContentTabsSection(
     tabs: List<String>,
     state: MutableIntState,
-    sharedUiState: ProductsResponse
+    sharedUiState: ProductsResponse,
+    reviewsUiState: MainProductReviewsUiState? = null
 ) {
 
     Card(modifier = Modifier
@@ -298,9 +338,32 @@ private fun ContentTabsSection(
                 1 -> FeaturesTab(
                     sharedUiState = sharedUiState
                 )
-                2 -> CommentsTab(
-                    sharedUiState = sharedUiState
-                )
+                2 -> {
+                    when (val reviewsState = reviewsUiState?.reviewsUiState) {
+                        ProductReviewsUiState.Loading -> {
+                            Column(modifier = Modifier
+                                .fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                JetText(text = "در حال بارگذاری ...")
+                            }
+                        }
+                        is ProductReviewsUiState.Success -> {
+                            CommentsTab(reviews = reviewsState.reviews)
+                        }
+                        is ProductReviewsUiState.Error -> {
+                            Column(modifier = Modifier
+                                .fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                JetText(text = reviewsState.message)
+                            }
+                        }
+                        else -> Unit
+                    }
+                }
             }
         }
     }
@@ -344,7 +407,7 @@ private fun FeaturesTab(
 
 @Composable
 private fun CommentsTab(
-    sharedUiState: ProductsResponse? = null
+    reviews: List<ProductReviewsResponse> = emptyList()
 ) {
     val state = rememberScrollState()
 
@@ -352,32 +415,12 @@ private fun CommentsTab(
         .fillMaxSize()
         .padding(15.dp)
     ) {
-//        when (val reviewsState = reviewsUiState?.reviewsUiState) {
-//            com.example.shoppingjetminds.viewmodels.ProductReviewsUiState.Loading -> {
-//                Column(modifier = Modifier
-//                    .fillMaxSize(),
-//                    verticalArrangement = Arrangement.Center,
-//                    horizontalAlignment = Alignment.CenterHorizontally
-//                ) {
-//                    JetText(text = "در حال بارگذاری ...")
-//                }
-//            }
-//            is com.example.shoppingjetminds.viewmodels.ProductReviewsUiState.Success -> {
-//
-//            }
-//            is com.example.shoppingjetminds.viewmodels.ProductReviewsUiState.Error -> {
-//                Column(modifier = Modifier
-//                    .fillMaxSize(),
-//                    verticalArrangement = Arrangement.Center,
-//                    horizontalAlignment = Alignment.CenterHorizontally
-//                ) {
-//                    JetText(text = reviewsState.message)
-//                }
-//            }
-//            else -> Unit
-//        }
-
-        ReviewsNotFound()
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            userScrollEnabled = true
+        ) {
+            
+        }
     }
 }
 

@@ -2,8 +2,8 @@ package com.example.productdetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.use_cases.favorites.IsFavoriteProductUseCase
-import com.example.domain.use_cases.favorites.UpdateFavoriteProductUseCase
+import com.example.domain.use_cases.products.GetProductDetailsUseCase
+import com.example.domain.utils.ServiceResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,26 +12,38 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
-    private val updateFavoriteProductUseCase: UpdateFavoriteProductUseCase,
-    private val isFavoriteProductUseCase: IsFavoriteProductUseCase
+    private val getProductDetailsUseCase: GetProductDetailsUseCase
 ): ViewModel() {
 
-    private var _isFavoriteState = MutableStateFlow(false)
-    val isFavoriteState = _isFavoriteState.asStateFlow()
+    private var _productDetailsUiState = MutableStateFlow(MainProductDetailsUiState(ProductDetailsUiState.Loading))
+    val productDetailsUiState = _productDetailsUiState.asStateFlow()
 
-    fun updateFavoriteProduct(productId: Int, isFavorite: Boolean) {
+    private var _productIdState = MutableStateFlow(0)
+    val productIdState = _productIdState.asStateFlow()
+
+    fun getProductDetails(productId: Int) {
         viewModelScope.launch {
-            updateFavoriteProductUseCase.invoke(productId = productId, isFavorite = isFavorite)
+            getProductDetailsUseCase.invoke(productId = productId).collect { productDetails ->
+                val productDetailsUiStateResult = when (productDetails) {
+                    ServiceResult.Loading -> ProductDetailsUiState.Loading
+                    is ServiceResult.Success -> ProductDetailsUiState.Success(
+                        productDetails = productDetails.data
+                    )
+                    is ServiceResult.Error -> ProductDetailsUiState.Error(
+                        throwable = productDetails.throwable!!
+                    )
+                }
+
+                _productDetailsUiState.value = MainProductDetailsUiState(
+                    productDetailsUiState = productDetailsUiStateResult
+                )
+            }
         }
     }
 
-    fun isFavoriteProduct(productId: Int) {
+    fun addProductId(productId: Int) {
         viewModelScope.launch {
-            isFavoriteProductUseCase.invoke(productId = productId).collect {
-                if (it != null) {
-                    _isFavoriteState.value = it
-                }
-            }
+            _productIdState.value = productId
         }
     }
 }

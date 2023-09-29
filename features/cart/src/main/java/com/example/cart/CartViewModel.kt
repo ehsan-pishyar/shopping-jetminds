@@ -27,9 +27,13 @@ class CartViewModel @Inject constructor(
     private var _cartItemCountState = MutableStateFlow(0)
     val cartItemCountState = _cartItemCountState.asStateFlow()
 
+    private var _totalPrice = MutableStateFlow(0)
+    val totalPrice = _totalPrice.asStateFlow()
+
     init {
         getCartItems()
         itemCountInCart()
+        getTotalPrice()
     }
 
     private fun getCartItems() {
@@ -38,6 +42,16 @@ class CartViewModel @Inject constructor(
                 _cartUiState.value = MainCartUiState(
                     cartUiState = cartItems
                 )
+            }
+        }
+    }
+
+    private fun getTotalPrice() {
+        viewModelScope.launch {
+            getCartItemsUseCase.invoke().collect { cartItems ->
+                cartItems.forEach {
+                    _totalPrice.value = it.price?.toInt()!!
+                }
             }
         }
     }

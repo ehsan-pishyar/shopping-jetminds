@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.utils.SharedViewModel
 import com.example.core.utils.carouselProductsSize
+import com.example.core.utils.getCurrentDate
 import com.example.designsystem.Background
 import com.example.designsystem.R
 import com.example.designsystem.components.JetHomeHeading
@@ -41,6 +42,7 @@ import com.example.designsystem.components.JetIconText
 import com.example.designsystem.components.JetProduct
 import com.example.designsystem.components.JetText
 import com.example.designsystem.components.SectionSpacer
+import com.example.domain.models.ProductsResponse
 import com.example.navigationdrawer.NavigationDialogScreen
 
 @Composable
@@ -60,16 +62,16 @@ fun HomeScreen(
     toCouponsScreen: () -> Unit
 ){
     val homeUiState: HomeUiState by viewModel.homeUiState.collectAsState()
+    val isFavoriteState by favoritesViewModel.isFavorite.collectAsState()
 
     HomeContent(
         homeUiState = homeUiState,
+        viewModel = viewModel,
         toCartScreen = { toCartScreen() },
         toNotificationScreen = { toNotificationScreen() },
         toProfileScreen = { toProfileScreen() },
         toShopScreen = { toShopScreen() },
-        toProductDetailsScreen = {
-            toProductDetailsScreen()
-        },
+        toProductDetailsScreen = { toProductDetailsScreen() },
         sharedViewModel = sharedViewModel,
         favoritesViewModel = favoritesViewModel,
         toOrdersScreen = { toOrdersScreen() },
@@ -77,13 +79,15 @@ fun HomeScreen(
         toFavoritesScreen = { toFavoritesScreen() },
         toDownloadsScreen = { toDownloadsScreen() },
         toNotificationsScreen = { toNotificationScreen() },
-        toCouponsScreen = { toCouponsScreen() }
+        toCouponsScreen = { toCouponsScreen() },
+        isFavoriteState = isFavoriteState
     )
 }
 
 @Composable
 private fun HomeContent(
     homeUiState: HomeUiState?,
+    viewModel: HomeViewModel? = null,
     sharedViewModel: SharedViewModel? = null,
     favoritesViewModel: FavoritesViewModel? = null,
     toCartScreen: () -> Unit,
@@ -97,6 +101,7 @@ private fun HomeContent(
     toDownloadsScreen: () -> Unit,
     toNotificationsScreen: () -> Unit,
     toCouponsScreen: () -> Unit,
+    isFavoriteState: Boolean = false
 ) {
     val scrollState = rememberScrollState()
     var openDialog by remember { mutableStateOf(false) }
@@ -131,58 +136,17 @@ private fun HomeContent(
                 )
             }
 
-            // Main slider
-            Image(
-                painter = painterResource(id = R.drawable.jetminds_slider_1),
-                contentDescription = "slider",
-                modifier = Modifier.clip(shape = RoundedCornerShape(12.dp))
-            )
-
-            SectionSpacer()
-
             // Application UI Kit
             if (homeUiState != null) {
-                AndroidSourceCodeSection(
+                MainContentSection(
                     homeUiState = homeUiState,
+                    viewModel = viewModel,
+                    sharedViewModel = sharedViewModel,
+                    favoritesViewModel = favoritesViewModel,
                     toShopScreen = { toShopScreen() },
-                    toCartScreen = { toCartScreen() },
-                    toProductDetailsScreen = { toProductDetailsScreen() },
-                    sharedViewModel = sharedViewModel!!,
-                    favoritesViewModel = favoritesViewModel
+                    toProductDetailsScreen = { toProductDetailsScreen() }
                 )
             }
-
-            SectionSpacer()
-
-            // Android Source Code
-            ApplicationUiKitSection(
-                homeUiState = homeUiState,
-                toShopScreen = { toShopScreen() },
-                toCartScreen = { toCartScreen() },
-                toProductDetailsScreen = { toProductDetailsScreen() }
-            )
-
-            SectionSpacer()
-
-            // Illustration banner
-            Image(
-                painter = painterResource(id = R.drawable.illustrations_3d_banner),
-                contentDescription = "3d illustration banner",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(12.dp))
-            )
-
-            SectionSpacer()
-
-            // 3D illustration products
-            Illustrations3DSection(
-                homeUiState = homeUiState,
-                toShopScreen = { toShopScreen() },
-                toCartScreen = { toCartScreen() },
-                toProductDetailsScreen = { toProductDetailsScreen() }
-            )
-
             NavigationDialogScreen(
                 openDialog = openDialog,
                 onDismiss = { openDialog = false },
@@ -200,14 +164,13 @@ private fun HomeContent(
     }
 }
 
-// Android carousel section
 @Composable
-private fun AndroidSourceCodeSection(
+fun MainContentSection(
     homeUiState: HomeUiState?,
-    sharedViewModel: SharedViewModel? = null,
-    favoritesViewModel: FavoritesViewModel? = null,
+    viewModel: HomeViewModel?,
+    sharedViewModel: SharedViewModel?,
+    favoritesViewModel: FavoritesViewModel?,
     toShopScreen: () -> Unit,
-    toCartScreen: () -> Unit,
     toProductDetailsScreen: () -> Unit
 ) {
     Column(modifier = Modifier
@@ -215,6 +178,17 @@ private fun AndroidSourceCodeSection(
         .wrapContentHeight(),
         verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
+
+        // Main slider
+        Image(
+            painter = painterResource(id = R.drawable.jetminds_slider_1),
+            contentDescription = "slider",
+            modifier = Modifier.clip(shape = RoundedCornerShape(12.dp))
+        )
+
+        SectionSpacer()
+
+        // Android source code section
         ProductsHeadingSection(
             title = "سورس کد اندروید",
             toShopScreen = { toShopScreen() }
@@ -224,69 +198,23 @@ private fun AndroidSourceCodeSection(
                 JetText(text = "در حال باگذاری ...")
             }
             is AndroidUiState.Success -> {
-                LazyRow(
-                    contentPadding = PaddingValues(0.dp),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    userScrollEnabled = true,
-                    content = {
-                        items(count = carouselProductsSize(
-                            size = androidUiState.androidSourceCodes.size
-                        )) { position ->
-                            favoritesViewModel?.isFavoriteProduct(androidUiState.androidSourceCodes[position].id!!)
-                            JetProduct(
-                                title = "${androidUiState.androidSourceCodes[position].name}",
-                                image = androidUiState.androidSourceCodes[position].images?.get(0)?.src,
-                                price = androidUiState.androidSourceCodes[position].price,
-                                rating = androidUiState.androidSourceCodes[position].averageRating,
-                                category = androidUiState.androidSourceCodes[position].categories?.get(0)?.name,
-                                onAddToCartClick = { toCartScreen() },
-                                onProductClick = {
-                                    sharedViewModel?.addProduct(androidUiState.androidSourceCodes[position])
-                                    toProductDetailsScreen()
-                                },
-                                onFavoriteBtnClick = {
-                                    if (androidUiState.androidSourceCodes[position].isFavorite == false) {
-                                        favoritesViewModel?.updateFavoriteProduct(
-                                            productId = androidUiState.androidSourceCodes[position].id!!,
-                                            isFavorite = true
-                                        )
-                                    } else {
-                                        favoritesViewModel?.updateFavoriteProduct(
-                                            productId = androidUiState.androidSourceCodes[position].id!!,
-                                            isFavorite = false
-                                        )
-                                    }
-                                },
-                                isFavorite = false // todo: fix this shit
-                            )
-                        }
-                    }
+                ProductsRow(
+                    viewModel = viewModel,
+                    sharedViewModel = sharedViewModel,
+                    favoritesViewModel = favoritesViewModel,
+                    products = androidUiState.androidSourceCodes,
+                    toProductDetailsScreen = { toProductDetailsScreen() }
                 )
             }
             is AndroidUiState.Error -> {
                 JetText(text = "${androidUiState.message}")
             }
-            else -> {}
+            else -> Unit
         }
-    }
-}
 
-// Application ui kits carousel section
-@Composable
-private fun ApplicationUiKitSection(
-    homeUiState: HomeUiState?,
-    toShopScreen: () -> Unit,
-    toCartScreen: () -> Unit,
-    toProductDetailsScreen: () -> Unit,
-    sharedViewModel: SharedViewModel? = null,
-    favoritesViewModel: FavoritesViewModel? = null
-) {
+        SectionSpacer()
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .wrapContentHeight(),
-        verticalArrangement = Arrangement.spacedBy(5.dp)
-    ) {
+        // Application section
         ProductsHeadingSection(
             title = "رابط کاربری اپلیکیشن",
             toShopScreen = { toShopScreen() }
@@ -296,69 +224,34 @@ private fun ApplicationUiKitSection(
                 JetText(text = "در حال باگذاری ...")
             }
             is ApplicationUiKitUiState.Success -> {
-                LazyRow(
-                    contentPadding = PaddingValues(0.dp),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    userScrollEnabled = true,
-                    content = {
-                        items(count = carouselProductsSize(
-                            size = applicationUiKitUiState.applicationUiKits.size
-                        )) { position ->
-                            favoritesViewModel?.isFavoriteProduct(applicationUiKitUiState.applicationUiKits[position].id!!)
-                            JetProduct(
-                                title = "${applicationUiKitUiState.applicationUiKits[position].name}",
-                                image = applicationUiKitUiState.applicationUiKits[position].images?.get(0)?.src,
-                                price = applicationUiKitUiState.applicationUiKits[position].price,
-                                rating = applicationUiKitUiState.applicationUiKits[position].averageRating,
-                                category = applicationUiKitUiState.applicationUiKits[position].categories?.get(0)?.name,
-                                onAddToCartClick = { toCartScreen() },
-                                onProductClick = {
-                                    sharedViewModel?.addProduct(applicationUiKitUiState.applicationUiKits[position])
-                                    toProductDetailsScreen()
-                                },
-                                onFavoriteBtnClick = {
-                                    if (applicationUiKitUiState.applicationUiKits[position].isFavorite == false) {
-                                        favoritesViewModel?.updateFavoriteProduct(
-                                            productId = applicationUiKitUiState.applicationUiKits[position].id!!,
-                                            isFavorite = true
-                                        )
-                                    } else {
-                                        favoritesViewModel?.updateFavoriteProduct(
-                                            productId = applicationUiKitUiState.applicationUiKits[position].id!!,
-                                            isFavorite = false
-                                        )
-                                    }
-                                },
-                                isFavorite = false // todo: fix this shit
-                            )
-                        }
-                    }
+                ProductsRow(
+                    viewModel = viewModel,
+                    sharedViewModel = sharedViewModel,
+                    favoritesViewModel = favoritesViewModel,
+                    products = applicationUiKitUiState.applicationUiKits,
+                    toProductDetailsScreen = { toProductDetailsScreen() }
                 )
             }
             is ApplicationUiKitUiState.Error -> {
                 JetText(text = "${applicationUiKitUiState.message}")
             }
-            else -> {}
+            else -> Unit
         }
-    }
-}
 
-// 3D illustrations carousel section
-@Composable
-private fun Illustrations3DSection(
-    homeUiState: HomeUiState?,
-    toShopScreen: () -> Unit,
-    toCartScreen: () -> Unit,
-    toProductDetailsScreen: () -> Unit,
-    sharedViewModel: SharedViewModel? = null,
-    favoritesViewModel: FavoritesViewModel? = null
-) {
+        SectionSpacer()
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .wrapContentHeight(),
-        verticalArrangement = Arrangement.spacedBy(5.dp)
-    ) {
+        // Illustration banner
+        Image(
+            painter = painterResource(id = R.drawable.illustrations_3d_banner),
+            contentDescription = "3d illustration banner",
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(shape = RoundedCornerShape(12.dp))
+        )
+
+        SectionSpacer()
+
+        // 3D illustration section
         ProductsHeadingSection(
             title = "طرح های سه بعدی",
             toShopScreen = { toShopScreen() }
@@ -368,50 +261,74 @@ private fun Illustrations3DSection(
                 JetText(text = "در حال باگذاری ...")
             }
             is Illustrations3DUiState.Success -> {
-                LazyRow(
-                    contentPadding = PaddingValues(0.dp),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    userScrollEnabled = true,
-                    content = {
-                        items(count = carouselProductsSize(
-                            size = illustrations3DUiState.illustration3Ds.size)
-                        ) { position ->
-                            JetProduct(
-                                title = "${illustrations3DUiState.illustration3Ds[position].name}",
-                                image = illustrations3DUiState.illustration3Ds[position].images?.get(0)?.src,
-                                price = illustrations3DUiState.illustration3Ds[position].price,
-                                rating = illustrations3DUiState.illustration3Ds[position].averageRating,
-                                category = illustrations3DUiState.illustration3Ds[position].categories?.get(0)?.name,
-                                onAddToCartClick = { toCartScreen() },
-                                onProductClick = {
-                                    sharedViewModel?.addProduct(illustrations3DUiState.illustration3Ds[position])
-                                    toProductDetailsScreen()
-                                },
-                                onFavoriteBtnClick = {
-                                    if (illustrations3DUiState.illustration3Ds[position].isFavorite == false) {
-                                        favoritesViewModel?.updateFavoriteProduct(
-                                            productId = illustrations3DUiState.illustration3Ds[position].id!!,
-                                            isFavorite = true
-                                        )
-                                    } else {
-                                        favoritesViewModel?.updateFavoriteProduct(
-                                            productId = illustrations3DUiState.illustration3Ds[position].id!!,
-                                            isFavorite = false
-                                        )
-                                    }
-                                },
-                                isFavorite = false // todo: fix this shit
-                            )
-                        }
-                    }
+                ProductsRow(
+                    viewModel = viewModel,
+                    sharedViewModel = sharedViewModel,
+                    favoritesViewModel = favoritesViewModel,
+                    products = illustrations3DUiState.illustration3Ds,
+                    toProductDetailsScreen = { toProductDetailsScreen() }
                 )
             }
             is Illustrations3DUiState.Error -> {
                 JetText(text = "${illustrations3DUiState.message}")
             }
-            else -> {}
+            else -> Unit
         }
     }
+}
+
+@Composable
+private fun ProductsRow(
+    products: List<ProductsResponse>,
+    viewModel: HomeViewModel? = null,
+    toProductDetailsScreen: () -> Unit,
+    sharedViewModel: SharedViewModel? = null,
+    favoritesViewModel: FavoritesViewModel? = null
+) {
+    LazyRow(
+        contentPadding = PaddingValues(0.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        userScrollEnabled = true,
+        content = {
+            items(count = carouselProductsSize(
+                size = products.size
+            )) { position ->
+                JetProduct(
+                    title = "${products[position].name}",
+                    image = products[position].images?.get(0)?.src,
+                    price = products[position].price,
+                    rating = products[position].averageRating,
+                    category = products[position].categories?.get(0)?.name,
+                    onAddToCartClick = {
+                        viewModel?.updateCart(
+                            productId = products[position].id!!,
+                            inCart = true,
+                            addedToCartDate = getCurrentDate()
+                        )
+                    },
+                    onProductClick = {
+//                        sharedViewModel?.addProduct(products[position])
+                        sharedViewModel?.addProductId(id = products[position].id!!)
+                        toProductDetailsScreen()
+                    },
+                    onFavoriteBtnClick = {
+                        if (products[position].isFavorite == false) {
+                            favoritesViewModel?.updateFavoriteProduct(
+                                productId = products[position].id!!,
+                                isFavorite = true
+                            )
+                        } else {
+                            favoritesViewModel?.updateFavoriteProduct(
+                                productId = products[position].id!!,
+                                isFavorite = false
+                            )
+                        }
+                    },
+                    isFavorite = false // todo: fix this shit
+                )
+            }
+        }
+    )
 }
 
 @Composable

@@ -13,7 +13,7 @@ interface ProductCategoriesDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertProductCategoryDetails(categoryDetails: ProductCategoriesResponseEntity)
 
-    @Query("SELECT * FROM `product_categories_table`")
+    @Query("SELECT id, name, image, count FROM `product_categories_table`")
     fun fetchProductCategories(): Flow<List<ProductCategoriesResponseEntity>>
 
     @Query("SELECT * FROM `product_categories_table` WHERE id = :categoryId")

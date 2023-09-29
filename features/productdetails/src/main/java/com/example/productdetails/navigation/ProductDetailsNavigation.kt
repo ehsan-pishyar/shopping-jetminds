@@ -12,6 +12,7 @@ fun NavGraphBuilder.productDetailsScreen(
     navController: NavHostController,
     sharedViewModel: SharedViewModel
 ) {
+
     composable(
         route = DetailScreens.ProductDetails.route
     ) {

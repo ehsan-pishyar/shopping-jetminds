@@ -18,6 +18,10 @@ class ProductsRepositoryImpl @Inject constructor(
     private val dao: ProductsDao
 ): ProductsRepository {
 
+    override suspend fun insertProductDetails(productDetails: ProductsResponse) {
+        dao.insertProductsDetails(productDetails = productDetails.toEntity())
+    }
+
     override fun getProducts(): Flow<List<ProductsResponse>> {
         return dao.fetchProducts().map { productsEntity ->
             productsEntity.map(ProductsResponseEntity::toDomain)

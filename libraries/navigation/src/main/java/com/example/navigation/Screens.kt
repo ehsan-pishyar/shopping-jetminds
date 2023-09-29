@@ -12,10 +12,9 @@ sealed class AuthScreens(val route: String) {
 }
 
 sealed class DetailScreens(val route: String) {
-    object ProductDetails: DetailScreens(route = "product_details")
-    object UserInformation: DetailScreens(route = "user_information")
+    object ProductDetails : DetailScreens(route = "product_details")
+    object UserInformation : DetailScreens(route = "user_information")
 }
-
 sealed class PaymentScreens(val route: String) {
     object Cart: PaymentScreens(route = "cart")
     object Checkout: PaymentScreens(route = "checkout")

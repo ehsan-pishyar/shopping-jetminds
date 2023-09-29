@@ -17,7 +17,7 @@ interface CartDao {
     suspend fun updateInCartProduct(
         productId: Int,
         inCart: Boolean,
-        addedToCartDate: String = ""
+        addedToCartDate: String
     )
 
     @Query("SELECT in_cart FROM `products_table` WHERE id = :productId AND in_cart = :inCart")

@@ -12,7 +12,6 @@ interface FavoritesDao {
         """
             SELECT * FROM `products_table`
             WHERE is_favorite = :isFavorite
-            ORDER BY date_created DESC
         """
     )
     fun fetchFavoriteProducts(

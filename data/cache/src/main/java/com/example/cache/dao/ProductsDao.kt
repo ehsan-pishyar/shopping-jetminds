@@ -18,11 +18,15 @@ interface ProductsDao {
     suspend fun insertProductsDetails(productDetails: ProductsResponseEntity)
 
     @Query(
-        "SELECT * FROM `products_table` " +
-                "WHERE stock_status = :stockStatus " +
-                "AND status = :status " +
-                "AND catalog_visibility = :catalogVisibility " +
-                "ORDER BY date_created DESC"
+        """
+            SELECT 
+                id, images, name, price, sale_price, average_rating, categories, is_favorite, in_cart, added_to_cart_date 
+            FROM `products_table`
+            WHERE stock_status = :stockStatus
+            AND status = :status
+            AND catalog_visibility = :catalogVisibility
+            ORDER BY date_created DESC
+        """
     )
     fun fetchProducts(
         stockStatus: String = "instock",
@@ -30,17 +34,13 @@ interface ProductsDao {
         catalogVisibility: String = "visible"
     ): Flow<List<ProductsResponseEntity>>
 
-    @Query(
-        "SELECT * FROM `products_table` " +
-                "WHERE id = :productId " +
-                "ORDER BY date_created"
-    )
+    @Query("SELECT * FROM `products_table` WHERE id = :productId")
     fun fetchProductDetails(productId: Int): Flow<ProductsResponseEntity>
 
     @Transaction
     @Query(
         """
-            SELECT * FROM products_table
+            SELECT id, images, name, price, sale_price, average_rating, categories FROM products_table
             WHERE id IN
             (
                 SELECT product_id FROM product_category_cross_ref_table
@@ -61,7 +61,7 @@ interface ProductsDao {
     @Transaction
     @Query(
         """
-            SELECT * FROM products_table
+            SELECT id, images, name, price, sale_price, average_rating, categories FROM products_table
             WHERE id IN
             (
                 SELECT product_id FROM product_tag_cross_ref_table
@@ -88,7 +88,7 @@ interface ProductsDao {
     @Transaction
     @Query(
         """
-            SELECT * FROM products_table
+            SELECT id, images, name, price, sale_price, average_rating, categories FROM products_table
             WHERE id IN
             (
                 SELECT product_id FROM product_attr_cross_ref_table
@@ -109,7 +109,7 @@ interface ProductsDao {
 
     // OnSale Products
     @Query(
-        "SELECT * FROM `products_table` " +
+        "SELECT id, images, name, price, sale_price, average_rating, categories FROM `products_table` " +
                 "WHERE on_sale = :onSale " +
                 "AND stock_status = :stockStatus " +
                 "AND status = :status " +
@@ -124,7 +124,7 @@ interface ProductsDao {
 
     // Popular Products
     @Query(
-        "SELECT * FROM `products_table` " +
+        "SELECT id, images, name, price, sale_price, average_rating, categories FROM `products_table` " +
                 "WHERE stock_status = :stockStatus " +
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility " +
@@ -138,7 +138,7 @@ interface ProductsDao {
 
     // Top Sales Products
     @Query(
-        "SELECT * FROM `products_table` " +
+        "SELECT id, images, name, price, sale_price, average_rating, categories FROM `products_table` " +
                 "WHERE stock_status = :stockStatus " +
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility " +
@@ -152,7 +152,7 @@ interface ProductsDao {
 
     // Newest Products
     @Query(
-        "SELECT * FROM `products_table` " +
+        "SELECT id, images, name, price, sale_price, average_rating, categories FROM `products_table` " +
                 "WHERE stock_status = :stockStatus " +
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility " +
@@ -166,7 +166,7 @@ interface ProductsDao {
 
     // Top Rated Products
     @Query(
-        "SELECT * FROM `products_table` " +
+        "SELECT id, images, name, price, sale_price, average_rating, categories FROM `products_table` " +
                 "WHERE stock_status = :stockStatus " +
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility " +
@@ -179,7 +179,7 @@ interface ProductsDao {
     ): Flow<List<ProductsResponseEntity>>
 
     @Query(
-        "SELECT * FROM `products_table` " +
+        "SELECT id, images, name, price, sale_price, average_rating, categories FROM `products_table` " +
                 "WHERE stock_status = :stockStatus " +
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility " +
@@ -192,7 +192,7 @@ interface ProductsDao {
     ): Flow<List<ProductsResponseEntity>>
 
     @Query(
-        "SELECT * FROM `products_table` " +
+        "SELECT id, images, name, price, sale_price, average_rating, categories FROM `products_table` " +
                 "WHERE stock_status = :stockStatus " +
                 "AND status = :status " +
                 "AND catalog_visibility = :catalogVisibility " +
