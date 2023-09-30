@@ -23,5 +23,5 @@ object CacheConstants {
     const val PRODUCT_ATTR_CROSS_REF_TABLE = "product_attr_cross_ref_table"
 
     const val DB_NAME = "jetminds-db"
-    const val DB_VERSION = 20
+    const val DB_VERSION = 21
 }

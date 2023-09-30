@@ -22,4 +22,6 @@ data class ProductReviewsResponseEntity(
     val review: String?,
     val rating: Int?,
     val verified: Boolean?,
+    @ColumnInfo(name = "reviewer_avatar_urls")
+    val avatar: UserAvatarEntity?
 )

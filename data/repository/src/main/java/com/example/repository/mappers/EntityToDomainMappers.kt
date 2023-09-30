@@ -104,7 +104,8 @@ fun ProductReviewsResponseEntity.toDomain(): ProductReviewsResponse =
         this.reviewerEmail,
         this.review,
         this.rating,
-        this.verified
+        this.verified,
+        this.avatar?.toDomain()
     )
 
 fun ProductShippingClassesResponseEntity.toDomain(): ProductShippingClassesResponse =
@@ -329,4 +330,11 @@ fun CustomersResponseEntity.toDomain(): CustomersResponse =
         this.shipping?.toDomain(),
         this.isPayingCustomer,
         this.avatarUrl
+    )
+
+fun UserAvatarEntity.toDomain(): UserAvatar =
+    UserAvatar(
+        this.size24,
+        this.size48,
+        this.size96
     )

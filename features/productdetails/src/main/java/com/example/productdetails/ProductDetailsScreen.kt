@@ -39,6 +39,7 @@ import com.example.designsystem.components.AttrsOptions
 import com.example.designsystem.components.JetCoilImage
 import com.example.designsystem.components.JetHeading
 import com.example.designsystem.components.JetPriceText
+import com.example.designsystem.components.JetReview
 import com.example.designsystem.components.JetSimpleButton
 import com.example.designsystem.components.JetStarText
 import com.example.designsystem.components.JetText
@@ -113,6 +114,7 @@ fun ProductDetailsScreen(
                             title = uiState.productDetails.name!!,
                             price = uiState.productDetails.price!!,
                             category = uiState.productDetails.categories?.get(0)?.name!!,
+                            rate = uiState.productDetails.averageRating!!,
                             onFavoriteBtnClick = {
                                 if (uiState.productDetails.isFavorite == false) {
                                     favoritesViewModel.updateFavoriteProduct(
@@ -173,7 +175,8 @@ private fun ImageContentSection(
     category: String,
     price: String = "",
     onFavoriteBtnClick: () -> Unit,
-    isFavorite: Boolean = false
+    isFavorite: Boolean = false,
+    rate: String = ""
 ) {
     Card(modifier = Modifier
         .fillMaxSize(),
@@ -281,7 +284,9 @@ private fun ImageContentSection(
                             horizontalArrangement = Arrangement.End,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            JetStarText()
+                            JetStarText(
+                                rate = rate.toFloat()
+                            )
                             Spacer(modifier = Modifier.width(10.dp))
                             LikeButton(
                                 onCLick = { onFavoriteBtnClick() },
@@ -409,17 +414,29 @@ private fun FeaturesTab(
 private fun CommentsTab(
     reviews: List<ProductReviewsResponse> = emptyList()
 ) {
-    val state = rememberScrollState()
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(15.dp)
-    ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            userScrollEnabled = true
+    if (reviews.isEmpty()) {
+        ReviewsNotFound()
+    } else {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(15.dp)
         ) {
-            
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                userScrollEnabled = true
+            ) {
+                items(count = reviews.size) { position ->
+                    println("product id: ${reviews[position].id}")
+                    JetReview(
+                        avatar = "${reviews[position].avatar?.size96}",
+                        reviewer = "${reviews[position].reviewer}",
+                        rating = reviews[position].rating!!,
+                        review = "${reviews[position].review}",
+                        date = "${reviews[position].dateCreated}"
+                    )
+                }
+            }
         }
     }
 }
@@ -469,18 +486,6 @@ private fun AttrsTabContent(
         }
     }
     AttrsNotFound()
-}
-
-@Composable
-private fun ReviewsTabContent(
-    reviews: List<ProductReviewsResponse>
-) {
-    LazyColumn(modifier = Modifier
-        .fillMaxWidth()
-        .wrapContentHeight()
-    ) {
-
-    }
 }
 
 @Composable

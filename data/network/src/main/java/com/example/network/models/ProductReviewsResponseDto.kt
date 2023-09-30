@@ -17,4 +17,6 @@ data class ProductReviewsResponseDto(
     val review: String?,
     val rating: Int?,
     val verified: Boolean?,
+    @SerializedName("reviewer_avatar_urls")
+    val avatar: UserAvatarDto?
 )

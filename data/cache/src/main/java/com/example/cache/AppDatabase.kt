@@ -62,7 +62,8 @@ import com.example.cache.utils.CacheConstants
     StringListConverter::class,
     TagsConverter::class,
     TaxesConverter::class,
-    TaxLinesConverter::class
+    TaxLinesConverter::class,
+    UserAvatarConverter::class
 )
 abstract class AppDatabase: RoomDatabase() {
 

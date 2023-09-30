@@ -10,5 +10,6 @@ data class ProductReviewsResponse(
     val reviewerEmail: String?,
     val review: String?,
     val rating: Int?,
-    val verified: Boolean?
+    val verified: Boolean?,
+    val avatar: UserAvatar?
 )

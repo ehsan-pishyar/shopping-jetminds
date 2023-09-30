@@ -104,7 +104,8 @@ fun ProductReviewsResponseDto.toEntity(): ProductReviewsResponseEntity =
         this.reviewerEmail,
         this.review,
         this.rating,
-        this.verified
+        this.verified,
+        this.avatar?.toEntity()
     )
 
 fun ProductShippingClassesResponseDto.toEntity(): ProductShippingClassesResponseEntity =
@@ -336,3 +337,9 @@ fun CustomersResponseDto.toEntity(): CustomersResponseEntity =
         this.avatarUrl
     )
 
+fun UserAvatarDto.toEntity(): UserAvatarEntity =
+    UserAvatarEntity(
+        this.size24,
+        this.size48,
+        this.size96
+    )

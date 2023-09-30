@@ -35,13 +35,10 @@ class ProductCategoriesRepositoryImpl @Inject constructor(
 
     override suspend fun refreshCategories() {
         api.getProductCategories().also { categoriesDto ->
-            println("Category DTO: ${categoriesDto[0].name}")
             dao.deleteAndInsertCategories(
                 categories = categoriesDto.map(
                     ProductCategoriesResponseDto::toEntity
-                ).also { categoriesEntity ->
-                    println("Category Entity: ${categoriesEntity[0].name}")
-                }
+                )
             )
         }
     }
