@@ -100,10 +100,5 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onErrorConsumed() {
-        viewModelScope.launch {
-            isError.emit(false)
-        }
-    }
 }
 

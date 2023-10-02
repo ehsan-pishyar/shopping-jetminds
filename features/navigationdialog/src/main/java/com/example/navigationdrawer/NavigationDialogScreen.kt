@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
@@ -190,7 +191,7 @@ private fun DialogHeaderSection(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 JetText(
-                    text = "جت مایندز",
+                    text = stringResource(id = R.string.app_name),
                     fontSize = 16,
                     fontWeight = FontWeight.SemiBold,
                     color = Primary
@@ -284,7 +285,7 @@ private fun DialogMainSectionHeader(
         .height(80.dp),
         verticalArrangement = Arrangement.Top
     ) {
-        // Avatar, Title and Email
+        // Avatar, Title and Email -----------------------------------------------------------------
         Row(modifier = Modifier
             .fillMaxWidth()
             .weight(3f)
@@ -404,43 +405,43 @@ private fun DialogMainSectionContent(
     val items = listOf(
         NavigationDialogItem(
             icon = R.drawable.orders_icon,
-            title = "سفارشات",
+            title = stringResource(id = R.string.user_dialog_orders),
             badge = ordersBadge.value,
             onClick = { toOrdersScreen() }
         ),
         NavigationDialogItem(
             icon = R.drawable.cart,
-            title = "سبد خرید",
+            title = stringResource(id = R.string.user_dialog_cart),
             badge = cartUiState?.value!!,
             onClick = { toCartScreen() }
         ),
         NavigationDialogItem(
             icon = R.drawable.compare,
-            title = "مقایسه ها",
+            title = stringResource(id = R.string.user_dialog_compares),
             badge = compareUiState?.value!!,
             onClick = { toComparesScreen() }
         ),
         NavigationDialogItem(
             icon = R.drawable.favorite,
-            title = "مورد علاقه ها",
+            title = stringResource(id = R.string.user_dialog_favorites),
             badge = favoritesUiState?.value!!,
             onClick = { toFavoritesScreen() }
         ),
         NavigationDialogItem(
             icon = R.drawable.download_icon,
-            title = "دانلود ها",
+            title = stringResource(id = R.string.user_dialog_downloads),
             badge = downloadsUiState?.value!!,
             onClick = { toDownloadsScreen() }
         ),
         NavigationDialogItem(
             icon = R.drawable.notification,
-            title = "اعلان ها",
+            title = stringResource(id = R.string.user_dialog_notifications),
             badge = notificationsUiState?.value!!,
             onClick = { toNotificationsScreen() }
         ),
         NavigationDialogItem(
             icon = R.drawable.discount,
-            title = "کد های تخفیف",
+            title = stringResource(id = R.string.user_dialog_coupon_codes),
             badge = couponsBadge.value,
             onClick = { toCouponsScreen() }
         )
@@ -530,12 +531,12 @@ private fun DialogBottomSection(
     val items = listOf(
         NavigationDialogBottomItem(
             icon = R.drawable.settings,
-            title = "تنظیمات",
+            title = stringResource(id = R.string.user_dialog_settings),
             onClick = { toShopScreen() }
         ),
         NavigationDialogBottomItem(
             icon = R.drawable.user_icon,
-            title = "درباره ما",
+            title = stringResource(id = R.string.user_dialog_about_us),
             onClick = { toShopScreen() }
         )
     )

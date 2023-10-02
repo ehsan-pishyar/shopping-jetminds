@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -190,12 +191,12 @@ fun MainContentSection(
 
         // Android source code section
         ProductsHeadingSection(
-            title = "سورس کد اندروید",
+            title = stringResource(id = R.string.category_title_android_ui_kit),
             toShopScreen = { toShopScreen() }
         )
         when (val androidUiState = homeUiState?.androidUiState) {
             AndroidUiState.Loading -> {
-                JetText(text = "در حال باگذاری ...")
+                JetText(text = stringResource(id = R.string.loading))
             }
             is AndroidUiState.Success -> {
                 ProductsRow(
@@ -216,12 +217,12 @@ fun MainContentSection(
 
         // Application section
         ProductsHeadingSection(
-            title = "رابط کاربری اپلیکیشن",
+            title = stringResource(id = R.string.category_title_application_ui_kit),
             toShopScreen = { toShopScreen() }
         )
         when (val applicationUiKitUiState = homeUiState?.applicationUiKitUiState) {
             ApplicationUiKitUiState.Loading -> {
-                JetText(text = "در حال باگذاری ...")
+                JetText(text = stringResource(id = R.string.loading))
             }
             is ApplicationUiKitUiState.Success -> {
                 ProductsRow(
@@ -253,12 +254,12 @@ fun MainContentSection(
 
         // 3D illustration section
         ProductsHeadingSection(
-            title = "طرح های سه بعدی",
+            title = stringResource(id = R.string.category_title_illustration_ui_lit),
             toShopScreen = { toShopScreen() }
         )
         when (val illustrations3DUiState = homeUiState?.illustrations3DUiState) {
             Illustrations3DUiState.Loading -> {
-                JetText(text = "در حال باگذاری ...")
+                JetText(text = stringResource(id = R.string.loading))
             }
             is Illustrations3DUiState.Success -> {
                 ProductsRow(
@@ -307,7 +308,6 @@ private fun ProductsRow(
                         )
                     },
                     onProductClick = {
-//                        sharedViewModel?.addProduct(products[position])
                         sharedViewModel?.addProductId(id = products[position].id!!)
                         toProductDetailsScreen()
                     },
@@ -342,9 +342,7 @@ private fun ProductsHeadingSection(
         verticalAlignment = Alignment.CenterVertically
     ) {
         JetText(text = title)
-        JetIconText {
-            toShopScreen()
-        }
+        JetIconText { toShopScreen() }
     }
 }
 

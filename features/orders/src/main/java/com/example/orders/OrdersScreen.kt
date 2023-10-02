@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -67,7 +68,10 @@ private fun OrdersContent(
                 .fillMaxWidth()
                 .weight(1f)
             ) {
-                JetHeading(title = "سفارشات من", hasCartIcon = true)
+                JetHeading(
+                    title = stringResource(id = R.string.heading_my_orders),
+                    hasCartIcon = true
+                )
             }
             Column(modifier = Modifier
                 .fillMaxWidth()

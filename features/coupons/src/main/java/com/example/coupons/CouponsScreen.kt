@@ -88,7 +88,9 @@ private fun CouponsContent(
                         JetText(text = state.message)
                     }
                 }
-                else -> Unit
+                else -> {
+                    CouponsNotFound()
+                }
             }
         }
     }
@@ -104,7 +106,7 @@ private fun CouponsNotFound() {
         Image(
             painter = painterResource(id = R.drawable.coupon),
             contentDescription = null,
-            modifier = Modifier.size(150.dp)
+            modifier = Modifier.size(100.dp)
         )
 
         Spacer(modifier = Modifier.height(20.dp))

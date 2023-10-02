@@ -1,9 +1,11 @@
-package com.example.productdetails
+package com.example.productdetails.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.use_cases.products.GetProductDetailsUseCase
 import com.example.domain.utils.ServiceResult
+import com.example.productdetails.uistate.MainProductDetailsUiState
+import com.example.productdetails.uistate.ProductDetailsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +17,11 @@ class ProductDetailsViewModel @Inject constructor(
     private val getProductDetailsUseCase: GetProductDetailsUseCase
 ): ViewModel() {
 
-    private var _productDetailsUiState = MutableStateFlow(MainProductDetailsUiState(ProductDetailsUiState.Loading))
+    private var _productDetailsUiState = MutableStateFlow(
+        MainProductDetailsUiState(
+            ProductDetailsUiState.Loading
+        )
+    )
     val productDetailsUiState = _productDetailsUiState.asStateFlow()
 
     private var _productIdState = MutableStateFlow(0)

@@ -14,10 +14,12 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.example.designsystem.Background
+import com.example.designsystem.R
 import com.example.designsystem.components.JetHeading
 import com.example.designsystem.components.JetTextField
 
@@ -41,7 +43,10 @@ private fun BillingContent() {
                 .fillMaxWidth()
                 .weight(1f)
             ) {
-                JetHeading(title = "مشخصات کاربر", hasCartIcon = true)
+                JetHeading(
+                    title = stringResource(id = R.string.heading_user_information),
+                    hasCartIcon = true
+                )
             }
             Column(modifier = Modifier
                 .fillMaxWidth()

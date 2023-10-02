@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Shopping JetMinds</string>
+    <string name="company_name">جت مایندز</string>
+
+    <!--  Product  -->
+    <string name="feature_404_title">محصول هیچ ویژگی نداره</string>
+    <string name="feature_404_desc">این محصولی که در حال مشاهده هستین هیچ ویژگی ای نداره</string>
+
+    <string name="comments_404_title">هیچ نظری ثبت نشده</string>
+    <string name="comments_404_desc">هیچ نظری برای محصول مورد نظر شما ثبت نشده</string>
+
+    <string name="tab_description">توضیحات</string>
+    <string name="tab_features">ویژگی ها</string>
+    <string name="tab_comments">نظرات</string>
+
+    <string name="category_title_android_ui_kit">سورس کد اندروید</string>
+    <string name="category_title_application_ui_kit">رابط کاربری اپلیکیشن</string>
+    <string name="category_title_illustration_ui_lit">طرح های سه بعدی</string>
+
+    <string name="coupon_codes">کدهای تخفیف</string>
+    <string name="coupon_code">کد تخفیف</string>
+    <string name="apply_coupon_code">اعمال کد</string>
+
+    <string name="sub_total_sum">جمع جزء</string>
+    <string name="total_sum">جمع کل</string>
+    <string name="tax">مالیات</string>
+    <string name="continue_to_checkout">ادامه جهت تسویه حساب</string>
+
+    <string name="cart_404_title">سبد خرید شما خالی است</string>
+    <string name="cart_404_desc">در حال حاضر هیچ محصولی توی سبد خرید شما نیستش</string>
+
+    <string name="favorites_404_title">"شما هیچ آیتم مورد علاقه ای ندارید"</string>
+    <string name="favorites_404_desc">سعی کنید محصولی را به عنوان مورد علاقه اضافه کنید</string>
+
+    <string name="last_purchased">آخرین خرید های من</string>
+
+    <!--  Headings  -->
+    <string name="heading_product_details">محصول تکی</string>
+    <string name="heading_user_dashboard">پنل کاربری</string>
+    <string name="heading_user_information">مشخصات کاربر</string>
+    <string name="heading_cart">سبد خرید</string>
+    <string name="heading_product_category">دسته بندی محصولات</string>
+    <string name="heading_my_downloads">دانلود های من</string>
+    <string name="heading_favorites">علاقه مندی ها</string>
+    <string name="heading_my_orders">سفارشات من</string>
+
+    <!--  User roles  -->
+    <string name="role_admin">مدیر کل</string>
+    <string name="role_subscriber">عادی</string>
+    <string name="role_customer">مشتری</string>
+    <string name="role_visitor">بازدید کننده</string>
+    <string name="role_author">نویسنده</string>
+    <string name="role_shop_manager">مدیر فروشگاه</string>
+    <string name="role_editor">ویرایشگر</string>
+
+    <!--  User account tabs  -->
+    <string name="account_tab_information">مشاهده اطلاعات</string>
+    <string name="account_tab_orders">سفارشات من</string>
+    <string name="account_tab_downloads">دانلود های من</string>
+    <string name="account_tab_billings">جزئیات صورت حساب</string>
+    <string name="account_tab_location">آدرس من</string>
+    <string name="account_tab_favorites">علاقمندی های من</string>
+
+    <!--  Others  -->
+    <string name="notifications">اعلان ها</string>
+    <string name="loading">در حال بارگذاری …</string>
+    <string name="filters">فیلتر ها</string>
+    <string name="order_by">مرتب سازی</string>
+
+    <!--  Buttons  -->
+    <string name="button_next">بعدی</string>
+    <string name="button_previous">قبلی</string>
+    <string name="button_start">شروع کنیم</string>
+    <string name="button_add_to_cart">افزودن به سبد خرید</string>
+
+    <!--  Payments status  -->
+    <string name="payment_status_completed">پرداخت شده</string>
+    <string name="payment_status_canceled">لغو شده</string>
+    <string name="payment_status_in_pending">در حال پرداخت</string>
+
+    <!--  User dialog  -->
+    <string name="user_dialog_orders">سفارشات</string>
+    <string name="user_dialog_cart">سبد خرید</string>
+    <string name="user_dialog_compares">مقایسه ها</string>
+    <string name="user_dialog_favorites">مورد علاقه ها</string>
+    <string name="user_dialog_downloads">دانلود ها</string>
+    <string name="user_dialog_notifications">اعلان ها</string>
+    <string name="user_dialog_coupon_codes">کد های تخفیف</string>
+
+    <string name="user_dialog_settings">تنظیمات</string>
+    <string name="user_dialog_about_us">درباره ما</string>
+</resources>

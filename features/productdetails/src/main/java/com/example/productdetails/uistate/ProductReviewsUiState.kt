@@ -1,4 +1,4 @@
-package com.example.productdetails
+package com.example.productdetails.uistate
 
 import com.example.domain.models.ProductReviewsResponse
 

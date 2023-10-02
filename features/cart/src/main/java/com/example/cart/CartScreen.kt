@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -95,7 +96,7 @@ private fun CartContent(
                         .weight(1f)
                     ) {
                         JetHeading(
-                            title = "سبد خرید",
+                            title = stringResource(id = R.string.heading_cart),
                             hasCartIcon = true
                             // TODO: Handle toCartScreen Click
                         )
@@ -113,7 +114,7 @@ private fun CartContent(
                         .weight(1f)
                     ) {
                         JetHeading(
-                            title = "سبد خرید",
+                            title = stringResource(id = R.string.heading_cart),
                             hasCartIcon = true
                             // TODO: Handle toCartScreen Click
                         )
@@ -187,7 +188,7 @@ fun PromoSection() {
             verticalArrangement = Arrangement.Bottom
         ) {
             JetTextField(
-                placeholder = "کد تخفیف",
+                placeholder = stringResource(id = R.string.coupon_code),
                 onValueChange = {},
                 height = 56,
                 shape = 12,
@@ -214,7 +215,7 @@ fun PromoSection() {
                 contentPadding = PaddingValues(0.dp)
             ) {
                 JetText(
-                    text = "اعمال کد",
+                    text = stringResource(id = R.string.apply_coupon_code),
                     color = Color.White
                 )
             }
@@ -250,7 +251,7 @@ fun CheckoutSection(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     JetText(
-                        text = "جمع جزء",
+                        text = stringResource(id = R.string.sub_total_sum),
                         fontSize = 16,
                         fontWeight = FontWeight.Bold
                     )
@@ -272,7 +273,7 @@ fun CheckoutSection(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     JetText(
-                        text = "مالیات",
+                        text = stringResource(id = R.string.tax),
                         fontSize = 16,
                         fontWeight = FontWeight.Bold
                     )
@@ -293,7 +294,7 @@ fun CheckoutSection(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     JetText(
-                        text = "جمع کل",
+                        text = stringResource(id = R.string.total_sum),
                         fontSize = 16,
                         fontWeight = FontWeight.Bold
                     )
@@ -319,7 +320,7 @@ fun CheckoutSection(
             Column {
                 JetSimpleButton(
                     onClick = { /*TODO*/ },
-                    text = "ادامه جهت تسویه حساب"
+                    text = stringResource(id = R.string.continue_to_checkout)
                 )
             }
         }
@@ -342,12 +343,12 @@ private fun CartItemNotFound() {
         Spacer(modifier = Modifier.height(20.dp))
 
         JetText(
-            text = "سبد خرید شما خالیه",
+            text = stringResource(id = R.string.cart_404_title),
             fontWeight = FontWeight.Bold
         )
 
         JetText(
-            text = "در حال حاضر هیچ محصولی توی سبد خرید شما نیستش",
+            text = stringResource(id = R.string.cart_404_desc),
             color = LighterBlack,
             fontSize = 12
         )

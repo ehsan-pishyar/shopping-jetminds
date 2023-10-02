@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -97,7 +98,7 @@ private fun AccountContent(
                 .fillMaxWidth()
                 .weight(1f)
             ) {
-                JetHeading(title = "پنل کاربری", hasCartIcon = true)
+                JetHeading(title = stringResource(id = R.string.heading_user_dashboard), hasCartIcon = true)
             }
             Column(modifier = Modifier
                 .fillMaxWidth()
@@ -271,42 +272,42 @@ private fun MainMenuSection(
         ) {
             MainMenuItemSection(
                 icon = R.drawable.user_icon,
-                title = "مشاهده اطلاعات"
+                title = stringResource(id = R.string.account_tab_information)
             ) {
                 toUserInformationScreen()
             }
             Divider(color = Background)
             MainMenuItemSection(
                 icon = R.drawable.orders_icon,
-                title = "سفارشات من"
+                title = stringResource(id = R.string.account_tab_orders)
             ) {
                 toOrdersScreen()
             }
             Divider(color = Background)
             MainMenuItemSection(
                 icon = R.drawable.download_icon,
-                title = "دانلود های من"
+                title = stringResource(id = R.string.account_tab_downloads)
             ) {
                 toDownloadScreen()
             }
             Divider(color = Background)
             MainMenuItemSection(
                 icon = R.drawable.billing_icon,
-                title = "جزئیات صورت حساب"
+                title = stringResource(id = R.string.account_tab_billings)
             ) {
                 toBillingScreen()
             }
             Divider(color = Background)
             MainMenuItemSection(
                 icon = R.drawable.location,
-                title = "آدرس من"
+                title = stringResource(id = R.string.account_tab_location)
             ) {
                 toAddressScreen()
             }
             Divider(color = Background)
             MainMenuItemSection(
                 icon = R.drawable.favorite,
-                title = "علاقه مندی های من"
+                title = stringResource(id = R.string.account_tab_favorites)
             ) {
                 toFavoritesScreen()
             }
@@ -361,7 +362,7 @@ private fun CouponSection() {
         verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         JetText(
-            text = "کدهای تخفیف",
+            text = stringResource(id = R.string.coupon_codes),
             fontSize = 13,
             fontWeight = FontWeight.Normal,
             modifier = Modifier.padding(horizontal = 10.dp)
@@ -413,7 +414,7 @@ private fun NotificationSection() {
         verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         JetText(
-            text = "اعلان ها",
+            text = stringResource(id = R.string.notifications),
             fontSize = 13,
             fontWeight = FontWeight.Normal,
             modifier = Modifier.padding(horizontal = 10.dp)
@@ -467,7 +468,7 @@ private fun UserLastBuying() {
         verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         JetText(
-            text = "آخرین خرید های من",
+            text = stringResource(id = R.string.last_purchased),
             fontSize = 13,
             fontWeight = FontWeight.Normal,
             modifier = Modifier.padding(horizontal = 10.dp)

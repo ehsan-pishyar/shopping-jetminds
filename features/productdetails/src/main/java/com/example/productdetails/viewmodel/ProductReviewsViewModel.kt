@@ -1,9 +1,11 @@
-package com.example.productdetails
+package com.example.productdetails.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.use_cases.product_reviews.GetProductReviewsUseCase
 import com.example.domain.utils.ServiceResult
+import com.example.productdetails.uistate.MainProductReviewsUiState
+import com.example.productdetails.uistate.ProductReviewsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

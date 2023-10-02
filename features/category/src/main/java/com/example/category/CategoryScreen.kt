@@ -16,12 +16,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.utils.SharedViewModel
 import com.example.designsystem.Background
+import com.example.designsystem.R
 import com.example.designsystem.components.JetCategory
 import com.example.designsystem.components.JetHeading
 import com.example.designsystem.components.JetText
@@ -65,7 +67,7 @@ private fun CategoryScreenContent(
                 .weight(1f)
             ) {
                 JetHeading(
-                    title = "دسته بندی محصولات",
+                    title = stringResource(id = R.string.heading_product_category),
                     hasCartIcon = true,
                     toCartScreen = { toCartScreen() }
                 )
@@ -80,7 +82,7 @@ private fun CategoryScreenContent(
                 ) {
                     when(val state = categoryState?.categoriesUiState) {
                         ProductCategoriesUiState.Loading -> {
-                            JetText(text = "در حال بارگذازی ...")
+                            JetText(text = stringResource(id = R.string.loading))
                         }
                         is ProductCategoriesUiState.Success -> {
                             LazyColumn(modifier = Modifier

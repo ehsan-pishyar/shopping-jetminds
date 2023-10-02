@@ -24,12 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.utils.SharedViewModel
+import com.example.core.utils.getCurrentDate
 import com.example.core.utils.parseHtml
 import com.example.designsystem.Background
 import com.example.designsystem.LighterBlack
@@ -46,6 +48,14 @@ import com.example.designsystem.components.JetText
 import com.example.designsystem.components.LikeButton
 import com.example.domain.models.ProductReviewsResponse
 import com.example.domain.models.ProductsResponse
+import com.example.productdetails.uistate.MainProductDetailsUiState
+import com.example.productdetails.uistate.MainProductReviewsUiState
+import com.example.productdetails.uistate.ProductDetailsUiState
+import com.example.productdetails.uistate.ProductReviewsUiState
+import com.example.productdetails.viewmodel.CartViewModel
+import com.example.productdetails.viewmodel.FavoritesViewModel
+import com.example.productdetails.viewmodel.ProductDetailsViewModel
+import com.example.productdetails.viewmodel.ProductReviewsViewModel
 
 @Composable
 fun ProductDetailsScreen(
@@ -53,13 +63,12 @@ fun ProductDetailsScreen(
     sharedViewModel: SharedViewModel = SharedViewModel(),
     favoritesViewModel: FavoritesViewModel = hiltViewModel(),
     reviewsViewModel: ProductReviewsViewModel = hiltViewModel(),
+    cartViewModel: CartViewModel = hiltViewModel(),
     toCartScreen: () -> Unit
 ) {
 
     // Tab states
     val state = remember { mutableIntStateOf(0) }
-    // Tab items
-    val items = listOf("توضیحات", "ویژگی ها", "نظرات")
 
     // Add product id that we get from shared viewModel to viewModel to get stateFlow
     viewModel.addProductId(sharedViewModel.productId)
@@ -88,9 +97,9 @@ fun ProductDetailsScreen(
                 .weight(1f)
             ) {
                 JetHeading(
-                    title = "محصول تکی",
-                    hasCartIcon = true
-                    // TODO: Handle toCartScreen Click
+                    title = stringResource(id = R.string.heading_product_details),
+                    hasCartIcon = true,
+                    toCartScreen = { toCartScreen() }
                 )
             }
             when (val uiState = productDetailsUiState.productDetailsUiState) {
@@ -101,7 +110,7 @@ fun ProductDetailsScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        JetText(text = "در حال بارگزاری ...")
+                        JetText(text = stringResource(id = R.string.loading))
                     }
                 }
                 is ProductDetailsUiState.Success -> {
@@ -137,10 +146,19 @@ fun ProductDetailsScreen(
                     ) {
                         Spacer(modifier = Modifier.height(10.dp))
                         ContentTabsSection(
-                            tabs = items,
                             state = state,
                             sharedUiState = uiState.productDetails,
                             reviewsUiState = reviewsUiState
+                        )
+                    }
+                    Column(modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                        verticalArrangement = Arrangement.Bottom
+                    ) {
+                        BottomSection(
+                            cartViewModel = cartViewModel,
+                            productId = uiState.productDetails.id!!
                         )
                     }
                 }
@@ -154,15 +172,6 @@ fun ProductDetailsScreen(
                         JetText(text = "${uiState.throwable}")
                     }
                 }
-            }
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-                verticalArrangement = Arrangement.Bottom
-            ) {
-                BottomSection(
-                    toCartScreen = { toCartScreen() }
-                )
             }
         }
     }
@@ -302,11 +311,17 @@ private fun ImageContentSection(
 
 @Composable
 private fun ContentTabsSection(
-    tabs: List<String>,
     state: MutableIntState,
     sharedUiState: ProductsResponse,
     reviewsUiState: MainProductReviewsUiState? = null
 ) {
+
+    // Tab items
+    val tabs = listOf(
+        ProductTabs.DESCRIPTION.tabName,
+        ProductTabs.FEATURES.tabName,
+        ProductTabs.REVIEWS.tabName
+    )
 
     Card(modifier = Modifier
         .fillMaxWidth(),
@@ -331,11 +346,6 @@ private fun ContentTabsSection(
                     )
                 }
             }
-//            Text(
-//                modifier = Modifier.align(Alignment.CenterHorizontally),
-//                text = "Text tab ${state.intValue + 1} selected",
-//                style = MaterialTheme.typography.bodyLarge
-//            )
             when (state.intValue) {
                 0 -> DescriptionTab(
                     sharedUiState = sharedUiState
@@ -351,7 +361,7 @@ private fun ContentTabsSection(
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                JetText(text = "در حال بارگذاری ...")
+                                JetText(text = stringResource(id = R.string.loading))
                             }
                         }
                         is ProductReviewsUiState.Success -> {
@@ -427,7 +437,6 @@ private fun CommentsTab(
                 userScrollEnabled = true
             ) {
                 items(count = reviews.size) { position ->
-                    println("product id: ${reviews[position].id}")
                     JetReview(
                         avatar = "${reviews[position].avatar?.size96}",
                         reviewer = "${reviews[position].reviewer}",
@@ -490,11 +499,18 @@ private fun AttrsTabContent(
 
 @Composable
 private fun BottomSection(
-    toCartScreen: () -> Unit
+    cartViewModel: CartViewModel? = null,
+    productId: Int
 ) {
     JetSimpleButton(
-        onClick = { toCartScreen() },
-        text = "افزودن به سبد خرید",
+        onClick = {
+            cartViewModel?.updateCart(
+                productId = productId,
+                inCart = true,
+                addedToCartDate = getCurrentDate()
+            )
+        },
+        text = stringResource(id = R.string.button_add_to_cart),
         height = 56
     )
 }
@@ -515,14 +531,14 @@ private fun AttrsNotFound() {
         Spacer(modifier = Modifier.height(10.dp))
 
         JetText(
-            text = "محصول، هیچ ویژگی نداره",
+            text = stringResource(id = R.string.feature_404_title),
             fontWeight = FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(5.dp))
 
         JetText(
-            text = "این محصولی که در حال مشاهده هستین هیچ ویژگی ای نداره",
+            text = stringResource(id = R.string.favorites_404_desc),
             color = LighterBlack,
             fontSize = 12
         )
@@ -545,14 +561,14 @@ private fun ReviewsNotFound() {
         Spacer(modifier = Modifier.height(10.dp))
 
         JetText(
-            text = "هیچ نظری ثبت نشده",
+            text = stringResource(id = R.string.comments_404_title),
             fontWeight = FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(5.dp))
 
         JetText(
-            text = "هیچ نظری برای محصول مورد نظر شما ثبت نشده",
+            text = stringResource(id = R.string.comments_404_desc),
             color = LighterBlack,
             fontSize = 12
         )

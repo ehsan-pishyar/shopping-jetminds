@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.designsystem.Background
 import com.example.designsystem.LighterBlack
 import com.example.designsystem.Primary
+import com.example.designsystem.R
 import com.example.designsystem.Yekanbakh
 import com.example.designsystem.components.JetSimpleButton
 import com.example.designsystem.components.JetText
@@ -210,7 +212,11 @@ fun ButtonSection(pagerState: PagerState, onClick: () -> Unit) {
         onClick = { onClick() },
         modifier = Modifier
             .fillMaxWidth(),
-        text = if (pagerState.currentPage != 2) "بعدی" else "شروع کنیم"
+        text =
+        if (pagerState.currentPage != 2)
+            stringResource(id = R.string.button_next)
+        else
+            stringResource(id = R.string.button_start)
     )
 }
 

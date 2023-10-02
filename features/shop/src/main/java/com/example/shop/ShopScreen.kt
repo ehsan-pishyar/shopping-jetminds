@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -140,7 +141,7 @@ private fun FilterAndOrderSection() {
                 Spacer(modifier = Modifier.width(20.dp))
 
                 JetText(
-                    text = "فیلتر ها"
+                    text = stringResource(id = R.string.filters)
                 )
             }
         }
@@ -169,7 +170,7 @@ private fun FilterAndOrderSection() {
                 Spacer(modifier = Modifier.width(20.dp))
 
                 JetText(
-                    text = "مرتب سازی"
+                    text = stringResource(id = R.string.order_by)
                 )
             }
         }
@@ -192,7 +193,7 @@ private fun ProductsSection(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                JetText(text = "در حال بارگذاری ...")
+                JetText(text = stringResource(id = R.string.loading))
             }
         }
         is ShopProductsUiState.Success -> {

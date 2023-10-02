@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -78,7 +79,10 @@ private fun FavoritesContent(
                 .weight(1f)
                 .padding(15.dp)
             ) {
-                JetHeading(title = "علاقه مندی ها", hasCartIcon = true)
+                JetHeading(
+                    title = stringResource(id = R.string.heading_favorites),
+                    hasCartIcon = true
+                )
             }
 
             Column(modifier = Modifier
@@ -189,12 +193,12 @@ private fun FavoritesNotFound() {
         Spacer(modifier = Modifier.height(20.dp))
 
         JetText(
-            text = "شما هیچ آیتم مورد علاقه ای ندارید",
+            text = stringResource(id = R.string.favorites_404_title),
             fontWeight = FontWeight.Bold
         )
 
         JetText(
-            text = "سعی کنید محصولی را به عنوان مورد علاقه اضافه کنید",
+            text = stringResource(id = R.string.favorites_404_desc),
             color = LighterBlack,
             fontSize = 12
         )
