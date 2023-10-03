@@ -157,9 +157,7 @@ fun ProductsResponseEntity.toDomain(): ProductsResponse =
         this.defaultAttributes?.map { it.toDomain() },
         this.stockStatus,
         this.isFavorite,
-        this.downloaded,
-        this.inCart,
-        this.addedToCartDate
+        this.downloaded
     )
 
 fun ProductTagsResponseEntity.toDomain(): ProductTagsResponse =
@@ -337,4 +335,15 @@ fun UserAvatarEntity.toDomain(): UserAvatar =
         this.size24,
         this.size48,
         this.size96
+    )
+
+fun CartEntity.toDomain(): Cart =
+    Cart(
+        this.productId,
+        this.productTitle,
+        this.productImage,
+        this.productCategory,
+        this.productPrice,
+        this.dateAdded,
+        this.itemCount
     )

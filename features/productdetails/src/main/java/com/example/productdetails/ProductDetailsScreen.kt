@@ -19,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -76,10 +77,14 @@ fun ProductDetailsScreen(
 
     LaunchedEffect(key1 = true) {
         viewModel.getProductDetails(productId = productIdState)
+        cartViewModel.isInCartItem(productId = productIdState)
+        cartViewModel.getCartItemCount(productId = productIdState)
         reviewsViewModel.getProductReviews(productId = productIdState)
     }
 
     val productDetailsUiState: MainProductDetailsUiState by viewModel.productDetailsUiState.collectAsState()
+    val isInCartUiState by cartViewModel.isInCartUiState.collectAsState()
+    val cartItemCountUiState by cartViewModel.cartItemCount.collectAsState()
     val reviewsUiState: MainProductReviewsUiState by reviewsViewModel.reviewsState.collectAsState()
 
     Box(modifier = Modifier
@@ -114,6 +119,7 @@ fun ProductDetailsScreen(
                     }
                 }
                 is ProductDetailsUiState.Success -> {
+                    println("Product is in cart: $isInCartUiState")
                     Column(modifier = Modifier
                         .fillMaxWidth()
                         .weight(5f)
@@ -158,7 +164,13 @@ fun ProductDetailsScreen(
                     ) {
                         BottomSection(
                             cartViewModel = cartViewModel,
-                            productId = uiState.productDetails.id!!
+                            productId = uiState.productDetails.id!!,
+                            title = uiState.productDetails.name!!,
+                            image = uiState.productDetails.images?.get(0)?.src!!,
+                            category = uiState.productDetails.categories?.get(0)?.name!!,
+                            price = uiState.productDetails.price!!,
+                            isInCart = isInCartUiState,
+                            itemCount = cartItemCountUiState
                         )
                     }
                 }
@@ -500,14 +512,28 @@ private fun AttrsTabContent(
 @Composable
 private fun BottomSection(
     cartViewModel: CartViewModel? = null,
-    productId: Int
+    productId: Int,
+    title: String,
+    image: String,
+    category: String,
+    price: String,
+    isInCart: Int, // is this product exists in cart table?
+    itemCount: Int // how many of this product is in cart table?
 ) {
+
+    var count by remember { mutableIntStateOf(0) }
+
     JetSimpleButton(
         onClick = {
-            cartViewModel?.updateCart(
+            count = 1
+            cartViewModel?.insertCartItem(
                 productId = productId,
-                inCart = true,
-                addedToCartDate = getCurrentDate()
+                productTitle = title,
+                productImage = image,
+                productCategory = category,
+                productPrice = price.toInt(),
+                count = count,
+                dateAdded = getCurrentDate()
             )
         },
         text = stringResource(id = R.string.button_add_to_cart),
@@ -547,8 +573,9 @@ private fun AttrsNotFound() {
 
 @Composable
 private fun ReviewsNotFound() {
-    Column(modifier = Modifier
-        .fillMaxSize(),
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

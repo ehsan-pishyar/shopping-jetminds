@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.utils.Categories
 import com.example.core.utils.WhileUiSubscribed
-import com.example.domain.use_cases.cart.UpdateCartItemUseCase
+import com.example.domain.use_cases.cart_item.UpdateCartItemUseCase
 import com.example.domain.use_cases.favorites.IsFavoriteProductUseCase
 import com.example.domain.use_cases.products.GetProductsUseCase
 import com.example.domain.utils.ServiceResult
@@ -22,7 +22,7 @@ class HomeViewModel @Inject constructor(
     getApplicationUiKitUseCase: GetProductsUseCase,
     getAndroidUseCase: GetProductsUseCase,
     getIllustrations3DUseCase: GetProductsUseCase,
-    private val updateCartItemUseCase: UpdateCartItemUseCase,
+    private val updateCartUseCase: UpdateCartItemUseCase,
     private val isFavoriteProductUseCase: IsFavoriteProductUseCase
 ): ViewModel() {
 
@@ -90,12 +90,12 @@ class HomeViewModel @Inject constructor(
             )
         )
 
-    fun updateCart(productId: Int, inCart: Boolean, addedToCartDate: String) {
+    fun updateCart(productId: Int, count: Int, price: Int) {
         viewModelScope.launch {
-            updateCartItemUseCase.invoke(
+            updateCartUseCase.invoke(
                 productId = productId,
-                inCart = inCart,
-                addedToCartDate = addedToCartDate
+                count = count,
+                price = price
             )
         }
     }

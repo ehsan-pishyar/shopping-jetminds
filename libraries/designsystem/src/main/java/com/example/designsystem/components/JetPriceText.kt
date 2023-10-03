@@ -1,6 +1,7 @@
 package com.example.designsystem.components
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import com.example.core.utils.priceThousandsSeparator
 import com.example.designsystem.Primary
@@ -10,7 +11,8 @@ fun JetPriceText(
     price: String = "",
     priceTextSize: Int = 14,
     priceTomanSize: Int = 10,
-    priceFreeSize: Int = 12
+    priceFreeSize: Int = 12,
+    color: Color = Primary
 ) {
     if (price.trim().isEmpty()) {
         JetText(
@@ -22,14 +24,14 @@ fun JetPriceText(
 
         JetText(
             text = "تومان",
-            color = Primary,
+            color = color,
             fontWeight = FontWeight.SemiBold,
             fontSize = priceTomanSize
         )
     } else {
         JetText(
             text = "رایگان",
-            color = Primary,
+            color = color,
             fontWeight = FontWeight.SemiBold,
             fontSize = priceFreeSize
         )

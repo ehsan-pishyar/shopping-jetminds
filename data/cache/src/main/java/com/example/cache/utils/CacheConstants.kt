@@ -17,11 +17,12 @@ object CacheConstants {
     const val PRODUCT_TAGS_TABLE = "product_tags_table"
     const val PRODUCT_VARIATIONS_TABLE = "product_variations_table"
     const val SHIPPING_ZONES_TABLE = "shipping_zones_table"
+    const val CART_TABLE = "cart_table"
 
     const val PRODUCT_CATEGORY_CROSS_REF_TABLE = "product_category_cross_ref_table"
     const val PRODUCT_TAG_CROSS_REF_TABLE = "product_tag_cross_ref_table"
     const val PRODUCT_ATTR_CROSS_REF_TABLE = "product_attr_cross_ref_table"
 
     const val DB_NAME = "jetminds-db"
-    const val DB_VERSION = 21
+    const val DB_VERSION = 24
 }

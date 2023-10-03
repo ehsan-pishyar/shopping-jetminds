@@ -20,7 +20,7 @@ interface ProductsDao {
     @Query(
         """
             SELECT 
-                id, images, name, price, sale_price, average_rating, categories, is_favorite, in_cart, added_to_cart_date 
+                id, images, name, price, sale_price, average_rating, categories, is_favorite
             FROM `products_table`
             WHERE stock_status = :stockStatus
             AND status = :status
@@ -40,7 +40,9 @@ interface ProductsDao {
     @Transaction
     @Query(
         """
-            SELECT id, images, name, price, sale_price, average_rating, categories FROM products_table
+            SELECT 
+                id, images, name, price, sale_price, average_rating, categories 
+            FROM products_table
             WHERE id IN
             (
                 SELECT product_id FROM product_category_cross_ref_table

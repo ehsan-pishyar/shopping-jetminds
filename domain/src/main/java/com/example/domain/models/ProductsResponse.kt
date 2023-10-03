@@ -39,7 +39,5 @@ data class ProductsResponse(
     val defaultAttributes: List<DefaultAttribute>?,
     val stockStatus: String?,
     val isFavorite: Boolean?,
-    val downloaded: Boolean?,
-    val inCart: Boolean?,
-    val addedToCartDate: String?
+    val downloaded: Boolean?
 )

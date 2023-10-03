@@ -36,17 +36,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.utils.SharedViewModel
 import com.example.core.utils.calculateTax
 import com.example.designsystem.Background
+import com.example.designsystem.BlackColor
 import com.example.designsystem.LighterBlack
 import com.example.designsystem.LighterGray
 import com.example.designsystem.Primary
 import com.example.designsystem.R
+import com.example.designsystem.RedColor
 import com.example.designsystem.components.CartListItem
 import com.example.designsystem.components.JetHeading
 import com.example.designsystem.components.JetPriceText
 import com.example.designsystem.components.JetSimpleButton
 import com.example.designsystem.components.JetText
 import com.example.designsystem.components.JetTextField
-import com.example.domain.models.ProductsResponse
+import com.example.domain.models.Cart
 
 @Composable
 fun CartScreen(
@@ -55,13 +57,13 @@ fun CartScreen(
     toProductDetailsScreen: () -> Unit
 ) {
     val uiState: MainCartUiState by viewModel.cartUiState.collectAsState()
-    val cartItemCountState by viewModel.cartItemCountState.collectAsState()
+    val cartTotalCountState by viewModel.cartTotalCountState.collectAsState()
     val isInCartState by viewModel.isInCartState.collectAsState()
     val totalPriceState by viewModel.totalPrice.collectAsState()
 
     CartContent(
         uiState = uiState,
-        cartItemCountState = cartItemCountState,
+        cartTotalCountState = cartTotalCountState,
         isInCartState = isInCartState,
         sharedViewModel = sharedViewModel,
         toProductDetailsScreen = toProductDetailsScreen,
@@ -72,8 +74,8 @@ fun CartScreen(
 @Composable
 private fun CartContent(
     uiState: MainCartUiState? = null,
-    cartItemCountState: Int = 0,
-    isInCartState: Boolean = false,
+    cartTotalCountState: Int = 0,
+    isInCartState: Int = 0,
     sharedViewModel: SharedViewModel,
     toProductDetailsScreen: () -> Unit,
     totalPriceState: Int = 0
@@ -85,11 +87,16 @@ private fun CartContent(
     ) {
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(15.dp)
+            .padding(
+                top = 15.dp,
+                start = 15.dp,
+                end = 15.dp,
+                bottom = 70.dp
+            )
         ) {
 
             // Check if cart is empty or not
-            when (cartItemCountState) {
+            when (cartTotalCountState) {
                 0 -> {
                     Column(modifier = Modifier
                         .fillMaxWidth()
@@ -142,7 +149,7 @@ private fun CartContent(
                     ) {
                         CheckoutSection(
                             totalPrice = totalPriceState,
-                            cartItemCountState = cartItemCountState
+                            cartItemCountState = cartTotalCountState
                         )
                     }
                 }
@@ -153,7 +160,7 @@ private fun CartContent(
 
 @Composable
 fun CartList(
-    items: List<ProductsResponse>,
+    items: List<Cart>,
     sharedViewModel: SharedViewModel,
     toProductDetailsScreen: () -> Unit
 ) {
@@ -161,13 +168,13 @@ fun CartList(
         content = {
         items(count = items.size) { position ->
             CartListItem(
-                image = "${items[position].images?.get(0)?.src}",
-                title = "${items[position].name}",
-                category = "${items[position].categories?.get(0)?.name}",
-                price = "${items[position].price}",
+                image = "${items[position].productImage}",
+                title = "${items[position].productTitle}",
+                category = "${items[position].productCategory}",
+                price = "${items[position].productPrice}",
                 onProductClick = {
-                    sharedViewModel.addProduct(items[position])
-                    toProductDetailsScreen()
+//                    sharedViewModel.addProduct(items[position])
+//                    toProductDetailsScreen()
                 }
             )
         }
@@ -177,15 +184,14 @@ fun CartList(
 @Composable
 fun PromoSection() {
     Row(modifier = Modifier
-        .fillMaxWidth()
-        .height(56.dp),
+        .fillMaxSize(),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
-        verticalAlignment = Alignment.Bottom
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Column(modifier = Modifier
             .fillMaxHeight()
             .weight(3.8f),
-            verticalArrangement = Arrangement.Bottom
+            verticalArrangement = Arrangement.Top
         ) {
             JetTextField(
                 placeholder = stringResource(id = R.string.coupon_code),
@@ -201,13 +207,13 @@ fun PromoSection() {
         Column(modifier = Modifier
             .fillMaxHeight()
             .weight(1.2f),
-            verticalArrangement = Arrangement.Bottom
+            verticalArrangement = Arrangement.Top
         ) {
             Button(
                 onClick = { /*TODO*/ },
                 modifier = Modifier
-                    .height(50.dp)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .height(55.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Primary
@@ -226,7 +232,8 @@ fun PromoSection() {
 @Composable
 fun CheckoutSection(
     totalPrice: Int,
-    cartItemCountState: Int = 0
+    cartItemCountState: Int = 0,
+    cartTotalPrice: Int = 0
 ) {
 
     Card(
@@ -252,14 +259,15 @@ fun CheckoutSection(
                 ) {
                     JetText(
                         text = stringResource(id = R.string.sub_total_sum),
-                        fontSize = 16,
-                        fontWeight = FontWeight.Bold
+                        fontSize = 14,
+                        fontWeight = FontWeight.SemiBold
                     )
                     JetPriceText(
                         price = "$totalPrice",
                         priceTextSize = 12,
                         priceTomanSize = 13,
-                        priceFreeSize = 12
+                        priceFreeSize = 12,
+                        color = BlackColor
                     )
                 }
 
@@ -274,13 +282,14 @@ fun CheckoutSection(
                 ) {
                     JetText(
                         text = stringResource(id = R.string.tax),
-                        fontSize = 16,
-                        fontWeight = FontWeight.Bold
+                        fontSize = 14,
+                        fontWeight = FontWeight.SemiBold
                     )
                     JetText(
                         text = calculateTax(totalPrice.toString()),
-                        fontSize = 15,
-                        fontWeight = FontWeight.Normal
+                        fontSize = 12,
+                        fontWeight = FontWeight.SemiBold,
+                        color = RedColor
                     )
                 }
 
@@ -300,7 +309,7 @@ fun CheckoutSection(
                     )
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(5.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.Bottom
                     ) {
                         JetText(
                             text = "($cartItemCountState)",
@@ -308,10 +317,11 @@ fun CheckoutSection(
                             fontWeight = FontWeight.Normal,
                             color = LighterGray
                         )
-                        JetText(
-                            text = "",
-                            fontSize = 15,
-                            fontWeight = FontWeight.Normal
+                        JetPriceText(
+                            price = "$cartTotalPrice",
+                            priceTextSize = 15,
+                            priceTomanSize = 13,
+                            priceFreeSize = 14
                         )
                     }
                 }

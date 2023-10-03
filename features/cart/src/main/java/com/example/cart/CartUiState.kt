@@ -1,11 +1,7 @@
 package com.example.cart
 
-import com.example.domain.models.ProductsResponse
+import com.example.domain.models.Cart
 
 data class MainCartUiState(
-    val cartUiState: List<ProductsResponse>
-)
-
-data class MainTotalPriceState(
-    val totalPrice: Int
+    val cartUiState: List<Cart>
 )

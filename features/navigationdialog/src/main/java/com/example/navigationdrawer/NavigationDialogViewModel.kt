@@ -2,7 +2,7 @@ package com.example.navigationdrawer
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.use_cases.cart.GetCartItemsUseCase
+import com.example.domain.use_cases.cart_item.GetCartTotalCountsUseCase
 import com.example.domain.use_cases.coupons.GetCouponsUseCase
 import com.example.domain.use_cases.downloads.GetDownloadedProductsUseCase
 import com.example.domain.use_cases.orders.GetOrdersUseCase
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class NavigationDialogViewModel @Inject constructor(
     private val getOrdersUseCase: GetOrdersUseCase,
-    private val getCartItemsUseCase: GetCartItemsUseCase,
+    private val getCartTotalCountUseCase: GetCartTotalCountsUseCase,
     private val getFavoritesUseCase: GetFavoriteProductsUseCase,
     private val getDownloadedUseCase: GetDownloadedProductsUseCase,
     private val getCouponsUseCase: GetCouponsUseCase
@@ -75,8 +75,8 @@ class NavigationDialogViewModel @Inject constructor(
 
     private fun getCartSize() {
         viewModelScope.launch {
-            getCartItemsUseCase.invoke().collect { cartResult ->
-                _cartState.value = cartResult.size
+            getCartTotalCountUseCase.invoke().collect { cartResult ->
+                _cartState.value = cartResult!!
             }
         }
     }

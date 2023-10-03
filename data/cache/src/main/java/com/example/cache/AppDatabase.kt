@@ -28,6 +28,7 @@ import com.example.cache.utils.CacheConstants
         TagEntity::class,
         AttributeEntity::class,
         ImageEntity::class,
+        CartEntity::class,
         ProductAndCategoryCrossRefEntity::class,
         ProductAndTagCrossRefEntity::class,
         ProductAndAttrCrossRefEntity::class
@@ -63,7 +64,8 @@ import com.example.cache.utils.CacheConstants
     TagsConverter::class,
     TaxesConverter::class,
     TaxLinesConverter::class,
-    UserAvatarConverter::class
+    UserAvatarConverter::class,
+    CartConverter::class
 )
 abstract class AppDatabase: RoomDatabase() {
 
@@ -78,7 +80,7 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun productTagsDao(): ProductTagsDao
     abstract fun productVariationsDao(): ProductVariationsDao
     abstract fun shippingZonesDao(): ShippingZonesDao
-    abstract fun cartDao(): CartDao
     abstract fun favoritesDao(): FavoritesDao
     abstract fun downloadsDao(): DownloadsDao
+    abstract fun cartItemDao(): CartItemDao
 }

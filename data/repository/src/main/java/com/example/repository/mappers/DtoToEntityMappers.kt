@@ -119,9 +119,7 @@ fun ProductShippingClassesResponseDto.toEntity(): ProductShippingClassesResponse
 
 fun ProductsResponseDto.toEntity(
     isFavorite: Boolean = false,
-    downloaded: Boolean = false,
-    inCart: Boolean = false,
-    addedToCartDate: String = ""
+    downloaded: Boolean = false
 ): ProductsResponseEntity =
     ProductsResponseEntity(
         this.id,
@@ -162,9 +160,7 @@ fun ProductsResponseDto.toEntity(
         this.defaultAttributes?.map { it.toEntity() },
         this.stockStatus,
         isFavorite = isFavorite,
-        downloaded = downloaded,
-        inCart = inCart,
-        addedToCartDate = addedToCartDate
+        downloaded = downloaded
     )
 
 fun ProductTagsResponseDto.toEntity(): ProductTagsResponseEntity =

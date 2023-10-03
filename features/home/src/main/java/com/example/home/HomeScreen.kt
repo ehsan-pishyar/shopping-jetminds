@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.utils.SharedViewModel
 import com.example.core.utils.carouselProductsSize
-import com.example.core.utils.getCurrentDate
 import com.example.designsystem.Background
 import com.example.designsystem.R
 import com.example.designsystem.components.JetHomeHeading
@@ -303,8 +302,8 @@ private fun ProductsRow(
                     onAddToCartClick = {
                         viewModel?.updateCart(
                             productId = products[position].id!!,
-                            inCart = true,
-                            addedToCartDate = getCurrentDate()
+                            count = 1,
+                            price = products[position].price?.toInt()!!
                         )
                     },
                     onProductClick = {

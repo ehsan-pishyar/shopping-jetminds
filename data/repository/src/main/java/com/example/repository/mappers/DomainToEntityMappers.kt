@@ -2,6 +2,7 @@ package com.example.repository.mappers
 
 import com.example.cache.models.AttributeEntity
 import com.example.cache.models.BillingEntity
+import com.example.cache.models.CartEntity
 import com.example.cache.models.CategoryEntity
 import com.example.cache.models.CustomersResponseEntity
 import com.example.cache.models.DefaultAttributeEntity
@@ -11,6 +12,7 @@ import com.example.cache.models.ShippingEntity
 import com.example.cache.models.TagEntity
 import com.example.domain.models.Attribute
 import com.example.domain.models.Billing
+import com.example.domain.models.Cart
 import com.example.domain.models.Category
 import com.example.domain.models.CustomersResponse
 import com.example.domain.models.DefaultAttribute
@@ -59,9 +61,7 @@ fun ProductsResponse.toEntity(): ProductsResponseEntity =
         this.defaultAttributes?.map { it.toEntity() },
         this.stockStatus,
         this.isFavorite,
-        this.downloaded,
-        this.inCart,
-        this.addedToCartDate
+        this.downloaded
     )
 
 fun Category.toEntity(): CategoryEntity =
@@ -143,4 +143,15 @@ fun Shipping.toEntity(): ShippingEntity =
         this.lastName,
         this.postcode,
         this.state
+    )
+
+fun Cart.toEntity(): CartEntity =
+    CartEntity(
+        this.productId,
+        this.productTitle,
+        this.productImage,
+        this.productCategory,
+        this.productPrice,
+        this.dateAdded,
+        this.itemCount
     )
