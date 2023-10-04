@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.utils.SharedViewModel
@@ -235,7 +236,6 @@ fun CheckoutSection(
     cartItemCountState: Int = 0,
     cartTotalPrice: Int = 0
 ) {
-
     Card(
         modifier = Modifier.fillMaxSize(),
         shape = RoundedCornerShape(12.dp),
@@ -363,4 +363,10 @@ private fun CartItemNotFound() {
             fontSize = 12
         )
     }
+}
+
+@Preview
+@Composable
+private fun Preview_CheckoutSection() {
+    CheckoutSection(totalPrice = 100000)
 }

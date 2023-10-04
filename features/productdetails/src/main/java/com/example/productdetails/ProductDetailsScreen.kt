@@ -10,6 +10,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
@@ -19,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,6 +62,7 @@ import com.example.productdetails.viewmodel.CartViewModel
 import com.example.productdetails.viewmodel.FavoritesViewModel
 import com.example.productdetails.viewmodel.ProductDetailsViewModel
 import com.example.productdetails.viewmodel.ProductReviewsViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun ProductDetailsScreen(
@@ -509,6 +515,7 @@ private fun AttrsTabContent(
     AttrsNotFound()
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun BottomSection(
     cartViewModel: CartViewModel? = null,
@@ -522,23 +529,48 @@ private fun BottomSection(
 ) {
 
     var count by remember { mutableIntStateOf(0) }
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    JetSimpleButton(
-        onClick = {
-            count = 1
-            cartViewModel?.insertCartItem(
-                productId = productId,
-                productTitle = title,
-                productImage = image,
-                productCategory = category,
-                productPrice = price.toInt(),
-                count = count,
-                dateAdded = getCurrentDate()
+    Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Column(modifier = Modifier
+            .padding(it)
+            .background(Background)
+            .fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            JetSimpleButton(
+                onClick = {
+                    count = itemCount
+                    if (isInCart == 0) {
+                        cartViewModel?.insertCartItem(
+                            productId = productId,
+                            productTitle = title,
+                            productImage = image,
+                            productCategory = category,
+                            productPrice = price.toInt(),
+                            count = (count + 1),
+                            dateAdded = getCurrentDate()
+                        )
+                    } else {
+                        cartViewModel?.updateCartItem(
+                            productId = productId,
+                            productPrice = price.toInt(),
+                            count = (count + 1)
+                        )
+                    }
+                    scope.launch {
+                        snackbarHostState.showSnackbar("محصول به سبدد خرید اضافه شد.")
+                    }
+                },
+                text = stringResource(id = R.string.button_add_to_cart),
+                height = 56
             )
-        },
-        text = stringResource(id = R.string.button_add_to_cart),
-        height = 56
-    )
+        }
+    }
 }
 
 @Composable
