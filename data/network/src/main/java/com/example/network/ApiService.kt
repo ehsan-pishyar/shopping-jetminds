@@ -71,6 +71,9 @@ interface ApiService {
         @Path("id") reviewId: Int
     ): ProductReviewsResponseDto
 
+    @GET("products/payment_gateways")
+    suspend fun getProductPaymentGateways(): List<PaymentGatewaysResponseDto>
+
     // Orders -------------------------------------------------------------------------
     @GET("orders")
     suspend fun getOrders(

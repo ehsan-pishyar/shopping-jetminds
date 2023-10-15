@@ -3,6 +3,7 @@ package com.example.network.di
 import com.example.network.ApiService
 import com.example.network.BuildConfig
 import com.example.network.utils.Constants
+import com.example.network.utils.WoocommerceQualifiers
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,6 +27,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @WoocommerceQualifiers
     fun providesAuthQueryAppenderInterceptor(): Interceptor =
         Interceptor { chain ->
             val requestBuilder = chain.request().newBuilder()
@@ -45,6 +47,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @WoocommerceQualifiers
     fun providesLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -52,9 +55,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @WoocommerceQualifiers
     fun providesOkHttpsBuilder(
-        authQueryAppenderInterceptor: Interceptor,
-        httpLoggingInterceptor: HttpLoggingInterceptor
+        @WoocommerceQualifiers authQueryAppenderInterceptor: Interceptor,
+        @WoocommerceQualifiers httpLoggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
         val trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
         trustManagerFactory.init(null as KeyStore?)
@@ -77,12 +81,14 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @WoocommerceQualifiers
     fun providesJson(): Json =
         Json { ignoreUnknownKeys = true }
 
     @Provides
     @Singleton
-    fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit =
+    @WoocommerceQualifiers
+    fun providesRetrofit(@WoocommerceQualifiers okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
 //            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
@@ -92,6 +98,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providesApiService(retrofit: Retrofit): ApiService =
+    fun providesApiService(@WoocommerceQualifiers retrofit: Retrofit): ApiService =
         retrofit.create(ApiService::class.java)
 }

@@ -18,15 +18,19 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.designsystem.Background
 import com.example.designsystem.R
 import com.example.designsystem.components.JetHeading
@@ -36,7 +40,20 @@ import com.example.designsystem.components.JetText
 import com.example.designsystem.components.JetTextField
 
 @Composable
-fun CheckoutScreen() {
+fun CheckoutScreen(
+    viewModel: CheckoutViewModel = hiltViewModel()
+) {
+    val paymentGatewaysUiState: MainPaymentGatewaysUiState by viewModel.gatewaysUiState.collectAsState()
+
+    CheckoutContent(
+        paymentGatewaysUiState = paymentGatewaysUiState
+    )
+}
+
+@Composable
+fun CheckoutContent(
+    paymentGatewaysUiState: MainPaymentGatewaysUiState? = null
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -51,9 +68,8 @@ fun CheckoutScreen() {
                 .weight(1f)
             ) {
                 JetHeading(
-                    title = "تسویه حساب",
+                    title = stringResource(id = R.string.heading_checkout),
                     hasCartIcon = true
-                    // TODO: Handle toCartScreen click
                 )
             }
 
@@ -219,6 +235,6 @@ fun PaymentTotalSection() {
 @Composable
 fun Preview_CheckoutScreen() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-        CheckoutScreen()
+        CheckoutContent()
     }
 }

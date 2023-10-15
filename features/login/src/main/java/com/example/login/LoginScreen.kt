@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.designsystem.Background
 import com.example.designsystem.BlackColor
 import com.example.designsystem.LighterBlack
@@ -27,11 +28,26 @@ import com.example.designsystem.components.SectionSpacer
 
 @Composable
 fun LoginScreen(
-    toHomeScreen: () -> Unit,
-    toVerificationScreen: () -> Unit
+    viewModel: UserViewModel = hiltViewModel(),
+    toHomeScreen: () -> Unit
 ){
+    val tokenUiState: MainUserTokenUiState by viewModel.tokenState.collectAsState()
 
-    var phoneNumber by remember { mutableStateOf("") }
+    LoginContent(
+        tokenUiState = tokenUiState,
+        viewModel = viewModel,
+        toHomeScreen = { toHomeScreen() }
+    )
+}
+
+@Composable
+fun LoginContent(
+    tokenUiState: MainUserTokenUiState? = null,
+    viewModel: UserViewModel? = null,
+    toHomeScreen: () -> Unit
+) {
+    var username by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier
@@ -77,9 +93,9 @@ fun LoginScreen(
 
             JetTextField(
                 onValueChange = {
-                    phoneNumber = it
+                    username = it
                 },
-                value = phoneNumber,
+                value = username,
                 placeholder = "نام کاربری یا ایمیل",
                 singleLine = true,
                 maxLines = 1,
@@ -97,9 +113,9 @@ fun LoginScreen(
 
             JetTextField(
                 onValueChange = {
-                    phoneNumber = it
+                    password = it
                 },
-                value = phoneNumber,
+                value = password,
                 placeholder = "رمز عبور خودتو وارد کن",
                 singleLine = true,
                 maxLines = 1,
@@ -117,35 +133,34 @@ fun LoginScreen(
 
             JetSimpleButton(
                 onClick = {
-//                    viewModel.getUserByEmailAndPassword(email, password)
-//                    if (state.loading) {
-//                        // Indicator on button
-//                    } else if (state.error == null) {
-//                        // Snack bar
-//                    } else if (state.success) {
-//                        toDashboardScreen()
-//                    }
+                    viewModel?.getUserToken(username = username, password = password)
+                    when(val tokenState = tokenUiState?.response) {
+                        UserTokenUiState.Loading -> {
+                            println("Loading Token ...")
+                        }
+                        is UserTokenUiState.Success -> {
+                            println("Token: ${tokenState.token.jwtToken}")
+                        }
+                        is UserTokenUiState.Error -> {
+                            println("Error: ${tokenState.throwable.message}")
+                        }
+                        else -> Unit
+                    }
                 },
-                text = "دریافت کد",
+                text = "ورود",
                 height = 50
             )
         }
     }
 }
 
-@Composable
-fun LoginContent(
-    phoneNumber: String,
-    toHomeScreen: () -> Unit,
-    toVerificationScreen: () -> Unit
-) {
-
-}
-
 @Preview
 @Composable
 fun Preview_LoginScreen() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        LoginScreen(toHomeScreen = {}) {}
+        LoginContent(
+            tokenUiState = null,
+            toHomeScreen = {}
+        )
     }
 }

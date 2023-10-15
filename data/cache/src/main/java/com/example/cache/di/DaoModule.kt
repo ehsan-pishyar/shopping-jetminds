@@ -7,6 +7,7 @@ import com.example.cache.dao.CustomersDao
 import com.example.cache.dao.DownloadsDao
 import com.example.cache.dao.FavoritesDao
 import com.example.cache.dao.OrdersDao
+import com.example.cache.dao.PaymentGatewaysDao
 import com.example.cache.dao.ProductAttributesDao
 import com.example.cache.dao.ProductCategoriesDao
 import com.example.cache.dao.ProductReviewsDao
@@ -77,4 +78,7 @@ object DaoModule {
 
     @[Provides Singleton]
     fun providesCartItemDao(db: AppDatabase): CartItemDao = db.cartItemDao()
+
+    @[Provides Singleton]
+    fun providesPaymentGatewaysDao(db: AppDatabase): PaymentGatewaysDao = db.paymentGatewaysDao()
 }

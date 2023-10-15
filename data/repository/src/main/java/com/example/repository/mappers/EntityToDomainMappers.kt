@@ -347,3 +347,45 @@ fun CartEntity.toDomain(): Cart =
         this.dateAdded,
         this.itemCount
     )
+
+fun PaymentGatewaysResponseEntity.toDomain(): PaymentGatewaysResponse =
+    PaymentGatewaysResponse(
+        this.id,
+        this.title,
+        this.description,
+        this.order,
+        this.enabled,
+        this.methodTitle,
+        this.methodDescription,
+        this.methodSupports,
+        this.settings?.toDomain(),
+        this.needsSetup,
+        this.settingsUrl,
+        this.connectionUrl,
+        this.setupHelpText
+    )
+
+fun SettingsEntity.toDomain(): Settings =
+    Settings(
+        this.baseConfig?.toDomain(),
+        this.title?.toDomain(),
+        this.accountConfig?.toDomain(),
+        this.api?.toDomain(),
+        this.merchantCode?.toDomain(),
+        this.webServiceConfig?.toDomain(),
+        this.apiKey?.toDomain(),
+        this.successMassage?.toDomain(),
+        this.failedMassage?.toDomain()
+    )
+
+fun PaymentMessageEntity.toDomain(): PaymentMessage =
+    PaymentMessage(
+        this.id,
+        this.label,
+        this.description,
+        this.type,
+        this.value,
+        this.default,
+        this.tip,
+        this.placeholder
+    )

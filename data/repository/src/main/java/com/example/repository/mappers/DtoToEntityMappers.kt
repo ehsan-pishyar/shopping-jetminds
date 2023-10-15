@@ -339,3 +339,45 @@ fun UserAvatarDto.toEntity(): UserAvatarEntity =
         this.size48,
         this.size96
     )
+
+fun PaymentGatewaysResponseDto.toEntity(): PaymentGatewaysResponseEntity =
+    PaymentGatewaysResponseEntity(
+        this.id,
+        this.title,
+        this.description,
+        this.order,
+        this.enabled,
+        this.methodTitle,
+        this.methodDescription,
+        this.methodSupports,
+        this.settings?.toEntity(),
+        this.needsSetup,
+        this.settingsUrl,
+        this.connectionUrl,
+        this.setupHelpText
+    )
+
+fun SettingsDto.toEntity(): SettingsEntity =
+    SettingsEntity(
+        this.baseConfig?.toEntity(),
+        this.title?.toEntity(),
+        this.accountConfig?.toEntity(),
+        this.api?.toEntity(),
+        this.merchantCode?.toEntity(),
+        this.webServiceConfig?.toEntity(),
+        this.apiKey?.toEntity(),
+        this.successMassage?.toEntity(),
+        this.failedMassage?.toEntity()
+    )
+
+fun PaymentMessageDto.toEntity(): PaymentMessageEntity =
+    PaymentMessageEntity(
+        this.id,
+        this.label,
+        this.description,
+        this.type,
+        this.value,
+        this.default,
+        this.tip,
+        this.placeholder
+    )

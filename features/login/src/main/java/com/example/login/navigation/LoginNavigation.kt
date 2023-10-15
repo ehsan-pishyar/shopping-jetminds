@@ -12,8 +12,7 @@ fun NavGraphBuilder.loginScreen(navController: NavHostController) {
         route = AuthScreens.Login.route
     ) {
         LoginScreen(
-            toHomeScreen = { navController.navigate(Graph.MAIN) },
-            toVerificationScreen = { navController.navigate(AuthScreens.Verification.route) }
+            toHomeScreen = { navController.navigate(Graph.MAIN) }
         )
     }
 }

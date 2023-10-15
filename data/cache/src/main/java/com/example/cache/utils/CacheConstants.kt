@@ -18,6 +18,7 @@ object CacheConstants {
     const val PRODUCT_VARIATIONS_TABLE = "product_variations_table"
     const val SHIPPING_ZONES_TABLE = "shipping_zones_table"
     const val CART_TABLE = "cart_table"
+    const val PAYMENT_GATEWAYS_TABLE = "payment_gateways_table"
 
     const val PRODUCT_CATEGORY_CROSS_REF_TABLE = "product_category_cross_ref_table"
     const val PRODUCT_TAG_CROSS_REF_TABLE = "product_tag_cross_ref_table"

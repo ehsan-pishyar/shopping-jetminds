@@ -22,7 +22,8 @@ import com.example.designsystem.components.JetText
 fun SplashScreen(
     viewModel: SplashViewModel = hiltViewModel(),
     toOnBoardingScreen: () -> Unit,
-    toHomeScreen: () -> Unit
+    toHomeScreen: () -> Unit,
+    toLoginScreen: () -> Unit
 ){
     // AnimationEffect
     LaunchedEffect(key1 = true) {
@@ -33,7 +34,8 @@ fun SplashScreen(
         if (viewModel.startDestination.value == StartScreens.OnBoarding.route) {
             toOnBoardingScreen()
         } else {
-            toHomeScreen()
+//            toHomeScreen()
+            toLoginScreen()
         }
     }
 

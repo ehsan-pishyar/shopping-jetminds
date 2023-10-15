@@ -44,6 +44,7 @@
     <string name="heading_my_downloads">دانلود های من</string>
     <string name="heading_favorites">علاقه مندی ها</string>
     <string name="heading_my_orders">سفارشات من</string>
+    <string name="heading_checkout">تسویه حساب</string>
 
     <!--  User roles  -->
     <string name="role_admin">مدیر کل</string>

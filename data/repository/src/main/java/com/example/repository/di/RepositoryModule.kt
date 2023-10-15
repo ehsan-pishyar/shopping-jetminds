@@ -93,4 +93,14 @@ interface RepositoryModule {
     fun bindsCartItemRepository(
         impl: CartItemRepositoryImpl
     ): CartItemRepository
+
+    @[Binds Singleton]
+    fun bindsUserRepository(
+        impl: UserRepositoryImpl
+    ): UserRepository
+
+    @[Binds Singleton]
+    fun bindsPaymentGatewayRepository(
+        impl: PaymentGatewaysRepositoryImpl
+    ): PaymentGatewaysRepository
 }

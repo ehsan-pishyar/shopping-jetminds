@@ -29,6 +29,7 @@ import com.example.cache.utils.CacheConstants
         AttributeEntity::class,
         ImageEntity::class,
         CartEntity::class,
+        PaymentGatewaysResponseEntity::class,
         ProductAndCategoryCrossRefEntity::class,
         ProductAndTagCrossRefEntity::class,
         ProductAndAttrCrossRefEntity::class
@@ -65,7 +66,10 @@ import com.example.cache.utils.CacheConstants
     TaxesConverter::class,
     TaxLinesConverter::class,
     UserAvatarConverter::class,
-    CartConverter::class
+    CartConverter::class,
+    PaymentGatewaysConverter::class,
+    SettingsConverter::class,
+    PaymentMessageConverter::class
 )
 abstract class AppDatabase: RoomDatabase() {
 
@@ -83,4 +87,5 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun favoritesDao(): FavoritesDao
     abstract fun downloadsDao(): DownloadsDao
     abstract fun cartItemDao(): CartItemDao
+    abstract fun paymentGatewaysDao(): PaymentGatewaysDao
 }

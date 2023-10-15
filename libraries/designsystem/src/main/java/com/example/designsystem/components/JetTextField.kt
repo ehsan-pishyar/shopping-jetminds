@@ -98,7 +98,7 @@ fun JetTextField(
                         text = link,
                         modifier = modifier.padding(horizontal = 10.dp),
                         fontWeight = FontWeight.SemiBold,
-                        fontSize = 15,
+                        fontSize = 13,
                         color = Primary,
                         textAlign = TextAlign.End,
                         maxLines = 1
