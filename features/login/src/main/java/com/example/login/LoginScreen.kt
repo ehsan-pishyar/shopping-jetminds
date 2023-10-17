@@ -99,7 +99,7 @@ fun LoginContent(
                 placeholder = "نام کاربری یا ایمیل",
                 singleLine = true,
                 maxLines = 1,
-                keyboardType = KeyboardType.Number,
+                keyboardType = KeyboardType.Text,
                 title = "نام کاربری یا ایمیل",
                 style = TextStyle(
                     color = LighterBlack,
@@ -119,7 +119,7 @@ fun LoginContent(
                 placeholder = "رمز عبور خودتو وارد کن",
                 singleLine = true,
                 maxLines = 1,
-                keyboardType = KeyboardType.Number,
+                keyboardType = KeyboardType.Text,
                 title = "رمز عبور",
                 style = TextStyle(
                     color = LighterBlack,
