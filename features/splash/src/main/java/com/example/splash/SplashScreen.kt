@@ -34,8 +34,8 @@ fun SplashScreen(
         if (viewModel.startDestination.value == StartScreens.OnBoarding.route) {
             toOnBoardingScreen()
         } else {
-            toHomeScreen()
-//            toLoginScreen()
+//            toHomeScreen()
+            toLoginScreen()
         }
     }
 
