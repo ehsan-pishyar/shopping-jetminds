@@ -11,5 +11,4 @@ interface UserTokenApiService {
         @Query("username") username: String,
         @Query("password") password: String
     ): UserTokenResponseDto
-
 }

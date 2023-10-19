@@ -1,6 +1,8 @@
 package com.example.repository.repository
 
+import com.example.domain.models.user.TokenValidationResponse
 import com.example.domain.models.user.UserCredentials
+import com.example.domain.models.user.UserResponse
 import com.example.domain.models.user.UserTokenResponse
 import com.example.domain.repositories.UserRepository
 import com.example.repository.mappers.toDomain
@@ -21,15 +23,19 @@ class UserRepositoryImpl @Inject constructor(
             username = userCredentials.username,
             password = userCredentials.password
         ).toDomain().also {
-            println("DTO response: ${it.jwtToken}")
+            println("DTO Token response: ${it.jwtToken}")
         })
     }
-//
-//    override fun validateUserToken(): Flow<TokenValidationResponse> = flow {
-//        tokenApi.checkToken("").toDomain()
-//    }
-//
-//    override fun getUser(): Flow<UserResponse> = flow {
-//        userApi.getUser("").toDomain()
-//    }
+
+    override fun validateUserToken(headers: Map<String, String>): Flow<TokenValidationResponse> = flow {
+        emit(userApi.checkToken(headers = headers).toDomain().also {
+            println("DTO Validate response: ${it.status}")
+        })
+    }
+
+    override fun getUser(headers: Map<String, String>): Flow<UserResponse> = flow {
+        userApi.getUser(headers = headers).toDomain().also {
+            println("DTO User response: ${it.name}")
+        }
+    }
 }

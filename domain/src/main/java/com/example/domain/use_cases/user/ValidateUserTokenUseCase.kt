@@ -10,6 +10,6 @@ class ValidateUserTokenUseCase constructor(
     private val repository: UserRepository
 ) {
 
-//    operator fun invoke(): Flow<ServiceResult<TokenValidationResponse>> =
-//        repository.validateUserToken().asResult()
+    operator fun invoke(headers: Map<String, String>): Flow<ServiceResult<TokenValidationResponse>> =
+        repository.validateUserToken(headers = headers).asResult()
 }
