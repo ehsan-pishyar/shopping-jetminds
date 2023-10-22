@@ -25,6 +25,11 @@ import com.example.designsystem.components.JetText
 import com.example.designsystem.components.JetTextField
 import com.example.designsystem.R
 import com.example.designsystem.components.SectionSpacer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
@@ -32,6 +37,7 @@ fun LoginScreen(
     toHomeScreen: () -> Unit
 ){
     val tokenUiState: MainUserTokenUiState by viewModel.tokenState.collectAsState()
+    val validateTokenUiState: MainValidateTokenUiState by viewModel.validateTokenUiState.collectAsState()
 
     LoginContent(
         tokenUiState = tokenUiState,
@@ -43,11 +49,14 @@ fun LoginScreen(
 @Composable
 fun LoginContent(
     tokenUiState: MainUserTokenUiState? = null,
+    validateTokenUiState: MainValidateTokenUiState? = null,
     viewModel: UserViewModel? = null,
     toHomeScreen: () -> Unit
 ) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    val coroutineScope = CoroutineScope(SupervisorJob())
 
     Box(
         modifier = Modifier
@@ -133,18 +142,46 @@ fun LoginContent(
 
             JetSimpleButton(
                 onClick = {
-                    viewModel?.getUserToken(username = username, password = password)
-                    when(val tokenState = tokenUiState?.response) {
-                        UserTokenUiState.Loading -> {
-                            println("Loading Token ...")
+                    val job1 = coroutineScope.async {
+                        viewModel?.getUserToken(username = username, password = password)
+                    }
+                    val job2 = coroutineScope.async {
+                        when(val tokenState = tokenUiState?.response) {
+                            UserTokenUiState.Loading -> {
+                                println("Loading Token ...")
+                            }
+                            is UserTokenUiState.Success -> {
+                                viewModel?.addToken(token = tokenState.token.jwtToken)
+                            }
+                            is UserTokenUiState.Error -> {
+                                println("Token Error: ${tokenState.throwable.message}")
+                            }
+                            else -> Unit
                         }
-                        is UserTokenUiState.Success -> {
-                            println("Token: ${tokenState.token.jwtToken}")
-                        }
-                        is UserTokenUiState.Error -> {
-                            println("Error: ${tokenState.throwable.message}")
-                        }
-                        else -> Unit
+                    }
+                    val job3 = coroutineScope.async {
+//                        viewModel?.validateToken()
+                        toHomeScreen()
+//                        delay(1000)
+                    }
+//                    val job4 = coroutineScope.async {
+//                        when(val validateTokenState = validateTokenUiState?.response) {
+//                            ValidateTokenUiState.Loading -> {
+//                                println("Validating Token ...")
+//                            }
+//                            is ValidateTokenUiState.Success -> {
+//                                toHomeScreen()
+//                            }
+//                            is ValidateTokenUiState.Error -> {
+//                                println("Validation Error: ${validateTokenState.throwable.message}")
+//                            }
+//                            else -> Unit
+//                        }
+//                        delay(1000)
+//                    }
+
+                    coroutineScope.launch {
+                        awaitAll(job1, job2, job3)
                     }
                 },
                 text = "ورود",
