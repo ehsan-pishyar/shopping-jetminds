@@ -26,9 +26,6 @@ class UserViewModel @Inject constructor(
     private var _validateTokenState = MutableStateFlow(MainValidateTokenUiState(ValidateTokenUiState.Loading))
     val validateTokenUiState = _validateTokenState.asStateFlow()
 
-    private val _token = MutableStateFlow("")
-    private val token = _token.asStateFlow()
-
     fun getUserToken(username: String, password: String) {
         viewModelScope.launch {
             getUserTokenFromApiUseCase.invoke(UserCredentials(
@@ -38,8 +35,7 @@ class UserViewModel @Inject constructor(
                 val userTokenUiStateResult = when (tokenResult) {
                     ServiceResult.Loading -> UserTokenUiState.Loading
                     is ServiceResult.Success -> UserTokenUiState.Success(
-                        token = tokenResult.data
-
+                        userTokenResponse = tokenResult.data
                     )
                     is ServiceResult.Error -> UserTokenUiState.Error(
                         throwable = tokenResult.throwable!!
@@ -52,17 +48,10 @@ class UserViewModel @Inject constructor(
         }
     }
 
-    fun addToken(token: String) {
+    fun validateToken(token: String) {
         viewModelScope.launch {
-            _token.value = token
-        }
-    }
-
-    fun validateToken() {
-        viewModelScope.launch {
-            val token = token.value
             validateUserTokenUseCase.invoke(headers = mapOf(
-                "Authorization" to token
+                "Authorization" to "Bearer $token"
             )).collect {
                 val validateTokenUiStateResult = when (it) {
                     ServiceResult.Loading -> ValidateTokenUiState.Loading
@@ -81,9 +70,9 @@ class UserViewModel @Inject constructor(
         }
     }
 
-    fun saveTokenToDataStore() {
+    fun saveTokenToDataStore(token: String) {
         viewModelScope.launch {
-            saveUserTokenUseCase.invoke(token = token.value)
+            saveUserTokenUseCase.invoke(token = token)
         }
     }
 }

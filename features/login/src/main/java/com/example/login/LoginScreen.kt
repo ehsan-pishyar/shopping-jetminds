@@ -6,13 +6,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -25,10 +22,7 @@ import com.example.designsystem.components.JetText
 import com.example.designsystem.components.JetTextField
 import com.example.designsystem.R
 import com.example.designsystem.components.SectionSpacer
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 @Composable
@@ -41,6 +35,7 @@ fun LoginScreen(
 
     LoginContent(
         tokenUiState = tokenUiState,
+        validateTokenUiState = validateTokenUiState,
         viewModel = viewModel,
         toHomeScreen = { toHomeScreen() }
     )
@@ -56,7 +51,8 @@ fun LoginContent(
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    val coroutineScope = CoroutineScope(SupervisorJob())
+    val scope = rememberCoroutineScope()
+    var token by remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier
@@ -142,62 +138,29 @@ fun LoginContent(
 
             JetSimpleButton(
                 onClick = {
-                    val job1 = coroutineScope.async {
-                        viewModel?.getUserToken(username = username, password = password)
-                    }
-                    val job2 = coroutineScope.async {
-                        when(val tokenState = tokenUiState?.response) {
-                            UserTokenUiState.Loading -> {
-                                println("Loading Token ...")
+                    scope.launch {
+                        async {
+                            viewModel?.getUserToken(username = username, password = password)
+                        }.await()
+                        async {
+                            when(val tokenState = tokenUiState?.response) {
+                                UserTokenUiState.Loading -> {
+                                    print("*** Loading Token ...")
+                                }
+                                is UserTokenUiState.Success -> {
+                                    println("*** Token: ${tokenState.userTokenResponse.jwtToken}")
+                                }
+                                is UserTokenUiState.Error -> {
+                                    println("*** Token Error: ${tokenState.throwable.message}")
+                                }
+                                else -> Unit
                             }
-                            is UserTokenUiState.Success -> {
-                                viewModel?.addToken(token = tokenState.token.jwtToken)
-                            }
-                            is UserTokenUiState.Error -> {
-                                println("Token Error: ${tokenState.throwable.message}")
-                            }
-                            else -> Unit
                         }
-                    }
-                    val job3 = coroutineScope.async {
-//                        viewModel?.validateToken()
-                        toHomeScreen()
-//                        delay(1000)
-                    }
-//                    val job4 = coroutineScope.async {
-//                        when(val validateTokenState = validateTokenUiState?.response) {
-//                            ValidateTokenUiState.Loading -> {
-//                                println("Validating Token ...")
-//                            }
-//                            is ValidateTokenUiState.Success -> {
-//                                toHomeScreen()
-//                            }
-//                            is ValidateTokenUiState.Error -> {
-//                                println("Validation Error: ${validateTokenState.throwable.message}")
-//                            }
-//                            else -> Unit
-//                        }
-//                        delay(1000)
-//                    }
-
-                    coroutineScope.launch {
-                        awaitAll(job1, job2, job3)
                     }
                 },
                 text = "ورود",
                 height = 50
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun Preview_LoginScreen() {
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        LoginContent(
-            tokenUiState = null,
-            toHomeScreen = {}
-        )
     }
 }

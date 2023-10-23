@@ -18,24 +18,17 @@ class UserRepositoryImpl @Inject constructor(
 ): UserRepository {
 
     override fun getUserToken(userCredentials: UserCredentials): Flow<UserTokenResponse> = flow {
-
         emit(tokenApi.getUserToken(
             username = userCredentials.username,
             password = userCredentials.password
-        ).toDomain().also {
-            println("DTO Token response: ${it.jwtToken}")
-        })
+        ).toDomain())
     }
 
     override fun validateUserToken(headers: Map<String, String>): Flow<TokenValidationResponse> = flow {
-        emit(userApi.checkToken(headers = headers).toDomain().also {
-            println("DTO Validate response: ${it.status}")
-        })
+        emit(userApi.checkToken(headers = headers).toDomain())
     }
 
     override fun getUser(headers: Map<String, String>): Flow<UserResponse> = flow {
-        userApi.getUser(headers = headers).toDomain().also {
-            println("DTO User response: ${it.name}")
-        }
+        userApi.getUser(headers = headers).toDomain()
     }
 }

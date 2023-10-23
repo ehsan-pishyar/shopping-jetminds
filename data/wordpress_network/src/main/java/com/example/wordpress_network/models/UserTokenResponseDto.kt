@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 data class UserTokenResponseDto(
     @SerializedName("token_type")
-    val tokenType: String,
-    val iat: Int,
+    val tokenType: String?,
+    val iat: Int?,
     @SerializedName("expires_in")
-    val expiresIn: Int,
+    val expiresIn: Int?,
     @SerializedName("jwt_token")
-    val jwtToken: String
+    val jwtToken: String?
 )

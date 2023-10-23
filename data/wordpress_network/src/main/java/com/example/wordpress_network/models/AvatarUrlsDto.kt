@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class AvatarUrlsDto(
     @SerializedName("24")
-    val size24: String,
+    val size24: String?,
     @SerializedName("48")
-    val size48: String,
+    val size48: String?,
     @SerializedName("96")
-    val size96: String
+    val size96: String?
 )
