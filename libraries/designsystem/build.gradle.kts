@@ -73,4 +73,7 @@ dependencies {
     implementation("com.google.accompanist:accompanist-navigation-animation:0.30.0")
     implementation("com.google.accompanist:accompanist-flowlayout:0.27.0")
     implementation("com.google.accompanist:accompanist-insets-ui:0.23.1")
+
+    val lottieVersion = "6.0.0"
+    implementation("com.airbnb.android:lottie-compose:$lottieVersion")
 }

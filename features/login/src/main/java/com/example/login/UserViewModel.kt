@@ -26,6 +26,8 @@ class UserViewModel @Inject constructor(
     private var _validateTokenState = MutableStateFlow(MainValidateTokenUiState(ValidateTokenUiState.Loading))
     val validateTokenUiState = _validateTokenState.asStateFlow()
 
+    private var _dataStoreToken = MutableStateFlow("")
+
     fun getUserToken(username: String, password: String) {
         viewModelScope.launch {
             getUserTokenFromApiUseCase.invoke(UserCredentials(
@@ -45,6 +47,12 @@ class UserViewModel @Inject constructor(
                     response = userTokenUiStateResult
                 )
             }
+        }
+    }
+
+    fun addTokenToDataStore(token: String) {
+        viewModelScope.launch {
+            _dataStoreToken.value = token
         }
     }
 

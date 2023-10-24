@@ -23,6 +23,7 @@ import com.example.designsystem.components.JetTextField
 import com.example.designsystem.R
 import com.example.designsystem.components.SectionSpacer
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -31,28 +32,13 @@ fun LoginScreen(
     toHomeScreen: () -> Unit
 ){
     val tokenUiState: MainUserTokenUiState by viewModel.tokenState.collectAsState()
-    val validateTokenUiState: MainValidateTokenUiState by viewModel.validateTokenUiState.collectAsState()
 
-    LoginContent(
-        tokenUiState = tokenUiState,
-        validateTokenUiState = validateTokenUiState,
-        viewModel = viewModel,
-        toHomeScreen = { toHomeScreen() }
-    )
-}
-
-@Composable
-fun LoginContent(
-    tokenUiState: MainUserTokenUiState? = null,
-    validateTokenUiState: MainValidateTokenUiState? = null,
-    viewModel: UserViewModel? = null,
-    toHomeScreen: () -> Unit
-) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var token by remember { mutableStateOf("") }
+    var loaderState by remember { mutableStateOf(false) }
 
     val scope = rememberCoroutineScope()
-    var token by remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier
@@ -138,23 +124,33 @@ fun LoginContent(
 
             JetSimpleButton(
                 onClick = {
+                    loaderState = true
                     scope.launch {
                         async {
-                            viewModel?.getUserToken(username = username, password = password)
+                            viewModel.getUserToken(username = username, password = password)
+                            delay(1000)
                         }.await()
                         async {
-                            when(val tokenState = tokenUiState?.response) {
+                            delay(1000)
+                            when(val tokenState = tokenUiState.response) {
                                 UserTokenUiState.Loading -> {
-                                    print("*** Loading Token ...")
+                                    println("*** Loading Token ...")
                                 }
                                 is UserTokenUiState.Success -> {
                                     println("*** Token: ${tokenState.userTokenResponse.jwtToken}")
+                                    token = tokenState.userTokenResponse.jwtToken!!
+                                    delay(1000)
                                 }
                                 is UserTokenUiState.Error -> {
                                     println("*** Token Error: ${tokenState.throwable.message}")
                                 }
-                                else -> Unit
                             }
+                        }.await()
+                        async {
+                            viewModel.addTokenToDataStore(token = token)
+                        }.await()
+                        async {
+                            toHomeScreen()
                         }
                     }
                 },

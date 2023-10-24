@@ -16,9 +16,11 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,6 +29,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.RenderMode
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieClipSpec
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.designsystem.Primary
 import com.example.designsystem.R
 
@@ -42,7 +51,8 @@ fun JetSimpleButton(
     fontSize: Int = 16,
     fontWeight: FontWeight = FontWeight.SemiBold,
     textColor: Color = Color.White,
-    textAlign: TextAlign = TextAlign.Center
+    textAlign: TextAlign = TextAlign.Center,
+    hasLoader: Boolean = false
 ) {
 
     Button(
@@ -62,14 +72,18 @@ fun JetSimpleButton(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            JetText(
-                modifier = Modifier.fillMaxWidth(),
-                text = text,
-                fontSize = fontSize,
-                fontWeight = fontWeight,
-                color = textColor,
-                textAlign = textAlign
-            )
+            if (hasLoader) {
+                LottieAnimation()
+            } else {
+                JetText(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = text,
+                    fontSize = fontSize,
+                    fontWeight = fontWeight,
+                    color = textColor,
+                    textAlign = textAlign
+                )
+            }
         }
     }
 }
@@ -140,6 +154,28 @@ fun JetBtnAddToCart(
     }
 }
 
+@Composable
+fun LottieAnimation() {
+    val lottieComposition by rememberLottieComposition(
+        spec = LottieCompositionSpec.RawRes(R.raw.loader_1)
+    )
+    val progressAnimation by animateLottieCompositionAsState(
+        composition = lottieComposition,
+        isPlaying = true,
+        iterations = LottieConstants.IterateForever,
+        speed = 1.0f,
+        clipSpec = LottieClipSpec.Progress()
+    )
+
+    LottieAnimation(
+        composition = lottieComposition,
+        progress = { progressAnimation },
+        renderMode = RenderMode.AUTOMATIC,
+        contentScale = ContentScale.FillHeight,
+        clipToCompositionBounds = true
+    )
+}
+
 @Preview
 @Composable
 fun Preview_JetButton() {
@@ -147,7 +183,8 @@ fun Preview_JetButton() {
         JetSimpleButton(
             onClick = {},
             text = "احسان پیش یار",
-            modifier = Modifier.width(364.dp)
+            modifier = Modifier.width(364.dp),
+            hasLoader = true
         )
     }
 }
@@ -160,4 +197,10 @@ private fun Preview_JetBtnAddToCart() {
             onClick = {}
         )
     }
+}
+
+@Preview
+@Composable
+private fun Preview_LottieAnimation() {
+    LottieAnimation()
 }
