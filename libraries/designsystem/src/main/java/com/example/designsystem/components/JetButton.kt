@@ -1,5 +1,7 @@
 package com.example.designsystem.components
 
+import android.annotation.SuppressLint
+import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,28 +18,29 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.airbnb.lottie.RenderMode
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieClipSpec
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.designsystem.Primary
 import com.example.designsystem.R
+import kotlinx.coroutines.delay
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalDensity
 
 
 @Composable
@@ -73,7 +76,9 @@ fun JetSimpleButton(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (hasLoader) {
-                LottieAnimation()
+                LoadingAnimation(
+
+                )
             } else {
                 JetText(
                     modifier = Modifier.fillMaxWidth(),
@@ -154,26 +159,67 @@ fun JetBtnAddToCart(
     }
 }
 
+@SuppressLint("RememberReturnType")
 @Composable
-fun LottieAnimation() {
-    val lottieComposition by rememberLottieComposition(
-        spec = LottieCompositionSpec.RawRes(R.raw.loader_1)
-    )
-    val progressAnimation by animateLottieCompositionAsState(
-        composition = lottieComposition,
-        isPlaying = true,
-        iterations = LottieConstants.IterateForever,
-        speed = 1.0f,
-        clipSpec = LottieClipSpec.Progress()
+fun LoadingAnimation(
+    modifier: Modifier = Modifier,
+    circleSize: Dp = 12.dp,
+    circleColor: Color = Color.White,
+    spaceBetween: Dp = 7.dp,
+    travelDistance: Dp = 20.dp
+) {
+    val circles = listOf(
+        remember { Animatable(initialValue = 0f) },
+        remember { Animatable(initialValue = 0f) },
+        remember { Animatable(initialValue = 0f) }
     )
 
-    LottieAnimation(
-        composition = lottieComposition,
-        progress = { progressAnimation },
-        renderMode = RenderMode.AUTOMATIC,
-        contentScale = ContentScale.FillHeight,
-        clipToCompositionBounds = true
-    )
+    circles.forEachIndexed { index, animatable ->
+        LaunchedEffect(key1 = animatable) {
+            delay(index * 100L)
+            animatable.animateTo(
+                targetValue = 1f,
+                animationSpec = infiniteRepeatable(
+                    animation = keyframes {
+                        durationMillis = 1200
+                        0.0f at 0 with LinearOutSlowInEasing
+                        1.0f at 300 with LinearOutSlowInEasing
+                        0.0f at 600 with LinearOutSlowInEasing
+                        0.0f at 1200 with LinearOutSlowInEasing
+                    },
+                    repeatMode = RepeatMode.Restart
+                )
+            )
+        }
+    }
+
+    val circleValues = circles.map { it.value }
+    val distance = with(LocalDensity.current) { travelDistance.toPx() }
+
+    Column(modifier = Modifier
+        .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.spacedBy(spaceBetween)
+        ) {
+            circleValues.forEach { value ->
+                Box(
+                    modifier = Modifier
+                        .size(circleSize)
+                        .graphicsLayer {
+                            translationY = -value * distance
+                        }
+                        .background(
+                            color = circleColor,
+                            shape = CircleShape
+                        )
+                )
+            }
+        }
+    }
 }
 
 @Preview
@@ -201,6 +247,8 @@ private fun Preview_JetBtnAddToCart() {
 
 @Preview
 @Composable
-private fun Preview_LottieAnimation() {
-    LottieAnimation()
+private fun Preview_LoadingAnimation() {
+    LoadingAnimation(
+        modifier = Modifier.fillMaxSize()
+    )
 }
