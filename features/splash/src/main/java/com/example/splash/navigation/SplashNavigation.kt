@@ -21,10 +21,6 @@ fun NavGraphBuilder.splashScreen(
             toHomeScreen = {
                 navController.popBackStack()
                 navController.navigate(Graph.MAIN)
-            },
-            toLoginScreen = {
-                navController.popBackStack()
-                navController.navigate(Graph.AUTH)
             }
         )
     }

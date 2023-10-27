@@ -59,10 +59,13 @@ fun HomeScreen(
     toComparesScreen: () -> Unit,
     toFavoritesScreen: () -> Unit,
     toDownloadsScreen: () -> Unit,
-    toCouponsScreen: () -> Unit
+    toCouponsScreen: () -> Unit,
+    toLoginScreen: () -> Unit
 ){
     val homeUiState: HomeUiState by viewModel.homeUiState.collectAsState()
     val isFavoriteState by favoritesViewModel.isFavorite.collectAsState()
+
+    val userLoggedIn by remember { mutableStateOf(false) }
 
     HomeContent(
         homeUiState = homeUiState,
@@ -80,6 +83,8 @@ fun HomeScreen(
         toDownloadsScreen = { toDownloadsScreen() },
         toNotificationsScreen = { toNotificationScreen() },
         toCouponsScreen = { toCouponsScreen() },
+        toLoginScreen = { toLoginScreen() },
+        userLoggedIn = userLoggedIn,
         isFavoriteState = isFavoriteState
     )
 }
@@ -101,6 +106,8 @@ private fun HomeContent(
     toDownloadsScreen: () -> Unit,
     toNotificationsScreen: () -> Unit,
     toCouponsScreen: () -> Unit,
+    toLoginScreen: () -> Unit,
+    userLoggedIn: Boolean = false,
     isFavoriteState: Boolean = false
 ) {
     val scrollState = rememberScrollState()
@@ -158,7 +165,9 @@ private fun HomeContent(
                 toDownloadsScreen = { toDownloadsScreen() },
                 toNotificationsScreen = { toNotificationsScreen() },
                 toCouponsScreen = { toCouponsScreen() },
-                toProfileScreen = { toProfileScreen() }
+                toProfileScreen = { toProfileScreen() },
+                toLoginScreen = { toLoginScreen() },
+                userLoggedIn = userLoggedIn
             )
         }
     }
@@ -361,7 +370,8 @@ fun Preview_HomeScreen() {
             toFavoritesScreen = {},
             toDownloadsScreen = {},
             toNotificationsScreen = {},
-            toCouponsScreen = {}
+            toCouponsScreen = {},
+            toLoginScreen = {}
         )
     }
 }

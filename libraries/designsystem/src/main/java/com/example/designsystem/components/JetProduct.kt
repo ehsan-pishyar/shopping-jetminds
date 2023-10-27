@@ -30,7 +30,7 @@ import com.example.designsystem.YellowColor
 fun JetProduct(
     title: String,
     image: String? = null,
-    price: String? = null,
+    price: String? = "7000",
     rating: String? = "4.5",
     category: String? = null,
     onAddToCartClick: () -> Unit,

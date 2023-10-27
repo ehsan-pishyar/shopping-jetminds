@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,7 +24,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -34,12 +34,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -50,6 +48,7 @@ import com.example.designsystem.LighterGray
 import com.example.designsystem.Primary
 import com.example.designsystem.components.JetText
 import com.example.designsystem.R
+import com.example.designsystem.components.JetSimpleButton
 import com.example.designsystem.components.SectionSpacer
 
 @Composable
@@ -65,7 +64,9 @@ fun NavigationDialogScreen(
     toDownloadsScreen: () -> Unit,
     toNotificationsScreen: () -> Unit,
     toCouponsScreen: () -> Unit,
-    toProfileScreen: () -> Unit
+    toProfileScreen: () -> Unit,
+    toLoginScreen: () -> Unit,
+    userLoggedIn: Boolean = false
 ) {
     val ordersUiState: MainNavigationDialogOrdersUiState by viewModel.ordersState.collectAsState()
     val cartUiState = viewModel.cartState.collectAsState()
@@ -93,7 +94,9 @@ fun NavigationDialogScreen(
         toDownloadsScreen = { toDownloadsScreen() },
         toNotificationsScreen = { toNotificationsScreen() },
         toCouponsScreen = { toCouponsScreen() },
-        toProfileScreen = { toProfileScreen() }
+        toProfileScreen = { toProfileScreen() },
+        toLoginScreen = { toLoginScreen() },
+        userLoggedIn = userLoggedIn
     )
 }
 
@@ -116,7 +119,9 @@ private fun NavigationDialogContent(
     toDownloadsScreen: () -> Unit,
     toNotificationsScreen: () -> Unit,
     toCouponsScreen: () -> Unit,
-    toProfileScreen: () -> Unit
+    toProfileScreen: () -> Unit,
+    toLoginScreen: () -> Unit,
+    userLoggedIn: Boolean = false
 ) {
     if (openDialog) {
         Dialog(
@@ -158,7 +163,9 @@ private fun NavigationDialogContent(
                         toDownloadsScreen = { toDownloadsScreen() },
                         toNotificationsScreen = { toNotificationsScreen() },
                         toCouponsScreen = { toCouponsScreen() },
-                        toProfileScreen = { toProfileScreen() }
+                        toProfileScreen = { toProfileScreen() },
+                        toLoginScreen = { toLoginScreen() },
+                        userLoggedIn = userLoggedIn
                     )
                     DialogBottomSection(
                         toShopScreen = { toShopScreen() }
@@ -232,7 +239,9 @@ private fun DialogMainSection(
     toDownloadsScreen: () -> Unit,
     toNotificationsScreen: () -> Unit,
     toCouponsScreen: () -> Unit,
-    toProfileScreen: () -> Unit
+    toProfileScreen: () -> Unit,
+    toLoginScreen: () -> Unit,
+    userLoggedIn: Boolean = false
 ) {
     Card(
         shape = RoundedCornerShape(20.dp),
@@ -250,7 +259,9 @@ private fun DialogMainSection(
             verticalArrangement = Arrangement.Top
         ) {
             DialogMainSectionHeader(
-                toProfileScreen = { toProfileScreen() }
+                toProfileScreen = { toProfileScreen() },
+                userLoggedIn = userLoggedIn,
+                toLoginScreen = { toLoginScreen() }
             )
             SectionSpacer(10)
             Divider(color = Color(0xFFE7EEF4))
@@ -278,83 +289,103 @@ private fun DialogMainSection(
 
 @Composable
 private fun DialogMainSectionHeader(
-    toProfileScreen: () -> Unit
+    toProfileScreen: () -> Unit,
+    userLoggedIn: Boolean = false,
+    toLoginScreen: () -> Unit
 ) {
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .height(80.dp),
-        verticalArrangement = Arrangement.Top
-    ) {
-        // Avatar, Title and Email -----------------------------------------------------------------
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .weight(3f)
-            .clickable(enabled = true, onClick = { toProfileScreen() }),
-            horizontalArrangement = Arrangement.spacedBy(15.dp)
+    if (!userLoggedIn) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // User Avatar -------------------------------------------------------------------------
-            Column(modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.End
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.avatar),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(45.dp)
-                        .clip(shape = RoundedCornerShape(50.dp))
-                )
-            }
-            // User Title and Email ----------------------------------------------------------------
-            Column(modifier = Modifier
-                .fillMaxHeight()
-                .weight(4f),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start
-            ) {
-                // User title ----------------------------------------------------------------------
-                JetText(
-                    text = "احسان پیش یار",
-                    fontSize = 13,
-                    fontWeight = FontWeight.Medium,
-                    color = BlackColor
-                )
-                // User email ----------------------------------------------------------------------
-                JetText(
-                    text = "ehsan.pishyar@gmail.com",
-                    fontSize = 11,
-                    fontWeight = FontWeight.Normal,
-                    color = LighterGray
-                )
-            }
+            JetSimpleButton(
+                onClick = { toLoginScreen() },
+                text = "ورود",
+                modifier = Modifier.width(70.dp),
+                height = 30,
+                fontSize = 11,
+                shape = 6
+            )
         }
-        // User role -------------------------------------------------------------------------------
+    } else {
         Column(modifier = Modifier
             .fillMaxWidth()
-            .weight(1f),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.End
+            .height(80.dp),
+            verticalArrangement = Arrangement.Top
         ) {
-            Card(
-                shape = RoundedCornerShape(6.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = Primary.copy(alpha = 0.2f)
-                ),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 0.dp
-                )
+            // Avatar, Title and Email -----------------------------------------------------------------
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .weight(3f)
+                .clickable(enabled = true, onClick = { toProfileScreen() }),
+                horizontalArrangement = Arrangement.spacedBy(15.dp)
             ) {
+                // User Avatar -------------------------------------------------------------------------
                 Column(modifier = Modifier
-                    .padding(horizontal = 10.dp, vertical = 2.dp)
+                    .fillMaxHeight()
+                    .weight(1f),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.End
                 ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.avatar),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(45.dp)
+                            .clip(shape = RoundedCornerShape(50.dp))
+                    )
+                }
+                // User Title and Email ----------------------------------------------------------------
+                Column(modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(4f),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    // User title ----------------------------------------------------------------------
                     JetText(
-                        text = "مدیر کل",
-                        fontSize = 10,
-                        fontWeight = FontWeight.Normal,
+                        text = "احسان پیش یار",
+                        fontSize = 13,
+                        fontWeight = FontWeight.Medium,
                         color = BlackColor
                     )
+                    // User email ----------------------------------------------------------------------
+                    JetText(
+                        text = "ehsan.pishyar@gmail.com",
+                        fontSize = 11,
+                        fontWeight = FontWeight.Normal,
+                        color = LighterGray
+                    )
+                }
+            }
+            // User role -------------------------------------------------------------------------------
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ) {
+                Card(
+                    shape = RoundedCornerShape(6.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Primary.copy(alpha = 0.2f)
+                    ),
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = 0.dp
+                    )
+                ) {
+                    Column(modifier = Modifier
+                        .padding(horizontal = 10.dp, vertical = 2.dp)
+                    ) {
+                        JetText(
+                            text = "مدیر کل",
+                            fontSize = 10,
+                            fontWeight = FontWeight.Normal,
+                            color = BlackColor
+                        )
+                    }
                 }
             }
         }
@@ -602,23 +633,12 @@ private fun DialogBottomSection(
     SectionSpacer(20)
 }
 
-
 @Preview
 @Composable
-private fun Preview_NavigationDialogScreen() {
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-        NavigationDialogContent(
-            openDialog = true,
-            onDismiss = {},
-            toShopScreen = {},
-            toOrdersScreen = {},
-            toCartScreen = {},
-            toComparesScreen = {},
-            toFavoritesScreen = {},
-            toDownloadsScreen = {},
-            toNotificationsScreen = {},
-            toCouponsScreen = {},
-            toProfileScreen = {}
-        )
-    }
+private fun Preview_HeaderSection() {
+    DialogMainSectionHeader(
+        toLoginScreen = {},
+        toProfileScreen = {},
+        userLoggedIn = false
+    )
 }

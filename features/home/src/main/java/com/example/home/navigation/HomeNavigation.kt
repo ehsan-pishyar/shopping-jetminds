@@ -29,7 +29,8 @@ fun NavGraphBuilder.homeScreen(
             toComparesScreen = { navController.navigate(OtherScreens.Compare.route) },
             toFavoritesScreen = { navController.navigate(OtherScreens.Favorite.route) },
             toDownloadsScreen = { navController.navigate(OtherScreens.Downloads.route) },
-            toCouponsScreen = { navController.navigate(PaymentScreens.Coupons.route) }
+            toCouponsScreen = { navController.navigate(PaymentScreens.Coupons.route) },
+            toLoginScreen = { navController.navigate(AuthScreens.Login.route) }
         )
     }
 }

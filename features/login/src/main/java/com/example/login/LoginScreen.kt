@@ -142,6 +142,7 @@ fun LoginScreen(
                                     delay(1000)
                                 }
                                 is UserTokenUiState.Error -> {
+                                    loaderState = false
                                     println("*** Token Error: ${tokenState.throwable.message}")
                                 }
                             }
@@ -155,7 +156,8 @@ fun LoginScreen(
                     }
                 },
                 text = "ورود",
-                height = 50
+                height = 50,
+                hasLoader = loaderState
             )
         }
     }

@@ -76,9 +76,7 @@ fun JetSimpleButton(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (hasLoader) {
-                LoadingAnimation(
-
-                )
+                LoadingAnimation()
             } else {
                 JetText(
                     modifier = Modifier.fillMaxWidth(),
@@ -163,10 +161,10 @@ fun JetBtnAddToCart(
 @Composable
 fun LoadingAnimation(
     modifier: Modifier = Modifier,
-    circleSize: Dp = 12.dp,
+    circleSize: Dp = 10.dp,
     circleColor: Color = Color.White,
     spaceBetween: Dp = 7.dp,
-    travelDistance: Dp = 20.dp
+    travelDistance: Dp = 10.dp
 ) {
     val circles = listOf(
         remember { Animatable(initialValue = 0f) },
