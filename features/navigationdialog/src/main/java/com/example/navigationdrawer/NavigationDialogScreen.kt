@@ -66,6 +66,9 @@ fun NavigationDialogScreen(
     toCouponsScreen: () -> Unit,
     toProfileScreen: () -> Unit,
     toLoginScreen: () -> Unit,
+    userTokenUiState: String?,
+    username: String?,
+    userImage: String?,
     userLoggedIn: Boolean = false
 ) {
     val ordersUiState: MainNavigationDialogOrdersUiState by viewModel.ordersState.collectAsState()
@@ -296,7 +299,8 @@ private fun DialogMainSectionHeader(
     if (!userLoggedIn) {
         Column(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxWidth()
+                .height(80.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

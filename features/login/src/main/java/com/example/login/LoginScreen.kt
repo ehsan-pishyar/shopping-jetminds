@@ -149,6 +149,8 @@ fun LoginScreen(
                         }.await()
                         async {
                             viewModel.addTokenToDataStore(token = token)
+                            delay(1000)
+                            viewModel.saveTokenToDataStore(token = token)
                         }.await()
                         async {
                             toHomeScreen()

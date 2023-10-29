@@ -21,8 +21,14 @@ fun JetPriceText(
     priceFreeSize: Int = 12,
     color: Color = Primary
 ) {
-    if (price.trim().isNotEmpty()) {
-
+    if (price.trim().isEmpty() || price == "0") {
+        JetText(
+            text = "رایگان",
+            color = color,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = priceFreeSize
+        )
+    } else {
         Row(modifier = Modifier
             .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -41,13 +47,6 @@ fun JetPriceText(
                 fontSize = priceTomanSize
             )
         }
-    } else {
-        JetText(
-            text = "رایگان",
-            color = color,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = priceFreeSize
-        )
     }
 }
 
@@ -55,7 +54,7 @@ fun JetPriceText(
 @Composable
 private fun Preview_JetPriceText() {
     JetPriceText(
-        price = "7000",
+        price = "",
         priceTextSize = 14,
         priceTomanSize = 10,
         priceFreeSize = 12,

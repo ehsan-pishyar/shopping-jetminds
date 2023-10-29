@@ -250,7 +250,8 @@ fun JetShopProduct(
                             .padding(horizontal = 5.dp)
                         ) {
                             JetStarText(
-                                textSize = 14,
+                                rate = if (rating?.isEmpty() == true) 0.00F else rating?.toFloat(),
+                                textSize = 13,
                                 iconSize = 15
                             )
                         }
@@ -484,7 +485,7 @@ private fun Preview_JetShopProduct() {
             title = "کیت رابط کاربری Magenest – eCommerce App UI Kit",
             image = "",
             price = "39000",
-            rating = "4.6",
+            rating = "",
             category = "کیت رابط کاربری",
             onAddToCartClick = {},
             onProductClick = {},

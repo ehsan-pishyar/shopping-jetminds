@@ -43,6 +43,9 @@ import com.example.designsystem.components.JetProduct
 import com.example.designsystem.components.JetText
 import com.example.designsystem.components.SectionSpacer
 import com.example.domain.models.ProductsResponse
+import com.example.home.user.MainUserUiState
+import com.example.home.user.UserUiState
+import com.example.home.user.UserViewModel
 import com.example.navigationdrawer.NavigationDialogScreen
 
 @Composable
@@ -50,6 +53,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     sharedViewModel: SharedViewModel = SharedViewModel(),
     favoritesViewModel: FavoritesViewModel = hiltViewModel(),
+    userViewModel: UserViewModel = hiltViewModel(),
     toCartScreen: () -> Unit,
     toNotificationScreen: () -> Unit,
     toProfileScreen: () -> Unit,
@@ -64,6 +68,9 @@ fun HomeScreen(
 ){
     val homeUiState: HomeUiState by viewModel.homeUiState.collectAsState()
     val isFavoriteState by favoritesViewModel.isFavorite.collectAsState()
+
+    val userTokenUiState by userViewModel.userTokenUiState.collectAsState()
+    val userUiState: MainUserUiState by userViewModel.userUiState.collectAsState()
 
     val userLoggedIn by remember { mutableStateOf(false) }
 
@@ -84,6 +91,8 @@ fun HomeScreen(
         toNotificationsScreen = { toNotificationScreen() },
         toCouponsScreen = { toCouponsScreen() },
         toLoginScreen = { toLoginScreen() },
+        userTokenUiState = userTokenUiState,
+        userInformationUiState = userUiState,
         userLoggedIn = userLoggedIn,
         isFavoriteState = isFavoriteState
     )
@@ -107,11 +116,16 @@ private fun HomeContent(
     toNotificationsScreen: () -> Unit,
     toCouponsScreen: () -> Unit,
     toLoginScreen: () -> Unit,
+    userTokenUiState: String? = null,
+    userInformationUiState: MainUserUiState? = null,
     userLoggedIn: Boolean = false,
     isFavoriteState: Boolean = false
 ) {
     val scrollState = rememberScrollState()
     var openDialog by remember { mutableStateOf(false) }
+
+    var userName by remember { mutableStateOf("") }
+    var userImage by remember { mutableStateOf("") }
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -154,6 +168,23 @@ private fun HomeContent(
                     toProductDetailsScreen = { toProductDetailsScreen() }
                 )
             }
+
+            when (val userState = userInformationUiState?.response) {
+                UserUiState.Loading -> {
+                    println("*** Home User Loading ...")
+                }
+                is UserUiState.Success -> {
+                    println("*** Home User was successful")
+                    userName = userState.user.name!!
+                    userImage = userState.user.avatarUrls?.size96!!
+                    println("Home username: $userName")
+                }
+                is UserUiState.Error -> {
+                    println("*** Home User Error: ${userState.throwable.message}")
+                }
+                else -> Unit
+            }
+
             NavigationDialogScreen(
                 openDialog = openDialog,
                 onDismiss = { openDialog = false },
@@ -167,6 +198,9 @@ private fun HomeContent(
                 toCouponsScreen = { toCouponsScreen() },
                 toProfileScreen = { toProfileScreen() },
                 toLoginScreen = { toLoginScreen() },
+                userTokenUiState = userTokenUiState,
+                username = userName,
+                userImage = userImage,
                 userLoggedIn = userLoggedIn
             )
         }
