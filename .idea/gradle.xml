@@ -14,9 +14,9 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/data/cache" />
+            <option value="$PROJECT_DIR$/data/datastore" />
             <option value="$PROJECT_DIR$/data/network" />
             <option value="$PROJECT_DIR$/data/repository" />
-            <option value="$PROJECT_DIR$/data/wordpress_network" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/aboutus" />
@@ -42,7 +42,6 @@
             <option value="$PROJECT_DIR$/features/shop" />
             <option value="$PROJECT_DIR$/features/splash" />
             <option value="$PROJECT_DIR$/features/userinformations" />
-            <option value="$PROJECT_DIR$/features/verification" />
             <option value="$PROJECT_DIR$/libraries" />
             <option value="$PROJECT_DIR$/libraries/core" />
             <option value="$PROJECT_DIR$/libraries/designsystem" />

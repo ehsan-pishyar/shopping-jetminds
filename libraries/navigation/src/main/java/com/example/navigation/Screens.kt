@@ -7,7 +7,6 @@ sealed class StartScreens(val route: String) {
 
 sealed class AuthScreens(val route: String) {
     object Login: AuthScreens(route = "login")
-    object Verification: AuthScreens(route = "verification")
     object Account: AuthScreens(route = "account")
 }
 

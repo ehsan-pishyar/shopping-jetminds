@@ -7,10 +7,12 @@ import com.example.domain.use_cases.coupons.GetCouponsUseCase
 import com.example.domain.use_cases.downloads.GetDownloadedProductsUseCase
 import com.example.domain.use_cases.orders.GetOrdersUseCase
 import com.example.domain.use_cases.favorites.GetFavoriteProductsUseCase
+import com.example.domain.use_cases.user.GetUserTokenUseCase
 import com.example.domain.utils.ServiceResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,7 +22,8 @@ class NavigationDialogViewModel @Inject constructor(
     private val getCartTotalCountUseCase: GetCartTotalCountsUseCase,
     private val getFavoritesUseCase: GetFavoriteProductsUseCase,
     private val getDownloadedUseCase: GetDownloadedProductsUseCase,
-    private val getCouponsUseCase: GetCouponsUseCase
+    private val getCouponsUseCase: GetCouponsUseCase,
+    private val readUserTokenUseCase: GetUserTokenUseCase
 ): ViewModel() {
 
     private var _ordersState = MutableStateFlow(MainNavigationDialogOrdersUiState(NavigationDialogOrdersUiState.Loading))
@@ -44,6 +47,9 @@ class NavigationDialogViewModel @Inject constructor(
     private var _couponsState = MutableStateFlow(MainNavigationDialogCouponsUiState(NavigationDialogCouponsUiState.Loading))
     val couponsState = _couponsState.asStateFlow()
 
+    private var _dataStoreUserToken = MutableStateFlow("")
+    val dataStoreUserToken = _dataStoreUserToken.asStateFlow()
+
     init {
         getOrdersSize()
         getCartSize()
@@ -52,6 +58,7 @@ class NavigationDialogViewModel @Inject constructor(
         getDownloadsSize()
         getNotificationsSize()
         getCouponsSize()
+        readUserTokenFromDataStore()
     }
 
     private fun getOrdersSize() {
@@ -109,7 +116,7 @@ class NavigationDialogViewModel @Inject constructor(
 
     private fun getCouponsSize() {
         viewModelScope.launch {
-            getCouponsUseCase.invoke().collect{ couponsResult ->
+            getCouponsUseCase.invoke().collect { couponsResult ->
                 val couponsUiStateResult = when (couponsResult) {
                     ServiceResult.Loading -> NavigationDialogCouponsUiState.Loading
                     is ServiceResult.Success -> NavigationDialogCouponsUiState.Success(
@@ -122,6 +129,14 @@ class NavigationDialogViewModel @Inject constructor(
                 _couponsState.value = MainNavigationDialogCouponsUiState(
                     response = couponsUiStateResult
                 )
+            }
+        }
+    }
+
+    private fun readUserTokenFromDataStore() {
+        viewModelScope.launch {
+            readUserTokenUseCase.invoke().collect {
+                _dataStoreUserToken.value = it
             }
         }
     }

@@ -18,6 +18,7 @@ import com.example.core.utils.SharedViewModel
 import com.example.downloads.navigation.downloadsScreen
 import com.example.favorites.navigation.favoritesScreen
 import com.example.home.navigation.homeScreen
+import com.example.login.navigation.loginScreen
 import com.example.notifications.navigation.notificationsScreen
 import com.example.orders.navigation.ordersScreen
 import com.example.productdetails.navigation.productDetailsScreen
@@ -73,6 +74,7 @@ fun MainGraph(
         checkoutScreen(navController = navController)
         ordersScreen(navController = navController)
 
+        loginScreen(navController = navController)
         accountScreen(navController = navController)
         userInformationScreen(navController = navController)
     }

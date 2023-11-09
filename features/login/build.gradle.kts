@@ -79,4 +79,7 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+    // Timber
+    implementation("com.jakewharton.timber:timber:5.0.1")
 }

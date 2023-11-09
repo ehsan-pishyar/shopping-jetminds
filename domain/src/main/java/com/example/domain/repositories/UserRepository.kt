@@ -9,6 +9,6 @@ import kotlinx.coroutines.flow.Flow
 interface UserRepository {
 
     fun getUserToken(userCredentials: UserCredentials): Flow<UserTokenResponse>
-    fun validateUserToken(headers: Map<String, String>): Flow<TokenValidationResponse>
-    fun getUser(headers: Map<String, String>): Flow<UserResponse>
+    fun validateUserToken(): Flow<TokenValidationResponse>
+    fun getUser(token: String): Flow<UserResponse>
 }

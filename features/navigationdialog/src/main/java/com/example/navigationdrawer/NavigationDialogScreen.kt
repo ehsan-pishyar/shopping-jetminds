@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -66,9 +65,6 @@ fun NavigationDialogScreen(
     toCouponsScreen: () -> Unit,
     toProfileScreen: () -> Unit,
     toLoginScreen: () -> Unit,
-    userTokenUiState: String?,
-    username: String?,
-    userImage: String?,
     userLoggedIn: Boolean = false
 ) {
     val ordersUiState: MainNavigationDialogOrdersUiState by viewModel.ordersState.collectAsState()
@@ -78,6 +74,7 @@ fun NavigationDialogScreen(
     val downloadsUiState = viewModel.downloadsState.collectAsState()
     val notificationsUiState = viewModel.notificationsState.collectAsState()
     val couponsUiState: MainNavigationDialogCouponsUiState by viewModel.couponsState.collectAsState()
+    val dataStoreUserTokenUiState by viewModel.dataStoreUserToken.collectAsState()
 
     NavigationDialogContent(
         ordersUiState = ordersUiState,
@@ -87,6 +84,7 @@ fun NavigationDialogScreen(
         downloadsUiState = downloadsUiState,
         notificationsUiState = notificationsUiState,
         couponsUiState = couponsUiState,
+        dataStoreUserTokenUiState = dataStoreUserTokenUiState,
         openDialog = openDialog,
         onDismiss = { onDismiss() },
         toShopScreen = { toShopScreen() },
@@ -112,6 +110,7 @@ private fun NavigationDialogContent(
     downloadsUiState: State<Int>? = null,
     notificationsUiState: State<Int>? = null,
     couponsUiState: MainNavigationDialogCouponsUiState? = null,
+    dataStoreUserTokenUiState: String = "",
     openDialog: Boolean,
     onDismiss: () -> Unit,
     toShopScreen: () -> Unit,
@@ -159,6 +158,7 @@ private fun NavigationDialogContent(
                         downloadsUiState = downloadsUiState,
                         notificationsUiState = notificationsUiState,
                         couponsUiState = couponsUiState,
+                        dataStoreUserTokenUiState = dataStoreUserTokenUiState,
                         toOrdersScreen = { toOrdersScreen() },
                         toCartScreen = { toCartScreen() },
                         toComparesScreen = { toComparesScreen() },
@@ -235,6 +235,7 @@ private fun DialogMainSection(
     downloadsUiState: State<Int>? = null,
     notificationsUiState: State<Int>? = null,
     couponsUiState: MainNavigationDialogCouponsUiState? = null,
+    dataStoreUserTokenUiState: String = "",
     toOrdersScreen: () -> Unit,
     toCartScreen: () -> Unit,
     toComparesScreen: () -> Unit,
@@ -262,8 +263,8 @@ private fun DialogMainSection(
             verticalArrangement = Arrangement.Top
         ) {
             DialogMainSectionHeader(
+                dataStoreUserTokenUiState = dataStoreUserTokenUiState,
                 toProfileScreen = { toProfileScreen() },
-                userLoggedIn = userLoggedIn,
                 toLoginScreen = { toLoginScreen() }
             )
             SectionSpacer(10)
@@ -292,11 +293,11 @@ private fun DialogMainSection(
 
 @Composable
 private fun DialogMainSectionHeader(
+    dataStoreUserTokenUiState: String = "",
     toProfileScreen: () -> Unit,
-    userLoggedIn: Boolean = false,
     toLoginScreen: () -> Unit
 ) {
-    if (!userLoggedIn) {
+    if (dataStoreUserTokenUiState.isEmpty()) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -305,10 +306,12 @@ private fun DialogMainSectionHeader(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             JetSimpleButton(
-                onClick = { toLoginScreen() },
+                onClick = {
+                    toLoginScreen()
+                },
                 text = "ورود",
-                modifier = Modifier.width(70.dp),
-                height = 30,
+                width = 70,
+                height = 35,
                 fontSize = 11,
                 shape = 6
             )
@@ -642,7 +645,6 @@ private fun DialogBottomSection(
 private fun Preview_HeaderSection() {
     DialogMainSectionHeader(
         toLoginScreen = {},
-        toProfileScreen = {},
-        userLoggedIn = false
+        toProfileScreen = {}
     )
 }

@@ -4,6 +4,7 @@ import com.example.cache.dao.*
 import com.example.domain.repositories.*
 import com.example.domain.use_cases.products.*
 import com.example.repository.repository.*
+import com.example.repository.repository.wordpress.UserRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,62 +15,52 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 interface RepositoryModule {
 
-    @Binds
-    @Singleton
+    @[Binds Singleton]
     fun providesProductCategoriesRepository(
         impl: ProductCategoriesRepositoryImpl
     ): ProductCategoriesRepository
 
-    @Binds
-    @Singleton
+    @[Binds Singleton]
     fun providesProductsRepository(
         impl: ProductsRepositoryImpl
     ): ProductsRepository
 
-    @Binds
-    @Singleton
+    @[Binds Singleton]
     fun providesCouponsRepository(
         impl: CouponsRepositoryImpl
     ): CouponsRepository
 
-    @Binds
-    @Singleton
+    @[Binds Singleton]
     fun providesOrdersRepository(
         impl: OrdersRepositoryImpl
     ): OrdersRepository
 
-    @Binds
-    @Singleton
+    @[Binds Singleton]
     fun providesProductAttrsRepository(
         impl: ProductAttributesRepositoryImpl
     ): ProductAttributesRepository
 
-    @Binds
-    @Singleton
+    @[Binds Singleton]
     fun providesProductReviewsRepository(
         impl: ProductReviewsRepositoryImpl
     ): ProductReviewsRepository
 
-    @Binds
-    @Singleton
+    @[Binds Singleton]
     fun providesProductShippingClassesRepository(
         impl: ProductShippingClassesRepositoryImpl
     ): ProductShippingClassesRepository
 
-    @Binds
-    @Singleton
+    @[Binds Singleton]
     fun providesProductTagsRepository(
         impl: ProductTagsRepositoryImpl
     ): ProductTagsRepository
 
-    @Binds
-    @Singleton
+    @[Binds Singleton]
     fun providesProductVariationRepository(
         impl: ProductVariationsRepositoryImpl
     ): ProductVariationsRepository
 
-    @Binds
-    @Singleton
+    @[Binds Singleton]
     fun providesShippingZonesRepository(
         impl: ShippingZonesRepositoryImpl
     ): ShippingZonesRepository
@@ -95,12 +86,12 @@ interface RepositoryModule {
     ): CartItemRepository
 
     @[Binds Singleton]
-    fun bindsUserRepository(
-        impl: UserRepositoryImpl
-    ): UserRepository
-
-    @[Binds Singleton]
     fun bindsPaymentGatewayRepository(
         impl: PaymentGatewaysRepositoryImpl
     ): PaymentGatewaysRepository
+
+    @[Binds Singleton]
+    fun bindsUserRepository(
+        impl: UserRepositoryImpl
+    ): UserRepository
 }

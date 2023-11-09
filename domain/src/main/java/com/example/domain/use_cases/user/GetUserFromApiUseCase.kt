@@ -10,6 +10,6 @@ class GetUserFromApiUseCase constructor(
     private val repository: UserRepository
 ) {
 
-    operator fun invoke(headers: Map<String, String>): Flow<ServiceResult<UserResponse>> =
-        repository.getUser(headers = headers).asResult()
+    operator fun invoke(token: String): Flow<ServiceResult<UserResponse>> =
+        repository.getUser(token = token).asResult()
 }

@@ -4,25 +4,10 @@ import com.example.domain.models.user.AvatarUrls
 import com.example.domain.models.user.TokenValidationResponse
 import com.example.domain.models.user.UserResponse
 import com.example.domain.models.user.UserTokenResponse
-import com.example.wordpress_network.models.AvatarUrlsDto
-import com.example.wordpress_network.models.TokenValidationResponseDto
-import com.example.wordpress_network.models.UserResponseDto
-import com.example.wordpress_network.models.UserTokenResponseDto
-
-fun UserTokenResponseDto.toDomain(): UserTokenResponse =
-    UserTokenResponse(
-        this.tokenType,
-        this.iat,
-        this.expiresIn,
-        this.jwtToken
-    )
-
-fun TokenValidationResponseDto.toDomain(): TokenValidationResponse =
-    TokenValidationResponse(
-        this.status,
-        this.message,
-        this.code
-    )
+import com.example.network.models.wordpress.AvatarUrlsDto
+import com.example.network.models.wordpress.TokenValidationResponseDto
+import com.example.network.models.wordpress.UserResponseDto
+import com.example.network.models.wordpress.UserTokenResponseDto
 
 fun UserResponseDto.toDomain(): UserResponse =
     UserResponse(
@@ -41,4 +26,19 @@ fun AvatarUrlsDto.toDomain(): AvatarUrls =
         this.size24,
         this.size48,
         this.size96
+    )
+
+fun UserTokenResponseDto.toDomain(): UserTokenResponse =
+    UserTokenResponse(
+        this.tokenType,
+        this.iat,
+        this.expiresIn,
+        this.jwtToken
+    )
+
+fun TokenValidationResponseDto.toDomain(): TokenValidationResponse =
+    TokenValidationResponse(
+        this.status,
+        this.message,
+        this.code
     )

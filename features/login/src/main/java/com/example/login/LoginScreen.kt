@@ -22,23 +22,21 @@ import com.example.designsystem.components.JetText
 import com.example.designsystem.components.JetTextField
 import com.example.designsystem.R
 import com.example.designsystem.components.SectionSpacer
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
-    viewModel: UserViewModel = hiltViewModel(),
+    viewModel: LoginViewModel = hiltViewModel(),
     toHomeScreen: () -> Unit
 ){
-    val tokenUiState: MainUserTokenUiState by viewModel.tokenState.collectAsState()
+    val wordpressUserUiState: MainWordpressUserUiState by viewModel.wordpressUserUiState.collectAsState()
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var token by remember { mutableStateOf("") }
-    var loaderState by remember { mutableStateOf(false) }
 
-    val scope = rememberCoroutineScope()
+    var testText by remember { mutableStateOf("") }
+
+    var loaderState by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -54,113 +52,127 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Image(
-                painter = painterResource(id = R.drawable.jetminds_logo),
-                contentDescription = null,
-                modifier = Modifier.width(200.dp)
-            )
-
+            LogoSection()
             SectionSpacer(40)
-
-            JetText(
-                text = "خوش اومـــــدی",
-                fontSize = 16,
-                textAlign = TextAlign.Center,
-                color = BlackColor,
-                maxLines = 1,
-                lineHeight = 0.0
-            )
-
-            JetText(
-                text = "ورود فقط با یه شماره همراه",
-                fontSize = 16,
-                textAlign = TextAlign.Center,
-                color = BlackColor,
-                maxLines = 1,
-                lineHeight = 0.0
-            )
-
+            WelcomeSection()
             SectionSpacer(40)
-
-            JetTextField(
-                onValueChange = {
-                    username = it
-                },
-                value = username,
-                placeholder = "نام کاربری یا ایمیل",
-                singleLine = true,
-                maxLines = 1,
-                keyboardType = KeyboardType.Text,
-                title = "نام کاربری یا ایمیل",
-                style = TextStyle(
-                    color = LighterBlack,
-                    fontFamily = Yekanbakh,
-                    fontSize = 14.sp
-                ),
-                height = 50
-            )
-
-            SectionSpacer(10)
-
-            JetTextField(
-                onValueChange = {
-                    password = it
-                },
-                value = password,
-                placeholder = "رمز عبور خودتو وارد کن",
-                singleLine = true,
-                maxLines = 1,
-                keyboardType = KeyboardType.Text,
-                title = "رمز عبور",
-                style = TextStyle(
-                    color = LighterBlack,
-                    fontFamily = Yekanbakh,
-                    fontSize = 14.sp
-                ),
-                height = 50
+            InputFieldsSection(
+                username = username,
+                password = password,
+                onUsernameChange = { username = it },
+                onPasswordChange = { password = it }
             )
 
             SectionSpacer(30)
 
+//            when (val tokenState = tokenUiState.response) {
+//                UserTokenUiState.Loading -> {
+//                    println("*** Token Loading ...")
+//                }
+//                is UserTokenUiState.Success -> {
+//                    token = tokenState.userTokenResponse.jwtToken!!
+//                    viewModel.saveTokenToDataStore(token = token)
+//                    viewModel.validateToken()
+//                }
+//                is UserTokenUiState.Error -> {
+//                    println("*** Token Error: ${tokenState.throwable.message}")
+//                }
+//            }
+
+            when (val wordpressUserState = wordpressUserUiState.response) {
+                WordpressUserUiState.Loading -> {
+                    println("*** Validation Token ...")
+                    viewModel.getWordpressUser(token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEwLCJuYW1lIjoiY3VzdG9tZXIiLCJpYXQiOjE2OTkzODk4MjAsImV4cCI6MTg1NzA2OTgyMH0.2AXy6tRzvHi4sKX_bTGqNwpBWy7oM1xkXUJrIcNj2yA")
+                }
+                is WordpressUserUiState.Success -> {
+                    println("*** Validation Token was successful: ${wordpressUserState.wordpressUser.name}")
+                    testText = wordpressUserState.wordpressUser.name!!
+                }
+                is WordpressUserUiState.Error -> {
+                    println("*** Validation Token was error: ${wordpressUserState.throwable.message}")
+                }
+            }
+
+            JetText(text = testText)
+
             JetSimpleButton(
                 onClick = {
-                    loaderState = true
-                    scope.launch {
-                        async {
-                            viewModel.getUserToken(username = username, password = password)
-                            delay(1000)
-                        }.await()
-                        async {
-                            delay(1000)
-                            when(val tokenState = tokenUiState.response) {
-                                UserTokenUiState.Loading -> {
-                                    println("*** Loading Token ...")
-                                }
-                                is UserTokenUiState.Success -> {
-                                    println("*** Token: ${tokenState.userTokenResponse.jwtToken}")
-                                    token = tokenState.userTokenResponse.jwtToken!!
-                                    delay(1000)
-                                }
-                                is UserTokenUiState.Error -> {
-                                    loaderState = false
-                                    println("*** Token Error: ${tokenState.throwable.message}")
-                                }
-                            }
-                        }.await()
-                        async {
-                            viewModel.addTokenToDataStore(token = token)
-                            delay(1000)
-                            viewModel.saveTokenToDataStore(token = token)
-                        }.await()
-                        async {
-                            toHomeScreen()
-                        }
-                    }
+//                    viewModel.getUserToken(username = username, password = password)
+//                          viewModel.validateToken()
                 },
                 text = "ورود",
                 height = 50,
-                hasLoader = loaderState
+                hasLoader = false
             )
         }
     }
+}
+
+@Composable
+private fun LogoSection() {
+    Image(
+        painter = painterResource(id = R.drawable.jetminds_logo),
+        contentDescription = null,
+        modifier = Modifier.width(200.dp)
+    )
+}
+
+@Composable
+private fun WelcomeSection() {
+    JetText(
+        text = "خوش اومـــــدی",
+        fontSize = 16,
+        textAlign = TextAlign.Center,
+        color = BlackColor,
+        maxLines = 1,
+        lineHeight = 0.0
+    )
+    JetText(
+        text = "ورود فقط با یه شماره همراه",
+        fontSize = 16,
+        textAlign = TextAlign.Center,
+        color = BlackColor,
+        maxLines = 1,
+        lineHeight = 0.0
+    )
+}
+
+@Composable
+fun InputFieldsSection(
+    username: String,
+    password: String,
+    onUsernameChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit
+) {
+    JetTextField(
+        onValueChange = onUsernameChange,
+        value = username,
+        placeholder = "نام کاربری یا ایمیل",
+        singleLine = true,
+        maxLines = 1,
+        keyboardType = KeyboardType.Text,
+        title = "نام کاربری یا ایمیل",
+        style = TextStyle(
+            color = LighterBlack,
+            fontFamily = Yekanbakh,
+            fontSize = 14.sp
+        ),
+        height = 50
+    )
+    SectionSpacer(10)
+    JetTextField(
+        onValueChange = onPasswordChange,
+        value = password,
+        placeholder = "رمز عبور خودتو وارد کن",
+        singleLine = true,
+        maxLines = 1,
+        keyboardType = KeyboardType.Text,
+        title = "رمز عبور",
+        style = TextStyle(
+            color = LighterBlack,
+            fontFamily = Yekanbakh,
+            fontSize = 14.sp
+        ),
+        height = 50
+    )
 }

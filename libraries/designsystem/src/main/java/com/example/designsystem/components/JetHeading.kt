@@ -216,7 +216,9 @@ fun JetHomeHeading(
             horizontalAlignment = Alignment.End
         ) {
             IconButton(
-                onClick = { toProfileScreen() }
+                onClick = {
+                    toProfileScreen()
+                }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.avatar),

@@ -37,6 +37,7 @@ android {
 
 dependencies {
 
+    implementation(project(mapOf("path" to ":domain")))
     val androidcoreVersion = "1.10.1"
     implementation("androidx.core:core-ktx:$androidcoreVersion")
 
@@ -50,7 +51,7 @@ dependencies {
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
 
     // OkHttp
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
     // Dagger - Hilt
@@ -59,4 +60,9 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+    // Testing - Mock web server
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.11.0")
+
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 }

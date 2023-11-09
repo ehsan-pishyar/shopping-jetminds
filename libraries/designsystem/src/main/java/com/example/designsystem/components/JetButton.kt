@@ -41,11 +41,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.style.TextOverflow
 
 
 @Composable
 fun JetSimpleButton(
     modifier: Modifier = Modifier,
+    width: Int? = null,
     height: Int = 56,
     onClick: () -> Unit,
     color: ButtonColors = ButtonDefaults.buttonColors(containerColor = Primary),
@@ -60,31 +62,41 @@ fun JetSimpleButton(
 
     Button(
         onClick = { onClick() },
-        modifier = modifier
-            .fillMaxWidth()
-            .height(height.dp),
+        modifier = if (width == null) {
+            modifier
+                .fillMaxWidth()
+                .height(height.dp)
+        } else {
+            modifier
+                .width(width.dp)
+                .height(height.dp)
+        },
         colors = color,
         shape = RoundedCornerShape(shape.dp),
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 0.dp,
             pressedElevation = 0.dp,
             disabledElevation = 0.dp
-        )
+        ),
+        contentPadding = ButtonDefaults.TextButtonContentPadding
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
             if (hasLoader) {
                 LoadingAnimation()
             } else {
                 JetText(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxSize(),
                     text = text,
                     fontSize = fontSize,
                     fontWeight = fontWeight,
                     color = textColor,
-                    textAlign = textAlign
+                    textAlign = textAlign,
+                    overflow = TextOverflow.Clip,
+                    maxLines = 1
                 )
             }
         }
@@ -226,9 +238,12 @@ fun Preview_JetButton() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         JetSimpleButton(
             onClick = {},
-            text = "احسان پیش یار",
-            modifier = Modifier.width(364.dp),
-            hasLoader = true
+            width = 70,
+            height = 30,
+            text = "ورود",
+            fontSize = 11,
+            shape = 6,
+            hasLoader = false
         )
     }
 }
