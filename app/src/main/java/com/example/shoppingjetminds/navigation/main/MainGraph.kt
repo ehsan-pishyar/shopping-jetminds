@@ -65,7 +65,10 @@ fun MainGraph(
         )
         
         compareScreen(navController = navController)
-        searchScreen(navController = navController)
+        searchScreen(
+            navController = navController,
+            sharedViewModel = sharedViewModel
+        )
         addressScreen(navController = navController)
         downloadsScreen(navController = navController)
         notificationsScreen(navController = navController)

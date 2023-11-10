@@ -33,9 +33,10 @@ import com.example.designsystem.components.JetText
 fun ShopScreen(
     viewModel: ShopViewModel = hiltViewModel(),
     sharedViewModel: SharedViewModel = SharedViewModel(),
-    favoritesViewModel: FavoritesViewModel = hiltViewModel(),
     toCartScreen: () -> Unit,
-    toProductDetailsScreen: () -> Unit
+    toProductDetailsScreen: () -> Unit,
+    toSearchScreen: () -> Unit,
+    toNotificationScreen: () -> Unit
 ) {
 
     LaunchedEffect(key1 = null) {
@@ -47,14 +48,14 @@ fun ShopScreen(
     }
 
     val uiState: MainShopProductsUiState by viewModel.shopUiState.collectAsState()
-    var search by remember { mutableStateOf("") }
 
     ShopContent(
         uiState = uiState,
         sharedViewModel = sharedViewModel,
         toCartScreen = { toCartScreen() },
         toProductDetailsScreen = { toProductDetailsScreen() },
-        favoritesViewModel = favoritesViewModel
+        toSearchScreen = { toSearchScreen() },
+        toNotificationScreen = { toNotificationScreen() }
     )
 }
 
@@ -64,7 +65,8 @@ private fun ShopContent(
     sharedViewModel: SharedViewModel? = null,
     toCartScreen: () -> Unit,
     toProductDetailsScreen: () -> Unit,
-    favoritesViewModel: FavoritesViewModel? = null
+    toSearchScreen: () -> Unit,
+    toNotificationScreen: () -> Unit
 ) {
     Box(modifier = Modifier
         .fillMaxSize()
@@ -80,9 +82,9 @@ private fun ShopContent(
                 .weight(1f)
             ) {
                 JetShopHeading(
-                    toSearchScreen = {  },
-                    toCartScreen = {  },
-                    toNotificationScreen = {  }
+                    toSearchScreen = { toSearchScreen() },
+                    toCartScreen = { toCartScreen() },
+                    toNotificationScreen = { toNotificationScreen() }
                 )
             }
             Column(modifier = Modifier
@@ -254,7 +256,9 @@ private fun PreviewShopScreen() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
         ShopContent(
             toCartScreen = {},
-            toProductDetailsScreen = {}
+            toProductDetailsScreen = {},
+            toSearchScreen = {},
+            toNotificationScreen = {}
         )
     }
 }

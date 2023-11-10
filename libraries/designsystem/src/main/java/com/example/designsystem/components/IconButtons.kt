@@ -47,15 +47,14 @@ fun LikeButton(
 
 @Composable
 fun BuyButton(
-    onCLick: () -> Unit
+    onCLick: () -> Unit,
+    modifier: Modifier = Modifier,
+    shape: Int = 8
 ) {
-    Button(modifier = Modifier
-        .fillMaxSize(),
+    Button(modifier = modifier,
         contentPadding = PaddingValues(5.dp),
-        shape = RoundedCornerShape(8.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Primary
-        ),
+        shape = RoundedCornerShape(shape.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = Primary),
         onClick = { onCLick() }
     ) {
         Image(
@@ -79,5 +78,7 @@ fun Preview_LikeButton() {
 @Preview
 @Composable
 fun Preview_BuyButton() {
-    BuyButton {}
+    BuyButton(
+        onCLick = {}
+    )
 }

@@ -40,4 +40,15 @@ data class ProductsResponse(
     val stockStatus: String?,
     val isFavorite: Boolean?,
     val downloaded: Boolean?
-)
+) {
+    fun doesMatchSearchQuery(query: String): Boolean {
+        val matchingCombinations = listOf(
+            "$name",
+            "${name?.first()}"
+        )
+
+        return matchingCombinations.any {
+            it.contains(query, ignoreCase = true)
+        }
+    }
+}

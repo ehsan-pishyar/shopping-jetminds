@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.utils.SharedViewModel
 import com.example.core.utils.carouselProductsSize
+import com.example.core.utils.getCurrentDate
 import com.example.designsystem.Background
 import com.example.designsystem.R
 import com.example.designsystem.components.JetHomeHeading
@@ -207,7 +209,6 @@ fun MainContentSection(
             }
             is AndroidUiState.Success -> {
                 ProductsRow(
-                    viewModel = viewModel,
                     sharedViewModel = sharedViewModel,
                     favoritesViewModel = favoritesViewModel,
                     products = androidUiState.androidSourceCodes,
@@ -233,7 +234,6 @@ fun MainContentSection(
             }
             is ApplicationUiKitUiState.Success -> {
                 ProductsRow(
-                    viewModel = viewModel,
                     sharedViewModel = sharedViewModel,
                     favoritesViewModel = favoritesViewModel,
                     products = applicationUiKitUiState.applicationUiKits,
@@ -270,7 +270,6 @@ fun MainContentSection(
             }
             is Illustrations3DUiState.Success -> {
                 ProductsRow(
-                    viewModel = viewModel,
                     sharedViewModel = sharedViewModel,
                     favoritesViewModel = favoritesViewModel,
                     products = illustrations3DUiState.illustration3Ds,
@@ -288,11 +287,14 @@ fun MainContentSection(
 @Composable
 private fun ProductsRow(
     products: List<ProductsResponse>,
-    viewModel: HomeViewModel? = null,
+    cartViewModel: CartViewModel = hiltViewModel(),
     toProductDetailsScreen: () -> Unit,
     sharedViewModel: SharedViewModel? = null,
     favoritesViewModel: FavoritesViewModel? = null
 ) {
+    val cartItemCountUiState by cartViewModel.cartItemCount.collectAsState()
+    val isInCartUiState by cartViewModel.isInCartUiState.collectAsState()
+    var count by remember { mutableIntStateOf(0) }
 
     LazyRow(
         contentPadding = PaddingValues(0.dp),
@@ -309,11 +311,24 @@ private fun ProductsRow(
                     rating = products[position].averageRating,
                     category = products[position].categories?.get(0)?.name,
                     onAddToCartClick = {
-                        viewModel?.updateCart(
-                            productId = products[position].id!!,
-                            count = 1,
-                            price = products[position].price?.toInt()!!
-                        )
+                        count = cartItemCountUiState
+                        if (isInCartUiState == 0) {
+                            cartViewModel.insertCartItem(
+                                productId = products[position].id!!,
+                                productTitle = products[position].name!!,
+                                productImage = products[position].images?.get(0)?.src!!,
+                                productCategory = products[position].categories?.get(0)?.name!!,
+                                productPrice = products[position].price!!.toInt(),
+                                count = (count + 1),
+                                dateAdded = getCurrentDate()
+                            )
+                        } else {
+                            cartViewModel.updateCart(
+                                productId = products[position].id!!,
+                                productPrice = products[position].price!!.toInt(),
+                                count = (count + 1)
+                            )
+                        }
                     },
                     onProductClick = {
                         sharedViewModel?.addProductId(id = products[position].id!!)

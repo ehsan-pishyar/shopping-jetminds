@@ -30,8 +30,8 @@ import com.example.designsystem.YellowColor
 fun JetProduct(
     title: String,
     image: String? = null,
-    price: String? = "7000",
-    rating: String? = "4.5",
+    price: String? = null,
+    rating: String? = null,
     category: String? = null,
     onAddToCartClick: () -> Unit,
     onProductClick: () -> Unit,
@@ -171,10 +171,13 @@ fun JetProduct(
                         }
                         Column(modifier = Modifier
                             .fillMaxHeight()
-                            .weight(2f)
+                            .weight(2f),
+                            verticalArrangement = Arrangement.Bottom
                         ) {
                             BuyButton(
-                                onCLick = { onAddToCartClick() }
+                                onCLick = { onAddToCartClick() },
+                                shape = 6,
+                                modifier = Modifier.fillMaxWidth().height(30.dp)
                             )
                         }
                     }

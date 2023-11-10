@@ -14,23 +14,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     getApplicationUiKitUseCase: GetProductsUseCase,
     getAndroidUseCase: GetProductsUseCase,
-    getIllustrations3DUseCase: GetProductsUseCase,
-    private val updateCartUseCase: UpdateCartItemUseCase,
-    private val isFavoriteProductUseCase: IsFavoriteProductUseCase
+    getIllustrations3DUseCase: GetProductsUseCase
 ): ViewModel() {
 
     private val isRefreshing = MutableStateFlow(false)
     private val isError = MutableStateFlow(false)
-
-    private var _isFavoriteState = MutableStateFlow(false)
-    val isFavoriteState = _isFavoriteState.asStateFlow()
 
     val homeUiState: StateFlow<HomeUiState> = combine(
         getApplicationUiKitUseCase.invoke(categoryId = Categories.APPLICATION_UI_KIT.id),
@@ -89,16 +83,6 @@ class HomeViewModel @Inject constructor(
                 isError = false
             )
         )
-
-    fun updateCart(productId: Int, count: Int, price: Int) {
-        viewModelScope.launch {
-            updateCartUseCase.invoke(
-                productId = productId,
-                count = count,
-                price = price
-            )
-        }
-    }
 
 }
 
