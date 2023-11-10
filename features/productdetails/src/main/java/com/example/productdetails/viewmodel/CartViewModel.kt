@@ -3,10 +3,11 @@ package com.example.productdetails.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.models.Cart
-import com.example.domain.use_cases.cart_item.GetCartItemCountUseCase
-import com.example.domain.use_cases.cart_item.InsertCartItemUseCase
-import com.example.domain.use_cases.cart_item.IsInCartItemUseCase
-import com.example.domain.use_cases.cart_item.UpdateCartItemUseCase
+import com.example.domain.use_cases.cart.GetCartItemCountUseCase
+import com.example.domain.use_cases.cart.GetCartTotalCountsUseCase
+import com.example.domain.use_cases.cart.InsertCartItemUseCase
+import com.example.domain.use_cases.cart.IsInCartItemUseCase
+import com.example.domain.use_cases.cart.UpdateCartItemUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +19,8 @@ class CartViewModel @Inject constructor(
     private val getCartItemCountUseCase: GetCartItemCountUseCase,
     private val insertCartItemUseCase: InsertCartItemUseCase,
     private val updateCartItemUseCase: UpdateCartItemUseCase,
-    private val isInCartItemUseCase: IsInCartItemUseCase
+    private val isInCartItemUseCase: IsInCartItemUseCase,
+    private val getCartTotalCountsUseCase: GetCartTotalCountsUseCase
 ): ViewModel() {
 
     private var _cartItemCount = MutableStateFlow(0)
@@ -26,6 +28,13 @@ class CartViewModel @Inject constructor(
 
     private var _isInCartUiState = MutableStateFlow(0)
     val isInCartUiState = _isInCartUiState.asStateFlow()
+
+    private val _cartTotalCountState = MutableStateFlow(0)
+    val cartTotalCountState = _cartTotalCountState.asStateFlow()
+
+    init {
+        getCartTotalCount()
+    }
 
     fun getCartItemCount(productId: Int) {
         viewModelScope.launch {
@@ -77,6 +86,14 @@ class CartViewModel @Inject constructor(
         viewModelScope.launch {
             isInCartItemUseCase.invoke(productId = productId).collect {
                 _isInCartUiState.value = it!!
+            }
+        }
+    }
+
+    private fun getCartTotalCount() {
+        viewModelScope.launch {
+            getCartTotalCountsUseCase.invoke().collect {
+                _cartTotalCountState.value = it!!
             }
         }
     }

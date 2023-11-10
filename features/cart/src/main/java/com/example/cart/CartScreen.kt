@@ -23,15 +23,18 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.utils.SharedViewModel
@@ -63,6 +66,7 @@ fun CartScreen(
     val totalPriceState by viewModel.totalPrice.collectAsState()
 
     CartContent(
+        viewModel = viewModel,
         uiState = uiState,
         cartTotalCountState = cartTotalCountState,
         isInCartState = isInCartState,
@@ -74,6 +78,7 @@ fun CartScreen(
 
 @Composable
 private fun CartContent(
+    viewModel: CartViewModel,
     uiState: MainCartUiState? = null,
     cartTotalCountState: Int = 0,
     isInCartState: Int = 0,
@@ -105,8 +110,8 @@ private fun CartContent(
                     ) {
                         JetHeading(
                             title = stringResource(id = R.string.heading_cart),
-                            hasCartIcon = true
-                            // TODO: Handle toCartScreen Click
+                            hasCartIcon = true,
+                            cartItemSize = cartTotalCountState
                         )
                     }
                     Column(modifier = Modifier
@@ -123,8 +128,8 @@ private fun CartContent(
                     ) {
                         JetHeading(
                             title = stringResource(id = R.string.heading_cart),
-                            hasCartIcon = true
-                            // TODO: Handle toCartScreen Click
+                            hasCartIcon = true,
+                            cartItemSize = cartTotalCountState
                         )
                     }
                     Column(modifier = Modifier
@@ -135,7 +140,8 @@ private fun CartContent(
                         CartList(
                             items = uiState?.cartUiState!!,
                             sharedViewModel = sharedViewModel,
-                            toProductDetailsScreen = toProductDetailsScreen
+                            toProductDetailsScreen = toProductDetailsScreen,
+                            viewModel = viewModel
                         )
                     }
                     Column(modifier = Modifier
@@ -150,7 +156,8 @@ private fun CartContent(
                     ) {
                         CheckoutSection(
                             totalPrice = totalPriceState,
-                            cartItemCountState = cartTotalCountState
+                            cartItemCountState = cartTotalCountState,
+                            cartTotalPrice = totalPriceState
                         )
                     }
                 }
@@ -161,6 +168,7 @@ private fun CartContent(
 
 @Composable
 fun CartList(
+    viewModel: CartViewModel,
     items: List<Cart>,
     sharedViewModel: SharedViewModel,
     toProductDetailsScreen: () -> Unit
@@ -176,6 +184,9 @@ fun CartList(
                 onProductClick = {
 //                    sharedViewModel.addProduct(items[position])
 //                    toProductDetailsScreen()
+                },
+                onDeleteItemClick = {
+                    viewModel.deleteCartItem(items[position].productId!!)
                 }
             )
         }
@@ -285,11 +296,13 @@ fun CheckoutSection(
                         fontSize = 14,
                         fontWeight = FontWeight.SemiBold
                     )
-                    JetText(
-                        text = calculateTax(totalPrice.toString()),
-                        fontSize = 12,
-                        fontWeight = FontWeight.SemiBold,
-                        color = RedColor
+                    JetPriceText(
+                        price = calculateTax(totalPrice.toString()),
+                        priceTextSize = 12,
+                        priceTomanSize = 13,
+                        priceFreeSize = 12,
+                        priceTextColor = RedColor,
+                        color = BlackColor
                     )
                 }
 
@@ -304,7 +317,7 @@ fun CheckoutSection(
                 ) {
                     JetText(
                         text = stringResource(id = R.string.total_sum),
-                        fontSize = 16,
+                        fontSize = 14,
                         fontWeight = FontWeight.Bold
                     )
                     Row(
@@ -368,5 +381,7 @@ private fun CartItemNotFound() {
 @Preview
 @Composable
 private fun Preview_CheckoutSection() {
-    CheckoutSection(totalPrice = 100000)
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+        CheckoutSection(totalPrice = 100000)
+    }
 }

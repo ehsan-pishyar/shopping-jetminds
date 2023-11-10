@@ -2,11 +2,12 @@ package com.example.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.use_cases.cart_item.GetCartItemCountUseCase
-import com.example.domain.use_cases.cart_item.GetCartItemsUseCase
-import com.example.domain.use_cases.cart_item.GetCartTotalCountsUseCase
-import com.example.domain.use_cases.cart_item.GetCartTotalPricesUseCase
-import com.example.domain.use_cases.cart_item.IsInCartItemUseCase
+import com.example.domain.use_cases.cart.DeleteCartItemUseCase
+import com.example.domain.use_cases.cart.GetCartItemCountUseCase
+import com.example.domain.use_cases.cart.GetCartItemsUseCase
+import com.example.domain.use_cases.cart.GetCartTotalCountsUseCase
+import com.example.domain.use_cases.cart.GetCartTotalPricesUseCase
+import com.example.domain.use_cases.cart.IsInCartItemUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +20,8 @@ class CartViewModel @Inject constructor(
     private val isInCartUseCase: IsInCartItemUseCase,
     private val getCartTotalCountsUseCase: GetCartTotalCountsUseCase,
     private val getCartItemCountUseCase: GetCartItemCountUseCase,
-    private val getCartTotalPricesUseCase: GetCartTotalPricesUseCase
+    private val getCartTotalPricesUseCase: GetCartTotalPricesUseCase,
+    private val deleteCartItemUseCase: DeleteCartItemUseCase
 ): ViewModel() {
 
     private var _cartUiState = MutableStateFlow(MainCartUiState(emptyList()))
@@ -84,6 +86,12 @@ class CartViewModel @Inject constructor(
             isInCartUseCase.invoke(productId = productId).collect {
                 _isInCartState.value = it!!
             }
+        }
+    }
+
+    fun deleteCartItem(productId: Int) {
+        viewModelScope.launch {
+            deleteCartItemUseCase.invoke(productId = productId)
         }
     }
 }

@@ -1,9 +1,9 @@
-package com.example.domain.use_cases.cart_item
+package com.example.domain.use_cases.cart
 
-import com.example.domain.repositories.CartItemRepository
+import com.example.domain.repositories.CartRepository
 
 class UpdateCartItemUseCase constructor(
-    private val repository: CartItemRepository
+    private val repository: CartRepository
 ) {
 
     suspend operator fun invoke(

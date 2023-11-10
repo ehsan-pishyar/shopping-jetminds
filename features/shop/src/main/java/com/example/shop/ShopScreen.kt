@@ -48,10 +48,12 @@ fun ShopScreen(
     }
 
     val uiState: MainShopProductsUiState by viewModel.shopUiState.collectAsState()
+    val cartTotalCountsState by viewModel.cartTotalCountState.collectAsState()
 
     ShopContent(
         uiState = uiState,
         sharedViewModel = sharedViewModel,
+        cartTotalCountsState = cartTotalCountsState,
         toCartScreen = { toCartScreen() },
         toProductDetailsScreen = { toProductDetailsScreen() },
         toSearchScreen = { toSearchScreen() },
@@ -63,6 +65,7 @@ fun ShopScreen(
 private fun ShopContent(
     uiState: MainShopProductsUiState? = null,
     sharedViewModel: SharedViewModel? = null,
+    cartTotalCountsState: Int = 0,
     toCartScreen: () -> Unit,
     toProductDetailsScreen: () -> Unit,
     toSearchScreen: () -> Unit,
@@ -84,7 +87,8 @@ private fun ShopContent(
                 JetShopHeading(
                     toSearchScreen = { toSearchScreen() },
                     toCartScreen = { toCartScreen() },
-                    toNotificationScreen = { toNotificationScreen() }
+                    toNotificationScreen = { toNotificationScreen() },
+                    cartItemSize = cartTotalCountsState
                 )
             }
             Column(modifier = Modifier

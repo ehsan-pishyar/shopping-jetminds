@@ -36,7 +36,8 @@ import com.example.designsystem.RedColor
 fun JetHeading(
     title: String,
     hasCartIcon: Boolean,
-    toCartScreen: () -> Unit = {}
+    toCartScreen: () -> Unit = {},
+    cartItemSize: Int = 0
 ) {
     Row(modifier = Modifier
         .fillMaxWidth()
@@ -62,23 +63,25 @@ fun JetHeading(
                         contentScale = ContentScale.Crop
                     )
                 }
-                Box(modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Transparent)
-                    .padding(top = 10.dp, start = 5.dp),
-                    contentAlignment = Alignment.TopStart
-                ) {
-                    // Red dot for notification
-                    Image(
-                        painter = painterResource(R.drawable.ic_launcher_background),
-                        contentDescription = "",
-                        colorFilter = ColorFilter.tint(RedColor),
-                        modifier = Modifier
-                            // Set image size to 4 dp
-                            .size(9.dp)
-                            // Clip image to be shaped as a circle
-                            .clip(CircleShape)
-                    )
+                if (cartItemSize > 0) {
+                    Box(modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .padding(top = 10.dp, start = 5.dp),
+                        contentAlignment = Alignment.TopStart
+                    ) {
+                        // Red dot for notification
+                        Image(
+                            painter = painterResource(R.drawable.ic_launcher_background),
+                            contentDescription = "",
+                            colorFilter = ColorFilter.tint(RedColor),
+                            modifier = Modifier
+                                // Set image size to 4 dp
+                                .size(9.dp)
+                                // Clip image to be shaped as a circle
+                                .clip(CircleShape)
+                        )
+                    }
                 }
             }
         }
@@ -116,7 +119,9 @@ fun JetHeading(
 fun JetHomeHeading(
     toProfileScreen: () -> Unit,
     toCartScreen: () -> Unit,
-    toNotificationScreen: () -> Unit
+    toNotificationScreen: () -> Unit,
+    cartItemSize: Int = 0,
+    notificationSize: Int = 0
 ) {
     Row(modifier = Modifier
         .fillMaxWidth()
@@ -140,22 +145,24 @@ fun JetHomeHeading(
                     contentScale = ContentScale.Crop
                 )
             }
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Transparent)
-                .padding(top = 10.dp, start = 5.dp),
-                contentAlignment = Alignment.TopStart
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.ic_launcher_background),
-                    contentDescription = "",
-                    colorFilter = ColorFilter.tint(RedColor),
-                    modifier = Modifier
-                        // Set image size to 4 dp
-                        .size(8.dp)
-                        // Clip image to be shaped as a circle
-                        .clip(CircleShape)
-                )
+            if (cartItemSize > 0) {
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Transparent)
+                    .padding(top = 10.dp, start = 5.dp),
+                    contentAlignment = Alignment.TopStart
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_launcher_background),
+                        contentDescription = "",
+                        colorFilter = ColorFilter.tint(RedColor),
+                        modifier = Modifier
+                            // Set image size to 4 dp
+                            .size(8.dp)
+                            // Clip image to be shaped as a circle
+                            .clip(CircleShape)
+                    )
+                }
             }
         }
 
@@ -176,22 +183,24 @@ fun JetHomeHeading(
                     contentScale = ContentScale.Crop
                 )
 
-                Box(modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Transparent)
-                    .padding(top = 10.dp, start = 5.dp),
-                    contentAlignment = Alignment.TopStart
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.ic_launcher_background),
-                        contentDescription = "",
-                        colorFilter = ColorFilter.tint(RedColor),
-                        modifier = Modifier
-                            // Set image size to 4 dp
-                            .size(8.dp)
-                            // Clip image to be shaped as a circle
-                            .clip(CircleShape)
-                    )
+                if (notificationSize > 0) {
+                    Box(modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .padding(top = 10.dp, start = 5.dp),
+                        contentAlignment = Alignment.TopStart
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.ic_launcher_background),
+                            contentDescription = "",
+                            colorFilter = ColorFilter.tint(RedColor),
+                            modifier = Modifier
+                                // Set image size to 4 dp
+                                .size(8.dp)
+                                // Clip image to be shaped as a circle
+                                .clip(CircleShape)
+                        )
+                    }
                 }
             }
         }
@@ -237,7 +246,9 @@ fun JetHomeHeading(
 fun JetShopHeading(
     toSearchScreen: () -> Unit,
     toCartScreen: () -> Unit,
-    toNotificationScreen: () -> Unit
+    toNotificationScreen: () -> Unit,
+    cartItemSize: Int = 0,
+    notificationSize: Int = 0
 ) {
     Row(modifier = Modifier
         .fillMaxWidth()
@@ -261,23 +272,26 @@ fun JetShopHeading(
                     contentScale = ContentScale.Crop
                 )
             }
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Transparent)
-                .padding(top = 10.dp, start = 5.dp),
-                contentAlignment = Alignment.TopStart
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.ic_launcher_background),
-                    contentDescription = "",
-                    colorFilter = ColorFilter.tint(RedColor),
-                    modifier = Modifier
-                        // Set image size to 4 dp
-                        .size(8.dp)
-                        // Clip image to be shaped as a circle
-                        .clip(CircleShape)
-                )
+            if (cartItemSize > 0) {
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Transparent)
+                    .padding(top = 10.dp, start = 5.dp),
+                    contentAlignment = Alignment.TopStart
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_launcher_background),
+                        contentDescription = "",
+                        colorFilter = ColorFilter.tint(RedColor),
+                        modifier = Modifier
+                            // Set image size to 4 dp
+                            .size(8.dp)
+                            // Clip image to be shaped as a circle
+                            .clip(CircleShape)
+                    )
+                }
             }
+
         }
 
         Box(modifier = Modifier
@@ -296,23 +310,24 @@ fun JetShopHeading(
                         .size(25.dp),
                     contentScale = ContentScale.Crop
                 )
-
-                Box(modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Transparent)
-                    .padding(top = 10.dp, start = 5.dp),
-                    contentAlignment = Alignment.TopStart
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.ic_launcher_background),
-                        contentDescription = "",
-                        colorFilter = ColorFilter.tint(RedColor),
-                        modifier = Modifier
-                            // Set image size to 4 dp
-                            .size(8.dp)
-                            // Clip image to be shaped as a circle
-                            .clip(CircleShape)
-                    )
+                if (notificationSize > 0) {
+                    Box(modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .padding(top = 10.dp, start = 5.dp),
+                        contentAlignment = Alignment.TopStart
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.ic_launcher_background),
+                            contentDescription = "",
+                            colorFilter = ColorFilter.tint(RedColor),
+                            modifier = Modifier
+                                // Set image size to 4 dp
+                                .size(8.dp)
+                                // Clip image to be shaped as a circle
+                                .clip(CircleShape)
+                        )
+                    }
                 }
             }
         }
@@ -352,8 +367,38 @@ fun JetShopHeading(
 
 @Preview
 @Composable
+private fun Preview_JetShopHeading() {
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+        JetShopHeading(
+            toSearchScreen = {},
+            toCartScreen = {},
+            toNotificationScreen = {}
+        )
+    }
+}
+
+@Preview
+@Composable
 private fun Preview_JetHeading() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-        JetShopHeading(toSearchScreen = { /*TODO*/ }, toCartScreen = { /*TODO*/ }) {}
+        JetHeading(
+            title = "جت مایندز",
+            hasCartIcon = true,
+            toCartScreen = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun Preview_JetHomeHeading() {
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+        JetHomeHeading(
+            toProfileScreen = {},
+            toCartScreen = {},
+            toNotificationScreen = {},
+            cartItemSize = 1,
+            notificationSize = 1
+        )
     }
 }

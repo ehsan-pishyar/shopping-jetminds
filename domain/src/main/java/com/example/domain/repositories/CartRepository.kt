@@ -3,7 +3,7 @@ package com.example.domain.repositories
 import com.example.domain.models.Cart
 import kotlinx.coroutines.flow.Flow
 
-interface CartItemRepository {
+interface CartRepository {
 
     suspend fun insertItem(cartItem: Cart)
     suspend fun updateItem(productId: Int, count: Int, newPrice: Int)

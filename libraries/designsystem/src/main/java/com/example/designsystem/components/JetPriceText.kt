@@ -2,10 +2,7 @@ package com.example.designsystem.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,7 +16,8 @@ fun JetPriceText(
     priceTextSize: Int = 14,
     priceTomanSize: Int = 10,
     priceFreeSize: Int = 12,
-    color: Color = Primary
+    color: Color = Primary,
+    priceTextColor: Color = Primary
 ) {
     if (price.trim().isEmpty() || price == "0") {
         JetText(
@@ -29,14 +27,12 @@ fun JetPriceText(
             fontSize = priceFreeSize
         )
     } else {
-        Row(modifier = Modifier
-            .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
+        Row(
             horizontalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             JetText(
                 text = priceThousandsSeparator(price),
-                color = Primary,
+                color = priceTextColor,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = priceTextSize
             )

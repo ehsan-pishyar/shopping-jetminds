@@ -45,15 +45,18 @@ fun OrdersScreen(
     viewModel: OrdersViewModel = hiltViewModel()
 ) {
     val uiState: MainOrdersUiState by viewModel.orderState.collectAsState()
+    val cartTotalCountState by viewModel.cartTotalCountState.collectAsState()
 
     OrdersContent(
-        uiState = uiState
+        uiState = uiState,
+        cartTotalCountState = cartTotalCountState
     )
 }
 
 @Composable
 private fun OrdersContent(
-    uiState: MainOrdersUiState? = null
+    uiState: MainOrdersUiState? = null,
+    cartTotalCountState: Int = 0
 ) {
     Box(modifier = Modifier
         .fillMaxSize()
@@ -70,7 +73,8 @@ private fun OrdersContent(
             ) {
                 JetHeading(
                     title = stringResource(id = R.string.heading_my_orders),
-                    hasCartIcon = true
+                    hasCartIcon = true,
+                    cartItemSize = cartTotalCountState
                 )
             }
             Column(modifier = Modifier

@@ -86,6 +86,6 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun shippingZonesDao(): ShippingZonesDao
     abstract fun favoritesDao(): FavoritesDao
     abstract fun downloadsDao(): DownloadsDao
-    abstract fun cartItemDao(): CartItemDao
+    abstract fun cartDao(): CartDao
     abstract fun paymentGatewaysDao(): PaymentGatewaysDao
 }

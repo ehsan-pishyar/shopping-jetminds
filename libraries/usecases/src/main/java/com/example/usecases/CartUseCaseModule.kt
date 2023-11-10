@@ -1,15 +1,15 @@
 package com.example.usecases
 
-import com.example.domain.repositories.CartItemRepository
-import com.example.domain.use_cases.cart_item.ClearCartUseCase
-import com.example.domain.use_cases.cart_item.DeleteCartItemUseCase
-import com.example.domain.use_cases.cart_item.GetCartItemCountUseCase
-import com.example.domain.use_cases.cart_item.GetCartItemsUseCase
-import com.example.domain.use_cases.cart_item.GetCartTotalCountsUseCase
-import com.example.domain.use_cases.cart_item.GetCartTotalPricesUseCase
-import com.example.domain.use_cases.cart_item.InsertCartItemUseCase
-import com.example.domain.use_cases.cart_item.IsInCartItemUseCase
-import com.example.domain.use_cases.cart_item.UpdateCartItemUseCase
+import com.example.domain.repositories.CartRepository
+import com.example.domain.use_cases.cart.ClearCartUseCase
+import com.example.domain.use_cases.cart.DeleteCartItemUseCase
+import com.example.domain.use_cases.cart.GetCartItemCountUseCase
+import com.example.domain.use_cases.cart.GetCartItemsUseCase
+import com.example.domain.use_cases.cart.GetCartTotalCountsUseCase
+import com.example.domain.use_cases.cart.GetCartTotalPricesUseCase
+import com.example.domain.use_cases.cart.InsertCartItemUseCase
+import com.example.domain.use_cases.cart.IsInCartItemUseCase
+import com.example.domain.use_cases.cart.UpdateCartItemUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,50 +17,50 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-object CartItemUseCaseModule {
+object CartUseCaseModule {
 
     @Provides
     fun providesInsertItemUseCase(
-        repository: CartItemRepository
+        repository: CartRepository
     ): InsertCartItemUseCase = InsertCartItemUseCase(repository = repository)
 
     @Provides
     fun providesUpdateCartItemUseCase(
-        repository: CartItemRepository
+        repository: CartRepository
     ): UpdateCartItemUseCase = UpdateCartItemUseCase(repository = repository)
 
     @Provides
     fun providesGetCartItemsUseCase(
-        repository: CartItemRepository
+        repository: CartRepository
     ): GetCartItemsUseCase = GetCartItemsUseCase(repository = repository)
 
     @Provides
     fun providesGetCartTotalPricesUseCase(
-        repository: CartItemRepository
+        repository: CartRepository
     ): GetCartTotalPricesUseCase = GetCartTotalPricesUseCase(repository = repository)
 
     @Provides
     fun providesGetCartTotalCountsUseCase(
-        repository: CartItemRepository
+        repository: CartRepository
     ): GetCartTotalCountsUseCase = GetCartTotalCountsUseCase(repository = repository)
 
     @Provides
     fun providesGetCartItemCountUseCase(
-        repository: CartItemRepository
+        repository: CartRepository
     ): GetCartItemCountUseCase = GetCartItemCountUseCase(repository = repository)
 
     @Provides
     fun providesIsInCartItemUseCase(
-        repository: CartItemRepository
+        repository: CartRepository
     ): IsInCartItemUseCase = IsInCartItemUseCase(repository = repository)
 
     @Provides
     fun providesDeleteCartItem(
-        repository: CartItemRepository
+        repository: CartRepository
     ): DeleteCartItemUseCase = DeleteCartItemUseCase(repository = repository)
 
     @Provides
     fun providesClearCartUseCase(
-        repository: CartItemRepository
+        repository: CartRepository
     ): ClearCartUseCase = ClearCartUseCase(repository = repository)
 }

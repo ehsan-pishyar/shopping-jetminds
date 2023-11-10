@@ -17,7 +17,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -27,11 +26,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.utils.SharedViewModel
@@ -52,6 +48,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     sharedViewModel: SharedViewModel = SharedViewModel(),
     favoritesViewModel: FavoritesViewModel = hiltViewModel(),
+    cartViewModel: CartViewModel = hiltViewModel(),
     toCartScreen: () -> Unit,
     toNotificationScreen: () -> Unit,
     toProfileScreen: () -> Unit,
@@ -66,17 +63,19 @@ fun HomeScreen(
 ){
     val homeUiState: HomeUiState by viewModel.homeUiState.collectAsState()
     val isFavoriteState by favoritesViewModel.isFavorite.collectAsState()
+    val cartTotalCountState by cartViewModel.totalCartCount.collectAsState()
 
     HomeContent(
         homeUiState = homeUiState,
-        viewModel = viewModel,
+        cartViewModel = cartViewModel,
+        sharedViewModel = sharedViewModel,
+        favoritesViewModel = favoritesViewModel,
+        cartTotalCount = cartTotalCountState,
         toCartScreen = { toCartScreen() },
         toNotificationScreen = { toNotificationScreen() },
         toProfileScreen = { toProfileScreen() },
         toShopScreen = { toShopScreen() },
         toProductDetailsScreen = { toProductDetailsScreen() },
-        sharedViewModel = sharedViewModel,
-        favoritesViewModel = favoritesViewModel,
         toOrdersScreen = { toOrdersScreen() },
         toComparesScreen = { toComparesScreen() },
         toFavoritesScreen = { toFavoritesScreen() },
@@ -91,9 +90,10 @@ fun HomeScreen(
 @Composable
 private fun HomeContent(
     homeUiState: HomeUiState?,
-    viewModel: HomeViewModel? = null,
     sharedViewModel: SharedViewModel? = null,
     favoritesViewModel: FavoritesViewModel? = null,
+    cartViewModel: CartViewModel,
+    cartTotalCount: Int = 0,
     toCartScreen: () -> Unit,
     toNotificationScreen: () -> Unit,
     toProfileScreen: () -> Unit,
@@ -110,9 +110,6 @@ private fun HomeContent(
 ) {
     val scrollState = rememberScrollState()
     var openDialog by remember { mutableStateOf(false) }
-
-    var userName by remember { mutableStateOf("") }
-    var userImage by remember { mutableStateOf("") }
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -138,9 +135,10 @@ private fun HomeContent(
                 JetHomeHeading(
                     toProfileScreen = {
                         openDialog = true
-                    }, // TODO: Handle toProfileScreen Click
+                    },
                     toCartScreen = { toCartScreen() },
-                    toNotificationScreen = { toNotificationScreen() } // TODO: Handle toNotificationScreen Click
+                    toNotificationScreen = { toNotificationScreen() }, // TODO: Handle toNotificationScreen Click
+                    cartItemSize = cartTotalCount
                 )
             }
 
@@ -148,9 +146,9 @@ private fun HomeContent(
             if (homeUiState != null) {
                 MainContentSection(
                     homeUiState = homeUiState,
-                    viewModel = viewModel,
                     sharedViewModel = sharedViewModel,
                     favoritesViewModel = favoritesViewModel,
+                    cartViewModel = cartViewModel,
                     toShopScreen = { toShopScreen() },
                     toProductDetailsScreen = { toProductDetailsScreen() }
                 )
@@ -177,9 +175,9 @@ private fun HomeContent(
 @Composable
 fun MainContentSection(
     homeUiState: HomeUiState?,
-    viewModel: HomeViewModel?,
     sharedViewModel: SharedViewModel?,
     favoritesViewModel: FavoritesViewModel?,
+    cartViewModel: CartViewModel,
     toShopScreen: () -> Unit,
     toProductDetailsScreen: () -> Unit
 ) {
@@ -212,7 +210,8 @@ fun MainContentSection(
                     sharedViewModel = sharedViewModel,
                     favoritesViewModel = favoritesViewModel,
                     products = androidUiState.androidSourceCodes,
-                    toProductDetailsScreen = { toProductDetailsScreen() }
+                    toProductDetailsScreen = { toProductDetailsScreen() },
+                    cartViewModel = cartViewModel
                 )
             }
             is AndroidUiState.Error -> {
@@ -237,7 +236,8 @@ fun MainContentSection(
                     sharedViewModel = sharedViewModel,
                     favoritesViewModel = favoritesViewModel,
                     products = applicationUiKitUiState.applicationUiKits,
-                    toProductDetailsScreen = { toProductDetailsScreen() }
+                    toProductDetailsScreen = { toProductDetailsScreen() },
+                    cartViewModel = cartViewModel
                 )
             }
             is ApplicationUiKitUiState.Error -> {
@@ -273,7 +273,8 @@ fun MainContentSection(
                     sharedViewModel = sharedViewModel,
                     favoritesViewModel = favoritesViewModel,
                     products = illustrations3DUiState.illustration3Ds,
-                    toProductDetailsScreen = { toProductDetailsScreen() }
+                    toProductDetailsScreen = { toProductDetailsScreen() },
+                    cartViewModel = cartViewModel
                 )
             }
             is Illustrations3DUiState.Error -> {
@@ -287,7 +288,7 @@ fun MainContentSection(
 @Composable
 private fun ProductsRow(
     products: List<ProductsResponse>,
-    cartViewModel: CartViewModel = hiltViewModel(),
+    cartViewModel: CartViewModel,
     toProductDetailsScreen: () -> Unit,
     sharedViewModel: SharedViewModel? = null,
     favoritesViewModel: FavoritesViewModel? = null
@@ -313,7 +314,7 @@ private fun ProductsRow(
                     onAddToCartClick = {
                         count = cartItemCountUiState
                         if (isInCartUiState == 0) {
-                            cartViewModel.insertCartItem(
+                            cartViewModel?.insertCartItem(
                                 productId = products[position].id!!,
                                 productTitle = products[position].name!!,
                                 productImage = products[position].images?.get(0)?.src!!,
@@ -323,7 +324,7 @@ private fun ProductsRow(
                                 dateAdded = getCurrentDate()
                             )
                         } else {
-                            cartViewModel.updateCart(
+                            cartViewModel?.updateCart(
                                 productId = products[position].id!!,
                                 productPrice = products[position].price!!.toInt(),
                                 count = (count + 1)
@@ -366,27 +367,5 @@ private fun ProductsHeadingSection(
     ) {
         JetText(text = title)
         JetIconText { toShopScreen() }
-    }
-}
-
-@Preview
-@Composable
-fun Preview_HomeScreen() {
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-        HomeContent(
-            homeUiState = null,
-            toCartScreen = {},
-            toNotificationScreen = {},
-            toProfileScreen = {},
-            toShopScreen = {},
-            toProductDetailsScreen = {},
-            toOrdersScreen = {},
-            toComparesScreen = {},
-            toFavoritesScreen = {},
-            toDownloadsScreen = {},
-            toNotificationsScreen = {},
-            toCouponsScreen = {},
-            toLoginScreen = {}
-        )
     }
 }

@@ -1,10 +1,10 @@
-package com.example.domain.use_cases.cart_item
+package com.example.domain.use_cases.cart
 
-import com.example.domain.repositories.CartItemRepository
+import com.example.domain.repositories.CartRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetCartTotalPricesUseCase constructor(
-    private val repository: CartItemRepository
+    private val repository: CartRepository
 ) {
 
     operator fun invoke(): Flow<Int?> = repository.fetchTotalPrices()

@@ -89,14 +89,14 @@ fun JetSimpleButton(
                 LoadingAnimation()
             } else {
                 JetText(
-                    modifier = Modifier.fillMaxSize(),
                     text = text,
                     fontSize = fontSize,
                     fontWeight = fontWeight,
                     color = textColor,
                     textAlign = textAlign,
                     overflow = TextOverflow.Clip,
-                    maxLines = 1
+                    maxLines = 1,
+                    lineHeight = 3.0
                 )
             }
         }
@@ -234,12 +234,12 @@ fun LoadingAnimation(
 
 @Preview
 @Composable
-fun Preview_JetButton() {
+fun Preview_JetSimpleButton() {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         JetSimpleButton(
             onClick = {},
             width = 70,
-            height = 30,
+            height = 50,
             text = "ورود",
             fontSize = 11,
             shape = 6,

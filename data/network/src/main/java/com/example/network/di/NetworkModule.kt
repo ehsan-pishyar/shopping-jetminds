@@ -25,9 +25,7 @@ import javax.net.ssl.X509TrustManager
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    @Provides
-    @Singleton
-    @WoocommerceQualifiers
+    @[Provides Singleton WoocommerceQualifiers]
     fun providesAuthQueryAppenderInterceptor(): Interceptor =
         Interceptor { chain ->
             val requestBuilder = chain.request().newBuilder()
@@ -45,17 +43,13 @@ object NetworkModule {
             )
         }
 
-    @Provides
-    @Singleton
-    @WoocommerceQualifiers
+    @[Provides Singleton WoocommerceQualifiers]
     fun providesLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
 
-    @Provides
-    @Singleton
-    @WoocommerceQualifiers
+    @[Provides Singleton WoocommerceQualifiers]
     fun providesOkHttpsBuilder(
         @WoocommerceQualifiers authQueryAppenderInterceptor: Interceptor,
         @WoocommerceQualifiers httpLoggingInterceptor: HttpLoggingInterceptor
@@ -79,15 +73,11 @@ object NetworkModule {
     }
 
 
-    @Provides
-    @Singleton
-    @WoocommerceQualifiers
+    @[Provides Singleton WoocommerceQualifiers]
     fun providesJson(): Json =
         Json { ignoreUnknownKeys = true }
 
-    @Provides
-    @Singleton
-    @WoocommerceQualifiers
+    @[Provides Singleton WoocommerceQualifiers]
     fun providesRetrofit(@WoocommerceQualifiers okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
@@ -96,8 +86,7 @@ object NetworkModule {
             .client(okHttpClient)
             .build()
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesApiService(@WoocommerceQualifiers retrofit: Retrofit): ApiService =
         retrofit.create(ApiService::class.java)
 }

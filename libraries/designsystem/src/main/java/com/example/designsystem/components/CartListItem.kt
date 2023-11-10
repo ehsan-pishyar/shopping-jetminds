@@ -42,7 +42,8 @@ fun CartListItem(
     title: String,
     category: String = "",
     price: String = "",
-    onProductClick: () -> Unit
+    onProductClick: () -> Unit,
+    onDeleteItemClick: () -> Unit
 ) {
     Card(modifier = Modifier
         .fillMaxWidth()
@@ -105,7 +106,9 @@ fun CartListItem(
                 Icon(
                     imageVector = Icons.Default.Clear,
                     contentDescription = null,
-                    modifier = Modifier.size(15.dp)
+                    modifier = Modifier
+                        .size(15.dp)
+                        .clickable(enabled = true, onClick = { onDeleteItemClick() })
                 )
 
                 Row(modifier = Modifier

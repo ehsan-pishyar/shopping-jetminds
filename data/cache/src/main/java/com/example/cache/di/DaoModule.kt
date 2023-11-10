@@ -1,7 +1,7 @@
 package com.example.cache.di
 
 import com.example.cache.AppDatabase
-import com.example.cache.dao.CartItemDao
+import com.example.cache.dao.CartDao
 import com.example.cache.dao.CouponsDao
 import com.example.cache.dao.CustomersDao
 import com.example.cache.dao.DownloadsDao
@@ -26,48 +26,37 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DaoModule {
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesCouponsDao(database: AppDatabase): CouponsDao = database.couponsDao()
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesCustomersDao(database: AppDatabase): CustomersDao = database.customersDao()
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesOrdersDao(database: AppDatabase): OrdersDao = database.ordersDao()
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesProductAttributesDao(database: AppDatabase): ProductAttributesDao = database.productAttributesDao()
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesProductCategoriesDao(database: AppDatabase): ProductCategoriesDao = database.productCategoriesDao()
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesProductReviewsDao(database: AppDatabase): ProductReviewsDao = database.productReviewsDao()
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesProductsDao(database: AppDatabase): ProductsDao = database.productsDao()
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesProductShippingClassesDao(database: AppDatabase): ProductShippingClassesDao = database.productShippingClassesDao()
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesProductTagsDao(database: AppDatabase): ProductTagsDao = database.productTagsDao()
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesProductVariationsDao(database: AppDatabase): ProductVariationsDao = database.productVariationsDao()
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesShippingZonesDao(database: AppDatabase): ShippingZonesDao = database.shippingZonesDao()
 
     @[Provides Singleton]
@@ -77,7 +66,7 @@ object DaoModule {
     fun providesDownloadsDao(db: AppDatabase): DownloadsDao = db.downloadsDao()
 
     @[Provides Singleton]
-    fun providesCartItemDao(db: AppDatabase): CartItemDao = db.cartItemDao()
+    fun providesCartDao(db: AppDatabase): CartDao = db.cartDao()
 
     @[Provides Singleton]
     fun providesPaymentGatewaysDao(db: AppDatabase): PaymentGatewaysDao = db.paymentGatewaysDao()

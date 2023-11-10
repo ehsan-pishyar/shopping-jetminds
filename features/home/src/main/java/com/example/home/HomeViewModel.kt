@@ -4,14 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.utils.Categories
 import com.example.core.utils.WhileUiSubscribed
-import com.example.domain.use_cases.cart_item.UpdateCartItemUseCase
-import com.example.domain.use_cases.favorites.IsFavoriteProductUseCase
 import com.example.domain.use_cases.products.GetProductsUseCase
 import com.example.domain.utils.ServiceResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject

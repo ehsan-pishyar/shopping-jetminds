@@ -26,17 +26,13 @@ import javax.net.ssl.X509TrustManager
 object WordpressNetworkModule {
 
 
-    @Provides
-    @Singleton
-    @WordpressQualifiers
+    @[Provides Singleton WordpressQualifiers]
     fun providesUserLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
 
-    @Provides
-    @Singleton
-    @WordpressQualifiers
+    @[Provides Singleton WordpressQualifiers]
     fun providesUserOkHttpsBuilder(
         @WordpressQualifiers userLoggingInterceptor: HttpLoggingInterceptor,
     ): OkHttpClient {
@@ -57,29 +53,22 @@ object WordpressNetworkModule {
             .build()
     }
 
-    @Provides
-    @Singleton
-    @WordpressQualifiers
+    @[Provides Singleton WordpressQualifiers]
     fun providesJson(): Json =
         Json { ignoreUnknownKeys = true }
 
-    @Provides
-    @Singleton
-    @TokenQualifiers
+    @[Provides Singleton TokenQualifiers]
     fun providesTokenRetrofit(): Retrofit =
         Retrofit.Builder()
             .baseUrl(WordpressConstants.TOKEN_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesTokenApiService(@TokenQualifiers retrofit: Retrofit): UserTokenApiService =
         retrofit.create(UserTokenApiService::class.java)
 
-    @Provides
-    @Singleton
-    @WordpressQualifiers
+    @[Provides Singleton WordpressQualifiers]
     fun providesWordpressRetrofit(@WordpressQualifiers okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl(WordpressConstants.WORDPRESS_BASE_URL)
@@ -87,8 +76,7 @@ object WordpressNetworkModule {
             .client(okHttpClient)
             .build()
 
-    @Provides
-    @Singleton
+    @[Provides Singleton]
     fun providesWordpressApiService(@WordpressQualifiers retrofit: Retrofit): UserApiService =
         retrofit.create(UserApiService::class.java)
 }

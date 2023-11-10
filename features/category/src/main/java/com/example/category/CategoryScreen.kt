@@ -36,10 +36,12 @@ fun CategoryScreen(
     toShopScreen: () -> Unit
 ){
     val categoryState: MainProductCategoriesUiState by viewModel.categoriesState.collectAsState()
+    val cartTotalCountState by viewModel.cartTotalCountState.collectAsState()
 
     CategoryScreenContent(
         categoryState = categoryState,
         sharedViewModel = sharedViewModel,
+        cartTotalCountState = cartTotalCountState,
         toCartScreen = { toCartScreen() },
         toShopScreen = { toShopScreen() }
     )
@@ -49,6 +51,7 @@ fun CategoryScreen(
 private fun CategoryScreenContent(
     categoryState: MainProductCategoriesUiState? = null,
     sharedViewModel: SharedViewModel? = null,
+    cartTotalCountState: Int = 0,
     toCartScreen: () -> Unit,
     toShopScreen: () -> Unit
 ) {
@@ -69,7 +72,8 @@ private fun CategoryScreenContent(
                 JetHeading(
                     title = stringResource(id = R.string.heading_product_category),
                     hasCartIcon = true,
-                    toCartScreen = { toCartScreen() }
+                    toCartScreen = { toCartScreen() },
+                    cartItemSize = cartTotalCountState
                 )
             }
             Column(modifier = Modifier

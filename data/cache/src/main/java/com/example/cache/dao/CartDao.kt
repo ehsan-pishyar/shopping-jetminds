@@ -8,7 +8,7 @@ import com.example.cache.models.CartEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface CartItemDao {
+interface CartDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertItem(cartItem: CartEntity)

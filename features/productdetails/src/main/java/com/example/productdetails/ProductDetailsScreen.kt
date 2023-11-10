@@ -92,6 +92,7 @@ fun ProductDetailsScreen(
     val isInCartUiState by cartViewModel.isInCartUiState.collectAsState()
     val cartItemCountUiState by cartViewModel.cartItemCount.collectAsState()
     val reviewsUiState: MainProductReviewsUiState by reviewsViewModel.reviewsState.collectAsState()
+    val cartTotalCountsState by cartViewModel.cartTotalCountState.collectAsState()
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -110,7 +111,8 @@ fun ProductDetailsScreen(
                 JetHeading(
                     title = stringResource(id = R.string.heading_product_details),
                     hasCartIcon = true,
-                    toCartScreen = { toCartScreen() }
+                    toCartScreen = { toCartScreen() },
+                    cartItemSize = cartTotalCountsState
                 )
             }
             when (val uiState = productDetailsUiState.productDetailsUiState) {

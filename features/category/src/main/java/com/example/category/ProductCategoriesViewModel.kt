@@ -2,6 +2,7 @@ package com.example.category
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.use_cases.cart.GetCartTotalCountsUseCase
 import com.example.domain.use_cases.product_categories.GetProductCategoriesUseCase
 import com.example.domain.use_cases.product_categories.GetProductCategoryDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,8 @@ import kotlinx.coroutines.flow.asStateFlow
 @HiltViewModel
 class ProductCategoriesViewModel @Inject constructor(
     private val getProductCategoriesUseCase: GetProductCategoriesUseCase,
-    private val getProductCategoryDetailsUseCase: GetProductCategoryDetailsUseCase
+    private val getProductCategoryDetailsUseCase: GetProductCategoryDetailsUseCase,
+    private val getCartTotalCountsUseCase: GetCartTotalCountsUseCase
 ): ViewModel() {
 
     private var _categoriesState = MutableStateFlow(MainProductCategoriesUiState(ProductCategoriesUiState.Loading))
@@ -23,8 +25,12 @@ class ProductCategoriesViewModel @Inject constructor(
     private var _categoryDetailsState = MutableStateFlow(MainProductCategoryDetailsUiState(ProductCategoryDetailsUiState.Loading))
     val categoryDetailsState = _categoryDetailsState.asStateFlow()
 
+    private val _cartTotalCountState = MutableStateFlow(0)
+    val cartTotalCountState = _cartTotalCountState.asStateFlow()
+
     init {
         getCategories()
+        getCartTotalCount()
     }
 
     private fun getCategories() {
@@ -56,6 +62,14 @@ class ProductCategoriesViewModel @Inject constructor(
                 _categoryDetailsState.value = MainProductCategoryDetailsUiState(
                     categoryDetailsUiState = categoryDetailsUiStateResult
                 )
+            }
+        }
+    }
+
+    private fun getCartTotalCount() {
+        viewModelScope.launch {
+            getCartTotalCountsUseCase.invoke().collect {
+                _cartTotalCountState.value = it!!
             }
         }
     }

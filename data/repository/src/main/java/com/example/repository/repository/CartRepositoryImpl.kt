@@ -1,18 +1,18 @@
 package com.example.repository.repository
 
-import com.example.cache.dao.CartItemDao
+import com.example.cache.dao.CartDao
 import com.example.cache.models.CartEntity
 import com.example.domain.models.Cart
-import com.example.domain.repositories.CartItemRepository
+import com.example.domain.repositories.CartRepository
 import com.example.repository.mappers.toDomain
 import com.example.repository.mappers.toEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class CartItemRepositoryImpl @Inject constructor(
-    private val dao: CartItemDao
-): CartItemRepository {
+class CartRepositoryImpl @Inject constructor(
+    private val dao: CartDao
+): CartRepository {
 
     override suspend fun insertItem(cartItem: Cart) {
         dao.insertItem(cartItem = cartItem.toEntity())

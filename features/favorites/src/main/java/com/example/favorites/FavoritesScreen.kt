@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -19,7 +20,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -51,9 +51,11 @@ fun FavoritesScreen(
     toProductDetailsScreen: () -> Unit
 ){
     val uiState: MainFavoritesUiState by viewModel.state.collectAsState()
+    val cartTotalCountState by viewModel.cartTotalCountState.collectAsState()
 
     FavoritesContent(
         uiState = uiState,
+        cartTotalCountState = cartTotalCountState,
         sharedViewModel = sharedViewModel,
         toProductDetailsScreen = { toProductDetailsScreen() }
     )
@@ -63,32 +65,36 @@ fun FavoritesScreen(
 @Composable
 private fun FavoritesContent(
     uiState: MainFavoritesUiState? = null,
+    cartTotalCountState: Int = 0,
     sharedViewModel: SharedViewModel? = null,
     toProductDetailsScreen: () -> Unit
 ) {
-    Scaffold(modifier = Modifier
+    Box(modifier = Modifier
         .fillMaxSize()
         .background(Background)
-    ) { padding ->
+    ) {
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(padding)
+            .padding(
+                top = 15.dp,
+                start = 15.dp,
+                end = 15.dp,
+                bottom = 70.dp
+            )
         ) {
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .padding(15.dp)
             ) {
                 JetHeading(
                     title = stringResource(id = R.string.heading_favorites),
-                    hasCartIcon = true
+                    hasCartIcon = true,
+                    cartItemSize = cartTotalCountState
                 )
             }
-
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .weight(11f)
-                .padding(15.dp)
             ) {
                 if (uiState?.favorites?.size == 0) {
                     FavoritesNotFound()

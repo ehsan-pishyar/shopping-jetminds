@@ -2,6 +2,7 @@ package com.example.orders
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.use_cases.cart.GetCartTotalCountsUseCase
 import com.example.domain.use_cases.orders.GetOrderDetailsUseCase
 import com.example.domain.use_cases.orders.GetOrdersUseCase
 import com.example.domain.utils.ServiceResult
@@ -14,7 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class OrdersViewModel @Inject constructor(
     private val getOrdersUseCase: GetOrdersUseCase,
-    private val getOrderDetailsUseCase: GetOrderDetailsUseCase
+    private val getOrderDetailsUseCase: GetOrderDetailsUseCase,
+    private val getCartTotalCountsUseCase: GetCartTotalCountsUseCase
 ): ViewModel() {
 
     private var _ordersState = MutableStateFlow(MainOrdersUiState(OrdersUiState.Loading))
@@ -23,8 +25,12 @@ class OrdersViewModel @Inject constructor(
     private var _orderDetailsState = MutableStateFlow(MainOrderDetailsUiState(OrderDetailsUiState.Loading))
     val orderDetailsState = _orderDetailsState.asStateFlow()
 
+    private val _cartTotalCountState = MutableStateFlow(0)
+    val cartTotalCountState = _cartTotalCountState.asStateFlow()
+
     init {
         getOrders()
+        getCartTotalCount()
     }
 
     private fun getOrders() {
@@ -49,6 +55,14 @@ class OrdersViewModel @Inject constructor(
                     is ServiceResult.Error -> OrderDetailsUiState.Error(message = orderDetailsResult.throwable?.message!!)
                 }
                 _orderDetailsState.value = MainOrderDetailsUiState(orderDetailsUiState = orderDetailsUiStateResult)
+            }
+        }
+    }
+
+    private fun getCartTotalCount() {
+        viewModelScope.launch {
+            getCartTotalCountsUseCase.invoke().collect {
+                _cartTotalCountState.value = it!!
             }
         }
     }

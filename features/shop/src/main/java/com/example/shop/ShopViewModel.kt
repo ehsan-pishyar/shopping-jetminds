@@ -2,6 +2,7 @@ package com.example.shop
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.use_cases.cart.GetCartTotalCountsUseCase
 import com.example.domain.use_cases.products.GetHighestPriceProductsUseCase
 import com.example.domain.use_cases.products.GetLowestPriceProductsUseCase
 import com.example.domain.use_cases.products.GetNewestProductsUseCase
@@ -28,14 +29,19 @@ class ShopViewModel @Inject constructor(
     private val getTopRatedProductsUseCase: GetTopRatedProductsUseCase,
     private val getTopSalesProductsUseCase: GetTopSalesProductsUseCase,
     private val getLowestPriceProductsUseCase: GetLowestPriceProductsUseCase,
-    private val getHighestPriceProductsUseCase: GetHighestPriceProductsUseCase
+    private val getHighestPriceProductsUseCase: GetHighestPriceProductsUseCase,
+    private val getCartTotalCountsUseCase: GetCartTotalCountsUseCase
 ): ViewModel() {
 
     private var _shopUiState = MutableStateFlow(MainShopProductsUiState(ShopProductsUiState.Loading))
     val shopUiState = _shopUiState.asStateFlow()
 
+    private val _cartTotalCountState = MutableStateFlow(0)
+    val cartTotalCountState = _cartTotalCountState.asStateFlow()
+
     init {
         getProducts()
+        getCartTotalCount()
     }
 
     fun getProducts(
@@ -202,6 +208,14 @@ class ShopViewModel @Inject constructor(
                 _shopUiState.value = MainShopProductsUiState(
                     shopProductsUiState = highestPriceProductsUiStateResult
                 )
+            }
+        }
+    }
+
+    private fun getCartTotalCount() {
+        viewModelScope.launch {
+            getCartTotalCountsUseCase.invoke().collect {
+                _cartTotalCountState.value = it!!
             }
         }
     }

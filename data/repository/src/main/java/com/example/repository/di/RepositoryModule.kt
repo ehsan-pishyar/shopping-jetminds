@@ -82,8 +82,8 @@ interface RepositoryModule {
 
     @[Binds Singleton]
     fun bindsCartItemRepository(
-        impl: CartItemRepositoryImpl
-    ): CartItemRepository
+        impl: CartRepositoryImpl
+    ): CartRepository
 
     @[Binds Singleton]
     fun bindsPaymentGatewayRepository(

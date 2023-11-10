@@ -2,7 +2,7 @@ package com.example.navigationdrawer
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.use_cases.cart_item.GetCartTotalCountsUseCase
+import com.example.domain.use_cases.cart.GetCartTotalCountsUseCase
 import com.example.domain.use_cases.coupons.GetCouponsUseCase
 import com.example.domain.use_cases.downloads.GetDownloadedProductsUseCase
 import com.example.domain.use_cases.orders.GetOrdersUseCase
@@ -12,7 +12,6 @@ import com.example.domain.utils.ServiceResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
