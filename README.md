@@ -99,6 +99,9 @@
 <p>In WordpressConstants: const val TOKEN_BASE_URL = "https://your-website-url.com/wp-json/api/v1/"</p>
 <p><b>Notice:</b> You need install miniOrange api authentication plugin to generate jwt token to allow you to access wordpress protected urls like users, posts and ...</p>
 <p><b>Notice:</b> Use Java JDK 18. i used Amazon Correto JDK-18 for my project.</p>
+<p><b>Notice:</b> Gradle version: 8.1.0</p>
+<p><b>Notice:</b> Kotlin version: 1.8.10</p>
+<p><b>Notice:</b> MinSdk version: 24</p>
 <br>
 <p><b>App Size:</b> 13mb</p>
 <br>
