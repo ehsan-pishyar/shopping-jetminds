@@ -1,5 +1,5 @@
 ![jetminds_logo](https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/c4c619eb-63ee-4993-9c19-2cbacec4c345)
-<h1>Shopping Jetminds - Persian Version</h1>
+<h1>Shopping Jetminds - Persian Version by <b>Ehsan Pishyar</b></h1>
 <h2>Shopping app which connects to Woocommerce and wordpress REST API</h2>
 <p>Shopping Jetminds is an android shopping app wich connects to Woocommerce and Wordpress api as back-end service.
     It uses the Retrofit and OkHttp3 to get and put data to web api and also uses Room Database to store and cache the data in database.
@@ -77,7 +77,7 @@
 <p>In Constans: const val BASE_URL = "https://your-website-url.com/wp-json/wc/v3/"</p>
 <p>In WordpressConstants: const val WORDPRESS_BASE_URL = "https://your-website-url.com/wp-json/wp/v2/"</p>
 <p>In WordpressConstants: const val TOKEN_BASE_URL = "https://your-website-url.com/wp-json/api/v1/"</p>
-<p><b>>Notice:</b You need install miniOrange api authentication plugin to generate jwt token to allow you to access wordpress protected urls like users, posts and ...</p>
+<p><b>Notice:</b> You need install miniOrange api authentication plugin to generate jwt token to allow you to access wordpress protected urls like users, posts and ...</p>
 <p><b>Notice:</b> Use Java JDK 18. i used Amazon Correto JDK-18 for my project.</p>
 <br>
 <p>See My Website: <b>https://jetminds.ir/</b></p>
