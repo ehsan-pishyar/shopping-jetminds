@@ -77,7 +77,7 @@
 <p>In Constans: const val BASE_URL = "https://your-website-url.com/wp-json/wc/v3/"</p>
 <p>In WordpressConstants: const val WORDPRESS_BASE_URL = "https://your-website-url.com/wp-json/wp/v2/"</p>
 <p>In WordpressConstants: const val TOKEN_BASE_URL = "https://your-website-url.com/wp-json/api/v1/"</p>
-<p>Notice: You need install miniOrange api authentication plugin to generate jwt token to allow you to access wordpress protected urls like users, posts and ...</p>
-<p>Notice: Use Java JDK 18. i used Amazon Correto JDK-18 for my project.</p>
+<p><b>>Notice:</b You need install miniOrange api authentication plugin to generate jwt token to allow you to access wordpress protected urls like users, posts and ...</p>
+<p><b>Notice:</b> Use Java JDK 18. i used Amazon Correto JDK-18 for my project.</p>
 <br>
 <p>See My Website: <b>https://jetminds.ir/</b></p>
