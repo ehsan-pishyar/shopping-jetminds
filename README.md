@@ -1,3 +1,4 @@
+![jetminds_logo](https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/fa0a4b3b-f135-4177-87ae-12d0f9cf83e2)
 <h1>Shopping Jetminds - Persian Version</h1>
 <h2>Shopping app which connects to Woocommerce and wordpress REST API</h2>
 <p>Shopping Jetminds is an android shopping app wich connects to Woocommerce and Wordpress api as back-end service.
