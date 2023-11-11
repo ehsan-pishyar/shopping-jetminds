@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 class GetCartItemCountUseCase constructor(
     private val repository: CartRepository
 ) {
-    operator fun invoke(productId: Int): Flow<Int?> = repository.fetchItemCount(productId = productId)
+    operator fun invoke(productId: Int): Flow<Int?> = repository.getItemCount(productId = productId)
 }

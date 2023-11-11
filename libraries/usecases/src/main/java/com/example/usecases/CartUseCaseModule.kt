@@ -1,12 +1,14 @@
 package com.example.usecases
 
 import com.example.domain.repositories.CartRepository
+import com.example.domain.use_cases.cart.CalculateTaxUseCase
+import com.example.domain.use_cases.cart.CalculateTotalPriceUseCase
 import com.example.domain.use_cases.cart.ClearCartUseCase
 import com.example.domain.use_cases.cart.DeleteCartItemUseCase
 import com.example.domain.use_cases.cart.GetCartItemCountUseCase
 import com.example.domain.use_cases.cart.GetCartItemsUseCase
 import com.example.domain.use_cases.cart.GetCartTotalCountsUseCase
-import com.example.domain.use_cases.cart.GetCartTotalPricesUseCase
+import com.example.domain.use_cases.cart.GetCartSubTotalUseCase
 import com.example.domain.use_cases.cart.InsertCartItemUseCase
 import com.example.domain.use_cases.cart.IsInCartItemUseCase
 import com.example.domain.use_cases.cart.UpdateCartItemUseCase
@@ -35,9 +37,9 @@ object CartUseCaseModule {
     ): GetCartItemsUseCase = GetCartItemsUseCase(repository = repository)
 
     @Provides
-    fun providesGetCartTotalPricesUseCase(
+    fun providesGetCartSubTotalUseCase(
         repository: CartRepository
-    ): GetCartTotalPricesUseCase = GetCartTotalPricesUseCase(repository = repository)
+    ): GetCartSubTotalUseCase = GetCartSubTotalUseCase(repository = repository)
 
     @Provides
     fun providesGetCartTotalCountsUseCase(
@@ -63,4 +65,10 @@ object CartUseCaseModule {
     fun providesClearCartUseCase(
         repository: CartRepository
     ): ClearCartUseCase = ClearCartUseCase(repository = repository)
+
+    @Provides
+    fun providesCalculateTaxUseCase(): CalculateTaxUseCase = CalculateTaxUseCase()
+
+    @Provides
+    fun providesCalculateTotalPriceUseCase(): CalculateTotalPriceUseCase = CalculateTotalPriceUseCase()
 }

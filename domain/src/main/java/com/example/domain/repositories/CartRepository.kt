@@ -8,10 +8,10 @@ interface CartRepository {
     suspend fun insertItem(cartItem: Cart)
     suspend fun updateItem(productId: Int, count: Int, newPrice: Int)
 
-    fun fetchItems(): Flow<List<Cart>>
-    fun fetchTotalPrices(): Flow<Int?>
-    fun fetchTotalCount(): Flow<Int?>
-    fun fetchItemCount(productId: Int): Flow<Int?>
+    fun getItems(): Flow<List<Cart>>
+    fun getSubTotal(): Flow<Int?>
+    fun getTotalCounts(): Flow<Int?>
+    fun getItemCount(productId: Int): Flow<Int?>
     fun isInCart(productId: Int): Flow<Int?>
 
     suspend fun deleteItem(productId: Int)

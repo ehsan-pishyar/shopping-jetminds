@@ -19,7 +19,7 @@ interface CartDao {
     @Query("SELECT * FROM `cart_table` ORDER BY date_added DESC")
     fun fetchItems(): Flow<List<CartEntity>>
 
-    @Query("SELECT product_price FROM `cart_table`")
+    @Query("SELECT SUM(product_price) AS sub_total_price FROM `cart_table`")
     fun fetchTotalPrices(): Flow<Int?>
 
     @Query("SELECT COUNT(*) FROM `cart_table`")

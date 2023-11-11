@@ -7,5 +7,5 @@ class GetCartTotalCountsUseCase constructor(
     private val repository: CartRepository
 ) {
 
-    operator fun invoke(): Flow<Int?> = repository.fetchTotalCount()
+    operator fun invoke(): Flow<Int?> = repository.getTotalCounts()
 }

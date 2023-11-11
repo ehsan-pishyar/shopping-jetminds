@@ -23,22 +23,17 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.utils.SharedViewModel
-import com.example.core.utils.calculateTax
 import com.example.designsystem.Background
 import com.example.designsystem.BlackColor
 import com.example.designsystem.LighterBlack
@@ -60,31 +55,31 @@ fun CartScreen(
     sharedViewModel: SharedViewModel = SharedViewModel(),
     toProductDetailsScreen: () -> Unit
 ) {
-    val uiState: MainCartUiState by viewModel.cartUiState.collectAsState()
+    val cartUiState: MainCartUiState by viewModel.cartUiState.collectAsState()
     val cartTotalCountState by viewModel.cartTotalCountState.collectAsState()
     val isInCartState by viewModel.isInCartState.collectAsState()
-    val totalPriceState by viewModel.totalPrice.collectAsState()
+    val subTotalState by viewModel.subTotalPrice.collectAsState()
 
     CartContent(
         viewModel = viewModel,
-        uiState = uiState,
+        cartUiState = cartUiState,
         cartTotalCountState = cartTotalCountState,
         isInCartState = isInCartState,
         sharedViewModel = sharedViewModel,
         toProductDetailsScreen = toProductDetailsScreen,
-        totalPriceState = totalPriceState
+        subTotalState = subTotalState
     )
 }
 
 @Composable
 private fun CartContent(
     viewModel: CartViewModel,
-    uiState: MainCartUiState? = null,
+    cartUiState: MainCartUiState,
     cartTotalCountState: Int = 0,
     isInCartState: Int = 0,
     sharedViewModel: SharedViewModel,
     toProductDetailsScreen: () -> Unit,
-    totalPriceState: Int = 0
+    subTotalState: Int = 0
 ) {
 
     Box(modifier = Modifier
@@ -138,7 +133,7 @@ private fun CartContent(
                         verticalArrangement = Arrangement.Top
                     ) {
                         CartList(
-                            items = uiState?.cartUiState!!,
+                            items = cartUiState.cartUiState,
                             sharedViewModel = sharedViewModel,
                             toProductDetailsScreen = toProductDetailsScreen,
                             viewModel = viewModel
@@ -155,9 +150,9 @@ private fun CartContent(
                         .weight(4f)
                     ) {
                         CheckoutSection(
-                            totalPrice = totalPriceState,
-                            cartItemCountState = cartTotalCountState,
-                            cartTotalPrice = totalPriceState
+                            viewModel = viewModel,
+                            subTotalState = subTotalState,
+                            cartItemCountState = cartTotalCountState
                         )
                     }
                 }
@@ -243,10 +238,13 @@ fun PromoSection() {
 
 @Composable
 fun CheckoutSection(
-    totalPrice: Int,
-    cartItemCountState: Int = 0,
-    cartTotalPrice: Int = 0
+    viewModel: CartViewModel,
+    subTotalState: Int = 0,
+    cartItemCountState: Int = 0
 ) {
+    val taxState by viewModel.calculateTaxState.collectAsState()
+    val totalPriceState by viewModel.calculateTotalPriceState.collectAsState()
+
     Card(
         modifier = Modifier.fillMaxSize(),
         shape = RoundedCornerShape(12.dp),
@@ -274,7 +272,7 @@ fun CheckoutSection(
                         fontWeight = FontWeight.SemiBold
                     )
                     JetPriceText(
-                        price = "$totalPrice",
+                        price = "$subTotalState",
                         priceTextSize = 12,
                         priceTomanSize = 13,
                         priceFreeSize = 12,
@@ -296,8 +294,9 @@ fun CheckoutSection(
                         fontSize = 14,
                         fontWeight = FontWeight.SemiBold
                     )
+                    viewModel.calculateTax(subTotal = subTotalState)
                     JetPriceText(
-                        price = calculateTax(totalPrice.toString()),
+                        price = "$taxState",
                         priceTextSize = 12,
                         priceTomanSize = 13,
                         priceFreeSize = 12,
@@ -330,8 +329,12 @@ fun CheckoutSection(
                             fontWeight = FontWeight.Normal,
                             color = LighterGray
                         )
+                        viewModel.calculateTotalPrice(
+                            subTotal = subTotalState,
+                            tax = taxState
+                        )
                         JetPriceText(
-                            price = "$cartTotalPrice",
+                            price = "$totalPriceState",
                             priceTextSize = 15,
                             priceTomanSize = 13,
                             priceFreeSize = 14
@@ -375,13 +378,5 @@ private fun CartItemNotFound() {
             color = LighterBlack,
             fontSize = 12
         )
-    }
-}
-
-@Preview
-@Composable
-private fun Preview_CheckoutSection() {
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-        CheckoutSection(totalPrice = 100000)
     }
 }

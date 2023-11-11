@@ -26,21 +26,21 @@ class CartRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun fetchItems(): Flow<List<Cart>> {
+    override fun getItems(): Flow<List<Cart>> {
         return dao.fetchItems().map { cartItems ->
             cartItems.map(CartEntity::toDomain)
         }
     }
 
-    override fun fetchTotalPrices(): Flow<Int?> {
+    override fun getSubTotal(): Flow<Int?> {
         return dao.fetchTotalPrices()
     }
 
-    override fun fetchTotalCount(): Flow<Int?> {
+    override fun getTotalCounts(): Flow<Int?> {
         return dao.fetchTotalCount()
     }
 
-    override fun fetchItemCount(productId: Int): Flow<Int?> {
+    override fun getItemCount(productId: Int): Flow<Int?> {
         return dao.fetchItemCount(productId = productId)
     }
 

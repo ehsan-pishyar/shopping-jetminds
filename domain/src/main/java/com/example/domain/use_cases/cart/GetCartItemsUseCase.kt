@@ -8,5 +8,5 @@ class GetCartItemsUseCase constructor(
     private val repository: CartRepository
 ){
 
-    operator fun invoke(): Flow<List<Cart>> = repository.fetchItems()
+    operator fun invoke(): Flow<List<Cart>> = repository.getItems()
 }
