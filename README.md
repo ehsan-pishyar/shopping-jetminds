@@ -72,14 +72,19 @@
 <h2>Workspace shots</h2>
 <p>app Section</p>
 <img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/7d92ce6e-0b45-40eb-8694-0f36a8050600"</img>
+<br>
 <p>data Section</p>
 <img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/6a3f284d-2d29-4075-9e81-9f114136b819"</img>
+<br>
 <p>domain Section</p>
 <img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/a28a6d6f-7a21-4b7a-8f12-febcf92dd79b"</img>
+<br>
 <p>features Section</p>
 <img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/f10c4747-70eb-4c43-ad72-78fe854c61b1"</img>
+<br>
 <p>libraries Section</p>
 <img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/42e2fb46-8465-4fae-a757-fea186c72b8b"</img>
+<br>
 <p>gradle Section</p>
 <img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/29787eb8-0039-45c1-8657-6b1febde84e9"</img>
 <br>
