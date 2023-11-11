@@ -7,7 +7,7 @@
 </p>
 <br>
 <h2>Screenshots</h2>
-<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/36157ff9-0e2d-472b-9a5c-e167a966dc51"></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/36157ff9-0e2d-472b-9a5c-e167a966dc51" style=width:300px; height:auto></img>
 
 <br>
 <h2>App screens</h2>
