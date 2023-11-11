@@ -1,21 +1,13 @@
-# shopping-jetminds
-Shopping Jetminds is a Shopping android app, which connects to Woocommerce and Wordpress REST API.
-
-
 <h1>Shopping Jetminds - Persian Version</h1>
-<hr>
 <h2>Shopping app which connects to Woocommerce and wordpress REST API</h2>
-<hr>
 <p>Shopping Jetminds is an android shopping app wich connects to Woocommerce and Wordpress api as back-end service.
     It uses the Retrofit and OkHttp3 to get and put data to web api and also uses Room Database to store and cache the data in database.
     Just change some urls and keys to use it on your Wordpress shopping website. :))
 </p>
 <br>
 <h2>Screenshots</h2>
-<hr>
 <br>
 <h2>App screens</h2>
-<hr>
 <ul>
     <li><b>Splash Screen:</b> App splash screen</li>
     <li><b>Onboarding Screens:</b> App welcome and introduction screens</li>
@@ -39,7 +31,6 @@ Shopping Jetminds is a Shopping android app, which connects to Woocommerce and W
 </ul>
 <br>
 <h2>Techs</h2>
-<hr>
 <ul>
     <li>Jetpack Compose</li>
     <li>Kotlin Coroutines</li>
@@ -59,12 +50,9 @@ Shopping Jetminds is a Shopping android app, which connects to Woocommerce and W
 </ul>
 <br>
 <h2>Setup</h2>
-<hr>
 <p>In local.properties add your wordpress consumer key and consumer secret.</p>
-<code>
-    <p>CONSUMER_KEY="YOUR CONSUMER KEY HERE"</p>
-    <p>CONSUMER_SECRET="YOUR CONSUMER SECRET HERE"</p>
-</code>
+<p>CONSUMER_KEY="YOUR CONSUMER KEY HERE"</p>
+<p>CONSUMER_SECRET="YOUR CONSUMER SECRET HERE"</p>
 <br>
 <p>In data module -> network module -> utils folder, in Constants and WordpressConstants file change the urls to your website url. like this:</p>
 <p>In Constans: const val BASE_URL = "https://your-website-url.com/wp-json/wc/v3/"</p>
