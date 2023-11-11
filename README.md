@@ -69,6 +69,20 @@
     <li>Accompanist</li>
 </ul>
 <br>
+<h2>Workspace shots</h2>
+<p>app Section</p>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/7d92ce6e-0b45-40eb-8694-0f36a8050600"</img>
+<p>data Section</p>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/6a3f284d-2d29-4075-9e81-9f114136b819"</img>
+<p>domain Section</p>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/a28a6d6f-7a21-4b7a-8f12-febcf92dd79b"</img>
+<p>features Section</p>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/f10c4747-70eb-4c43-ad72-78fe854c61b1"</img>
+<p>libraries Section</p>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/42e2fb46-8465-4fae-a757-fea186c72b8b"</img>
+<p>gradle Section</p>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/29787eb8-0039-45c1-8657-6b1febde84e9"</img>
+<br>
 <h2>Setup</h2>
 <p>In local.properties add your wordpress consumer key and consumer secret.</p>
 <p>CONSUMER_KEY="YOUR CONSUMER KEY HERE"</p>
@@ -80,5 +94,7 @@
 <p>In WordpressConstants: const val TOKEN_BASE_URL = "https://your-website-url.com/wp-json/api/v1/"</p>
 <p><b>Notice:</b> You need install miniOrange api authentication plugin to generate jwt token to allow you to access wordpress protected urls like users, posts and ...</p>
 <p><b>Notice:</b> Use Java JDK 18. i used Amazon Correto JDK-18 for my project.</p>
+<br>
+<p><b>App Size:</b> 13mb</p>
 <br>
 <p>See My Website: <b>https://jetminds.ir/</b></p>
