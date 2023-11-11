@@ -1,6 +1,6 @@
 ![jetminds_logo](https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/c4c619eb-63ee-4993-9c19-2cbacec4c345)
 <h1>Shopping Jetminds</h1>
-<span>Persian Version by <b>Ehsan Pishyar</b></span>
+<span>Persian Version by <b><a href="https://github.com/ehsan-pishyar/">Ehsan Pishyar</a></b></span>
 <h2>Shopping app which connects to Woocommerce and wordpress REST API</h2>
 <p>Shopping Jetminds is an android shopping app wich connects to Woocommerce and Wordpress api as back-end service.
     It uses the Retrofit and OkHttp3 to get and put data to web api and also uses Room Database to store and cache the data in database.
