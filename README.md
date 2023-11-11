@@ -8,7 +8,23 @@
 <br>
 <h2>Screenshots</h2>
 <img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/36157ff9-0e2d-472b-9a5c-e167a966dc51" style=width:300px; height:auto></img>
-
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/125aaeb1-f275-4097-9bc6-4cd72420227e" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/52bf9134-ecb2-449a-a519-650f63cb7bd6" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/1202cef5-acaa-475a-8c72-06f2eeac7256" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/ac14f8b0-188a-460d-969a-73e2878091e6" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/0be37fdd-224a-4829-9375-f83749fd2ae5" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/c681f2fb-e365-40e7-986d-2ccd476f299a" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/1a7e9ba3-7e0d-43e2-a4bf-4a804532ee21" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/f8feb9e3-e949-4e5e-b383-9bbff8576f63" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/315b9ebd-669e-4426-93c4-aff1bc1b5160" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/01bfb323-4bad-4091-b296-a240e57512da" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/a5451adb-35aa-4887-ac00-08e1165261f7" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/e0eea7e3-e661-404c-b79e-37177b0f8d8e" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/7e679e95-1c39-4b71-b850-b3f39f994611" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/e963c878-6d04-4670-aee4-a8f58c66a0c6" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/22c7c967-5d04-459b-b1e2-b098561853ae" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/c250fc27-9b65-47b6-8156-7bb7b473f6d7" style=width:300px; height:auto></img>
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/185af3d1-71e3-4d33-be06-3a3266aa99ed" style=width:300px; height:auto></img>
 <br>
 <h2>App screens</h2>
 <ul>
