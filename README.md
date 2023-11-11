@@ -7,7 +7,7 @@
 </p>
 <br>
 <h2>Screenshots</h2>
-![shopping-jetminds-01](https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/36157ff9-0e2d-472b-9a5c-e167a966dc51)
+<img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/36157ff9-0e2d-472b-9a5c-e167a966dc51"></img>
 
 <br>
 <h2>App screens</h2>
