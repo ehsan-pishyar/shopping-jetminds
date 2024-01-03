@@ -92,15 +92,16 @@
 
 ```bash
 Setup:
-clone project
-In local.properties add your wordpress consumer key and consumer secret.
-CONSUMER_KEY="YOUR CONSUMER KEY HERE"
-CONSUMER_SECRET="YOUR CONSUMER SECRET HERE"
 
-In data module -> network module -> utils folder, in Constants and WordpressConstants file change the urls to your website url. like this:
-In Constans: const val BASE_URL = "https://your-website-url.com/wp-json/wc/v3/"
-In WordpressConstants: const val WORDPRESS_BASE_URL = "https://your-website-url.com/wp-json/wp/v2/"
-In WordpressConstants: const val TOKEN_BASE_URL = "https://your-website-url.com/wp-json/api/v1/"
+1. Clone Project
+2. In local.properties add your wordpress consumer key and consumer secret.
+3. CONSUMER_KEY="YOUR CONSUMER KEY HERE"
+4. CONSUMER_SECRET="YOUR CONSUMER SECRET HERE"
+
+5. In data module -> network module -> utils folder, in Constants and WordpressConstants file change the urls to your website url. like this:
+6. In Constans: const val BASE_URL = "https://your-website-url.com/wp-json/wc/v3/"
+7. In WordpressConstants: const val WORDPRESS_BASE_URL = "https://your-website-url.com/wp-json/wp/v2/"
+8. In WordpressConstants: const val TOKEN_BASE_URL = "https://your-website-url.com/wp-json/api/v1/"
 ```
 
 <br>
