@@ -88,15 +88,19 @@
 <p>gradle Section</p>
 <img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/29787eb8-0039-45c1-8657-6b1febde84e9"</img>
 <br>
-<h2>Setup</h2>
-<p>In local.properties add your wordpress consumer key and consumer secret.</p>
-<p>CONSUMER_KEY="YOUR CONSUMER KEY HERE"</p>
-<p>CONSUMER_SECRET="YOUR CONSUMER SECRET HERE"</p>
+```bash
+Setup:
+clone project
+In local.properties add your wordpress consumer key and consumer secret.
+CONSUMER_KEY="YOUR CONSUMER KEY HERE"
+CONSUMER_SECRET="YOUR CONSUMER SECRET HERE"
+
+In data module -> network module -> utils folder, in Constants and WordpressConstants file change the urls to your website url. like this:
+In Constans: const val BASE_URL = "https://your-website-url.com/wp-json/wc/v3/"
+In WordpressConstants: const val WORDPRESS_BASE_URL = "https://your-website-url.com/wp-json/wp/v2/"
+In WordpressConstants: const val TOKEN_BASE_URL = "https://your-website-url.com/wp-json/api/v1/"
+```
 <br>
-<p>In data module -> network module -> utils folder, in Constants and WordpressConstants file change the urls to your website url. like this:</p>
-<p>In Constans: const val BASE_URL = "https://your-website-url.com/wp-json/wc/v3/"</p>
-<p>In WordpressConstants: const val WORDPRESS_BASE_URL = "https://your-website-url.com/wp-json/wp/v2/"</p>
-<p>In WordpressConstants: const val TOKEN_BASE_URL = "https://your-website-url.com/wp-json/api/v1/"</p>
 <p><b>Notice:</b> You need install miniOrange api authentication plugin to generate jwt token to allow you to access wordpress protected urls like users, posts and ...</p>
 <p><b>Notice:</b> Use Java JDK 18. i used Amazon Correto JDK-18 for my project.</p>
 <p><b>Notice:</b> Gradle version: 8.1.0</p>
