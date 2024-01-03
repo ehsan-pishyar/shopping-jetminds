@@ -88,6 +88,7 @@
 <p>gradle Section</p>
 <img src="https://github.com/ehsan-pishyar/shopping-jetminds/assets/20971244/29787eb8-0039-45c1-8657-6b1febde84e9"</img>
 <br>
+<br>
 
 ```bash
 Setup:
