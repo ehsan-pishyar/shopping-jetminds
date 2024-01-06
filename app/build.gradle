@@ -64,7 +64,6 @@ android {
 
 dependencies {
 
-
     implementation project(path: ':libraries:navigation')
     implementation project(path: ':libraries:designsystem')
     implementation project(path: ':libraries:core')

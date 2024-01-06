@@ -27,18 +27,18 @@ import com.example.cache.utils.CacheConstants
 
 @Entity(
     tableName = CacheConstants.PRODUCT_CATEGORY_CROSS_REF_TABLE,
-    primaryKeys = ["product_id", "category_id"],
+    primaryKeys = ["productId", "categoryId"],
     foreignKeys = [
         ForeignKey(
             entity = ProductsResponseEntity::class,
             parentColumns = ["id"],
-            childColumns = ["product_id"],
+            childColumns = ["productId"],
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity = ProductCategoriesResponseEntity::class,
             parentColumns = ["id"],
-            childColumns = ["category_id"],
+            childColumns = ["categoryId"],
             onDelete = ForeignKey.CASCADE
         )
     ],
@@ -49,7 +49,7 @@ import com.example.cache.utils.CacheConstants
 )
 data class ProductAndCategoryCrossRefEntity(
     @ColumnInfo(name = "product_id")
-    val productId: Int,
+    val productId: Int?,
     @ColumnInfo(name = "category_id")
-    val categoryId: Int
+    val categoryId: Int?
 )
